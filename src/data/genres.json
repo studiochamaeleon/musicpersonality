@@ -1,0 +1,2754 @@
+[
+  {
+    "id": "jazz_cool",
+    "name": "Cool Jazz",
+    "nameKo": "쿨 재즈",
+    "category": "JAZZ",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 85,
+      "unpretentious": 45,
+      "sophisticated": 90,
+      "intense": 25,
+      "contemporary": 40
+    },
+    "description": "1940년대 후반에 등장한 재즈 스타일로, 비밥보다 차분하고 절제된 특징을 가집니다.",
+    "characteristics": ["침착한", "세련된", "지적인", "절제된"],
+    "era": "1940s-1950s",
+    "popularity": 75,
+    "energy": 30,
+    "valence": 60,
+    "acousticness": 70,
+    "personalityAnalysis": {
+      "typeTitle": "우아한 지성인",
+      "description": "당신은 깊이 있는 사고와 절제된 감정 표현을 중시하는 세련된 인격의 소유자입니다. 쿨 재즈의 미묘한 뉘앙스와 정교한 하모니는 당신의 내면적 깊이와 지적 탐구심을 완벽하게 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "지적 우아함",
+          "score": 90,
+          "description": "복잡한 개념을 우아하게 다루며 깊이 있는 대화를 선호합니다",
+          "impact": "학문적, 예술적 영역에서 뛰어난 통찰력 발휘"
+        },
+        {
+          "traitName": "감정 절제",
+          "score": 85,
+          "description": "감정을 절제하고 침착하게 상황을 판단하는 능력이 뛰어납니다",
+          "impact": "스트레스 상황에서도 냉정한 판단력 유지"
+        },
+        {
+          "traitName": "미적 감각",
+          "score": 88,
+          "description": "섬세한 미적 감각을 통해 품질과 완성도를 중시합니다",
+          "impact": "창작이나 기획 분야에서 높은 완성도 추구"
+        }
+      ],
+      "lifestyleInsights": [
+        "조용하고 편안한 공간에서 독서나 사색하는 시간을 소중히 여깁니다",
+        "품질 좋은 소수의 물건을 선호하며 미니멀한 라이프스타일을 추구합니다",
+        "깊이 있는 인간관계를 형성하며 진정성 있는 소통을 중시합니다"
+      ],
+      "strengths": [
+        "복잡한 문제를 차분하게 분석하고 해결하는 능력",
+        "섬세한 감수성으로 예술적, 창작적 영감을 얻는 재능",
+        "갈등 상황에서 중재자 역할을 하는 균형감각"
+      ],
+      "challenges": [
+        "과도한 완벽주의로 인한 결정 지연",
+        "감정 표현의 절제로 인한 거리감 조성 가능성",
+        "빠른 변화나 급작스러운 상황에 대한 적응 어려움"
+      ],
+      "relationshipCompatibility": "지적 호기심이 많고 깊이 있는 대화를 나눌 수 있는 파트너를 선호하며, 서로의 개인 공간을 존중하는 성숙한 관계를 추구합니다.",
+      "musicPreferences": [
+        "독서나 작업 시 집중력을 높이는 차분한 배경음악",
+        "저녁 시간 와인과 함께 듣는 감상용 음악",
+        "명상이나 요가 등 내적 평화를 위한 사운드"
+      ],
+      "recommendedActivities": [
+        "재즈 카페나 작은 공연장에서의 라이브 음악 감상",
+        "미술관이나 박물관 방문으로 문화적 소양 쌓기",
+        "독서 모임이나 토론 그룹 참여",
+        "요가, 명상, 차 마시기 등 정적인 휴식 활동"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "Miles Davis",
+        "nameKo": "마일스 데이비스",
+        "popularity": 95,
+        "keyTracks": ["Kind of Blue", "So What"]
+      },
+      {
+        "name": "Chet Baker",
+        "nameKo": "쳇 베이커",
+        "popularity": 85,
+        "keyTracks": ["My Funny Valentine", "Let's Get Lost"]
+      }
+    ]
+  },
+  {
+    "id": "jazz_bebop", 
+    "name": "Bebop",
+    "nameKo": "비밥",
+    "category": "JAZZ",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 35,
+      "unpretentious": 40,
+      "sophisticated": 95,
+      "intense": 80,
+      "contemporary": 50
+    },
+    "description": "1940년대 발전한 복잡하고 기교적인 재즈 스타일로, 즉흥연주가 특징입니다.",
+    "characteristics": ["복잡한", "기교적", "즉흥적", "빠른"],
+    "era": "1940s",
+    "popularity": 65,
+    "energy": 85,
+    "valence": 70,
+    "acousticness": 75,
+    "personalityAnalysis": {
+      "typeTitle": "창조적 천재",
+      "description": "당신은 복잡한 아이디어를 즉석에서 창조하고 완벽하게 실행하는 뛰어난 지적 능력의 소유자입니다. 비밥의 정교한 하모니와 빠른 즉흥연주는 당신의 순발력과 창의적 사고력, 그리고 완벽을 추구하는 장인 정신을 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "즉흥 창조력",
+          "score": 95,
+          "description": "예상치 못한 상황에서도 창의적이고 우아한 해결책을 즉석에서 만들어냅니다",
+          "impact": "위기 상황에서 뛰어난 리더십과 문제해결 능력 발휘"
+        },
+        {
+          "traitName": "기술적 완벽주의",
+          "score": 90,
+          "description": "높은 기준을 설정하고 끊임없이 자신의 기술을 연마하는 성향이 강합니다",
+          "impact": "전문 분야에서 최고 수준의 실력과 인정 획득"
+        },
+        {
+          "traitName": "복합적 사고",
+          "score": 85,
+          "description": "여러 요소를 동시에 고려하며 복잡한 패턴을 인식하는 능력이 뛰어납니다",
+          "impact": "전략적 기획이나 복잡한 프로젝트 관리에서 탁월함"
+        }
+      ],
+      "lifestyleInsights": [
+        "끊임없는 학습과 자기계발을 통해 전문성을 높이는 것을 중시합니다",
+        "예측 불가능한 상황을 즐기며 루틴보다는 변화와 도전을 선호합니다",
+        "같은 수준의 전문성을 가진 사람들과의 깊이 있는 토론을 즐깁니다"
+      ],
+      "strengths": [
+        "압박 상황에서도 창의적이고 정교한 솔루션을 만들어내는 능력",
+        "복잡한 정보를 빠르게 처리하고 패턴을 찾아내는 분석력",
+        "높은 기준과 완벽주의를 통해 탁월한 결과물 창출"
+      ],
+      "challenges": [
+        "완벽주의로 인한 과도한 스트레스와 자기 압박",
+        "일반인들이 이해하기 어려운 수준의 복잡성 추구",
+        "단순하고 반복적인 일에 대한 낮은 인내심"
+      ],
+      "relationshipCompatibility": "지적 수준이 높고 창의적 대화를 나눌 수 있는 파트너를 선호하며, 서로의 전문성과 개성을 존중하는 자극적이고 성장 지향적인 관계를 추구합니다.",
+      "musicPreferences": [
+        "집중이 필요한 창작 활동이나 복잡한 작업 시 배경음악",
+        "지적 토론이나 브레인스토밍 세션 시 영감을 주는 사운드",
+        "전문적 기술 연마나 학습 시 집중력을 높이는 음악"
+      ],
+      "recommendedActivities": [
+        "재즈 잼 세션이나 즉흥연주 워크숍 참여",
+        "복잡한 전략 게임이나 퍼즐 도전",
+        "전문 분야의 마스터클래스나 고급 세미나 참석",
+        "창의적 협업 프로젝트나 혁신 챌린지 참여"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "Charlie Parker",
+        "nameKo": "찰리 파커",
+        "popularity": 95,
+        "keyTracks": ["Ornithology", "Ko Ko"]
+      },
+      {
+        "name": "Dizzy Gillespie",
+        "nameKo": "디지 길레스피",
+        "popularity": 90,
+        "keyTracks": ["Salt Peanuts", "A Night in Tunisia"]
+      }
+    ]
+  },
+  {
+    "id": "rock_alternative",
+    "name": "Alternative Rock",
+    "nameKo": "얼터너티브 록",
+    "category": "ROCK",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 40,
+      "unpretentious": 70,
+      "sophisticated": 60,
+      "intense": 70,
+      "contemporary": 85
+    },
+    "description": "1980년대 등장한 비주류 록 음악으로, 실험적이고 독창적인 사운드가 특징입니다.",
+    "characteristics": ["실험적", "독창적", "반항적", "다양한"],
+    "era": "1980s-present",
+    "popularity": 80,
+    "energy": 75,
+    "valence": 50,
+    "acousticness": 30,
+    "personalityAnalysis": {
+      "typeTitle": "독창적 반항아",
+      "description": "당신은 주류에 순응하기보다는 자신만의 독특한 길을 개척하는 창의적이고 개성 강한 사람입니다. 얼터너티브 록의 실험적 사운드와 반항적 정신은 당신의 비판적 사고와 독립적 성향을 완벽하게 대변합니다.",
+      "coreTraits": [
+        {
+          "traitName": "창의적 독립성",
+          "score": 85,
+          "description": "기존 관념에 도전하며 자신만의 독창적인 방식을 추구합니다",
+          "impact": "혁신적인 아이디어와 독특한 솔루션 창출"
+        },
+        {
+          "traitName": "진정성 추구",
+          "score": 75,
+          "description": "표면적인 것보다 진실되고 의미 있는 것을 중시합니다",
+          "impact": "깊이 있고 진정성 있는 관계 형성"
+        },
+        {
+          "traitName": "비판적 사고",
+          "score": 70,
+          "description": "현상을 비판적으로 분석하고 대안을 모색하는 능력이 뛰어납니다",
+          "impact": "문제의 본질을 파악하고 창의적 해결책 제시"
+        }
+      ],
+      "lifestyleInsights": [
+        "유행보다는 자신의 신념과 가치관에 따라 선택하는 경향이 강합니다",
+        "다양한 문화와 예술 형태에 개방적이며 실험적인 경험을 즐깁니다",
+        "소수의 진정한 친구들과 깊은 관계를 유지하며 표면적인 사교는 피합니다"
+      ],
+      "strengths": [
+        "독창적이고 혁신적인 아이디어를 생성하는 능력",
+        "압박이나 동조 압력에 굴복하지 않는 정신적 독립성",
+        "다양한 관점을 수용하고 융합하는 유연성"
+      ],
+      "challenges": [
+        "주류 사회나 조직 문화에 적응하는 데 어려움",
+        "완벽주의 성향으로 인한 자기 비판과 스트레스",
+        "감정의 기복이 크고 내적 갈등을 겪을 가능성"
+      ],
+      "relationshipCompatibility": "자신의 개성을 인정하고 존중해주는 파트너를 선호하며, 서로의 창의성을 격려하고 성장을 지지하는 관계를 추구합니다.",
+      "musicPreferences": [
+        "창작 활동이나 브레인스토밍 시 영감을 주는 사운드",
+        "감정 표출이나 스트레스 해소를 위한 카타르시스적 음악",
+        "운전이나 홀로 있을 때 듣는 개인적 성찰의 시간"
+      ],
+      "recommendedActivities": [
+        "라이브 하우스나 소규모 공연장에서의 언더그라운드 음악 탐험",
+        "독립 영화제나 아트 갤러리 등 대안 문화 체험",
+        "창작 워크숍이나 DIY 프로젝트 참여",
+        "자연 속에서의 트레킹이나 사진 촬영 등 개인적 탐험"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "Nirvana",
+        "nameKo": "너바나",
+        "popularity": 95,
+        "keyTracks": ["Smells Like Teen Spirit", "Come As You Are"]
+      },
+      {
+        "name": "Radiohead",
+        "nameKo": "라디오헤드",
+        "popularity": 92,
+        "keyTracks": ["Creep", "Karma Police"]
+      }
+    ]
+  },
+  {
+    "id": "rock_indie",
+    "name": "Indie Rock", 
+    "nameKo": "인디 록",
+    "category": "ROCK",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 55,
+      "unpretentious": 80,
+      "sophisticated": 70,
+      "intense": 60,
+      "contemporary": 90
+    },
+    "description": "독립 레이블에서 제작되는 록 음악으로, 자유롭고 창의적인 표현이 특징입니다.",
+    "characteristics": ["자유로운", "창의적", "독립적", "감성적"],
+    "era": "1990s-present",
+    "popularity": 85,
+    "energy": 65,
+    "valence": 60,
+    "acousticness": 40,
+    "personalityAnalysis": {
+      "typeTitle": "자유로운 예술가",
+      "description": "당신은 독립적인 정신과 창의적 감수성을 동시에 가진 진정한 예술가입니다. 인디 록의 자유로운 표현과 감성적 깊이는 당신의 개성 추구와 진정성에 대한 갈망, 그리고 상업적 성공보다 예술적 완성을 중시하는 가치관을 완벽하게 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "예술적 독립성",
+          "score": 85,
+          "description": "외부의 기대나 압력에 휘둘리지 않고 자신만의 예술적 비전을 추구합니다",
+          "impact": "창작 분야에서 독창적이고 의미 있는 작품 창출"
+        },
+        {
+          "traitName": "감성적 진정성",
+          "score": 80,
+          "description": "진실한 감정과 경험을 바탕으로 한 표현을 중시하며 가식을 배제합니다",
+          "impact": "깊이 있고 진실한 인간관계와 작품 활동"
+        },
+        {
+          "traitName": "창의적 실험",
+          "score": 75,
+          "description": "새로운 시도와 실험을 두려워하지 않으며 실패를 성장의 기회로 받아들입니다",
+          "impact": "혁신적 아이디어와 독특한 해결책 개발"
+        }
+      ],
+      "lifestyleInsights": [
+        "소규모 독립 공간이나 아티스트들과의 협업을 통해 영감을 얻습니다",
+        "대중적 트렌드보다는 개인적 가치와 신념에 따라 선택하는 경향이 강합니다",
+        "물질적 성공보다는 의미 있는 경험과 자기표현을 우선시합니다"
+      ],
+      "strengths": [
+        "독창적이고 개성 있는 아이디어를 생성하고 실현하는 능력",
+        "진정성 있는 관계를 형성하고 깊은 공감대를 나누는 재능",
+        "상업적 압력에 굴복하지 않는 예술적 신념과 원칙"
+      ],
+      "challenges": [
+        "경제적 안정성보다 예술적 가치를 우선시하여 재정적 어려움 가능",
+        "주류 사회나 조직 문화에 적응하는 데 어려움 경험",
+        "과도한 완벽주의나 자기 비판으로 인한 창작 활동 지연"
+      ],
+      "relationshipCompatibility": "창의성과 개성을 이해하고 존중해주는 파트너를 선호하며, 서로의 예술적 성장을 지지하고 진정한 소통을 나눌 수 있는 관계를 추구합니다.",
+      "musicPreferences": [
+        "창작 활동이나 아이디어 구상 시 영감을 주는 배경음악",
+        "감정적 정화나 내적 성찰을 위한 개인적 치유 시간",
+        "친구들과의 소규모 모임이나 파티에서 분위기를 만드는 사운드"
+      ],
+      "recommendedActivities": [
+        "라이브 하우스나 소규모 공연장에서의 인디 뮤지션 공연 관람",
+        "독립 영화제나 아트 페어 등 대안 문화 이벤트 참가",
+        "창작 워크숍이나 아티스트 레지던시 프로그램 참여",
+        "도시 탐험이나 독특한 카페, 갤러리 발굴 활동"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "Arctic Monkeys",
+        "nameKo": "아틱 몽키스",
+        "popularity": 90,
+        "keyTracks": ["Do I Wanna Know?", "R U Mine?"]
+      },
+      {
+        "name": "The Strokes",
+        "nameKo": "더 스트록스",
+        "popularity": 88,
+        "keyTracks": ["Last Nite", "Someday"]
+      }
+    ]
+  },
+  {
+    "id": "electronic_ambient",
+    "name": "Ambient",
+    "nameKo": "앰비언트",
+    "category": "ELECTRONIC",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 95,
+      "unpretentious": 60,
+      "sophisticated": 75,
+      "intense": 15,
+      "contemporary": 80
+    },
+    "description": "분위기와 공간감을 중시하는 전자 음악 장르로, 명상적이고 평화로운 특징을 가집니다.",
+    "characteristics": ["명상적", "공간감", "미니멀", "분위기적"],
+    "era": "1970s-present",
+    "popularity": 70,
+    "energy": 15,
+    "valence": 50,
+    "acousticness": 20,
+    "personalityAnalysis": {
+      "typeTitle": "평온한 탐험가",
+      "description": "당신은 내면의 고요함과 무한한 상상력을 동시에 품고 있는 신비로운 영혼입니다. 앰비언트 음악의 광대한 음향 공간과 미묘한 질감은 당신의 깊은 내적 세계와 우주적 관점을 완벽하게 표현합니다.",
+      "coreTraits": [
+        {
+          "traitName": "깊은 내적 평화",
+          "score": 95,
+          "description": "혼란스러운 상황에서도 내면의 평정심을 유지하는 탁월한 능력을 가지고 있습니다",
+          "impact": "주변 사람들에게 안정감과 치유의 에너지 제공"
+        },
+        {
+          "traitName": "공간적 상상력",
+          "score": 80,
+          "description": "추상적이고 공간적인 사고를 통해 창의적 아이디어를 생성합니다",
+          "impact": "디자인, 건축, 또는 예술 분야에서의 독창적 표현"
+        },
+        {
+          "traitName": "직관적 감수성",
+          "score": 85,
+          "description": "말로 표현되지 않는 미묘한 감정과 분위기를 민감하게 포착합니다",
+          "impact": "타인의 감정 상태를 직관적으로 이해하고 적절한 반응"
+        }
+      ],
+      "lifestyleInsights": [
+        "자연과의 연결을 중시하며 정기적으로 혼자만의 시간을 갖습니다",
+        "물리적 공간의 분위기와 에너지에 매우 민감하게 반응합니다",
+        "깊은 사색과 명상을 통해 삶의 의미와 목적을 탐구합니다"
+      ],
+      "strengths": [
+        "스트레스가 많은 환경에서 평온함을 유지하는 능력",
+        "창의적 영감을 통해 혁신적인 아이디어를 생성하는 재능",
+        "타인에게 정서적 안정감과 치유를 제공하는 자연스러운 능력"
+      ],
+      "challenges": [
+        "과도한 자극이나 소음에 민감하여 에너지 소진 위험",
+        "현실적인 문제보다 이상적 세계에 빠져있을 가능성",
+        "감정적 경계 설정의 어려움으로 인한 타인의 감정 흡수"
+      ],
+      "relationshipCompatibility": "정서적으로 안정되고 개인 공간을 존중해주는 파트너를 선호하며, 깊이 있는 정신적 교감을 나눌 수 있는 관계를 추구합니다.",
+      "musicPreferences": [
+        "수면 전 마음을 진정시키고 꿈의 세계로 안내하는 음악",
+        "창작이나 명상 시 깊은 집중 상태로 들어가는 배경 사운드",
+        "힐링이나 마사지 시 몸과 마음의 긴장을 완전히 이완시키는 음악"
+      ],
+      "recommendedActivities": [
+        "사운드 배스나 명상 음악 공연 참석",
+        "자연 속에서의 사운드 워킹이나 조용한 등산",
+        "플로팅 탱크나 스파에서의 감각 차단 명상 체험",
+        "천체 관측이나 일출/일몰 감상 등 우주적 체험"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "Brian Eno",
+        "nameKo": "브라이언 이노",
+        "popularity": 88,
+        "keyTracks": ["Music for Airports", "An Ending (Ascent)"]
+      },
+      {
+        "name": "Stars of the Lid",
+        "nameKo": "스타스 오브 더 리드",
+        "popularity": 75,
+        "keyTracks": ["The Tired Sounds of", "Apreludes"]
+      }
+    ]
+  },
+  {
+    "id": "electronic_house",
+    "name": "House",
+    "nameKo": "하우스",
+    "category": "ELECTRONIC",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 25,
+      "unpretentious": 85,
+      "sophisticated": 50,
+      "intense": 65,
+      "contemporary": 95
+    },
+    "description": "1980년대 시카고에서 시작된 댄스 음악으로, 반복적인 4/4 비트가 특징입니다.",
+    "characteristics": ["리드미컬", "댄스", "반복적", "에너지"],
+    "era": "1980s-present",
+    "popularity": 90,
+    "energy": 90,
+    "valence": 85,
+    "acousticness": 10,
+    "personalityAnalysis": {
+      "typeTitle": "사교적 에너자이저",
+      "description": "당신은 사람들을 하나로 모으고 긍정적인 에너지를 전파하는 타고난 분위기 메이커입니다. 하우스 음악의 강렬한 4/4 비트와 댄스플로어를 가득 채우는 역동성은 당신의 사교성과 포용력, 그리고 모든 이를 즐겁게 만드는 특별한 재능을 완벽하게 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "사교적 리더십",
+          "score": 90,
+          "description": "자연스럽게 사람들을 모으고 즐거운 분위기를 만드는 리더십을 가지고 있습니다",
+          "impact": "팀 빌딩과 네트워킹에서 뛰어난 능력 발휘"
+        },
+        {
+          "traitName": "긍정적 에너지",
+          "score": 85,
+          "description": "어떤 상황에서도 희망적이고 활기찬 태도를 유지하며 다른 사람들에게 영감을 줍니다",
+          "impact": "어려운 프로젝트나 침체된 분위기를 활성화시키는 역할"
+        },
+        {
+          "traitName": "포용적 개방성",
+          "score": 80,
+          "description": "다양한 배경의 사람들을 받아들이고 차이를 인정하는 포용력이 뛰어납니다",
+          "impact": "다문화 환경이나 다양성 있는 팀에서 조화 창출"
+        }
+      ],
+      "lifestyleInsights": [
+        "파티나 모임을 주최하며 사람들과의 만남을 통해 에너지를 충전합니다",
+        "새로운 사람들과의 네트워킹을 즐기고 폭넓은 인맥을 유지합니다",
+        "활동적이고 역동적인 환경에서 최고의 퍼포먼스를 발휘합니다"
+      ],
+      "strengths": [
+        "다양한 사람들과 쉽게 친해지고 신뢰관계를 구축하는 능력",
+        "침체된 분위기를 활기차게 만들고 팀 사기를 높이는 재능",
+        "갈등 상황에서 긍정적 해결책을 찾아 화합을 이끌어내는 중재력"
+      ],
+      "challenges": [
+        "혼자 있는 시간이 부족하여 자기 성찰의 기회가 적을 수 있음",
+        "모든 사람을 만족시키려다 자신의 의견을 명확히 표현하지 못할 가능성",
+        "과도한 사교 활동으로 인한 피로나 번아웃 위험"
+      ],
+      "relationshipCompatibility": "사교적이고 활발한 파트너를 선호하며, 함께 다양한 사람들과 어울리고 새로운 경험을 즐길 수 있는 역동적인 관계를 추구합니다.",
+      "musicPreferences": [
+        "파티나 모임에서 모든 사람이 함께 즐길 수 있는 댄스 음악",
+        "운동이나 활동적인 취미 시 동기부여가 되는 리드미컬한 사운드",
+        "새로운 사람들과의 만남이나 네트워킹 이벤트에서 분위기를 띄우는 음악"
+      ],
+      "recommendedActivities": [
+        "하우스 음악 페스티벌이나 클럽에서의 댄스 파티 참여",
+        "DJ나 이벤트 기획을 통한 사교 모임 주최",
+        "댄스 수업이나 그룹 피트니스 클래스 참여",
+        "여행이나 그룹 액티비티를 통한 새로운 인맥 형성"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "Daft Punk",
+        "nameKo": "다프트 펑크",
+        "popularity": 94,
+        "keyTracks": ["One More Time", "Around the World"]
+      },
+      {
+        "name": "Disclosure",
+        "nameKo": "디스클로저",
+        "popularity": 85,
+        "keyTracks": ["Latch", "White Noise"]
+      }
+    ]
+  },
+  {
+    "id": "classical_baroque",
+    "name": "Baroque",
+    "nameKo": "바로크",
+    "category": "CLASSICAL",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 70,
+      "unpretentious": 20,
+      "sophisticated": 95,
+      "intense": 45,
+      "contemporary": 10
+    },
+    "description": "1600-1750년 유럽의 음악 양식으로, 정교하고 장식적인 특징을 가집니다.",
+    "characteristics": ["정교한", "장식적", "구조적", "웅장한"],
+    "era": "1600-1750",
+    "popularity": 60,
+    "energy": 50,
+    "valence": 65,
+    "acousticness": 95,
+    "personalityAnalysis": {
+      "typeTitle": "우아한 완벽주의자",
+      "description": "당신은 질서와 아름다움을 사랑하며, 모든 것을 정교하고 완벽하게 만들어내는 예술적 장인입니다. 바로크 음악의 복잡한 대위법과 장식적 아름다움은 당신의 세련된 취향과 디테일에 대한 완벽한 추구, 그리고 전통적 가치에 대한 깊은 존경을 완벽하게 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "정교한 완벽주의",
+          "score": 95,
+          "description": "모든 세부사항까지 완벽하게 다듬어내는 뛰어난 정밀성과 끈기를 가지고 있습니다",
+          "impact": "최고 수준의 품질과 완성도를 가진 결과물 창출"
+        },
+        {
+          "traitName": "구조적 사고",
+          "score": 85,
+          "description": "복잡한 시스템을 논리적으로 조직화하고 체계적으로 접근하는 능력이 뛰어납니다",
+          "impact": "복잡한 프로젝트나 조직을 효율적으로 관리"
+        },
+        {
+          "traitName": "고전적 품격",
+          "score": 80,
+          "description": "전통적 가치와 형식미를 존중하며 우아하고 세련된 표현을 추구합니다",
+          "impact": "문화적 소양과 교양을 바탕으로 한 리더십 발휘"
+        }
+      ],
+      "lifestyleInsights": [
+        "질서정연하고 아름다운 환경에서 생활하며 불필요한 혼란을 피합니다",
+        "검증된 전통과 역사적 가치를 존중하며 고전적 문화를 즐깁니다",
+        "소수의 깊이 있는 관계를 통해 지적이고 품격 있는 교류를 나눕니다"
+      ],
+      "strengths": [
+        "복잡한 문제를 체계적이고 논리적으로 해결하는 분석 능력",
+        "높은 기준과 완벽주의를 통해 탁월한 결과물을 만들어내는 실행력",
+        "전통과 혁신을 조화시켜 시대를 초월한 가치를 창조하는 능력"
+      ],
+      "challenges": [
+        "과도한 완벽주의로 인한 스트레스와 결정 지연",
+        "변화에 대한 저항이나 새로운 방식 수용의 어려움",
+        "일반적 기준보다 높은 요구사항으로 인한 타인과의 갈등 가능성"
+      ],
+      "relationshipCompatibility": "교양 있고 세련된 파트너를 선호하며, 서로의 품격과 가치관을 존중하고 문화적 소양을 함께 발전시킬 수 있는 성숙한 관계를 추구합니다.",
+      "musicPreferences": [
+        "집중이 필요한 정밀한 작업이나 창작 활동 시 배경음악",
+        "품격 있는 모임이나 만찬에서 분위기를 연출하는 클래식 사운드",
+        "독서나 사색 시간에 지적 영감을 주는 구조적이고 아름다운 음악"
+      ],
+      "recommendedActivities": [
+        "오케스트라나 실내악 콘서트에서의 클래식 음악 감상",
+        "박물관이나 미술관에서의 역사적 예술품 관람",
+        "고전 문학 독서나 역사 관련 강의 수강",
+        "전통 공예나 예술 기법을 배우는 마스터클래스 참여"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "Johann Sebastian Bach",
+        "nameKo": "요한 세바스티안 바흐",
+        "popularity": 95,
+        "keyTracks": ["Brandenburg Concerto No. 3", "Air on the G String"]
+      },
+      {
+        "name": "Antonio Vivaldi",
+        "nameKo": "안토니오 비발디",
+        "popularity": 90,
+        "keyTracks": ["The Four Seasons: Spring", "Gloria in D Major"]
+      }
+    ]
+  },
+  {
+    "id": "classical_minimalism",
+    "name": "Minimalism",
+    "nameKo": "미니멀리즘",
+    "category": "CLASSICAL",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 80,
+      "unpretentious": 50,
+      "sophisticated": 85,
+      "intense": 30,
+      "contemporary": 75
+    },
+    "description": "단순하고 반복적인 패턴을 통해 점진적 변화를 추구하는 현대 클래식 음악입니다.",
+    "characteristics": ["단순한", "반복적", "명상적", "점진적"],
+    "era": "1960s-present",
+    "popularity": 55,
+    "energy": 25,
+    "valence": 55,
+    "acousticness": 80,
+    "personalityAnalysis": {
+      "typeTitle": "명상하는 완벽주의자",
+      "description": "당신은 복잡함 속에서 단순함의 아름다움을 발견하고, 깊은 내적 평화를 추구하는 철학적 사색가입니다. 미니멀리즘 클래식의 정제된 패턴과 점진적 변화는 당신의 인내심과 완벽을 향한 끈질긴 추구력을 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "내적 평화",
+          "score": 85,
+          "description": "외적 소음에 흔들리지 않고 내면의 고요함을 유지하는 능력이 뛰어납니다",
+          "impact": "스트레스 상황에서도 침착함을 유지하고 명확한 판단"
+        },
+        {
+          "traitName": "세심한 집중력",
+          "score": 80,
+          "description": "미세한 변화와 패턴을 인지하며 장시간 집중할 수 있는 능력을 가지고 있습니다",
+          "impact": "정밀한 작업이나 연구 분야에서 뛰어난 성과"
+        },
+        {
+          "traitName": "점진적 완성",
+          "score": 82,
+          "description": "급하게 서두르지 않고 꾸준히 개선해 나가는 인내심을 가지고 있습니다",
+          "impact": "장기 프로젝트나 목표 달성에서 높은 성취도"
+        }
+      ],
+      "lifestyleInsights": [
+        "정리정돈된 공간에서 편안함을 느끼며 불필요한 것들을 제거하는 것을 선호합니다",
+        "품질 좋은 소수의 물건을 오래 사용하며 지속가능한 소비를 추구합니다",
+        "명상이나 요가 같은 마음챙김 활동을 통해 내적 균형을 유지합니다"
+      ],
+      "strengths": [
+        "복잡한 문제를 단순하고 우아한 해결책으로 정리하는 능력",
+        "꾸준한 노력을 통해 높은 수준의 완성도를 달성하는 끈기",
+        "혼란스러운 상황에서도 핵심을 파악하는 통찰력"
+      ],
+      "challenges": [
+        "완벽주의 성향으로 인한 과도한 자기 압박과 스트레스",
+        "변화에 대한 저항이나 새로운 환경 적응의 어려움",
+        "감정 표현이 절제되어 타인에게 차갑게 느껴질 수 있음"
+      ],
+      "relationshipCompatibility": "깊이 있고 성숙한 대화를 나눌 수 있는 파트너를 선호하며, 서로의 개인 공간과 성장을 존중하는 안정적인 관계를 추구합니다.",
+      "musicPreferences": [
+        "작업이나 공부 시 집중력을 높이는 배경음악",
+        "명상이나 요가 시간의 마음챙김을 위한 사운드",
+        "잠자리에 들기 전 마음을 정화하는 치유 음악"
+      ],
+      "recommendedActivities": [
+        "클래식 음악회나 현대음악 페스티벌 참석",
+        "미니멀 아트 전시회나 건축 투어 참여",
+        "명상 수업이나 마음챙김 워크숍 체험",
+        "정원가꾸기나 서예 등 정적이고 집중적인 취미 활동"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "Steve Reich",
+        "nameKo": "스티브 라이히",
+        "popularity": 82,
+        "keyTracks": ["Music for 18 Musicians", "Different Trains"]
+      },
+      {
+        "name": "Philip Glass",
+        "nameKo": "필립 글래스",
+        "popularity": 85,
+        "keyTracks": ["Glassworks", "Einstein on the Beach"]
+      }
+    ]
+  },
+  {
+    "id": "pop_indie",
+    "name": "Indie Pop",
+    "nameKo": "인디 팝",
+    "category": "POP",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 65,
+      "unpretentious": 75,
+      "sophisticated": 65,
+      "intense": 40,
+      "contemporary": 85
+    },
+    "description": "독립적이고 창의적인 팝 음악으로, 멜로디와 감성을 중시합니다.",
+    "characteristics": ["멜로디컬", "감성적", "창의적", "따뜻한"],
+    "era": "1980s-present",
+    "popularity": 80,
+    "energy": 55,
+    "valence": 75,
+    "acousticness": 50,
+    "personalityAnalysis": {
+      "typeTitle": "감성적 몽상가",
+      "description": "당신은 따뜻한 마음과 풍부한 감수성을 가진 로맨틱한 몽상가입니다. 인디 팝의 달콤한 멜로디와 서정적인 가사는 당신의 내면에 있는 순수함과 창의적 영감을 자극하며, 일상 속에서 아름다움을 발견하는 능력을 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "감성적 공감력",
+          "score": 80,
+          "description": "타인의 감정을 깊이 이해하고 공감하는 능력이 뛰어납니다",
+          "impact": "인간관계에서 따뜻한 지지자 역할 수행"
+        },
+        {
+          "traitName": "창의적 표현",
+          "score": 75,
+          "description": "일상의 경험을 창의적이고 예술적으로 표현하는 재능을 가지고 있습니다",
+          "impact": "예술, 디자인, 글쓰기 등 창작 영역에서의 재능 발휘"
+        },
+        {
+          "traitName": "낙관적 세계관",
+          "score": 75,
+          "description": "어려운 상황에서도 희망과 긍정적 면을 찾아내는 능력이 있습니다",
+          "impact": "주변 사람들에게 희망과 위로를 주는 역할"
+        }
+      ],
+      "lifestyleInsights": [
+        "카페나 서점 같은 아늑하고 감성적인 공간을 선호합니다",
+        "인스타그램이나 블로그를 통해 일상의 아름다운 순간들을 기록하고 공유합니다",
+        "소규모 모임이나 친밀한 관계에서 더 편안함을 느끼며 진정성을 중시합니다"
+      ],
+      "strengths": [
+        "타인의 마음을 이해하고 위로하는 뛰어난 공감 능력",
+        "일상 속에서 영감을 찾아 창의적으로 표현하는 재능",
+        "갈등 상황에서 화해와 조화를 이끌어내는 중재 능력"
+      ],
+      "challenges": [
+        "과도한 감정 이입으로 인한 감정적 소진",
+        "비현실적인 이상주의로 인한 실망과 좌절",
+        "결정을 내리는 데 있어서 감정에 치우칠 가능성"
+      ],
+      "relationshipCompatibility": "감정적으로 안정되고 서로의 꿈과 창의성을 지지해주는 파트너를 선호하며, 로맨틱하고 따뜻한 관계를 추구합니다.",
+      "musicPreferences": [
+        "커피 타임이나 독서할 때 듣는 편안한 배경음악",
+        "연인과 함께 하는 데이트나 드라이브 음악",
+        "감정적으로 힘들 때 위로가 되는 치유의 사운드"
+      ],
+      "recommendedActivities": [
+        "인디 밴드 공연이나 소규모 음악 페스티벌 참석",
+        "카페에서의 어쿠스틱 공연이나 시낭송회 감상",
+        "창작 워크숍이나 DIY 공예 활동 참여",
+        "자연 속 피크닉이나 감성적인 장소에서의 사진 촬영"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "Vampire Weekend",
+        "nameKo": "뱀파이어 위켄드",
+        "popularity": 88,
+        "keyTracks": ["A-Punk", "Oxford Comma"]
+      },
+      {
+        "name": "Belle and Sebastian",
+        "nameKo": "벨 앤 세바스찬",
+        "popularity": 82,
+        "keyTracks": ["The Boy with the Arab Strap", "I'm a Cuckoo"]
+      }
+    ]
+  },
+  {
+    "id": "pop_dream",
+    "name": "Dream Pop",
+    "nameKo": "드림 팝",
+    "category": "POP",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 85,
+      "unpretentious": 60,
+      "sophisticated": 70,
+      "intense": 25,
+      "contemporary": 80
+    },
+    "description": "몽환적이고 대기권적인 사운드가 특징인 팝 음악 장르입니다.",
+    "characteristics": ["몽환적", "대기권적", "부드러운", "꿈같은"],
+    "era": "1980s-present",
+    "popularity": 70,
+    "energy": 35,
+    "valence": 70,
+    "acousticness": 40,
+    "personalityAnalysis": {
+      "typeTitle": "신비로운 몽상가",
+      "description": "당신은 현실과 꿈의 경계를 자유롭게 넘나들며 아름다운 상상의 세계를 창조하는 시적 영혼입니다. 드림 팝의 몽환적 사운드와 대기권적 분위기는 당신의 섬세한 감수성과 초월적 상상력, 그리고 일상 속에서 마법 같은 순간들을 발견하는 특별한 능력을 완벽하게 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "몽환적 상상력",
+          "score": 85,
+          "description": "현실을 뛰어넘는 창의적 상상력으로 아름다운 비전과 아이디어를 창조합니다",
+          "impact": "예술적 창작이나 혁신적 컨셉 개발에서 독창성 발휘"
+        },
+        {
+          "traitName": "직관적 감수성",
+          "score": 80,
+          "description": "미묘한 감정과 분위기를 민감하게 포착하고 시적으로 표현하는 능력이 뛰어납니다",
+          "impact": "타인의 숨겨진 감정을 이해하고 공감하는 뛰어난 능력"
+        },
+        {
+          "traitName": "평온한 내면",
+          "score": 75,
+          "description": "혼란스러운 외부 환경에서도 내적 평화와 고요함을 유지하는 능력을 가지고 있습니다",
+          "impact": "스트레스 상황에서 창의적 해결책을 제시하는 역할"
+        }
+      ],
+      "lifestyleInsights": [
+        "아름다운 공간과 분위기를 중시하며 시각적, 청각적 자극에 민감하게 반응합니다",
+        "혼자만의 시간을 통해 상상력을 발휘하고 창작 활동에 몰입하는 것을 즐깁니다",
+        "깊이 있는 감정과 의미를 추구하며 표면적인 관계나 경험보다 진정성을 중시합니다"
+      ],
+      "strengths": [
+        "독창적이고 아름다운 아이디어를 생성하고 구현하는 창의적 능력",
+        "복잡한 감정과 상황을 시적이고 예술적으로 표현하는 재능",
+        "평온한 에너지로 주변 사람들에게 치유와 영감을 주는 능력"
+      ],
+      "challenges": [
+        "현실적 제약이나 실무적 문제에 대한 관심과 집중력 부족",
+        "과도한 이상주의로 인한 현실과의 괴리감이나 실망",
+        "내향적 성향으로 인해 자신의 아이디어를 적극적으로 표현하지 못할 가능성"
+      ],
+      "relationshipCompatibility": "감성적이고 예술적 감수성을 공유할 수 있는 파트너를 선호하며, 서로의 꿈과 상상을 존중하고 함께 아름다운 순간들을 만들어가는 로맨틱한 관계를 추구합니다.",
+      "musicPreferences": [
+        "창작이나 상상력이 필요한 활동 시 영감을 주는 몽환적 배경음악",
+        "잠들기 전이나 휴식 시간에 마음을 편안하게 만드는 꿈같은 사운드",
+        "감정적으로 힘들 때 위로가 되고 다른 세계로 데려다주는 치유적 음악"
+      ],
+      "recommendedActivities": [
+        "드림 팝 콘서트나 몽환적 분위기의 라이브 공연 감상",
+        "미술관에서의 초현실주의나 인상주의 작품 관람",
+        "창작 일기나 시 쓰기를 통한 내적 세계 표현",
+        "자연 속에서의 사색이나 일출/일몰 감상 등 명상적 체험"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "Cocteau Twins",
+        "nameKo": "콕토 트윈스",
+        "popularity": 78,
+        "keyTracks": ["Heaven or Las Vegas", "Lorelei"]
+      },
+      {
+        "name": "Beach House",
+        "nameKo": "비치 하우스",
+        "popularity": 82,
+        "keyTracks": ["Space Song", "Myth"]
+      }
+    ]
+  },
+  {
+    "id": "rock_classic",
+    "name": "Classic Rock",
+    "nameKo": "클래식 록",
+    "category": "ROCK",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 45,
+      "unpretentious": 80,
+      "sophisticated": 55,
+      "intense": 75,
+      "contemporary": 30
+    },
+    "description": "1960-70년대 록 음악의 황금기를 대표하는 장르로, 강력한 기타 리프와 드럼이 특징입니다.",
+    "characteristics": ["강력한", "전통적", "에너지", "기타 중심"],
+    "era": "1960s-1970s",
+    "popularity": 95,
+    "energy": 80,
+    "valence": 70,
+    "acousticness": 25,
+    "personalityAnalysis": {
+      "typeTitle": "전설적인 리더",
+      "description": "당신은 시간이 검증한 가치와 원칙을 중시하며, 강인한 정신력으로 어떤 도전도 헤쳐나가는 타고난 리더입니다. 클래식 록의 강력한 에너지와 불멸의 명곡들은 당신의 카리스마와 지속력, 그리고 시대를 초월한 매력을 완벽하게 상징합니다.",
+      "coreTraits": [
+        {
+          "traitName": "불굴의 의지력",
+          "score": 85,
+          "description": "어려운 상황에서도 포기하지 않고 끝까지 밀고 나가는 강인한 정신력을 가지고 있습니다",
+          "impact": "위기 상황에서 팀을 이끌고 목표를 달성하는 뛰어난 리더십"
+        },
+        {
+          "traitName": "전통적 가치관",
+          "score": 80,
+          "description": "검증된 방식과 원칙을 존중하며 변하지 않는 핵심 가치를 중시합니다",
+          "impact": "조직 내에서 신뢰받는 멘토이자 든든한 버팀목 역할"
+        },
+        {
+          "traitName": "진정성 있는 소통",
+          "score": 75,
+          "description": "직설적이고 솔직한 의사소통을 선호하며 인위적인 것을 배제합니다",
+          "impact": "명확하고 효과적인 의사전달과 진실한 인간관계 형성"
+        }
+      ],
+      "lifestyleInsights": [
+        "검증된 품질과 전통 있는 브랜드를 선호하며 유행보다는 본질을 중시합니다",
+        "친구들과의 오래된 우정을 소중히 여기며 의리와 신뢰를 바탕으로 한 관계를 추구합니다",
+        "새로운 기술보다는 입증된 방법론을 선호하지만 필요하다면 적극적으로 학습합니다"
+      ],
+      "strengths": [
+        "위기 상황에서 팀을 안정시키고 방향을 제시하는 리더십",
+        "일관된 원칙과 신념으로 주변 사람들에게 신뢰감을 주는 능력",
+        "오랜 시간에 걸쳐 쌓아온 경험과 지혜를 바탕으로 한 판단력"
+      ],
+      "challenges": [
+        "변화에 대한 저항이나 새로운 아이디어 수용의 어려움",
+        "완고함으로 인해 때로는 유연성이 부족할 수 있음",
+        "전통적 방식에 고착되어 혁신의 기회를 놓칠 가능성"
+      ],
+      "relationshipCompatibility": "신뢰할 수 있고 진실한 파트너를 선호하며, 서로의 가치관을 존중하고 평생에 걸친 동반자 관계를 추구합니다.",
+      "musicPreferences": [
+        "운동이나 도전적인 활동 시 의지력을 북돋는 파워풀한 사운드",
+        "친구들과의 모임이나 파티에서 모두가 함께 즐길 수 있는 명곡들",
+        "업무나 프로젝트 수행 시 집중력과 추진력을 높이는 에너지 넘치는 음악"
+      ],
+      "recommendedActivities": [
+        "클래식 록 콘서트나 레전드 뮤지션들의 공연 관람",
+        "빈티지 기타나 레코드 수집 등 음악 관련 취미 활동",
+        "오토바이 라이딩이나 캠핑 등 모험적이고 자유로운 야외 활동",
+        "스포츠 관람이나 팀 스포츠 참여를 통한 동료애 형성"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "Queen",
+        "nameKo": "퀸",
+        "popularity": 98,
+        "keyTracks": ["Bohemian Rhapsody", "We Will Rock You"]
+      },
+      {
+        "name": "Led Zeppelin",
+        "nameKo": "레드 제플린",
+        "popularity": 95,
+        "keyTracks": ["Stairway to Heaven", "Kashmir"]
+      }
+    ]
+  },
+  {
+    "id": "electronic_techno",
+    "name": "Techno",
+    "nameKo": "테크노",
+    "category": "ELECTRONIC",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 20,
+      "unpretentious": 70,
+      "sophisticated": 60,
+      "intense": 85,
+      "contemporary": 95
+    },
+    "description": "1980년대 디트로이트에서 시작된 전자 댄스 음악으로, 반복적이고 강렬한 비트가 특징입니다.",
+    "characteristics": ["반복적", "강렬한", "미래적", "하이퍼"],
+    "era": "1980s-present",
+    "popularity": 75,
+    "energy": 95,
+    "valence": 60,
+    "acousticness": 5,
+    "personalityAnalysis": {
+      "typeTitle": "미래지향적 혁신가",
+      "description": "당신은 끊임없이 변화하고 진화하는 현대 사회의 리듬에 완벽하게 동조하는 사람입니다. 테크노 음악이 주는 강렬하고 반복적인 패턴은 당신의 집중력과 몰입도를 극대화시키며, 미래에 대한 비전과 혁신적 사고를 자극합니다.",
+      "coreTraits": [
+        {
+          "traitName": "혁신 추구",
+          "score": 95,
+          "description": "새로운 기술과 트렌드에 민감하며 변화를 두려워하지 않습니다",
+          "impact": "항상 최신 동향을 파악하고 미래를 준비하는 자세"
+        },
+        {
+          "traitName": "집중력",
+          "score": 85,
+          "description": "반복적 패턴 속에서 깊은 몰입 상태에 들어갈 수 있습니다",
+          "impact": "장시간 집중이 필요한 작업에서 뛰어난 성과"
+        },
+        {
+          "traitName": "에너지 관리",
+          "score": 90,
+          "description": "강렬한 자극을 통해 에너지를 충전하고 활력을 유지합니다",
+          "impact": "스트레스 상황에서도 높은 활력 유지 가능"
+        }
+      ],
+      "lifestyleInsights": [
+        "야간 활동과 클럽 문화를 즐기며 사회적 에너지를 충전합니다",
+        "기술과 디지털 환경에서 편안함을 느끼고 적응력이 뛰어납니다",
+        "일상의 루틴보다는 변화와 자극을 추구하는 경향이 있습니다"
+      ],
+      "strengths": [
+        "변화하는 환경에 빠르게 적응하는 능력",
+        "단조로운 작업도 리듬감 있게 처리하는 집중력",
+        "미래 지향적 사고와 혁신적 아이디어 생성"
+      ],
+      "challenges": [
+        "조용하고 평온한 환경에서는 집중력이 떨어질 수 있음",
+        "과도한 자극 추구로 인한 번아웃 위험",
+        "전통적이고 보수적인 환경에서의 적응 어려움"
+      ],
+      "relationshipCompatibility": "같은 에너지 레벨을 가진 역동적인 파트너와 잘 맞으며, 함께 새로운 경험을 추구하고 모험을 즐길 수 있는 관계를 선호합니다.",
+      "musicPreferences": [
+        "운동이나 작업 시 집중력을 높이는 배경음악",
+        "파티나 사교 모임에서의 분위기 메이커 역할",
+        "창작 활동이나 브레인스토밍 시 영감을 주는 사운드"
+      ],
+      "recommendedActivities": [
+        "DJ나 전자음악 제작 경험하기",
+        "테크노 페스티벌이나 언더그라운드 클럽 방문",
+        "VR, AR 등 최신 기술 체험",
+        "야간 러닝이나 사이클링 등 리듬감 있는 운동"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "Carl Cox",
+        "nameKo": "칼 콕스",
+        "popularity": 85,
+        "keyTracks": ["I Want You (Forever)", "The Player"]
+      },
+      {
+        "name": "Richie Hawtin",
+        "nameKo": "리치 호틴",
+        "popularity": 82,
+        "keyTracks": ["Spastik", "DE9: Closer to the Edit"]
+      }
+    ]
+  },
+  {
+    "id": "jazz_fusion",
+    "name": "Jazz Fusion",
+    "nameKo": "재즈 퓨전",
+    "category": "JAZZ",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 50,
+      "unpretentious": 55,
+      "sophisticated": 85,
+      "intense": 70,
+      "contemporary": 75
+    },
+    "description": "1960년대 후반 재즈와 록, 펑크를 결합한 장르로, 전기 악기와 복잡한 리듬이 특징입니다.",
+    "characteristics": ["융합적", "복잡한", "전기적", "역동적"],
+    "era": "1960s-present",
+    "popularity": 70,
+    "energy": 75,
+    "valence": 65,
+    "acousticness": 40,
+    "personalityAnalysis": {
+      "typeTitle": "경계를 넘나드는 융합가",
+      "description": "당신은 서로 다른 세계를 연결하고 새로운 가능성을 창조하는 혁신적 중재자입니다. 재즈 퓨전의 다양한 장르 융합과 전기적 에너지는 당신의 포용력과 실험 정신, 그리고 변화를 이끄는 리더십을 완벽하게 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "융합적 사고",
+          "score": 85,
+          "description": "서로 다른 아이디어나 방식을 창의적으로 결합하여 새로운 해결책을 만듭니다",
+          "impact": "혁신적 프로젝트나 협업에서 뛰어난 시너지 창출"
+        },
+        {
+          "traitName": "적응적 리더십",
+          "score": 80,
+          "description": "다양한 배경의 사람들을 이해하고 조율하는 리더십 능력이 뛰어납니다",
+          "impact": "다문화 팀이나 복합적 조직에서 탁월한 관리 능력"
+        },
+        {
+          "traitName": "기술적 유연성",
+          "score": 75,
+          "description": "전통과 혁신을 모두 수용하며 새로운 도구와 방법론을 빠르게 습득합니다",
+          "impact": "변화하는 업무 환경에서 지속적인 경쟁력 유지"
+        }
+      ],
+      "lifestyleInsights": [
+        "다양한 문화와 배경의 사람들과 교류하며 새로운 관점을 적극적으로 받아들입니다",
+        "전통적인 방식과 혁신적인 기술을 조화롭게 활용하는 것을 선호합니다",
+        "변화와 실험을 두려워하지 않으며 실패를 학습의 기회로 받아들입니다"
+      ],
+      "strengths": [
+        "복잡하고 다원적인 환경에서 조화와 균형을 만들어내는 능력",
+        "갈등 상황에서 창의적 타협점을 찾아내는 중재 능력",
+        "새로운 트렌드와 기술을 빠르게 파악하고 활용하는 적응력"
+      ],
+      "challenges": [
+        "너무 많은 것을 시도하려다 집중력이 분산될 가능성",
+        "완벽한 융합을 추구하다 결정을 내리지 못하는 우유부단함",
+        "전통주의자들과의 갈등이나 보수적 환경에서의 제약"
+      ],
+      "relationshipCompatibility": "개방적이고 모험적인 파트너를 선호하며, 서로의 다양성을 인정하고 함께 성장할 수 있는 역동적이고 자극적인 관계를 추구합니다.",
+      "musicPreferences": [
+        "창의적 협업이나 팀 프로젝트 시 시너지를 높이는 배경음악",
+        "새로운 아이디어 도출이나 브레인스토밍 시 영감을 주는 사운드",
+        "운동이나 활동적인 취미 시 에너지를 높이는 리듬감 있는 음악"
+      ],
+      "recommendedActivities": [
+        "다양한 장르의 뮤지션들과의 콜라보레이션 경험",
+        "국제적 문화 교류 프로그램이나 워크숍 참여",
+        "스타트업이나 혁신 프로젝트에서의 멘토링 역할",
+        "다양한 스포츠나 예술 활동을 통한 크로스 트레이닝"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "Weather Report",
+        "nameKo": "웨더 리포트",
+        "popularity": 90,
+        "keyTracks": ["Birdland", "Heavy Weather"]
+      },
+      {
+        "name": "Herbie Hancock",
+        "nameKo": "허비 행콕",
+        "popularity": 92,
+        "keyTracks": ["Chameleon", "Rockit"]
+      }
+    ]
+  },
+  {
+    "id": "classical_romantic",
+    "name": "Romantic Classical",
+    "nameKo": "낭만주의 클래식",
+    "category": "CLASSICAL",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 60,
+      "unpretentious": 30,
+      "sophisticated": 90,
+      "intense": 70,
+      "contemporary": 20
+    },
+    "description": "19세기 낭만주의 시대의 클래식 음악으로, 감정 표현과 개성이 강조됩니다.",
+    "characteristics": ["감정적", "드라마틱", "표현적", "서정적"],
+    "era": "1800-1900",
+    "popularity": 80,
+    "energy": 60,
+    "valence": 55,
+    "acousticness": 95,
+    "personalityAnalysis": {
+      "typeTitle": "열정적 낭만주의자",
+      "description": "당신은 깊은 감정과 풍부한 상상력으로 세상을 바라보는 감성적 예술가입니다. 낭만주의 클래식의 드라마틱한 선율과 개성 넘치는 표현은 당신의 열정적인 삶의 태도와 진정한 아름다움에 대한 갈망, 그리고 감정을 통해 진실을 추구하는 철학을 완벽하게 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "감정적 깊이",
+          "score": 90,
+          "description": "복잡하고 미묘한 감정을 깊이 있게 경험하고 표현하는 능력이 뛰어납니다",
+          "impact": "예술적 창작이나 인간관계에서 진정성 있는 표현"
+        },
+        {
+          "traitName": "상상력과 직관",
+          "score": 85,
+          "description": "논리를 넘어선 직관과 창의적 상상력으로 새로운 관점을 제시합니다",
+          "impact": "혁신적 아이디어와 독창적 솔루션 개발"
+        },
+        {
+          "traitName": "개성 추구",
+          "score": 80,
+          "description": "자신만의 독특한 개성과 스타일을 추구하며 획일성을 거부합니다",
+          "impact": "개인의 브랜드와 정체성을 뚜렷하게 구축"
+        }
+      ],
+      "lifestyleInsights": [
+        "영감을 주는 아름다운 환경과 예술적 경험을 적극적으로 추구합니다",
+        "감정의 기복이 있지만 이를 창작이나 성장의 원동력으로 활용합니다",
+        "진정한 사랑과 깊이 있는 인간관계에 대한 강한 갈망을 가지고 있습니다"
+      ],
+      "strengths": [
+        "깊은 감정 이입을 통해 타인의 마음을 이해하고 위로하는 능력",
+        "예술적 감수성과 창의력을 통한 독창적 작품이나 아이디어 창출",
+        "열정과 진정성으로 다른 사람들에게 영감을 주는 리더십"
+      ],
+      "challenges": [
+        "감정의 기복이 크고 때로는 우울이나 멜랑콜리에 빠질 수 있음",
+        "이상주의적 성향으로 현실적 제약에 좌절할 가능성",
+        "과도한 감정 표현으로 인해 타인에게 부담을 줄 수 있음"
+      ],
+      "relationshipCompatibility": "깊은 감정을 공유하고 예술적 감수성을 이해해주는 파트너를 선호하며, 열정적이고 로맨틱한 사랑을 추구합니다.",
+      "musicPreferences": [
+        "감정적으로 힘들거나 외로울 때 위로가 되는 서정적 클래식",
+        "창작이나 영감이 필요할 때 상상력을 자극하는 드라마틱한 음악",
+        "연인과의 특별한 시간이나 로맨틱한 순간을 위한 감성적 사운드"
+      ],
+      "recommendedActivities": [
+        "교향악 콘서트나 오페라 공연에서의 감동적 클래식 체험",
+        "미술관에서의 낭만주의 회화나 조각 작품 감상",
+        "문학 창작이나 시 쓰기 등 감정을 표현하는 예술 활동",
+        "자연 속에서의 사색이나 감성적 여행을 통한 영감 추구"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "Frédéric Chopin",
+        "nameKo": "프레데리크 쇼팽",
+        "popularity": 93,
+        "keyTracks": ["Nocturne in E-flat Major", "Minute Waltz"]
+      },
+      {
+        "name": "Pyotr Ilyich Tchaikovsky",
+        "nameKo": "표트르 일리치 차이코프스키",
+        "popularity": 95,
+        "keyTracks": ["Swan Lake", "1812 Overture"]
+      }
+    ]
+  },
+  {
+    "id": "pop_kpop",
+    "name": "K-Pop",
+    "nameKo": "케이팝",
+    "category": "POP",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 35,
+      "unpretentious": 90,
+      "sophisticated": 60,
+      "intense": 65,
+      "contemporary": 100
+    },
+    "description": "한국의 대중음악으로, 캐치한 멜로디와 완성도 높은 퍼포먼스가 특징입니다.",
+    "characteristics": ["캐치한", "다채로운", "퍼포먼스", "글로벌"],
+    "era": "1990s-present",
+    "popularity": 100,
+    "energy": 80,
+    "valence": 85,
+    "acousticness": 20,
+    "personalityAnalysis": {
+      "typeTitle": "글로벌 트렌드세터",
+      "description": "당신은 최신 트렌드에 민감하고 다양한 문화를 받아들이는 열린 마음의 소유자입니다. K-Pop의 완성도 높은 퍼포먼스와 글로벌한 매력은 당신의 완벽주의 성향과 문화적 개방성, 그리고 끊임없이 자신을 발전시키려는 성장 의지를 완벽하게 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "트렌드 감각",
+          "score": 95,
+          "description": "최신 트렌드와 문화적 변화를 빠르게 파악하고 적응하는 감각이 뛰어납니다",
+          "impact": "마케팅이나 기획 분야에서 시대의 흐름을 읽는 능력"
+        },
+        {
+          "traitName": "완벽 추구",
+          "score": 80,
+          "description": "높은 기준을 설정하고 끊임없이 자신을 발전시키려는 성장 의지가 강합니다",
+          "impact": "지속적인 자기계발과 전문성 향상을 통한 성취"
+        },
+        {
+          "traitName": "문화적 개방성",
+          "score": 85,
+          "description": "다양한 문화와 사람들을 받아들이고 글로벌한 관점을 가지고 있습니다",
+          "impact": "국제적 환경이나 다문화 팀에서 뛰어난 적응력"
+        }
+      ],
+      "lifestyleInsights": [
+        "SNS와 온라인 플랫폼을 적극 활용하며 글로벌 커뮤니티와 소통합니다",
+        "외모와 스타일에 관심이 많고 자신만의 개성을 표현하는 것을 즐깁니다",
+        "새로운 경험과 도전을 두려워하지 않으며 변화를 긍정적으로 받아들입니다"
+      ],
+      "strengths": [
+        "변화하는 시장과 소비자 니즈를 빠르게 파악하는 마케팅 감각",
+        "다양한 사람들과 쉽게 친해지고 네트워크를 구축하는 사교성",
+        "높은 목표 설정과 체계적 노력을 통한 지속적 성장"
+      ],
+      "challenges": [
+        "빠른 트렌드 변화에 따라가려다 일관성을 잃을 가능성",
+        "외적 인정과 평가에 과도하게 의존할 수 있음",
+        "완벽 추구로 인한 스트레스나 번아웃 위험"
+      ],
+      "relationshipCompatibility": "활발하고 긍정적인 에너지를 가진 파트너를 선호하며, 함께 성장하고 새로운 경험을 공유할 수 있는 역동적인 관계를 추구합니다.",
+      "musicPreferences": [
+        "운동이나 다이어트 등 자기관리 시 동기부여가 되는 에너지 넘치는 음악",
+        "친구들과의 모임이나 파티에서 분위기를 띄우는 캐치한 댄스 음악",
+        "새로운 도전이나 목표 달성을 위한 의지력을 북돋는 파워풀한 사운드"
+      ],
+      "recommendedActivities": [
+        "K-Pop 콘서트나 아이돌 팬미팅 등 라이브 퍼포먼스 관람",
+        "댄스 수업이나 보컬 트레이닝 등 퍼포먼스 관련 취미 활동",
+        "패션쇼나 뷰티 이벤트 참여를 통한 트렌드 체험",
+        "해외 여행이나 문화 교류 프로그램을 통한 글로벌 경험 확장"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "BTS",
+        "nameKo": "방탄소년단",
+        "popularity": 98,
+        "keyTracks": ["Dynamite", "Butter", "Permission to Dance"]
+      },
+      {
+        "name": "BLACKPINK",
+        "nameKo": "블랙핑크", 
+        "popularity": 95,
+        "keyTracks": ["DDU-DU DDU-DU", "How You Like That", "Pink Venom"]
+      }
+    ]
+  },
+  {
+    "id": "jazz_smooth",
+    "name": "Smooth Jazz",
+    "nameKo": "스무스 재즈",
+    "category": "JAZZ",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 90,
+      "unpretentious": 70,
+      "sophisticated": 60,
+      "intense": 20,
+      "contemporary": 65
+    },
+    "description": "1970년대 등장한 부드럽고 접근하기 쉬운 재즈 스타일로, 상업적 성공을 거둔 장르입니다.",
+    "characteristics": ["부드러운", "접근하기 쉬운", "편안한", "상업적"],
+    "era": "1970s-present",
+    "popularity": 85,
+    "energy": 35,
+    "valence": 80,
+    "acousticness": 60,
+    "personalityAnalysis": {
+      "typeTitle": "세련된 소통가",
+      "description": "당신은 복잡한 것을 단순하고 아름답게 만드는 천부적인 소통 능력의 소유자입니다. 스무스 재즈의 부드러운 멜로디와 접근하기 쉬운 매력은 당신의 친화력과 균형감, 그리고 사람들을 편안하게 만드는 특별한 재능을 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "자연스러운 친화력",
+          "score": 85,
+          "description": "누구와도 쉽게 어울리며 편안하고 따뜻한 분위기를 만들어냅니다",
+          "impact": "팀 내 화합과 협력을 이끌어내는 뛰어난 능력"
+        },
+        {
+          "traitName": "균형잡힌 판단력",
+          "score": 80,
+          "description": "극단을 피하고 조화로운 해결책을 찾아내는 중재 능력이 뛰어납니다",
+          "impact": "갈등 상황에서 모든 이해관계자가 만족하는 결과 도출"
+        },
+        {
+          "traitName": "실용적 감성",
+          "score": 75,
+          "description": "감성과 이성을 적절히 조화시켜 현실적이면서도 따뜻한 접근을 합니다",
+          "impact": "비즈니스와 인간관계 모두에서 성공적인 결과 창출"
+        }
+      ],
+      "lifestyleInsights": [
+        "사람들과의 만남과 소통을 통해 에너지를 얻으며 네트워킹을 즐깁니다",
+        "편안하고 세련된 환경을 선호하며 과시보다는 품격을 중시합니다",
+        "일과 휴식의 균형을 잘 맞추며 스트레스 관리에 능숙합니다"
+      ],
+      "strengths": [
+        "다양한 사람들과 쉽게 rapport를 형성하는 뛰어난 사교 능력",
+        "복잡한 상황을 단순화하여 모두가 이해할 수 있게 설명하는 능력",
+        "상업적 성공과 예술적 가치를 동시에 추구하는 균형감"
+      ],
+      "challenges": [
+        "모든 사람을 만족시키려다 자신의 의견을 명확히 표현하지 못할 수 있음",
+        "지나친 조화 추구로 인해 때로는 필요한 갈등을 회피할 가능성",
+        "깊이보다는 폭넓은 관계를 선호하여 진정한 친밀감 형성에 어려움"
+      ],
+      "relationshipCompatibility": "안정적이고 성숙한 파트너를 선호하며, 서로를 존중하고 편안하게 소통할 수 있는 조화로운 관계를 추구합니다.",
+      "musicPreferences": [
+        "비즈니스 미팅이나 사교 모임에서 분위기를 부드럽게 만드는 배경음악",
+        "휴식이나 이완 시간에 듣는 편안하고 품격 있는 사운드",
+        "로맨틱한 저녁 식사나 데이트 시 분위기를 연출하는 음악"
+      ],
+      "recommendedActivities": [
+        "재즈 라운지나 호텔 바에서의 라이브 음악 감상",
+        "와인 테이스팅이나 미식 체험 등 품격 있는 취미 활동",
+        "네트워킹 이벤트나 사교 모임 주최 및 참여",
+        "골프나 요가 등 여유롭고 사교적인 스포츠 활동"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "Kenny G",
+        "nameKo": "케니 지",
+        "popularity": 88,
+        "keyTracks": ["Songbird", "Going Home"]
+      },
+      {
+        "name": "George Benson",
+        "nameKo": "조지 벤슨",
+        "popularity": 85,
+        "keyTracks": ["Breezin'", "Give Me the Night"]
+      }
+    ]
+  },
+  {
+    "id": "rock_progressive",
+    "name": "Progressive Rock",
+    "nameKo": "프로그레시브 록",
+    "category": "ROCK",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 40,
+      "unpretentious": 25,
+      "sophisticated": 95,
+      "intense": 65,
+      "contemporary": 45
+    },
+    "description": "1970년대 발전한 실험적이고 복잡한 록 음악으로, 긴 곡 구성과 기교적 연주가 특징입니다.",
+    "characteristics": ["실험적", "복잡한", "기교적", "개념적"],
+    "era": "1970s-present",
+    "popularity": 60,
+    "energy": 70,
+    "valence": 50,
+    "acousticness": 35,
+    "personalityAnalysis": {
+      "typeTitle": "철학적 건축가",
+      "description": "당신은 복잡한 구조 속에서 완벽한 조화를 추구하는 사상가이자 창조자입니다. 프로그레시브 록의 정교한 구성과 개념적 깊이는 당신의 체계적 사고와 예술적 야심, 그리고 단순함을 거부하고 복잡성 속에서 아름다움을 찾는 철학을 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "체계적 사고",
+          "score": 95,
+          "description": "복잡한 시스템을 이해하고 논리적으로 구조화하는 능력이 뛰어납니다",
+          "impact": "거대한 프로젝트나 복합적 문제를 체계적으로 해결"
+        },
+        {
+          "traitName": "개념적 창조",
+          "score": 85,
+          "description": "추상적인 아이디어를 구체적이고 완성도 높은 형태로 구현하는 재능을 가지고 있습니다",
+          "impact": "혁신적이고 의미 있는 작품이나 솔루션 개발"
+        },
+        {
+          "traitName": "완벽주의적 장인정신",
+          "score": 80,
+          "description": "세부사항까지 완벽하게 다듬어내는 끈기와 기술적 정밀성을 추구합니다",
+          "impact": "최고 수준의 품질과 완성도를 가진 결과물 창출"
+        }
+      ],
+      "lifestyleInsights": [
+        "깊이 있는 학습과 연구를 통해 전문성을 계속 발전시키는 것을 중시합니다",
+        "단순한 엔터테인먼트보다는 지적 자극과 예술적 감동을 주는 콘텐츠를 선호합니다",
+        "소수의 깊이 있는 관계를 통해 철학적, 예술적 대화를 나누는 것을 즐깁니다"
+      ],
+      "strengths": [
+        "복잡한 프로젝트를 장기적 관점에서 계획하고 실행하는 능력",
+        "디테일과 전체 구조를 동시에 고려하는 균형잡힌 시각",
+        "일반적인 해결책에 만족하지 않고 독창적 대안을 모색하는 창의성"
+      ],
+      "challenges": [
+        "과도한 완벽주의로 인한 프로젝트 완료 지연",
+        "일반 대중의 이해 수준과 괴리감으로 인한 소통의 어려움",
+        "복잡성 추구로 인해 때로는 실용성을 놓칠 가능성"
+      ],
+      "relationshipCompatibility": "지적 수준이 높고 예술적 감수성을 공유할 수 있는 파트너를 선호하며, 서로의 창작 활동과 성장을 깊이 이해하고 지지하는 관계를 추구합니다.",
+      "musicPreferences": [
+        "복잡한 창작 작업이나 설계 시 집중력을 높이는 구조적 배경음악",
+        "철학적 사색이나 독서 시간에 사고의 깊이를 더하는 사운드",
+        "예술적 영감이 필요한 순간에 창의성을 자극하는 개념적 음악"
+      ],
+      "recommendedActivities": [
+        "프로그레시브 록 밴드의 라이브 공연이나 음악 페스티벌 참석",
+        "복잡한 보드게임이나 전략 게임을 통한 논리적 사고 훈련",
+        "건축이나 디자인 전시회 관람을 통한 구조적 아름다움 탐구",
+        "철학이나 예술 이론 관련 강의나 토론회 참여"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "Pink Floyd",
+        "nameKo": "핑크 플로이드",
+        "popularity": 96,
+        "keyTracks": ["Comfortably Numb", "Wish You Were Here"]
+      },
+      {
+        "name": "Yes",
+        "nameKo": "예스",
+        "popularity": 82,
+        "keyTracks": ["Roundabout", "Owner of a Lonely Heart"]
+      }
+    ]
+  },
+  {
+    "id": "electronic_chillout",
+    "name": "Chillout",
+    "nameKo": "칠아웃",
+    "category": "ELECTRONIC",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 95,
+      "unpretentious": 80,
+      "sophisticated": 50,
+      "intense": 15,
+      "contemporary": 85
+    },
+    "description": "휴식과 이완을 위한 전자 음악으로, 느린 템포와 편안한 분위기가 특징입니다.",
+    "characteristics": ["편안한", "이완적", "느린", "분위기적"],
+    "era": "1990s-present",
+    "popularity": 85,
+    "energy": 20,
+    "valence": 75,
+    "acousticness": 25,
+    "personalityAnalysis": {
+      "typeTitle": "여유로운 힐러",
+      "description": "당신은 바쁜 현대 사회에서 진정한 휴식과 평온함의 가치를 아는 지혜로운 사람입니다. 칠아웃 음악의 부드러운 템포와 치유적 분위기는 당신의 여유로운 삶의 철학과 다른 사람들에게 평안을 주는 특별한 능력을 완벽하게 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "내적 평온",
+          "score": 90,
+          "description": "스트레스 상황에서도 마음의 평정심을 유지하고 차분하게 대응합니다",
+          "impact": "위기 상황에서 팀에게 안정감을 주는 역할"
+        },
+        {
+          "traitName": "치유적 공감",
+          "score": 85,
+          "description": "다른 사람의 감정을 이해하고 위로와 치유를 제공하는 능력이 뛰어납니다",
+          "impact": "인간관계에서 신뢰받는 상담자 역할"
+        },
+        {
+          "traitName": "라이프 밸런스",
+          "score": 80,
+          "description": "일과 휴식의 균형을 잘 맞추며 지속가능한 라이프스타일을 추구합니다",
+          "impact": "장기적 관점에서 안정적이고 행복한 삶 구축"
+        }
+      ],
+      "lifestyleInsights": [
+        "빠른 속도보다는 여유롭고 의미 있는 시간 보내기를 선호합니다",
+        "자연이나 편안한 공간에서 휴식을 취하며 에너지를 재충전합니다",
+        "물질적 성공보다는 정신적 만족과 내적 성장을 중시합니다"
+      ],
+      "strengths": [
+        "스트레스가 많은 환경에서도 냉정을 잃지 않는 정서적 안정성",
+        "다른 사람들의 마음을 편안하게 만드는 자연스러운 치유 능력",
+        "장기적 관점에서 지속가능한 해결책을 모색하는 지혜"
+      ],
+      "challenges": [
+        "너무 편안함을 추구하여 때로는 도전이나 성장 기회를 놓칠 수 있음",
+        "빠른 결정이나 즉시 행동이 필요한 상황에서 느린 반응",
+        "경쟁적이거나 고압적인 환경에서 스트레스를 받을 가능성"
+      ],
+      "relationshipCompatibility": "정서적으로 안정되고 여유로운 파트너를 선호하며, 서로를 있는 그대로 받아들이고 평온한 일상을 함께 누릴 수 있는 관계를 추구합니다.",
+      "musicPreferences": [
+        "스트레스 해소나 이완을 위한 힐링 타임의 배경음악",
+        "마사지나 요가, 명상 시간에 듣는 치유적 사운드",
+        "카페나 라운지에서 편안한 분위기를 연출하는 앰비언트 음악"
+      ],
+      "recommendedActivities": [
+        "스파나 힐링 센터에서의 이완 테라피 체험",
+        "자연 속에서의 느린 산책이나 피크닉",
+        "요가나 명상 수업을 통한 마음챙김 실천",
+        "아늑한 카페나 라운지에서의 독서나 사색 시간"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "Moby",
+        "nameKo": "모비",
+        "popularity": 88,
+        "keyTracks": ["Porcelain", "Natural Blues"]
+      },
+      {
+        "name": "Zero 7",
+        "nameKo": "제로 7",
+        "popularity": 78,
+        "keyTracks": ["Destiny", "In the Waiting Line"]
+      }
+    ]
+  },
+  {
+    "id": "pop_mainstream",
+    "name": "Mainstream Pop",
+    "nameKo": "메인스트림 팝",
+    "category": "POP",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 50,
+      "unpretentious": 95,
+      "sophisticated": 40,
+      "intense": 55,
+      "contemporary": 90
+    },
+    "description": "대중적 어필을 위한 상업적 팝 음악으로, 캐치한 멜로디와 친숙한 구조가 특징입니다.",
+    "characteristics": ["대중적", "캐치한", "친숙한", "상업적"],
+    "era": "1950s-present",
+    "popularity": 100,
+    "energy": 70,
+    "valence": 85,
+    "acousticness": 30,
+    "personalityAnalysis": {
+      "typeTitle": "대중적 소통가",
+      "description": "당신은 사람들과 쉽게 공감대를 형성하고 누구와도 편안하게 어울리는 천부적인 소통 능력의 소유자입니다. 메인스트림 팝의 친숙한 멜로디와 보편적 매력은 당신의 포용력과 긍정적 에너지, 그리고 모든 사람을 행복하게 만드는 특별한 재능을 완벽하게 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "보편적 매력",
+          "score": 90,
+          "description": "다양한 연령대와 배경의 사람들과 쉽게 공감대를 형성하는 능력이 뛰어납니다",
+          "impact": "팀 내 화합과 고객과의 관계 구축에서 탁월한 성과"
+        },
+        {
+          "traitName": "긍정적 에너지",
+          "score": 85,
+          "description": "밝고 긍정적인 에너지로 주변 분위기를 활기차게 만드는 능력을 가지고 있습니다",
+          "impact": "어려운 상황에서도 팀 사기를 높이고 희망을 주는 역할"
+        },
+        {
+          "traitName": "실용적 감각",
+          "score": 80,
+          "description": "복잡한 것보다 실용적이고 효과적인 해결책을 선호하는 현실적 감각이 뛰어납니다",
+          "impact": "비즈니스나 일상에서 효율적이고 성과 중심적인 접근"
+        }
+      ],
+      "lifestyleInsights": [
+        "유행하는 장소와 활동을 즐기며 많은 사람들과 어울리는 것을 선호합니다",
+        "복잡하고 어려운 것보다는 간단하고 즐거운 경험을 추구합니다",
+        "성공과 인정을 중시하며 사회적 성취에 대한 동기가 강합니다"
+      ],
+      "strengths": [
+        "다양한 사람들과 빠르게 친밀감을 형성하는 뛰어난 사교 능력",
+        "복잡한 상황을 단순화하여 모두가 이해할 수 있게 설명하는 소통력",
+        "대중의 니즈와 트렌드를 파악하는 마케팅 감각과 상업적 안목"
+      ],
+      "challenges": [
+        "깊이 있는 관계보다 넓은 관계를 선호하여 진정한 친밀감 형성에 어려움",
+        "대중적 인기나 외적 성공에 과도하게 의존할 가능성",
+        "독창성보다 안전한 선택을 선호하여 혁신의 기회를 놓칠 수 있음"
+      ],
+      "relationshipCompatibility": "밝고 사교적인 파트너를 선호하며, 함께 다양한 사람들과 어울리고 즐거운 시간을 보낼 수 있는 활발하고 안정적인 관계를 추구합니다.",
+      "musicPreferences": [
+        "파티나 모임에서 모든 사람이 함께 즐길 수 있는 인기 있는 히트곡",
+        "운전이나 일상 활동 시 기분을 좋게 만드는 경쾌한 팝 음악",
+        "친구들이나 가족과 함께 하는 시간에 분위기를 밝게 만드는 사운드"
+      ],
+      "recommendedActivities": [
+        "인기 있는 팝 스타의 콘서트나 대형 음악 페스티벌 참석",
+        "트렌디한 카페나 레스토랑에서의 소셜 모임",
+        "댄스나 노래방 등 여러 사람과 함께 즐길 수 있는 엔터테인먼트 활동",
+        "인기 있는 여행지나 핫플레이스 탐방을 통한 소셜 경험 확장"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "Taylor Swift",
+        "nameKo": "테일러 스위프트",
+        "popularity": 98,
+        "keyTracks": ["Shake It Off", "Anti-Hero"]
+      },
+      {
+        "name": "Ed Sheeran",
+        "nameKo": "에드 시런",
+        "popularity": 95,
+        "keyTracks": ["Shape of You", "Perfect"]
+      }
+    ]
+  },
+  {
+    "id": "classical_contemporary",
+    "name": "Contemporary Classical",
+    "nameKo": "현대 클래식",
+    "category": "CLASSICAL",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 55,
+      "unpretentious": 20,
+      "sophisticated": 95,
+      "intense": 60,
+      "contemporary": 85
+    },
+    "description": "20세기 이후의 현대적 클래식 음악으로, 실험적 기법과 새로운 음향 탐구가 특징입니다.",
+    "characteristics": ["실험적", "현대적", "도전적", "혁신적"],
+    "era": "1900-present",
+    "popularity": 45,
+    "energy": 45,
+    "valence": 40,
+    "acousticness": 70,
+    "personalityAnalysis": {
+      "typeTitle": "전위적 사상가",
+      "description": "당신은 기존 관념을 뛰어넘어 새로운 가능성을 탐구하는 혁신적 개척자입니다. 현대 클래식의 실험적 음향과 도전적 구조는 당신의 전위적 사고와 예술적 용기, 그리고 미래를 향한 끊임없는 탐구 정신을 완벽하게 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "실험적 혁신",
+          "score": 95,
+          "description": "기존 틀을 깨고 새로운 방법론과 접근법을 개발하는 능력이 뛰어납니다",
+          "impact": "혁신적 솔루션과 패러다임 전환을 이끄는 리더십"
+        },
+        {
+          "traitName": "지적 호기심",
+          "score": 85,
+          "description": "복잡하고 추상적인 개념에 대한 깊은 탐구 욕구와 이해력을 가지고 있습니다",
+          "impact": "전문 분야에서 깊이 있는 연구와 발견"
+        },
+        {
+          "traitName": "비판적 시각",
+          "score": 80,
+          "description": "현상을 비판적으로 분석하고 기존 시스템의 한계를 찾아내는 통찰력이 뛰어납니다",
+          "impact": "문제의 근본 원인을 파악하고 구조적 개선안 제시"
+        }
+      ],
+      "lifestyleInsights": [
+        "최신 기술과 트렌드에 관심이 많으며 미래지향적 라이프스타일을 추구합니다",
+        "전통적 방식에 의문을 제기하고 더 나은 대안을 찾기 위해 끊임없이 연구합니다",
+        "소수의 지적 수준이 높은 사람들과 깊이 있는 토론과 교류를 즐깁니다"
+      ],
+      "strengths": [
+        "복잡한 문제에 대해 창의적이고 혁신적인 해결책을 제시하는 능력",
+        "변화하는 환경에 빠르게 적응하고 미래를 예측하는 통찰력",
+        "기존 관념에 도전하여 새로운 표준과 패러다임을 만들어내는 리더십"
+      ],
+      "challenges": [
+        "일반 대중이 이해하기 어려운 고도의 복잡성을 추구할 가능성",
+        "실용성보다 이론적 완벽함을 추구하여 현실 적용에 어려움",
+        "급진적 변화를 추구하다 기존 시스템과 마찰을 일으킬 수 있음"
+      ],
+      "relationshipCompatibility": "지적으로 자극적이고 혁신적 사고를 공유할 수 있는 파트너를 선호하며, 서로의 실험과 성장을 격려하는 진보적인 관계를 추구합니다.",
+      "musicPreferences": [
+        "복잡한 창작이나 연구 작업 시 사고의 깊이를 더하는 실험적 사운드",
+        "새로운 아이디어나 영감이 필요할 때 창의성을 자극하는 현대적 음악",
+        "철학적 사색이나 미래 기획 시 전위적 관점을 제공하는 도전적 클래식"
+      ],
+      "recommendedActivities": [
+        "현대음악 페스티벌이나 실험적 공연 예술 체험",
+        "첨단 기술 전시회나 혁신적 디자인 전시 관람",
+        "학술 세미나나 미래학 관련 강연 참석",
+        "아방가르드 예술이나 개념 미술 작품 탐구"
+      ]
+    },
+    "representativeArtists": [
+      {
+        "name": "John Adams",
+        "nameKo": "존 아담스",
+        "popularity": 78,
+        "keyTracks": ["Short Ride in a Fast Machine", "The Chairman Dances"]
+      },
+      {
+        "name": "Arvo Pärt",
+        "nameKo": "아르보 패르트",
+        "popularity": 75,
+        "keyTracks": ["Spiegel im Spiegel", "Für Alina"]
+      }
+    ]
+  },
+  {
+    "id": "hiphop_oldschool",
+    "name": "Old School Hip Hop",
+    "nameKo": "올드스쿨 힙합",
+    "category": "HIP_HOP",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 20,
+      "unpretentious": 90,
+      "sophisticated": 70,
+      "intense": 85,
+      "contemporary": 75
+    },
+    "description": "1970-80년대 뉴욕에서 시작된 힙합의 초기 형태로, 직설적이고 사회 비판적인 메시지가 특징입니다.",
+    "characteristics": ["직설적", "리듬감", "사회의식", "원초적"],
+    "era": "1970s-1980s",
+    "popularity": 80,
+    "energy": 85,
+    "valence": 70,
+    "acousticness": 10,
+    "representativeArtists": [
+      {
+        "name": "Grandmaster Flash",
+        "nameKo": "그랜드마스터 플래시",
+        "popularity": 85,
+        "keyTracks": ["The Message", "White Lines"]
+      },
+      {
+        "name": "Run-DMC",
+        "nameKo": "런 디엠씨",
+        "popularity": 90,
+        "keyTracks": ["Walk This Way", "It's Tricky"]
+      }
+    ],
+    "personalityAnalysis": {
+      "typeTitle": "진실한 스토리텔러",
+      "description": "당신은 진실을 두려워하지 않고 직면하는 용기 있는 사람입니다. 올드스쿨 힙합의 원초적 에너지와 사회 비판적 메시지는 당신의 정의감과 진정성을 추구하는 마음을 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "진정성 추구",
+          "score": 90,
+          "description": "가식 없는 솔직함과 진실된 표현을 중시합니다",
+          "impact": "타인에게 진정성 있는 소통으로 신뢰 형성"
+        },
+        {
+          "traitName": "사회적 의식",
+          "score": 85,
+          "description": "사회 문제에 대한 날카로운 관찰력과 비판 의식을 가지고 있습니다",
+          "impact": "불의에 맞서고 변화를 이끄는 리더십 발휘"
+        },
+        {
+          "traitName": "강인한 정신력",
+          "score": 80,
+          "description": "어려운 상황에서도 굴복하지 않는 강한 의지력을 보입니다",
+          "impact": "역경을 극복하고 목표를 달성하는 끈기"
+        }
+      ],
+      "lifestyleInsights": [
+        "불의한 상황을 보면 침묵하지 못하고 목소리를 내는 성향이 강합니다",
+        "전통과 뿌리를 중시하며 역사와 문화에 대한 관심이 많습니다",
+        "소수의 진정한 친구들과 깊은 유대관계를 형성합니다"
+      ],
+      "strengths": [
+        "진실을 말하는 용기와 도덕적 판단력",
+        "어려운 상황에서도 굴복하지 않는 정신적 강인함",
+        "사회적 약자를 대변하는 리더십과 연대 의식"
+      ],
+      "challenges": [
+        "지나친 직설적 표현으로 인한 갈등 가능성",
+        "완고함으로 인해 타협점 찾기 어려움",
+        "감정적 대응으로 인한 관계 손상 위험"
+      ],
+      "relationshipCompatibility": "진실되고 원칙이 있는 사람을 존경하며, 서로의 신념을 존중하고 지지하는 관계를 선호합니다.",
+      "musicPreferences": [
+        "운동이나 격렬한 활동 시 동기 부여가 되는 강렬한 비트",
+        "사회적 메시지가 담긴 음악으로 의식 있는 시간 보내기",
+        "친구들과 함께 듣는 파티나 모임에서의 분위기 음악"
+      ],
+      "recommendedActivities": [
+        "힙합 문화 페스티벌이나 블럭 파티 참가",
+        "사회적 이슈에 대한 토론회나 세미나 참석",
+        "자원봉사나 사회 활동을 통한 실천적 참여",
+        "브레이킹이나 그래피티 등 힙합 문화 체험"
+      ]
+    }
+  },
+  {
+    "id": "hiphop_trap",
+    "name": "Trap Hip Hop",
+    "nameKo": "트랩 힙합",
+    "category": "HIP_HOP",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 15,
+      "unpretentious": 70,
+      "sophisticated": 60,
+      "intense": 95,
+      "contemporary": 95
+    },
+    "description": "2000년대 미국 남부에서 시작된 현대적인 힙합 스타일로, 강렬한 808 베이스와 하이햇이 특징입니다.",
+    "characteristics": ["강렬한", "현대적", "에지있는", "역동적"],
+    "era": "2000s-present",
+    "popularity": 95,
+    "energy": 95,
+    "valence": 60,
+    "acousticness": 5,
+    "representativeArtists": [
+      {
+        "name": "Travis Scott",
+        "nameKo": "트래비스 스캇",
+        "popularity": 95,
+        "keyTracks": ["SICKO MODE", "Goosebumps"]
+      },
+      {
+        "name": "Future",
+        "nameKo": "퓨처",
+        "popularity": 85,
+        "keyTracks": ["Mask Off", "Life Is Good"]
+      }
+    ],
+    "personalityAnalysis": {
+      "typeTitle": "트렌디한 혁신가",
+      "description": "당신은 시대의 흐름을 선도하고 새로운 것을 추구하는 현대적인 감각의 소유자입니다. 트랩 힙합의 강렬한 에너지와 혁신적 사운드는 당신의 진취적 성향과 현재에 충실한 라이프스타일을 완벽하게 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "트렌드 감각",
+          "score": 95,
+          "description": "최신 트렌드를 빠르게 파악하고 적응하는 뛰어난 감각을 가지고 있습니다",
+          "impact": "새로운 기회를 발견하고 선점하는 능력"
+        },
+        {
+          "traitName": "강렬한 추진력",
+          "score": 90,
+          "description": "목표를 향해 강렬하고 빠르게 추진해나가는 행동력이 뛰어납니다",
+          "impact": "빠른 성과 달성과 경쟁력 확보"
+        },
+        {
+          "traitName": "현대적 감수성",
+          "score": 85,
+          "description": "디지털 시대의 문화와 기술을 자연스럽게 받아들이고 활용합니다",
+          "impact": "소셜미디어와 디지털 플랫폼에서의 높은 적응력"
+        }
+      ],
+      "lifestyleInsights": [
+        "SNS와 디지털 플랫폼을 적극적으로 활용하는 온라인 네이티브입니다",
+        "빠르게 변화하는 환경을 즐기며 새로운 경험에 개방적입니다",
+        "성과와 성공에 대한 강한 욕구와 경쟁심을 가지고 있습니다"
+      ],
+      "strengths": [
+        "빠른 변화에 대한 뛰어난 적응력과 유연성",
+        "강렬한 에너지로 목표를 달성하는 추진력",
+        "현대 문화를 선도하는 트렌드 세터 역할"
+      ],
+      "challenges": [
+        "즉흥적 결정으로 인한 장기적 계획 부족 가능성",
+        "지나친 경쟁심으로 인한 스트레스와 번아웃 위험",
+        "빠른 변화 추구로 인한 지속성과 깊이 부족"
+      ],
+      "relationshipCompatibility": "에너지가 넘치고 야심 있는 파트너를 선호하며, 서로의 성공을 응원하고 함께 성장하는 관계를 추구합니다.",
+      "musicPreferences": [
+        "운동이나 업무 시 집중력과 에너지를 높이는 강렬한 비트",
+        "파티나 클럽에서 분위기를 고조시키는 댄스 음악",
+        "드라이브 시 기분을 UP시키는 현대적 사운드"
+      ],
+      "recommendedActivities": [
+        "트랩 음악 페스티벌이나 대형 콘서트 참가",
+        "피트니스나 익스트림 스포츠 등 에너지 소비 활동",
+        "창업이나 사이드 프로젝트 등 도전적 활동",
+        "소셜미디어 콘텐츠 제작이나 인플루언서 활동"
+      ]
+    }
+  },
+  {
+    "id": "rnb_classic",
+    "name": "Classic R&B",
+    "nameKo": "클래식 R&B",
+    "category": "RNB",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 70,
+      "unpretentious": 80,
+      "sophisticated": 75,
+      "intense": 60,
+      "contemporary": 40
+    },
+    "description": "1940-70년대의 전통적인 리듬 앤 블루스로, 깊은 감정과 영혼이 담긴 보컬이 특징입니다.",
+    "characteristics": ["감정적", "영혼적", "따뜻한", "진정성"],
+    "era": "1940s-1970s",
+    "popularity": 75,
+    "energy": 60,
+    "valence": 70,
+    "acousticness": 60,
+    "representativeArtists": [
+      {
+        "name": "Aretha Franklin",
+        "nameKo": "아레사 프랭클린",
+        "popularity": 95,
+        "keyTracks": ["Respect", "Natural Woman"]
+      },
+      {
+        "name": "Marvin Gaye",
+        "nameKo": "마빈 게이",
+        "popularity": 90,
+        "keyTracks": ["What's Going On", "Let's Get It On"]
+      }
+    ],
+    "personalityAnalysis": {
+      "typeTitle": "깊은 감성의 소울 메이트",
+      "description": "당신은 진정한 감정과 인간의 따뜻함을 중시하는 영혼이 깊은 사람입니다. 클래식 R&B의 깊은 감정 표현과 진솔한 메시지는 당신의 공감 능력과 인간에 대한 사랑을 완벽하게 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "깊은 공감능력",
+          "score": 85,
+          "description": "타인의 감정을 깊이 이해하고 공감하는 뛰어난 능력을 가지고 있습니다",
+          "impact": "치유와 위안을 제공하는 따뜻한 관계 형성"
+        },
+        {
+          "traitName": "진정성 있는 소통",
+          "score": 80,
+          "description": "진심어린 대화와 진실한 감정 표현을 통해 깊은 연결을 만들어냅니다",
+          "impact": "신뢰를 바탕으로 한 의미 있는 인간관계 구축"
+        },
+        {
+          "traitName": "내적 풍요로움",
+          "score": 75,
+          "description": "풍부한 내면세계와 감정적 깊이를 통해 삶의 의미를 찾습니다",
+          "impact": "예술적 영감과 창의적 표현력의 원천"
+        }
+      ],
+      "lifestyleInsights": [
+        "사람들과의 진정한 만남과 깊은 대화를 소중히 여깁니다",
+        "감정적 충만함과 내적 평화를 위한 시간을 정기적으로 가집니다",
+        "전통적 가치와 인간적 따뜻함을 현대 생활에 녹여내려 노력합니다"
+      ],
+      "strengths": [
+        "타인의 마음을 치유하고 위로하는 자연스러운 능력",
+        "진정성 있는 관계를 통해 깊은 신뢰를 구축하는 재능",
+        "감정적 지능이 높아 갈등 상황을 원만히 해결하는 능력"
+      ],
+      "challenges": [
+        "타인의 감정에 과도하게 몰입하여 정서적 소진 위험",
+        "완벽한 진정성을 추구하여 현실적 타협에 어려움",
+        "감정적 상처에 민감하여 회복에 시간이 오래 걸림"
+      ],
+      "relationshipCompatibility": "진실하고 따뜻한 마음을 가진 사람을 선호하며, 서로를 깊이 이해하고 감정적으로 지지하는 안정적인 관계를 추구합니다.",
+      "musicPreferences": [
+        "힘든 시간을 위로받고 치유받는 감정적 음악",
+        "사랑하는 사람과 함께 듣는 로맨틱한 분위기 음악",
+        "혼자만의 시간에 내면을 성찰하는 영혼이 담긴 음악"
+      ],
+      "recommendedActivities": [
+        "소울 음악 콘서트나 재즈 클럽에서의 라이브 음악 감상",
+        "감정적 교감을 나누는 소규모 모임이나 살롱 참가",
+        "자원봉사나 상담 활동을 통한 타인 도움",
+        "일기 쓰기나 에세이 작성 등 감정 표현 활동"
+      ]
+    }
+  },
+  {
+    "id": "rnb_neosoul",
+    "name": "Neo Soul",
+    "nameKo": "네오 소울",
+    "category": "RNB",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 75,
+      "unpretentious": 85,
+      "sophisticated": 85,
+      "intense": 65,
+      "contemporary": 80
+    },
+    "description": "1990년대에 등장한 현대적 소울 음악으로, 전통 R&B에 힙합과 재즈 요소를 결합한 장르입니다.",
+    "characteristics": ["세련된", "깊이있는", "실험적", "영적"],
+    "era": "1990s-present",
+    "popularity": 70,
+    "energy": 55,
+    "valence": 65,
+    "acousticness": 40,
+    "representativeArtists": [
+      {
+        "name": "D'Angelo",
+        "nameKo": "디안젤로",
+        "popularity": 80,
+        "keyTracks": ["Untitled", "Brown Sugar"]
+      },
+      {
+        "name": "Erykah Badu",
+        "nameKo": "에리카 바두",
+        "popularity": 85,
+        "keyTracks": ["On & On", "Bag Lady"]
+      }
+    ],
+    "personalityAnalysis": {
+      "typeTitle": "영적 탐구자",
+      "description": "당신은 깊은 영성과 현대적 감각을 동시에 추구하는 균형 잡힌 영혼입니다. 네오 소울의 세련된 실험성과 영적 깊이는 당신의 내적 성장 욕구와 창조적 표현력을 완벽하게 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "영적 깊이",
+          "score": 85,
+          "description": "삶의 본질적 의미와 영적 성장에 대한 깊은 관심을 가지고 있습니다",
+          "impact": "자아 실현과 내적 평화를 통한 삶의 질 향상"
+        },
+        {
+          "traitName": "창조적 융합",
+          "score": 85,
+          "description": "서로 다른 요소들을 창의적으로 결합하여 새로운 것을 만들어내는 능력이 뛰어납니다",
+          "impact": "예술적, 문화적 혁신을 이끄는 크리에이티브 리더십"
+        },
+        {
+          "traitName": "세련된 감수성",
+          "score": 80,
+          "description": "미묘한 감정의 차이를 포착하고 세련되게 표현하는 감각이 뛰어납니다",
+          "impact": "높은 수준의 예술적 표현과 문화적 이해력"
+        }
+      ],
+      "lifestyleInsights": [
+        "전통과 현대를 조화롭게 결합한 독특한 라이프스타일을 추구합니다",
+        "영적 성장과 자아 발견을 위한 다양한 수행과 탐구를 실천합니다",
+        "예술과 문화를 통해 자신의 내면을 표현하고 타인과 소통합니다"
+      ],
+      "strengths": [
+        "복잡한 감정과 상황을 예술적으로 승화시키는 능력",
+        "다양한 문화와 사상을 통합하는 포용적 사고력",
+        "깊이 있는 성찰과 명상을 통한 내적 안정감"
+      ],
+      "challenges": [
+        "완벽한 조화를 추구하여 결정을 내리는 데 시간이 오래 걸림",
+        "높은 이상을 추구하여 현실과의 괴리감을 경험할 수 있음",
+        "복잡한 내면세계로 인해 타인에게 신비롭게 느껴질 수 있음"
+      ],
+      "relationshipCompatibility": "영적으로 성숙하고 예술적 감각을 공유할 수 있는 파트너를 선호하며, 서로의 내적 성장을 지원하는 깊이 있는 관계를 추구합니다.",
+      "musicPreferences": [
+        "명상이나 요가 시 깊은 집중 상태로 들어가는 영적 음악",
+        "창작이나 예술 활동 시 영감을 주는 실험적 사운드",
+        "감정적 치유와 내면 탐구를 위한 소울풀한 음악"
+      ],
+      "recommendedActivities": [
+        "네오 소울 콘서트나 얼터너티브 음악 페스티벌 참가",
+        "명상 센터나 영성 모임에서의 깊은 성찰 시간",
+        "예술 창작이나 문화 기획 활동 참여",
+        "다양한 문화 체험과 철학적 탐구 여행"
+      ]
+    }
+  },
+  {
+    "id": "world_latin",
+    "name": "Latin Music",
+    "nameKo": "라틴 음악",
+    "category": "WORLD",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 40,
+      "unpretentious": 90,
+      "sophisticated": 65,
+      "intense": 80,
+      "contemporary": 70
+    },
+    "description": "라틴 아메리카 지역의 전통적인 음악으로, 열정적인 리듬과 춤추고 싶게 만드는 멜로디가 특징입니다.",
+    "characteristics": ["열정적", "리듬감", "춤추는", "생동감"],
+    "era": "Traditional-present",
+    "popularity": 85,
+    "energy": 85,
+    "valence": 90,
+    "acousticness": 50,
+    "representativeArtists": [
+      {
+        "name": "Marc Anthony",
+        "nameKo": "마크 안소니",
+        "popularity": 85,
+        "keyTracks": ["Vivir Mi Vida", "Valió la Pena"]
+      },
+      {
+        "name": "Manu Chao",
+        "nameKo": "마누 차오",
+        "popularity": 80,
+        "keyTracks": ["Bongo Bong", "Me Gustas Tu"]
+      }
+    ],
+    "personalityAnalysis": {
+      "typeTitle": "열정적인 생명력의 화신",
+      "description": "당신은 삶에 대한 뜨거운 열정과 타고난 생명력을 가진 에너지 넘치는 영혼입니다. 라틴 음악의 역동적 리듬과 축제적 분위기는 당신의 긍정적 에너지와 사람들을 하나로 모으는 매력을 완벽하게 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "뜨거운 열정",
+          "score": 90,
+          "description": "삶의 모든 순간을 열정적으로 받아들이고 즐기는 타고난 에너지를 가지고 있습니다",
+          "impact": "주변을 활기차게 만들고 긍정적 변화를 이끄는 동력"
+        },
+        {
+          "traitName": "사교적 매력",
+          "score": 85,
+          "description": "자연스럽게 사람들을 끌어들이고 함께 즐거움을 나누는 카리스마가 있습니다",
+          "impact": "강력한 네트워킹과 팀워크를 통한 협력적 성과 달성"
+        },
+        {
+          "traitName": "순간 집중력",
+          "score": 80,
+          "description": "지금 이 순간에 완전히 몰입하여 최고의 경험을 만들어내는 능력이 뛰어납니다",
+          "impact": "현재에 충실한 삶으로 만족도와 행복감 극대화"
+        }
+      ],
+      "lifestyleInsights": [
+        "축제와 파티, 다양한 모임을 통해 에너지를 충전하고 기쁨을 나눕니다",
+        "음악과 춤을 통해 감정을 표현하고 스트레스를 해소합니다",
+        "다양한 문화와 사람들과의 교류를 통해 삶의 풍요로움을 만끽합니다"
+      ],
+      "strengths": [
+        "어떤 상황에서도 긍정적 분위기를 만들어내는 능력",
+        "타인을 격려하고 동기부여하는 천성적 리더십",
+        "역경을 극복하는 강인한 정신력과 회복력"
+      ],
+      "challenges": [
+        "즉흥적 성향으로 인한 계획성 부족 가능성",
+        "감정의 기복이 클 수 있고 일관성 유지 어려움",
+        "과도한 사교 활동으로 인한 에너지 소진 위험"
+      ],
+      "relationshipCompatibility": "열정적이고 활동적인 파트너를 선호하며, 함께 삶을 축하하고 즐길 수 있는 역동적인 관계를 추구합니다.",
+      "musicPreferences": [
+        "파티나 축제에서 모든 사람이 함께 춤출 수 있는 신나는 음악",
+        "운동이나 활동적인 일을 할 때 에너지를 높이는 리듬감 있는 음악",
+        "친구들과 함께하는 즐거운 시간을 더욱 특별하게 만드는 음악"
+      ],
+      "recommendedActivities": [
+        "라틴 댄스 클래스나 살사 파티 참가",
+        "다문화 음식 축제나 국제 문화 행사 참여",
+        "여행을 통한 다양한 문화 체험과 모험",
+        "스포츠나 아웃도어 활동을 통한 에너지 발산"
+      ]
+    }
+  },
+  {
+    "id": "world_traditional",
+    "name": "World Traditional",
+    "nameKo": "월드 트래디셔널",
+    "category": "WORLD",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 80,
+      "unpretentious": 95,
+      "sophisticated": 70,
+      "intense": 40,
+      "contemporary": 20
+    },
+    "description": "세계 각국의 전통 민속 음악으로, 각 문화의 고유한 악기와 선율이 담긴 음악입니다.",
+    "characteristics": ["전통적", "문화적", "명상적", "자연적"],
+    "era": "Traditional",
+    "popularity": 50,
+    "energy": 40,
+    "valence": 60,
+    "acousticness": 90,
+    "representativeArtists": [
+      {
+        "name": "Ravi Shankar",
+        "nameKo": "라비 샨카르",
+        "popularity": 70,
+        "keyTracks": ["Raga Jog", "Sitar Concerto"]
+      },
+      {
+        "name": "Ali Farka Touré",
+        "nameKo": "알리 파르카 투레",
+        "popularity": 65,
+        "keyTracks": ["Savane", "Niafunké"]
+      }
+    ],
+    "personalityAnalysis": {
+      "typeTitle": "지혜로운 전승자",
+      "description": "당신은 오랜 시간 축적된 지혜와 전통의 가치를 깊이 이해하는 문화적 수호자입니다. 세계 전통 음악의 고요한 명상성과 문화적 깊이는 당신의 성숙한 정신세계와 인간 본연의 진실함을 추구하는 마음을 완벽하게 반영합니다.",
+      "coreTraits": [
+        {
+          "traitName": "문화적 지혜",
+          "score": 90,
+          "description": "다양한 문화와 전통에 대한 깊은 이해와 존중심을 가지고 있습니다",
+          "impact": "문화 간 소통과 이해를 돕는 다리 역할"
+        },
+        {
+          "traitName": "내적 평온",
+          "score": 85,
+          "description": "자연스러운 평정심과 깊은 명상적 성향을 통해 마음의 안정을 유지합니다",
+          "impact": "스트레스 상황에서도 차분한 판단력 발휘"
+        },
+        {
+          "traitName": "영적 깊이",
+          "score": 80,
+          "description": "물질적 가치보다 정신적, 영적 성장을 중시하는 철학적 사고를 가지고 있습니다",
+          "impact": "삶의 본질적 의미에 대한 깊은 통찰력"
+        }
+      ],
+      "lifestyleInsights": [
+        "자연과의 조화로운 삶을 추구하며 단순하고 의미 있는 생활 방식을 선호합니다",
+        "다양한 문화와 전통에 대한 학습과 경험을 통해 지혜를 쌓아갑니다",
+        "혼자만의 시간을 통해 내적 성찰과 영적 성장을 도모합니다"
+      ],
+      "strengths": [
+        "문화적 다양성을 이해하고 존중하는 포용적 마인드",
+        "오랜 경험과 지혜를 바탕으로 한 깊이 있는 조언 능력",
+        "변하지 않는 가치와 원칙을 지키는 일관된 신념"
+      ],
+      "challenges": [
+        "변화에 대한 저항이나 새로운 방식 수용의 어려움",
+        "현대적 기술이나 트렌드에 대한 관심 부족",
+        "일반 대중과의 소통에서 세대 차이로 인한 어려움"
+      ],
+      "relationshipCompatibility": "정신적으로 성숙하고 전통적 가치를 존중하는 파트너를 선호하며, 서로의 내적 성장을 지지하는 깊이 있고 안정적인 관계를 추구합니다.",
+      "musicPreferences": [
+        "명상이나 요가 시간에 마음의 평정을 찾는 영적 음악",
+        "문화적 학습이나 독서 시간의 배경으로 듣는 전통 음악",
+        "자연 속에서의 사색이나 산책 시 듣는 민속 음악"
+      ],
+      "recommendedActivities": [
+        "세계 전통 음악 페스티벌이나 문화 공연 관람",
+        "명상 센터나 전통 문화 체험 프로그램 참여",
+        "박물관이나 문화유산 탐방을 통한 역사 학습",
+        "자연 속에서의 명상이나 전통 수공예 체험"
+      ]
+    }
+  },
+  {
+    "id": "rock_metal",
+    "name": "Metal",
+    "nameKo": "메탈",
+    "category": "ROCK",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 10,
+      "unpretentious": 60,
+      "sophisticated": 70,
+      "intense": 95,
+      "contemporary": 70
+    },
+    "description": "극도로 강렬하고 공격적인 록 음악으로, 빠른 템포와 강한 디스토션이 특징입니다.",
+    "characteristics": ["극도로강렬한", "공격적", "기교적", "파워풀"],
+    "era": "1970s-present",
+    "popularity": 70,
+    "energy": 95,
+    "valence": 40,
+    "acousticness": 10,
+    "representativeArtists": [
+      {
+        "name": "Metallica",
+        "nameKo": "메탈리카",
+        "popularity": 95,
+        "keyTracks": ["Master of Puppets", "Enter Sandman"]
+      },
+      {
+        "name": "Iron Maiden",
+        "nameKo": "아이언 메이든",
+        "popularity": 85,
+        "keyTracks": ["The Number of the Beast", "Run to the Hills"]
+      }
+     ],
+     "personalityAnalysis": {
+       "typeTitle": "강인한 전사",
+       "description": "당신은 내면의 강인함과 불굴의 정신력을 가진 진정한 전사입니다. 메탈의 극도로 강렬하고 공격적인 사운드는 당신의 끊임없는 도전 정신과 어떤 역경도 이겨내는 강인한 의지를 완벽하게 반영합니다.",
+       "coreTraits": [
+         {
+           "traitName": "불굴의 의지",
+           "score": 95,
+           "description": "어떤 어려움도 굴복하지 않는 강인한 정신력과 끈기를 가지고 있습니다",
+           "impact": "목표 달성을 위해 끝까지 포기하지 않는 추진력"
+         },
+         {
+           "traitName": "솔직한 표현",
+           "score": 85,
+           "description": "자신의 감정과 생각을 숨김없이 직접적으로 표현하는 용기를 가지고 있습니다",
+           "impact": "진정성 있는 소통과 명확한 의사전달"
+         },
+         {
+           "traitName": "깊은 집중력",
+           "score": 80,
+           "description": "복잡하고 기교적인 것에 몰입할 수 있는 높은 집중력을 보유하고 있습니다",
+           "impact": "전문적인 기술이나 지식 습득에서의 뛰어난 성과"
+         }
+       ],
+       "lifestyleInsights": [
+         "강렬한 운동이나 스포츠를 통해 에너지를 분출하고 정신력을 단련합니다",
+         "목표 달성을 위해 체계적이고 집중적인 훈련이나 학습을 선호합니다",
+         "진정한 우정과 동료애를 중시하며 서로를 격려하는 커뮤니티를 형성합니다"
+       ],
+       "strengths": [
+         "극한 상황에서도 냉정함을 유지하는 강인한 정신력",
+         "복잡한 문제를 체계적으로 분석하고 해결하는 능력",
+         "진실된 관계를 구축하고 유지하는 충성심"
+       ],
+       "challenges": [
+         "감정 조절이 어려워 때로는 과도하게 공격적일 수 있음",
+         "완벽주의 성향으로 인한 스트레스나 번아웃 위험",
+         "타인의 약함이나 포기를 이해하지 못하는 경향"
+       ],
+       "relationshipCompatibility": "같은 강도의 열정과 의지를 가진 파트너를 선호하며, 서로의 목표와 꿈을 지지하고 함께 성장해나가는 도전적이고 역동적인 관계를 추구합니다.",
+       "musicPreferences": [
+         "강렬한 운동이나 트레이닝 시 동기부여를 위한 파워풀한 음악",
+         "스트레스 해소나 감정 표출이 필요할 때 듣는 공격적인 음악",
+         "깊은 집중이 필요한 작업 시 몰입을 돕는 복잡한 구조의 음악"
+       ],
+       "recommendedActivities": [
+         "메탈 콘서트나 페스티벌에서의 강렬한 라이브 경험",
+         "익스트림 스포츠나 고강도 피트니스 활동",
+         "기술적 도전이 있는 취미나 전문 분야 학습",
+         "동료들과 함께하는 팀 스포츠나 그룹 활동"
+       ]
+     }
+   },
+   {
+     "id": "rock_punk",
+    "name": "Punk Rock",
+    "nameKo": "펑크 록",
+    "category": "ROCK",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 15,
+      "unpretentious": 95,
+      "sophisticated": 30,
+      "intense": 90,
+      "contemporary": 60
+    },
+    "description": "1970년대 등장한 반항적이고 직설적인 록 음악으로, 빠른 템포와 단순한 구조가 특징입니다.",
+    "characteristics": ["반항적", "직설적", "빠른", "단순한"],
+    "era": "1970s-present",
+    "popularity": 60,
+    "energy": 90,
+    "valence": 50,
+    "acousticness": 20,
+    "representativeArtists": [
+      {
+        "name": "The Ramones",
+        "nameKo": "더 라몬즈",
+        "popularity": 85,
+        "keyTracks": ["Blitzkrieg Bop", "I Wanna Be Sedated"]
+      },
+      {
+        "name": "Sex Pistols",
+        "nameKo": "섹스 피스톨즈",
+        "popularity": 80,
+        "keyTracks": ["Anarchy in the U.K.", "God Save the Queen"]
+      }
+     ],
+     "personalityAnalysis": {
+       "typeTitle": "자유로운 반항자",
+       "description": "당신은 기존 틀에 얽매이지 않는 자유로운 영혼이며, 진정성과 솔직함을 무엇보다 중시하는 진정한 반항자입니다. 펑크 록의 직설적이고 반항적인 에너지는 당신의 독립적인 정신과 불의에 맞서는 용기를 완벽하게 표현합니다.",
+       "coreTraits": [
+         {
+           "traitName": "진정성 추구",
+           "score": 95,
+           "description": "가식이나 위선을 극도로 싫어하며 항상 진실되고 솔직한 모습을 유지합니다",
+           "impact": "주변 사람들에게 신뢰받는 정직한 관계 형성"
+         },
+         {
+           "traitName": "독립적 사고",
+           "score": 90,
+           "description": "남의 시선이나 사회적 기대에 흔들리지 않는 강한 자아 정체성을 가지고 있습니다",
+           "impact": "독창적인 아이디어와 혁신적인 해결책 제시"
+         },
+         {
+           "traitName": "정의감",
+           "score": 80,
+           "description": "불공정하거나 부당한 일에 대해 목소리를 내는 강한 정의감을 가지고 있습니다",
+           "impact": "사회적 변화와 개선을 이끄는 리더십 발휘"
+         }
+       ],
+       "lifestyleInsights": [
+         "자신만의 독특한 스타일과 가치관을 일관되게 유지합니다",
+         "mainstream보다는 alternative하고 독립적인 것들을 선호합니다",
+         "사회적 이슈나 불의에 대해 적극적으로 목소리를 내고 행동합니다"
+       ],
+       "strengths": [
+         "어떤 상황에서도 자신의 신념을 굽히지 않는 일관성",
+         "복잡한 문제를 단순하고 직접적으로 해결하는 능력",
+         "변화를 두려워하지 않고 새로운 도전을 시도하는 용기"
+       ],
+       "challenges": [
+         "타협이나 절충을 어려워하여 관계에서 갈등이 생길 수 있음",
+         "감정적으로 격해져서 충동적인 결정을 내릴 위험",
+         "권위나 규칙에 대한 거부감으로 조직 생활의 어려움"
+       ],
+       "relationshipCompatibility": "진정성과 자유로움을 존중하는 파트너를 선호하며, 서로의 개성을 인정하고 독립성을 보장하는 솔직하고 평등한 관계를 추구합니다.",
+       "musicPreferences": [
+         "일상의 답답함이나 스트레스를 해소할 때 듣는 시원한 음악",
+         "불의나 부당함에 분노할 때 공감되는 반항적인 음악",
+         "자신의 정체성을 확인하고 용기를 얻고 싶을 때 듣는 음악"
+       ],
+       "recommendedActivities": [
+         "인디 음악 클럽이나 언더그라운드 공연장에서의 라이브 경험",
+         "사회적 이슈에 대한 토론이나 시민 참여 활동",
+         "DIY 문화나 독립적인 창작 활동 참여",
+         "자유로운 여행이나 새로운 경험을 통한 시야 확장"
+       ]
+     }
+   },
+   {
+     "id": "electronic_dnb",
+    "name": "Drum & Bass",
+    "nameKo": "드럼 앤 베이스",
+    "category": "ELECTRONIC",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 20,
+      "unpretentious": 70,
+      "sophisticated": 80,
+      "intense": 90,
+      "contemporary": 85
+    },
+    "description": "빠른 브레이크비트와 강한 베이스라인이 특징인 전자음악 장르입니다.",
+    "characteristics": ["빠른", "복잡한", "에너지넘치는", "기술적"],
+    "era": "1990s-present",
+    "popularity": 65,
+    "energy": 90,
+    "valence": 60,
+    "acousticness": 5,
+    "representativeArtists": [
+      {
+        "name": "LTJ Bukem",
+        "nameKo": "LTJ 부켐",
+        "popularity": 75,
+        "keyTracks": ["Music", "Horizons"]
+      },
+      {
+        "name": "Netsky",
+        "nameKo": "넷스키",
+        "popularity": 80,
+        "keyTracks": ["Come Alive", "Work It Out"]
+      }
+     ],
+     "personalityAnalysis": {
+       "typeTitle": "리듬의 마에스트로",
+       "description": "당신은 복잡한 패턴과 정교한 구조를 이해하고 즐기는 분석적이고 창의적인 마음을 가진 음악적 천재입니다. 드럼 앤 베이스의 빠르고 복잡한 브레이크비트는 당신의 뛰어난 집중력과 다층적 사고 능력을 완벽하게 반영합니다.",
+       "coreTraits": [
+         {
+           "traitName": "복합적 사고",
+           "score": 90,
+           "description": "여러 정보를 동시에 처리하고 복잡한 패턴을 파악하는 뛰어난 능력을 가지고 있습니다",
+           "impact": "복잡한 프로젝트나 멀티태스킹에서의 탁월한 성과"
+         },
+         {
+           "traitName": "기술적 완벽주의",
+           "score": 85,
+           "description": "세밀한 디테일과 기술적 정확성을 추구하는 완벽주의적 성향을 가지고 있습니다",
+           "impact": "전문 분야에서 높은 수준의 기술적 성취"
+         },
+         {
+           "traitName": "에너지 관리",
+           "score": 80,
+           "description": "높은 에너지를 효율적으로 관리하고 적절한 시점에 폭발적으로 발휘할 수 있습니다",
+           "impact": "중요한 순간에 최고의 퍼포먼스 발휘"
+         }
+       ],
+       "lifestyleInsights": [
+         "정교한 계획과 체계적인 접근을 통해 목표를 달성해나갑니다",
+         "새로운 기술이나 트렌드에 대한 높은 관심과 빠른 적응력을 보입니다",
+         "창의적인 작업과 기술적 도전을 동시에 만족시키는 활동을 선호합니다"
+       ],
+       "strengths": [
+         "복잡한 시스템이나 구조를 빠르게 이해하고 최적화하는 능력",
+         "높은 집중력과 지속력을 바탕으로 한 전문성 개발",
+         "변화하는 환경에 빠르게 적응하고 혁신을 만들어내는 창의성"
+       ],
+       "challenges": [
+         "완벽주의로 인해 과도한 스트레스나 번아웃을 경험할 수 있음",
+         "지나치게 기술적인 접근으로 인한 인간관계에서의 소통 어려움",
+         "빠른 변화에 대한 압박감이나 뒤처짐에 대한 불안감"
+       ],
+       "relationshipCompatibility": "지적 호기심이 강하고 창의적인 파트너를 선호하며, 서로의 전문성을 존중하고 함께 성장해나가는 역동적이고 자극적인 관계를 추구합니다.",
+       "musicPreferences": [
+         "집중이 필요한 작업이나 창작 활동 시 몰입을 돕는 복잡한 음악",
+         "운동이나 활동적인 일상에서 에너지를 높이는 역동적인 음악",
+         "새로운 아이디어나 영감이 필요할 때 듣는 혁신적인 음악"
+       ],
+       "recommendedActivities": [
+         "일렉트로닉 뮤직 페스티벌이나 테크노 클럽에서의 몰입 경험",
+         "프로그래밍이나 디지털 창작 도구를 활용한 기술적 취미",
+         "빠른 반응이 필요한 스포츠나 게임 활동",
+         "최신 기술이나 트렌드에 대한 지속적인 학습과 실험"
+       ]
+     }
+   },
+   {
+     "id": "electronic_dubstep",
+    "name": "Dubstep",
+    "nameKo": "덥스텝",
+    "category": "ELECTRONIC",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 10,
+      "unpretentious": 60,
+      "sophisticated": 70,
+      "intense": 95,
+      "contemporary": 90
+    },
+    "description": "강렬한 베이스 드롭과 신스 사운드가 특징인 현대 일렉트로닉 댄스 뮤직입니다.",
+    "characteristics": ["강렬한", "충격적", "미래적", "역동적"],
+    "era": "2000s-present",
+    "popularity": 75,
+    "energy": 95,
+    "valence": 50,
+    "acousticness": 5,
+    "representativeArtists": [
+      {
+        "name": "Skrillex",
+        "nameKo": "스크릴렉스",
+        "popularity": 90,
+        "keyTracks": ["Bangarang", "Scary Monsters and Nice Sprites"]
+      },
+      {
+        "name": "Bassnectar",
+        "nameKo": "베이스넥타",
+        "popularity": 80,
+        "keyTracks": ["Bass Head", "Timestretch"]
+      }
+     ],
+     "personalityAnalysis": {
+       "typeTitle": "미래의 혁신가",
+       "description": "당신은 기존의 한계를 뛰어넘어 새로운 가능성을 창조하는 혁신적인 비전가입니다. 덥스텝의 강렬한 베이스 드롭과 미래적 사운드는 당신의 파괴적 창조력과 예상치 못한 순간에 폭발적인 임팩트를 만들어내는 능력을 완벽하게 표현합니다.",
+       "coreTraits": [
+         {
+           "traitName": "파괴적 창조력",
+           "score": 95,
+           "description": "기존 틀을 과감히 부수고 전혀 새로운 방식으로 문제를 해결하는 혁신적 사고를 가지고 있습니다",
+           "impact": "혁신적인 아이디어와 솔루션으로 주변에 강한 인상 제공"
+         },
+         {
+           "traitName": "임팩트 창출",
+           "score": 90,
+           "description": "적절한 타이밍에 강력한 임팩트를 만들어내는 뛰어난 감각을 가지고 있습니다",
+           "impact": "중요한 순간에 결정적인 변화를 이끌어내는 리더십"
+         },
+         {
+           "traitName": "미래 지향성",
+           "score": 85,
+           "description": "현재에 안주하지 않고 항상 미래의 가능성을 탐구하는 전진적 사고를 가지고 있습니다",
+           "impact": "트렌드를 앞서가는 선구자적 역할 수행"
+         }
+       ],
+       "lifestyleInsights": [
+         "최첨단 기술이나 혁신적인 도구를 적극적으로 활용하고 실험합니다",
+         "예측 가능한 일상보다 변화와 자극이 있는 역동적인 환경을 선호합니다",
+         "자신만의 독특한 방식으로 세상에 임팩트를 남기고자 합니다"
+       ],
+       "strengths": [
+         "위기나 변화의 순간에 빛을 발하는 뛰어난 적응력과 순발력",
+         "남들이 생각하지 못한 창의적이고 혁신적인 아이디어 제시",
+         "강한 자신감과 추진력으로 어려운 도전도 성공으로 이끄는 능력"
+       ],
+       "challenges": [
+         "지나친 변화 추구로 인한 일관성 부족이나 불안정성",
+         "강한 임팩트를 추구하다가 주변 사람들을 압도하거나 부담주기",
+         "현실적 제약이나 점진적 과정을 무시하는 경향"
+       ],
+       "relationshipCompatibility": "변화와 모험을 함께 즐길 수 있는 개방적이고 역동적인 파트너를 선호하며, 서로의 꿈과 비전을 지지하고 함께 새로운 경험을 만들어가는 자극적인 관계를 추구합니다.",
+       "musicPreferences": [
+         "중요한 프레젠테이션이나 도전 전 동기부여를 위한 파워풀한 음악",
+         "창의적 작업이나 브레인스토밍 시 영감을 주는 혁신적인 음악",
+         "파티나 축제에서 분위기를 폭발적으로 끌어올리는 임팩트 있는 음악"
+       ],
+       "recommendedActivities": [
+         "EDM 페스티벌이나 대형 일렉트로닉 이벤트에서의 강렬한 경험",
+         "신기술이나 혁신적인 서비스를 체험하고 실험하기",
+         "창업이나 새로운 프로젝트를 통한 혁신적 아이디어 실현",
+         "극한 스포츠나 새로운 모험을 통한 한계 도전"
+       ]
+     }
+   },
+   {
+     "id": "pop_synthpop",
+    "name": "Synthpop",
+    "nameKo": "신스팝",
+    "category": "POP",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 40,
+      "unpretentious": 60,
+      "sophisticated": 80,
+      "intense": 50,
+      "contemporary": 85
+    },
+    "description": "신시사이저 중심의 팝 음악으로, 미래적이고 세련된 사운드가 특징입니다.",
+    "characteristics": ["미래적", "세련된", "멜로딕", "신스중심"],
+    "era": "1980s-present",
+    "popularity": 75,
+    "energy": 70,
+    "valence": 75,
+    "acousticness": 15,
+    "representativeArtists": [
+      {
+        "name": "Depeche Mode",
+        "nameKo": "데페쉬 모드",
+        "popularity": 85,
+        "keyTracks": ["Personal Jesus", "Enjoy the Silence"]
+      },
+      {
+        "name": "The Weeknd",
+        "nameKo": "더 위켄드",
+        "popularity": 95,
+        "keyTracks": ["Blinding Lights", "Midnight City"]
+      }
+     ],
+     "personalityAnalysis": {
+       "typeTitle": "세련된 미래주의자",
+       "description": "당신은 과거의 향수와 미래의 비전을 완벽하게 조화시키는 세련된 감각의 소유자입니다. 신스팝의 미래적이면서도 멜로딕한 사운드는 당신의 진보적 사고와 동시에 인간적 감성을 잃지 않는 균형 잡힌 성격을 완벽하게 반영합니다.",
+       "coreTraits": [
+         {
+           "traitName": "미적 감각",
+           "score": 90,
+           "description": "세련되고 조화로운 것을 추구하는 뛰어난 미적 센스와 취향을 가지고 있습니다",
+           "impact": "주변 환경을 아름답고 의미 있게 만드는 영향력"
+         },
+         {
+           "traitName": "균형감각",
+           "score": 85,
+           "description": "전통과 혁신, 이성과 감성 사이의 완벽한 균형을 추구하는 지혜를 가지고 있습니다",
+           "impact": "복잡한 상황에서 최적의 절충안을 찾는 조정 능력"
+         },
+         {
+           "traitName": "트렌드 감지",
+           "score": 80,
+           "description": "시대의 흐름과 트렌드를 민감하게 감지하고 적절히 활용하는 능력을 가지고 있습니다",
+           "impact": "변화하는 환경에서 기회를 포착하고 성공하는 통찰력"
+         }
+       ],
+       "lifestyleInsights": [
+         "현대적이면서도 클래식한 매력을 동시에 추구하는 세련된 라이프스타일을 유지합니다",
+         "기술의 발전을 적극 수용하되 인간적 가치와 감성을 잃지 않으려 노력합니다",
+         "개인의 성장과 발전을 위해 지속적으로 새로운 것을 학습하고 경험합니다"
+       ],
+       "strengths": [
+         "다양한 관점을 이해하고 통합하는 포용적이고 유연한 사고",
+         "변화하는 환경에서도 자신만의 스타일을 유지하는 일관성",
+         "미래를 내다보면서도 현실적인 실행력을 갖춘 실용적 비전"
+       ],
+       "challenges": [
+         "완벽한 균형을 추구하다가 결정을 미루거나 우유부단해질 수 있음",
+         "지나친 미적 기준으로 인해 실용성을 놓치거나 비용이 과다해질 위험",
+         "트렌드에 민감해서 본질을 놓치거나 피상적이 될 가능성"
+       ],
+       "relationshipCompatibility": "지적이고 세련된 취향을 공유할 수 있는 파트너를 선호하며, 서로의 개성을 존중하면서도 함께 성장하고 발전해나가는 조화롭고 상호 보완적인 관계를 추구합니다.",
+       "musicPreferences": [
+         "일상의 세련된 분위기 연출을 위한 모던하고 우아한 음악",
+         "창작이나 디자인 작업 시 영감을 주는 미적 감각이 뛰어난 음악",
+         "사교적 모임이나 파티에서 분위기를 세련되게 만드는 음악"
+       ],
+       "recommendedActivities": [
+         "현대적인 콘서트홀이나 세련된 클럽에서의 음악 감상",
+         "디자인이나 예술 관련 전시회나 이벤트 참여",
+         "최신 기술을 활용한 창의적 취미나 프로젝트 진행",
+         "트렌디한 카페나 문화 공간에서의 네트워킹과 교류"
+       ]
+     }
+   },
+   {
+     "id": "pop_folk",
+    "name": "Folk Pop",
+    "nameKo": "포크 팝",
+    "category": "POP",
+    "subGenres": [],
+    "personalityProfile": {
+      "mellow": 85,
+      "unpretentious": 90,
+      "sophisticated": 60,
+      "intense": 35,
+      "contemporary": 65
+    },
+    "description": "전통 포크 음악과 팝의 접근성을 결합한 장르로, 어쿠스틱하고 서정적인 특징을 가집니다.",
+    "characteristics": ["서정적", "어쿠스틱", "자연스러운", "따뜻한"],
+    "era": "1960s-present",
+    "popularity": 70,
+    "energy": 40,
+    "valence": 70,
+    "acousticness": 80,
+    "representativeArtists": [
+      {
+        "name": "Simon & Garfunkel",
+        "nameKo": "사이먼 앤 가펑클",
+        "popularity": 90,
+        "keyTracks": ["The Sound of Silence", "Bridge Over Troubled Water"]
+      },
+      {
+        "name": "Mumford & Sons",
+        "nameKo": "멈포드 앤 선즈",
+        "popularity": 80,
+        "keyTracks": ["Little Lion Man", "I Will Wait"]
+      }
+     ],
+     "personalityAnalysis": {
+       "typeTitle": "따뜻한 이야기꾼",
+       "description": "당신은 진솔한 감정과 인간적인 이야기를 통해 다른 사람들과 깊이 연결되는 따뜻한 마음의 소유자입니다. 포크 팝의 서정적이고 어쿠스틱한 선율은 당신의 자연스러운 매력과 진정성 있는 소통 능력을 완벽하게 표현합니다.",
+       "coreTraits": [
+         {
+           "traitName": "감정적 진정성",
+           "score": 90,
+           "description": "자신의 감정을 솔직하고 자연스럽게 표현하며 타인의 감정도 깊이 공감할 수 있습니다",
+           "impact": "진심어린 소통으로 깊고 의미 있는 인간관계 형성"
+         },
+         {
+           "traitName": "자연스러운 매력",
+           "score": 85,
+           "description": "꾸밈없는 자연스러운 모습으로도 충분한 매력을 발산하는 편안한 존재감을 가지고 있습니다",
+           "impact": "주변 사람들에게 편안함과 안정감을 제공하는 치유적 영향"
+         },
+         {
+           "traitName": "서정적 감수성",
+           "score": 80,
+           "description": "일상의 소소한 순간들에서도 아름다움과 의미를 발견하는 풍부한 감수성을 가지고 있습니다",
+           "impact": "삶의 깊이와 여유를 통해 주변에 긍정적 영향력 전파"
+         }
+       ],
+       "lifestyleInsights": [
+         "복잡함보다는 단순하고 자연스러운 것들을 추구하며 소박한 행복을 중시합니다",
+         "가까운 사람들과의 깊고 진솔한 관계를 무엇보다 소중히 여깁니다",
+         "자연이나 조용한 공간에서 느끼는 평온함과 성찰의 시간을 즐깁니다"
+       ],
+       "strengths": [
+         "진정성 있는 소통으로 타인과 깊은 신뢰 관계를 구축하는 능력",
+         "복잡한 상황에서도 본질을 꿰뚫어보는 직관적 지혜",
+         "주변 사람들에게 위로와 격려를 제공하는 자연스러운 치유력"
+       ],
+       "challenges": [
+         "지나친 감정 이입으로 인해 타인의 문제를 자신의 것처럼 느끼는 경향",
+         "변화나 갈등 상황을 피하려는 성향으로 필요한 대립을 회피하기",
+         "자신의 욕구보다 타인을 우선시하여 자기 돌봄을 소홀히 하기"
+       ],
+       "relationshipCompatibility": "진정성과 따뜻함을 중시하는 파트너를 선호하며, 서로의 마음을 깊이 이해하고 소중한 순간들을 함께 나누는 감정적으로 풍요롭고 안정적인 관계를 추구합니다.",
+       "musicPreferences": [
+         "힘든 하루 끝에 마음의 평안을 찾을 때 듣는 위로가 되는 음악",
+         "소중한 사람들과 함께하는 시간에 배경이 되는 따뜻한 음악",
+         "자연 속에서의 산책이나 독서 시간에 어울리는 서정적인 음악"
+       ],
+       "recommendedActivities": [
+         "작은 규모의 어쿠스틱 콘서트나 인디 음악 공연 관람",
+         "자연 속에서의 캠핑이나 하이킹을 통한 마음의 여유 찾기",
+         "가까운 사람들과의 소소한 모임이나 깊은 대화 시간",
+         "일기 쓰기나 창작 활동을 통한 내면의 감정 표현"
+       ]
+     }
+   }
+ ]

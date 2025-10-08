@@ -1,0 +1,688 @@
+[
+  {
+    "id": "mellow_1",
+    "category": "mellow",
+    "text": "나는 조용하고 차분한 음악을 선호한다",
+    "textEn": "I prefer quiet and calm music",
+    "description": "평화롭고 편안한 느낌의 음악에 대한 선호도",
+    "descriptionEn": "Preference for peaceful and comfortable feeling music",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "mellow_2", 
+    "category": "mellow",
+    "text": "음악을 들으며 명상하거나 휴식을 취하는 것을 좋아한다",
+    "textEn": "I like to meditate or relax while listening to music",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "mellow_3",
+    "category": "mellow", 
+    "text": "스트레스가 많을 때 부드러운 음악을 찾는다",
+    "textEn": "I seek soft music when I'm stressed",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "mellow_4",
+    "category": "mellow",
+    "text": "시끄럽고 자극적인 음악을 듣는 것을 피한다",
+    "textEn": "I avoid listening to loud and stimulating music",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다", 
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "mellow_5",
+    "category": "mellow",
+    "text": "음악은 내 감정을 진정시키는 역할을 해야 한다고 생각한다",
+    "textEn": "I believe music should calm my emotions",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "mellow_6",
+    "category": "mellow",
+    "text": "배경 음악으로 흘러나오는 잔잔한 멜로디를 선호한다",
+    "textEn": "I prefer gentle melodies playing as background music",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "mellow_7",
+    "category": "mellow",
+    "text": "어쿠스틱 악기 소리가 전자 악기보다 편안하게 느껴진다",
+    "textEn": "Acoustic instruments feel more comfortable than electronic instruments",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "mellow_8",
+    "category": "mellow",
+    "text": "음악의 템포는 느릴수록 좋다",
+    "textEn": "I prefer slower music tempos",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+
+  {
+    "id": "unpretentious_1",
+    "category": "unpretentious",
+    "text": "음악은 복잡하지 않고 단순할수록 좋다",
+    "textEn": "Music is better when it's simple rather than complex",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "unpretentious_2",
+    "category": "unpretentious",
+    "text": "대중적이고 친숙한 음악을 선호한다",
+    "textEn": "I prefer popular and familiar music",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "unpretentious_3",
+    "category": "unpretentious",
+    "text": "음악을 분석하기보다는 단순히 즐기는 편이다",
+    "textEn": "I prefer to simply enjoy music rather than analyze it",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "unpretentious_4",
+    "category": "unpretentious",
+    "text": "누구나 쉽게 따라 부를 수 있는 노래를 좋아한다",
+    "textEn": "I like songs that anyone can easily sing along to",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "unpretentious_5",
+    "category": "unpretentious",
+    "text": "음악에 깊은 의미나 메시지보다는 기분 좋은 느낌이 중요하다",
+    "textEn": "Good feelings matter more than deep meanings or messages in music",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "unpretentious_6",
+    "category": "unpretentious",
+    "text": "라디오에서 자주 나오는 인기곡들을 듣는 것을 좋아한다",
+    "textEn": "I like listening to popular songs that are frequently played on the radio",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "unpretentious_7",
+    "category": "unpretentious",
+    "text": "음악적 지식이 없어도 쉽게 접근할 수 있는 음악을 선호한다",
+    "textEn": "I prefer music that's easily accessible even without musical knowledge",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "unpretentious_8",
+    "category": "unpretentious",
+    "text": "정통성보다는 재미있고 즐거운 음악이 더 좋다",
+    "textEn": "Fun and enjoyable music is better than authentic music",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+
+  {
+    "id": "sophisticated_1",
+    "category": "sophisticated",
+    "text": "복잡하고 정교한 음악적 구조를 가진 곡을 좋아한다",
+    "textEn": "I like songs with complex and sophisticated musical structures",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "sophisticated_2", 
+    "category": "sophisticated",
+    "text": "클래식이나 재즈 같은 전통적인 고급 음악을 선호한다",
+    "textEn": "I prefer traditional high-class music like classical or jazz",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "sophisticated_3",
+    "category": "sophisticated",
+    "text": "음악의 예술적 가치와 문화적 의미를 중요하게 생각한다",
+    "textEn": "I value the artistic value and cultural meaning of music",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "sophisticated_4",
+    "category": "sophisticated",
+    "text": "음악적 기교와 연주 실력을 높이 평가한다",
+    "textEn": "I highly value musical technique and performance skills",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "sophisticated_5",
+    "category": "sophisticated",
+    "text": "음악을 들을 때 악기 편성이나 구성을 세심하게 듣는다",
+    "textEn": "I listen carefully to instrumentation and composition when listening to music",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "sophisticated_6",
+    "category": "sophisticated",
+    "text": "음악사적으로 중요한 작품들에 관심이 많다",
+    "textEn": "I'm very interested in historically important musical works",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "sophisticated_7",
+    "category": "sophisticated",
+    "text": "실험적이고 혁신적인 음악 스타일을 탐구하는 것을 좋아한다",
+    "textEn": "I like exploring experimental and innovative music styles",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "sophisticated_8",
+    "category": "sophisticated",
+    "text": "음악을 깊이 있게 이해하고 분석하려고 노력한다",
+    "textEn": "I try to understand and analyze music in depth",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+
+  {
+    "id": "intense_1",
+    "category": "intense",
+    "text": "강렬하고 파워풀한 음악을 선호한다",
+    "textEn": "I prefer intense and powerful music",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "intense_2",
+    "category": "intense",
+    "text": "감정적으로 격정적인 음악을 들으면 카타르시스를 느낀다",
+    "textEn": "I feel catharsis when listening to emotionally intense music",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "intense_3",
+    "category": "intense",
+    "text": "음악을 통해 강한 감정을 경험하고 싶다",
+    "textEn": "I want to experience strong emotions through music",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "intense_4",
+    "category": "intense",
+    "text": "드라마틱하고 극적인 음악적 전개를 좋아한다",
+    "textEn": "I like dramatic and theatrical musical development",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "intense_5",
+    "category": "intense",
+    "text": "높은 볼륨으로 음악을 듣는 것을 좋아한다",
+    "textEn": "I like listening to music at high volume",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "intense_6",
+    "category": "intense",
+    "text": "음악이 내 심장박동을 빠르게 만드는 것을 즐긴다",
+    "textEn": "I enjoy when music makes my heart beat faster",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "intense_7",
+    "category": "intense",
+    "text": "절망이나 분노 같은 어두운 감정을 다룬 음악도 좋아한다",
+    "textEn": "I also like music that deals with dark emotions like despair or anger",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "intense_8",
+    "category": "intense",
+    "text": "에너지가 넘치는 음악을 들으면 기분이 좋아진다",
+    "textEn": "Energetic music makes me feel good",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+
+  {
+    "id": "contemporary_1",
+    "category": "contemporary",
+    "text": "최신 음악 트렌드를 따르는 것을 좋아한다",
+    "textEn": "I like following the latest music trends",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "contemporary_2",
+    "category": "contemporary",
+    "text": "전자 음악이나 디지털 사운드를 선호한다",
+    "textEn": "I prefer electronic music or digital sounds",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "contemporary_3",
+    "category": "contemporary",
+    "text": "젊은 세대가 좋아하는 음악에 관심이 많다",
+    "textEn": "I'm very interested in music that young people like",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "contemporary_4",
+    "category": "contemporary",
+    "text": "새로운 아티스트와 신곡을 찾아 듣는 것을 즐긴다",
+    "textEn": "I enjoy discovering new artists and new songs",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "contemporary_5",
+    "category": "contemporary",
+    "text": "과거의 음악보다는 현재의 음악이 더 흥미롭다",
+    "textEn": "Current music is more interesting than past music",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "contemporary_6",
+    "category": "contemporary",
+    "text": "스트리밍 플랫폼의 추천 음악을 자주 듣는다",
+    "textEn": "I often listen to music recommended by streaming platforms",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "contemporary_7",
+    "category": "contemporary",
+    "text": "음악과 기술의 융합에 관심이 있다",
+    "textEn": "I'm interested in the fusion of music and technology",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  },
+  {
+    "id": "contemporary_8",
+    "category": "contemporary",
+    "text": "소셜미디어에서 인기 있는 음악을 찾아 듣는다",
+    "textEn": "I seek out popular music on social media",
+    "scale": 5,
+    "scaleLabels": {
+      "min": "전혀 그렇지 않다",
+      "max": "매우 그렇다"
+    },
+    "scaleLabelsEn": {
+      "min": "Strongly Disagree",
+      "max": "Strongly Agree"
+    },
+    "weight": 1.0,
+    "reverse": false
+  }
+]

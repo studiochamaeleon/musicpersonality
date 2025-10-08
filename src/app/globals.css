@@ -24,3 +24,92 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+/* Mobile Touch Optimizations */
+@media (max-width: 768px) {
+  /* Increase touch target sizes for mobile */
+  .likert-scale button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  /* Reduce spacing on mobile for better fit */
+  .likert-scale .flex.space-x-2 {
+    gap: 0.25rem;
+  }
+  
+  /* Better text sizing for mobile */
+  .genre-card h3 {
+    font-size: 1.125rem;
+  }
+  
+  /* Improved tap targets for genre cards */
+  .genre-card {
+    min-height: 120px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(59, 130, 246, 0.1);
+  }
+  
+  /* Better mobile form inputs */
+  input, select, button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  
+  /* Improved mobile button spacing */
+  .shareable-card-container .flex.gap-3 {
+    gap: 0.5rem;
+  }
+  
+  .shareable-card-container button {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+}
+
+/* Touch feedback animations */
+@keyframes touch-feedback {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+.touch-feedback:active {
+  animation: touch-feedback 0.1s ease-in-out;
+}
+
+/* Enhanced focus states for accessibility */
+button:focus-visible, 
+input:focus-visible, 
+select:focus-visible {
+  outline: 2px solid #3B82F6;
+  outline-offset: 2px;
+}
+
+/* Smooth scrolling for mobile */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Better mobile viewport handling */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}

@@ -1,0 +1,202 @@
+{
+  "common": {
+    "buttons": {
+      "start": "Start Test",
+      "next": "Next",
+      "prev": "Previous", 
+      "complete": "Complete",
+      "restart": "Restart",
+      "close": "Close",
+      "backToHome": "Back to Home",
+      "exploreGenres": "Explore Genres"
+    },
+    "loading": {
+      "initializing": "Initializing app...",
+      "preparingSurvey": "Preparing survey...",
+      "analyzingResults": "Analyzing results...",
+      "loadingGenres": "Loading genre data..."
+    },
+    "labels": {
+      "required": "Answer Required",
+      "completed": "Completed",
+      "progress": "Progress",
+      "question": "Question",
+      "of": "of"
+    }
+  },
+  "languageSelector": {
+    "label": "Language"
+  },
+  "intro": {
+    "title": "Music Personality Test",
+    "description": "Discover your personality through music preferences\nand get personalized music genre recommendations",
+    "testInfo": "📝 40 Questions | ⏱️ 5-10 Minutes | 🎵 32 Genres to Explore",
+    "subtitle": "Discover your personality through music preferences\nand get personalized music genre recommendations",
+    "musicModelTitle": "Based on the MUSIC Model",
+    "startTest": "Start Test",
+    "exploreGenres": "Explore Genres",
+    "musicModelTraits": {
+      "mellow": {
+        "name": "Mellow",
+        "description": "Calm"
+      },
+      "unpretentious": {
+        "name": "Unpretentious",
+        "description": "Down-to-earth"
+      },
+      "sophisticated": {
+        "name": "Sophisticated", 
+        "description": "Refined"
+      },
+      "intense": {
+        "name": "Intense",
+        "description": "Passionate"
+      },
+      "contemporary": {
+        "name": "Contemporary",
+        "description": "Modern"
+      }
+    },
+    "stats": "📝 40 Questions | ⏱️ 5-10 Minutes | 🎵 32 Genres to Explore",
+    "musicTraitDescriptions": {
+      "mellow": "Calm and relaxed music preference",
+      "unpretentious": "Genuine and simple music preference", 
+      "sophisticated": "Complex and intellectual music preference",
+      "intense": "Dynamic and powerful music preference",
+      "contemporary": "Modern trends and contemporary music preference"
+    }
+  },
+  "survey": {
+    "completed": "Survey completed!",
+    "cannotLoad": "Cannot load questions.",
+    "analyzing": "Analyzing your results...",
+    "errorLoadingQuestion": "Unable to load questions.",
+    "previous": "Previous",
+    "next": "Next", 
+    "complete": "Complete",
+    "answerComplete": "Answered",
+    "answerNeeded": "Answer Required",
+    "questionProgress": "Question",
+    "percentComplete": "complete",
+    "scales": {
+      "stronglyDisagree": "Strongly Disagree",
+      "disagree": "Disagree",
+      "neutral": "Neutral", 
+      "agree": "Agree",
+      "stronglyAgree": "Strongly Agree"
+    }
+  },
+  "results": {
+    "title": "Your Results",
+    "yourPersonality": "Your Music Personality",
+    "musicPersonalityType": "Music Personality Type",
+    "personalityTraits": "Personality Traits",
+    "recommendedGenres": "Recommended Genres",
+    "recommendedArtists": "Recommended Artists", 
+    "shareResults": "Share Results",
+    "exploreMore": "Explore More Genres",
+    "showSimpleResults": "Show Simple Results",
+    "showDetailedAnalysis": "Show Detailed Analysis",
+    "personalityAnalysis": {
+      "coreTraits": "Core Traits",
+      "lifestyleInsights": "Lifestyle Insights",
+      "strengths": "Strengths", 
+      "growthAreas": "Growth Areas"
+    }
+  },
+  "genreExplorer": {
+    "title": "Music Genre Explorer",
+    "subtitle": "Explore diverse music genres and discover your taste preferences",
+    "searchPlaceholder": "Search genres...",
+    "categories": {
+      "all": "All Categories"
+    },
+    "sortBy": {
+      "name": "Name",
+      "popularity": "Popularity",
+      "energy": "Energy",
+      "era": "Era"
+    },
+    "viewModes": {
+      "grid": "Grid",
+      "list": "List"
+    },
+    "genreModal": {
+      "description": "Genre Description",
+      "personalityProfile": "MUSIC Personality Profile",
+      "personalityAnalysis": "Personality Type Analysis",
+      "coreTraits": "Core Traits",
+      "lifestyleInsights": "Lifestyle Insights",
+      "strengths": "Strengths",
+      "challenges": "Growth Areas",
+      "musicalCharacteristics": "Musical Characteristics",
+      "representativeArtists": "Representative Artists",
+      "subGenres": "Sub-genres",
+      "recommendedTracks": "Key Tracks",
+      "clickToListen": "Listen on YouTube",
+      "moreTracksPrefix": "+",
+      "moreTracksSuffix": "more"
+    },
+    "metrics": {
+      "popularity": "Popularity",
+      "energy": "Energy",
+      "valence": "Positivity",
+      "acousticness": "Acoustic",
+      "characteristics": "Characteristics"
+    },
+    "resultsCount": "Found {count} genres",
+    "noResults": {
+      "title": "No results found",
+      "subtitle": "Try different search terms or filters"
+    }
+  },
+  "chart": {
+    "interpretationGuide": "Each axis is displayed on a 0-100 scale,",
+    "interpretationGuide2": "with higher scores indicating stronger traits."
+  },
+  "pwa": {
+    "installTitle": "Install App",
+    "installDescription": "Add Music Personality Test to your home screen for quick access!",
+    "installButton": "Install",
+    "laterButton": "Later"
+  },
+  "sharing": {
+    "download": "Download",
+    "share": "Share",
+    "shareNative": "Share"
+  },
+  "shareableCard": {
+    "myMusicalPersonality": "My Musical Personality",
+    "myMusicalTraits": "My Musical Traits",
+    "match": "match",
+    "basedOnMusicModel": "Based on MUSIC Model • musicpersonality.app"
+  },
+  "analysisReport": {
+    "coreTraits": "Core Traits",
+    "lifestyleInsights": "Lifestyle Insights", 
+    "strengths": "Strengths",
+    "challenges": "Challenges",
+    "compatibleTypes": "Compatible Music Types",
+    "compatibilityTitle": "Musical Compatibility",
+    "compatibilityDescription": "💡 **Compare with friends!** You can have even more enjoyable experiences listening to music with friends who have the above preferences.",
+    "musicPreferences": "Music Preferences",
+    "socialSharing": {
+      "title": "Share Your Music Personality Test Results",
+      "description": "🎵 Check your musical compatibility with friends!",
+      "subtitle": "Find friends with similar musical tastes and discover genres you can enjoy together.",
+      "instructions": "Friends can compare their musical compatibility once they complete the test",
+      "resultText": "🎵 Music Personality Test Results\n\n{typeTitle}\n{description}\n\nTake the test too: {url}",
+      "shareTitle": "My Music Personality Test Results"
+    },
+    "relationshipCompatibility": "Relationship Compatibility",
+    "bestMatch": "Best Match",
+    "compatibilityReason": "Compatibility Reason:",
+    "recommendedActivities": "Recommended Activities",
+    "shareButton": "📲 Share Results",
+    "resultsCopied": "Results copied to clipboard!"
+  },
+  "error": {
+    "occurred": "An error occurred.",
+    "tryAgain": "Please try again."
+  }
+}

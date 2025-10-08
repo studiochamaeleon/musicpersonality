@@ -1,0 +1,35 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  
+  <!-- Radar Chart Background -->
+  <circle cx="300" cy="315" r="120" fill="white" fill-opacity="0.1"/>
+  <circle cx="300" cy="315" r="80" fill="white" fill-opacity="0.1"/>
+  <circle cx="300" cy="315" r="40" fill="white" fill-opacity="0.1"/>
+  
+  <!-- Pentagon shape for MUSIC model -->
+  <polygon points="300,195 374,255 344,343 256,343 226,255" fill="white" fill-opacity="0.3" stroke="white" stroke-width="2"/>
+  
+  <!-- Title -->
+  <text x="600" y="200" text-anchor="middle" fill="white" font-family="system-ui" font-size="64" font-weight="bold">Music Personality Test</text>
+  
+  <!-- Subtitle -->
+  <text x="600" y="280" text-anchor="middle" fill="white" font-family="system-ui" font-size="32" font-weight="normal">Discover Your Musical Identity</text>
+  
+  <!-- MUSIC Labels -->
+  <text x="600" y="360" text-anchor="middle" fill="white" font-family="system-ui" font-size="24" font-weight="normal">Mellow • Unpretentious • Sophisticated • Intense • Contemporary</text>
+  
+  <!-- Call to Action -->
+  <rect x="500" y="420" width="200" height="60" rx="30" fill="white"/>
+  <text x="600" y="460" text-anchor="middle" fill="#6366f1" font-family="system-ui" font-size="24" font-weight="bold">Take the Test</text>
+  
+  <!-- Domain -->
+  <text x="600" y="580" text-anchor="middle" fill="white" font-family="system-ui" font-size="18" font-weight="normal">music-personality-test.vercel.app</text>
+</svg>
