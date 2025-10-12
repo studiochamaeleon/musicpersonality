@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { Home } from 'lucide-react';
 import { Question } from '@/types';
 import { useSurvey } from '@/hooks/useSurvey';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -10,9 +11,10 @@ import ProgressIndicator from './ui/ProgressIndicator';
 interface SurveyProps {
   questions: Question[];
   onComplete?: (answers: Record<string, number>) => void;
+  onGoHome?: () => void;
 }
 
-const Survey: React.FC<SurveyProps> = ({ questions, onComplete }) => {
+const Survey: React.FC<SurveyProps> = ({ questions, onComplete, onGoHome }) => {
   const { t } = useTranslation();
   const {
     surveyState,
@@ -61,6 +63,19 @@ const Survey: React.FC<SurveyProps> = ({ questions, onComplete }) => {
   return (
     <div className="survey min-h-screen bg-gray-50 py-8">
       <div className="container mx-auto px-4">
+        {/* 홈 버튼 */}
+        {onGoHome && (
+          <div className="mb-4">
+            <button
+              onClick={onGoHome}
+              className="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-white rounded-lg transition-colors touch-feedback"
+            >
+              <Home size={18} />
+              <span className="text-sm font-medium">{t('common.buttons.backToHome')}</span>
+            </button>
+          </div>
+        )}
+        
         {/* 진행도 표시 */}
         <ProgressIndicator
           currentStep={progress.current}

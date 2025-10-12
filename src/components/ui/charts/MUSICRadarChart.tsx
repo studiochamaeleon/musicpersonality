@@ -8,39 +8,29 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useTranslation } from '@/hooks/useTranslation';
 
 // MUSIC 특성 정보 및 색상 정의
-const MUSIC_TRAITS: MUSICTraitInfo[] = [
+const MUSIC_TRAITS: Omit<MUSICTraitInfo, 'nameKo' | 'nameEn'>[] = [
   {
     key: 'mellow',
-    nameKo: '침착함',
-    nameEn: 'Mellow',
     description: 'Calm and relaxed music preference',
     color: '#10B981'
   },
   {
     key: 'unpretentious',
-    nameKo: '소탈함',
-    nameEn: 'Unpretentious',
     description: 'Genuine and simple music preference',
     color: '#F59E0B'
   },
   {
     key: 'sophisticated',
-    nameKo: '세련됨',
-    nameEn: 'Sophisticated',
     description: 'Complex and intellectual music preference',
     color: '#8B5CF6'
   },
   {
     key: 'intense',
-    nameKo: '강렬함',
-    nameEn: 'Intense',
     description: 'Dynamic and powerful music preference',
     color: '#EF4444'
   },
   {
     key: 'contemporary',
-    nameKo: '현대성',
-    nameEn: 'Contemporary',
     description: 'Modern trends and contemporary music preference',
     color: '#06B6D4'
   }
@@ -59,17 +49,20 @@ interface TooltipProps {
 
 const CustomTooltip = ({ active, payload }: TooltipProps) => {
   const { language } = useLanguage();
+  const { t } = useTranslation();
   
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
       <div className="bg-white p-3 rounded-lg shadow-lg border border-gray-200">
-        <p className="font-semibold text-gray-900">
-          {language === 'ko' ? data.nameKo : data.nameEn}
-        </p>
+         <p className="font-semibold text-gray-900">
+           {language === 'ko' 
+             ? t(`intro.musicModelTraits.${data.trait}.description`)
+             : t(`intro.musicModelTraits.${data.trait}.name`)}
+         </p>
         <p className="text-sm text-gray-600 mb-1">{data.description}</p>
         <p className="text-lg font-bold" style={{ color: data.color }}>
-          {Math.round(data.score)}{language === 'ko' ? '점' : ' pts'}
+          {Math.round(data.score)}{t('results.points')}
         </p>
       </div>
     );
@@ -87,13 +80,17 @@ const MUSICRadarChart: React.FC<RadarChartProps> = ({
   const { language } = useLanguage();
   const { t } = useTranslation();
   
+  // Helper function to get trait name based on language
+  const getTraitName = (traitKey: string) => {
+    return language === 'ko' 
+      ? t(`intro.musicModelTraits.${traitKey}.description`)
+      : t(`intro.musicModelTraits.${traitKey}.name`);
+  };
+  
    // MUSIC 점수를 차트 데이터로 변환
    const chartData = MUSIC_TRAITS.map(trait => ({
      trait: trait.key,
-     traitKo: trait.nameKo,
-     traitDisplay: language === 'ko' ? trait.nameKo : trait.nameEn,
-     nameKo: trait.nameKo,  // tooltip용 추가
-     nameEn: trait.nameEn,  // tooltip용 추가
+     traitDisplay: getTraitName(trait.key),
      score: personalityScores[trait.key],
      fullMark: 100,
      color: trait.color,
@@ -153,7 +150,7 @@ const MUSICRadarChart: React.FC<RadarChartProps> = ({
               tickCount={4}
             />
             <Radar
-              name="MUSIC 성격"
+              name={t('chart.musicPersonality')}
               dataKey="score"
               stroke="#3B82F6"
               fill="#3B82F6"
@@ -177,20 +174,20 @@ const MUSICRadarChart: React.FC<RadarChartProps> = ({
         animate={animated ? { opacity: 1, y: 0 } : undefined}
         transition={animated ? { delay: 0.3, duration: 0.5 } : undefined}
       >
-        {MUSIC_TRAITS.map((trait) => (
-          <div key={trait.key} className="text-center">
-            <div 
-              className="w-4 h-4 rounded-full mx-auto mb-1"
-              style={{ backgroundColor: trait.color }}
-            />
-            <div className="text-xs font-medium text-gray-700">
-              {language === 'ko' ? trait.nameKo : trait.nameEn}
-            </div>
-            <div className="text-lg font-bold text-gray-900">
-              {Math.round(personalityScores[trait.key])}
-            </div>
-          </div>
-        ))}
+         {MUSIC_TRAITS.map((trait) => (
+           <div key={trait.key} className="text-center">
+             <div 
+               className="w-4 h-4 rounded-full mx-auto mb-1"
+               style={{ backgroundColor: trait.color }}
+             />
+             <div className="text-xs font-medium text-gray-700">
+               {getTraitName(trait.key)}
+             </div>
+             <div className="text-lg font-bold text-gray-900">
+               {Math.round(personalityScores[trait.key])}
+             </div>
+           </div>
+         ))}
       </motion.div>
 
       {/* 해석 가이드 */}

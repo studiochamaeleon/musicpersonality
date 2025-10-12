@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { LikertScaleProps } from '@/types';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const LikertScale: React.FC<LikertScaleProps> = ({
   scale,
@@ -9,6 +10,7 @@ const LikertScale: React.FC<LikertScaleProps> = ({
   onChange,
   labels
 }) => {
+  const { t } = useTranslation();
   const options = Array.from({ length: scale }, (_, i) => i + 1);
 
   return (
@@ -37,7 +39,7 @@ const LikertScale: React.FC<LikertScaleProps> = ({
                 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
                 min-w-[44px] min-h-[44px]
               `}
-              aria-label={`점수 ${option}`}
+              aria-label={`${t('survey.scoreLabel')} ${option}`}
               style={{ WebkitTapHighlightColor: 'rgba(59, 130, 246, 0.1)' }}
             >
               {option}
@@ -50,7 +52,7 @@ const LikertScale: React.FC<LikertScaleProps> = ({
       {/* 현재 선택 표시 */}
       {value && (
         <div className="text-center text-sm text-blue-600">
-          선택됨: {value}점
+          {t('results.selected')}: {value}{t('results.points')}
         </div>
       )}
     </div>

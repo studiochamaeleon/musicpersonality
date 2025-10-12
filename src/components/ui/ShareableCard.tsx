@@ -6,6 +6,7 @@ import { Download, Share2 } from 'lucide-react';
 import { MUSICPersonality, GenreSchema } from '@/types';
 import { analytics } from '@/lib/analytics';
 import { useTranslation } from '@/hooks/useTranslation';
+import { getGenreName, getGenreCharacteristics } from '@/lib/genreTranslations';
 
 interface ShareableCardProps {
   personalityScores: MUSICPersonality;
@@ -20,7 +21,7 @@ const ShareableCard: React.FC<ShareableCardProps> = ({
   topGenreScore,
   className = ''
 }) => {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const cardRef = useRef<HTMLDivElement>(null);
 
   // MUSIC 트레이트 색상 매핑
@@ -66,78 +67,83 @@ const ShareableCard: React.FC<ShareableCardProps> = ({
     }
   };
 
-  const shareToSocial = async () => {
-    if (!cardRef.current) return;
-
-    // Track social share action
+  const shareUnified = async () => {
+    // Track unified share action
     analytics.track('result_shared', {
-      shareType: 'social_native',
+      shareType: 'unified',
       topGenre: topGenre.name,
       topGenreKo: topGenre.nameKo,
       personalityScores
     });
 
-    try {
-      const canvas = await html2canvas(cardRef.current, {
-        width: 600,
-        height: 800,
-        background: '#6366f1',
-        useCORS: true,
-        allowTaint: false
-      });
+    // Step 1: Try image + native sharing (highest quality option)
+    if (cardRef.current) {
+      try {
+        const canvas = await html2canvas(cardRef.current, {
+          width: 600,
+          height: 800,
+          background: '#6366f1',
+          useCORS: true,
+          allowTaint: false
+        });
 
-      canvas.toBlob(async (blob) => {
-        if (!blob) return;
+        await new Promise((resolve, reject) => {
+          canvas.toBlob(async (blob) => {
+            if (!blob) return reject(new Error('Failed to create blob'));
 
-        // Check if native sharing is available and supports files
-        if (navigator.share) {
-          try {
-            const file = new File([blob], 'music-personality.png', { type: 'image/png' });
-            const shareData = {
-              title: 'My Music Personality Test Results',
-              text: `I'm a ${topGenre.name} music lover! Discover your musical identity.`,
-              files: [file]
-            };
-            
-            if (navigator.canShare?.(shareData)) {
-              await navigator.share(shareData);
-              return;
+            // Try native sharing with image file
+            if (navigator.share) {
+              try {
+                const file = new File([blob], 'music-personality.png', { type: 'image/png' });
+                const shareData = {
+                  title: language === 'ko' ? '내 음악적 성격 검사 결과' : 'My Music Personality Test Results',
+                  text: language === 'ko' 
+                    ? `저는 ${getGenreName(topGenre, language)} 음악을 좋아해요! 당신의 음악적 정체성을 발견해보세요.`
+                    : `I'm a ${getGenreName(topGenre, language)} music lover! Discover your musical identity.`,
+                  files: [file]
+                };
+                
+                if (navigator.canShare?.(shareData)) {
+                  await navigator.share(shareData);
+                  return resolve(true);
+                }
+              } catch {
+                console.log('Image sharing failed, trying URL sharing');
+              }
             }
-          } catch {
-            console.log('Native sharing failed, falling back to download');
-          }
-        }
-
-        // Fallback: Download the image
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'music-personality-result.png';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }, 'image/png');
-    } catch (error) {
-      console.error('Failed to generate image:', error);
-      
-      // Ultimate fallback: Share URL only
-      if (navigator.share) {
-        try {
-          await navigator.share({
-            title: 'My Music Personality Test Results',
-            text: `I'm a ${topGenre.name} music lover! Discover your musical identity.`,
-            url: window.location.href
-          });
-        } catch (shareError) {
-          console.error('URL sharing also failed:', shareError);
-        }
-      } else {
-        // Generate dynamic share URL with personality data
-        const shareUrl = `${window.location.origin}?mellow=${personalityScores.mellow}&unpretentious=${personalityScores.unpretentious}&sophisticated=${personalityScores.sophisticated}&intense=${personalityScores.intense}&contemporary=${personalityScores.contemporary}`;
-        await navigator.clipboard.writeText(shareUrl);
-        alert('Share URL copied to clipboard!');
+            reject(new Error('Image sharing not available'));
+          }, 'image/png');
+        });
+        return; // Success, exit early
+      } catch {
+        console.log('Image generation or sharing failed, falling back to URL sharing');
       }
+    }
+
+    // Step 2: Fallback to URL/text sharing (if image sharing failed)
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: language === 'ko' ? `내 음악적 성격: ${getGenreName(topGenre, language)}` : `My Music Personality: ${getGenreName(topGenre, language)}`,
+          text: language === 'ko' 
+            ? `저는 ${getGenreName(topGenre, language)} 음악을 좋아해요! 당신의 음악적 성격을 발견해보세요.`
+            : `I'm a ${getGenreName(topGenre, language)} music lover! Discover your music personality.`,
+          url: window.location.href
+        });
+        return; // Success, exit early
+      } catch {
+        console.log('URL sharing failed, falling back to clipboard');
+      }
+    }
+
+    // Step 3: Final fallback - Copy to clipboard
+    try {
+      const shareUrl = `${window.location.origin}?mellow=${personalityScores.mellow}&unpretentious=${personalityScores.unpretentious}&sophisticated=${personalityScores.sophisticated}&intense=${personalityScores.intense}&contemporary=${personalityScores.contemporary}`;
+      await navigator.clipboard.writeText(shareUrl);
+      alert(language === 'ko' ? '공유 URL이 클립보드에 복사되었습니다!' : 'Share URL copied to clipboard!');
+    } catch (clipboardError) {
+      console.error('All share methods failed:', clipboardError);
+      alert(language === 'ko' ? '공유에 실패했습니다. 다시 시도해주세요.' : 'Sharing failed. Please try again.');
     }
   };
 
@@ -150,10 +156,13 @@ const ShareableCard: React.FC<ShareableCardProps> = ({
       personalityScores
     });
 
-    const topTraitsText = topTraits.slice(0, 2).map(([trait]) => getTraitNameKo(trait)).join(' & ');
-    const text = `I just discovered my music personality: ${topTraitsText}! My top genre is ${topGenre.name}. What's yours?`;
+    const topTraitsText = topTraits.slice(0, 2).map(([trait]) => getTraitName(trait)).join(' & ');
+    const text = language === 'ko' 
+      ? `내 음악적 성격을 발견했어요: ${topTraitsText}! 제가 가장 좋아하는 장르는 ${getGenreName(topGenre, language)}입니다. 당신은 어떤가요?`
+      : `I just discovered my music personality: ${topTraitsText}! My top genre is ${getGenreName(topGenre, language)}. What's yours?`;
     const url = `${window.location.origin}?mellow=${personalityScores.mellow}&unpretentious=${personalityScores.unpretentious}&sophisticated=${personalityScores.sophisticated}&intense=${personalityScores.intense}&contemporary=${personalityScores.contemporary}`;
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}&hashtags=MusicPersonality,MUSIC`;
+    const hashtags = language === 'ko' ? '음악성격검사,MUSIC,성격검사' : 'MusicPersonality,MUSIC';
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}&hashtags=${hashtags}`;
     window.open(twitterUrl, '_blank');
   };
 
@@ -171,15 +180,11 @@ const ShareableCard: React.FC<ShareableCardProps> = ({
     window.open(facebookUrl, '_blank');
   };
 
-  const getTraitNameKo = (trait: string): string => {
-    const names: Record<string, string> = {
-      mellow: '온화함',
-      unpretentious: '소탈함',
-      sophisticated: '세련됨',
-      intense: '강렬함',
-      contemporary: '현대적'
-    };
-    return names[trait] || trait;
+  const getTraitName = (trait: string): string => {
+    // For Korean, use the description (침착함, 소탈함, etc.)
+    // For English, use the name (Mellow, Unpretentious, etc.)
+    const key = language === 'ko' ? `intro.musicModelTraits.${trait}.description` : `intro.musicModelTraits.${trait}.name`;
+    return t(key) || trait;
   };
 
   return (
@@ -187,7 +192,7 @@ const ShareableCard: React.FC<ShareableCardProps> = ({
       {/* 실제 공유될 카드 */}
       <div
         ref={cardRef}
-        className="shareable-card w-[600px] h-[800px] bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 text-white p-8 flex flex-col justify-between relative overflow-hidden"
+        className="shareable-card w-full max-w-[600px] h-[800px] mx-auto bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 text-white p-8 flex flex-col justify-between relative overflow-hidden"
         style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
       >
         {/* 배경 패턴 */}
@@ -197,18 +202,20 @@ const ShareableCard: React.FC<ShareableCardProps> = ({
           <div className="absolute top-1/2 right-8 w-16 h-16 rounded-full bg-white/25"></div>
         </div>
 
-        {/* 헤더 */}
+          {/* 헤더 */}
         <div className="relative z-10">
           <div className="text-center mb-8">
             <div className="text-6xl mb-4">🎵</div>
-            <h1 className="text-2xl font-bold mb-2">Music Personality Test</h1>
+            <h1 className="text-2xl font-bold mb-2">
+              {language === 'ko' ? '음악적 성격 유형 검사' : 'Music Personality Test'}
+            </h1>
             <p className="text-lg opacity-90">{t('shareableCard.myMusicalPersonality')}</p>
           </div>
 
           {/* 메인 결과 */}
           <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 mb-6">
             <div className="text-center">
-              <h2 className="text-3xl font-bold mb-2">{topGenre.nameKo}</h2>
+              <h2 className="text-3xl font-bold mb-2">{getGenreName(topGenre, language)}</h2>
               <p className="text-lg opacity-90 mb-4">{topGenre.category}</p>
               <div className="bg-white/20 rounded-full px-4 py-2 inline-block">
                 <span className="text-xl font-bold">{topGenreScore}% {t('shareableCard.match')}</span>
@@ -223,7 +230,7 @@ const ShareableCard: React.FC<ShareableCardProps> = ({
               <div key={trait} className="flex items-center space-x-3">
                 <div className="flex-1">
                   <div className="flex justify-between items-center mb-1">
-                    <span className="font-medium">{getTraitNameKo(trait)}</span>
+                    <span className="font-medium">{getTraitName(trait)}</span>
                     <span className="text-sm font-bold">{Math.round(score)}%</span>
                   </div>
                   <div className="h-2 bg-white/20 rounded-full overflow-hidden">
@@ -245,7 +252,7 @@ const ShareableCard: React.FC<ShareableCardProps> = ({
         <div className="relative z-10 text-center">
           <div className="bg-white/10 backdrop-blur-md rounded-xl p-4">
             <p className="text-sm opacity-80 mb-2">
-              {topGenre.characteristics.slice(0, 3).join(' • ')}
+              {getGenreCharacteristics(topGenre.id, topGenre.characteristics, language).slice(0, 3).join(' • ')}
             </p>
             <p className="text-xs opacity-70">
 {t('shareableCard.basedOnMusicModel')}
@@ -255,7 +262,7 @@ const ShareableCard: React.FC<ShareableCardProps> = ({
       </div>
 
       {/* 공유 버튼들 */}
-      <div className="mt-6 flex flex-wrap justify-center gap-2 md:gap-3">
+      <div className="mt-6 flex flex-wrap justify-center gap-2 md:gap-3 px-4 md:px-0">
         <button
           onClick={downloadImage}
           className="flex items-center space-x-2 px-3 md:px-4 py-2 md:py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 active:bg-green-700 transition-colors touch-feedback min-h-[44px] text-sm md:text-base"
@@ -265,8 +272,8 @@ const ShareableCard: React.FC<ShareableCardProps> = ({
         </button>
         
         <button
-          onClick={shareToSocial}
-          className="flex items-center space-x-2 px-3 md:px-4 py-2 md:py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 active:bg-blue-700 transition-colors touch-feedback min-h-[44px] text-sm md:text-base"
+          onClick={shareUnified}
+          className="flex items-center space-x-2 px-3 md:px-4 py-2 md:py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 active:bg-purple-700 transition-colors touch-feedback min-h-[44px] text-sm md:text-base"
         >
           <Share2 size={18} />
           <span>{t('sharing.share')}</span>
@@ -274,9 +281,9 @@ const ShareableCard: React.FC<ShareableCardProps> = ({
         
         <button
           onClick={shareToTwitter}
-          className="flex items-center space-x-2 px-3 md:px-4 py-2 md:py-3 bg-sky-500 text-white rounded-lg hover:bg-sky-600 active:bg-sky-700 transition-colors touch-feedback min-h-[44px] text-sm md:text-base"
+          className="flex items-center space-x-2 px-3 md:px-4 py-2 md:py-3 bg-black text-white rounded-lg hover:bg-gray-800 active:bg-gray-900 transition-colors touch-feedback min-h-[44px] text-sm md:text-base"
         >
-          <span>Twitter</span>
+          <span>𝕏</span>
         </button>
         
         <button
@@ -284,30 +291,6 @@ const ShareableCard: React.FC<ShareableCardProps> = ({
           className="flex items-center space-x-2 px-3 md:px-4 py-2 md:py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-800 active:bg-blue-900 transition-colors touch-feedback min-h-[44px] text-sm md:text-base"
         >
           <span>Facebook</span>
-        </button>
-        
-        <button
-          onClick={() => {
-            // Track general share
-            analytics.track('result_shared', {
-              shareType: 'native',
-              topGenre: topGenre.name,
-              topGenreKo: topGenre.nameKo,
-              personalityScores
-            });
-
-            if (navigator.share) {
-              navigator.share({
-                title: `My Music Personality: ${topGenre.nameKo}`,
-                text: `I'm a ${topGenre.nameKo} music lover! Discover your music personality.`,
-                url: window.location.href
-              });
-            }
-          }}
-          className="flex items-center space-x-2 px-3 md:px-4 py-2 md:py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 active:bg-purple-700 transition-colors touch-feedback min-h-[44px] text-sm md:text-base"
-        >
-          <Share2 size={18} />
-          <span>{t('sharing.shareNative')}</span>
         </button>
       </div>
     </div>

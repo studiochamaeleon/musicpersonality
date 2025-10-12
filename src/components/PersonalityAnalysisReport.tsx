@@ -1,5 +1,6 @@
 import { PersonalityAnalysisReport as PersonalityAnalysisReportType, CompatiblePersonalityType } from '@/types';
 import { useTranslation } from '@/hooks/useTranslation';
+import { getGenreName } from '@/lib/genreTranslations';
 
 interface PersonalityAnalysisReportProps {
   analysis: PersonalityAnalysisReportType;
@@ -7,7 +8,7 @@ interface PersonalityAnalysisReportProps {
 }
 
 export default function PersonalityAnalysisReport({ analysis, compatibleTypes = [] }: PersonalityAnalysisReportProps) {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   return (
     <div className="bg-white rounded-lg shadow-lg p-8 max-w-4xl mx-auto">
       {/* Header */}
@@ -132,7 +133,7 @@ export default function PersonalityAnalysisReport({ analysis, compatibleTypes = 
                         : 'bg-pink-100 text-pink-700'
                     }`}>
                       <span className="mr-2">🎶</span>
-                      <span>{compatibleType.representativeGenre.nameKo}</span>
+                      <span>{getGenreName(compatibleType.representativeGenre, language)}</span>
                       <span className="ml-2 text-xs opacity-90">
                         {compatibleType.representativeGenre.compatibility}%
                       </span>

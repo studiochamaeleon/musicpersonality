@@ -14,7 +14,8 @@
       "initializing": "앱을 초기화하고 있습니다...",
       "preparingSurvey": "설문을 준비하고 있습니다...",
       "analyzingResults": "결과를 분석하고 있습니다...",
-      "loadingGenres": "장르 데이터를 불러오고 있습니다..."
+      "loadingGenres": "장르 데이터를 불러오고 있습니다...",
+      "default": "로딩 중..."
     },
     "labels": {
       "required": "답변 필요",
@@ -38,23 +39,28 @@
     "musicModelTraits": {
       "mellow": {
         "name": "Mellow",
-        "description": "침착함"
+        "description": "침착함",
+        "abbrev": "침착"
       },
       "unpretentious": {
         "name": "Unpretentious", 
-        "description": "소탈함"
+        "description": "소탈함",
+        "abbrev": "소탈"
       },
       "sophisticated": {
         "name": "Sophisticated",
-        "description": "세련됨"
+        "description": "세련됨",
+        "abbrev": "세련"
       },
       "intense": {
         "name": "Intense",
-        "description": "강렬함"
+        "description": "강렬함",
+        "abbrev": "강렬"
       },
       "contemporary": {
         "name": "Contemporary",
-        "description": "현대성"
+        "description": "현대성",
+        "abbrev": "현대"
       }
     },
     "stats": "📝 총 40문항 | ⏱️ 약 5-10분 소요 | 🎵 32개 장르 탐험",
@@ -84,7 +90,8 @@
       "neutral": "보통이다",
       "agree": "그렇다",
       "stronglyAgree": "매우 그렇다"
-    }
+    },
+    "scoreLabel": "점수"
   },
   "results": {
     "title": "결과 보기",
@@ -94,15 +101,84 @@
     "recommendedGenres": "추천 장르",
     "recommendedArtists": "추천 아티스트",
     "shareResults": "결과 공유하기",
+    "shareDescription": "친구들과 나의 음악적 성격을 공유해보세요!",
     "exploreMore": "더 많은 장르 탐험하기",
     "showSimpleResults": "간단히 보기",
     "showDetailedAnalysis": "자세히 보기",
+    "points": "점",
+    "selected": "선택됨",
+    "fallbackTitle": "당신만의 독특한 음악적 성격",
+    "fallbackDescription": "당신은 개성 있고 독특한 음악적 취향을 가지고 있으며, 이는 당신의 성격을 잘 반영합니다.",
+    "musicProfileTitle": "당신의 MUSIC 성격 프로필",
+    "unknownGenre": "알 수 없는 장르",
+    "cannotLoadGenre": "장르 정보를 불러올 수 없습니다.",
+    "recommendationReason": "추천 이유",
+    "keyTracks": "대표곡",
+    "clickToListen": "클릭하여 듣기",
+    "retakeTest": "다시 검사하기",
+    "exploreGenres": "장르 탐험하기",
+    "musicModelNote": "MUSIC 모델 기반 • musicpersonality.app",
+    "fallbackAnalysisNote": "당신의 음악적 선호도를 바탕으로 한 분석",
+    "uniqueTaste": "독특한 취향",
+    "distinctive": "개성적인",
     "personalityAnalysis": {
       "coreTraits": "핵심 특성",
       "lifestyleInsights": "라이프스타일 인사이트",
       "strengths": "강점",
       "growthAreas": "성장 과제"
-    }
+    },
+    "fallbackTraits": {
+      "musicalOpenness": "음악적 개방성",
+      "emotionalExpression": "감정적 표현력",
+      "creativeThinking": "창의적 사고"
+    },
+    "fallbackDescriptions": {
+      "musicalOpennessDesc": "당신은 다양한 음악 스타일을 즐기는 열린 마음을 가지고 있습니다",
+      "musicalOpennessImpact": "다양한 음악 장르에 대한 강한 탐구 정신",
+      "emotionalExpressionDesc": "당신은 음악을 통해 감정을 표현하는 것을 즐깁니다",
+      "emotionalExpressionImpact": "음악이 감정 소통의 중요한 수단",
+      "creativeThinkingDesc": "당신의 음악적 취향에서 창의적이고 독창적인 면을 보입니다",
+      "creativeThinkingImpact": "뛰어난 예술적 감각과 창의력"
+    },
+    "fallbackLifestyle": {
+      "stressRelief": "일상의 스트레스를 해소합니다",
+      "personalTime": "음악 감상을 통한 개인적인 시간을 소중히 여깁니다",
+      "lifestyleImpact": "음악적 취향이 라이프스타일에 큰 영향을 미칩니다"
+    },
+    "fallbackStrengths": {
+      "uniqueTaste": "독특하고 개성 있는 음악적 취향",
+      "artisticSense": "예술적 감수성과 창의적 사고력",
+      "emotionalRegulation": "음악을 통한 감정 조절 능력"
+    },
+    "fallbackChallenges": {
+      "isolation": "비주류 취향으로 인한 소외감을 때때로 느낄 수 있음",
+      "perfectionism": "음악적 완벽주의 성향",
+      "exploration": "새로운 장르 탐험에 대한 두려움"
+    },
+    "fallbackActivities": {
+      "concerts": "콘서트나 페스티벌 참석하기",
+      "community": "음악 관련 커뮤니티 활동 참여하기",
+      "curation": "새로운 아티스트 발굴 및 음악 큐레이션하기",
+      "creation": "음악 제작이나 연주 도전해보기"
+    },
+    "fallbackMusic": {
+      "captivated": "이 장르의 특별한 매력에 깊이 빠져있습니다",
+      "valueElements": "이런 음악적 요소를 중요하게 생각합니다",
+      "elementTemplate": "{element}한 음악적 요소를 소중히 여깁니다"
+    },
+    "fallbackTitles": {
+      "enthusiast": "성향의 음악 애호가",
+      "uniqueTaste": "당신은 이런 음악을 선호하는 독특한 취향을 가지고 있습니다.",
+      "uniqueDescription": "당신은 개성을 반영하는 독특한 취향을 가지고 있습니다."
+    },
+    "templates": {
+      "typeDescription": "당신은 {genreName} 음악에 대한 독특한 취향을 가지고 있습니다. {description}",
+      "lifestyleTemplate": "{genreName} 음악을 통해 일상의 스트레스를 해소합니다",
+      "musicPreferenceTemplate": "{genreName}의 특별한 매력에 깊이 빠져있습니다",
+      "activitiesTemplate": "{genreName} {activity}"
+    },
+    "yourGenreType": "당신은 {category}의 {genre} 입니다!",
+    "genreLabel": "{genre} 장르"
   },
   "genreExplorer": {
     "title": "음악 장르 탐험",
@@ -152,7 +228,8 @@
   },
   "chart": {
     "interpretationGuide": "각 축은 0-100점으로 표시되며,",
-    "interpretationGuide2": "높은 점수일수록 해당 특성이 강함을 의미합니다."
+    "interpretationGuide2": "높은 점수일수록 해당 특성이 강함을 의미합니다.",
+    "musicPersonality": "MUSIC 성격"
   },
   "pwa": {
     "installTitle": "앱 설치",
@@ -193,10 +270,56 @@
     "compatibilityReason": "궁합 이유:",
     "recommendedActivities": "추천 활동",
     "shareButton": "📲 결과 공유하기",
-    "resultsCopied": "결과가 클립보드에 복사되었습니다!"
+    "resultsCopied": "결과가 클립보드에 복사되었습니다!",
+    "relationshipDynamics": {
+      "complementary": "서로의 부족한 부분을 채워주며 음악적 성장을 도모하는 관계입니다. {genreName}를 통해 새로운 감성을 발견할 수 있습니다.",
+      "similarEnhanced": "비슷한 취향을 바탕으로 더 깊이 있는 음악적 탐험을 함께하는 관계입니다. {genreName}에 대한 이해를 공유하며 발전시킵니다.",
+      "balanced": "서로 다른 강점을 인정하며 균형잡힌 음악적 교류를 나누는 관계입니다. {genreName}를 중심으로 조화로운 소통이 가능합니다."
+    },
+    "musicalSynergy": {
+      "complementary": "{genreName}의 특성이 당신의 음악적 경험을 확장시켜 주며, 함께 들을 때 더욱 풍부한 감동을 경험할 수 있습니다.",
+      "similarEnhanced": "{genreName}에 대한 공통된 관심사로 깊이 있는 음악 대화가 가능하며, 새로운 아티스트 발굴을 함께 즐길 수 있습니다.",
+      "balanced": "{genreName}를 통해 서로의 음악적 관점을 나누며, 균형잡힌 플레이리스트를 만들어 갈 수 있습니다."
+    }
   },
   "error": {
     "occurred": "오류가 발생했습니다.",
     "tryAgain": "다시 시도해주세요."
+  },
+  "seo": {
+    "website": {
+      "title": "음악 성격 테스트 - 나만의 음악적 정체성 발견하기",
+      "description": "MUSIC 모델을 기반으로 한 포괄적인 음악 성격 평가를 받아보세요. 고유한 음악적 선호도를 발견하고, 개인 맞춤형 장르 추천과 성격에 맞는 새로운 아티스트를 탐색해보세요.",
+      "siteName": "음악 성격 테스트",
+      "keywords": ["음악 성격 테스트", "MUSIC 모델", "음악 심리학", "장르 추천", "성격 평가", "음악적 선호도", "음악 발견"],
+      "author": "음악 성격 연구소",
+      "creator": "음악 성격 테스트",
+      "publisher": "음악 성격 테스트",
+      "ogTitle": "음악 성격 테스트 - 나만의 음악적 정체성 발견하기",
+      "ogDescription": "포괄적인 음악 성격 평가를 통해 고유한 음악적 선호도를 발견하고 개인 맞춤형 추천을 받아보세요.",
+      "ogImageAlt": "음악 성격 테스트 - 나만의 음악적 정체성 발견하기",
+      "twitterTitle": "음악 성격 테스트 - 나만의 음악적 정체성 발견하기",
+      "twitterDescription": "포괄적인 음악 성격 평가를 통해 고유한 음악적 선호도를 발견하고 개인 맞춤형 추천을 받아보세요.",
+      "twitterCreator": "@musicpersonality"
+    },
+    "structuredData": {
+      "website": {
+        "name": "음악 성격 테스트",
+        "description": "MUSIC 모델 기반 포괄적인 음악 성격 평가",
+        "organizationName": "음악 성격 연구소"
+      },
+      "quiz": {
+        "educationalLevel": "일반",
+        "learningResourceType": "평가",
+        "aboutName": "음악 심리학",
+        "aboutDescription": "MUSIC 모델 성격 평가",
+        "questionName": "음악 선호도 질문",
+        "questionText": "음악적 선호도와 청취 습관에 관한 질문"
+      },
+      "article": {
+        "headline": "당신의 음악 성격 이해하기",
+        "authorName": "음악 성격 연구소"
+      }
+    }
   }
 }

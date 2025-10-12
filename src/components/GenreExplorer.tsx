@@ -6,7 +6,7 @@ import { GenreSchema } from '@/types';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getEnglishArtistName } from '@/lib/youtube';
-import { getGenreDescription, getGenreCharacteristics, getPersonalityAnalysis } from '@/lib/genreTranslations';
+import { getGenreDescription, getGenreCharacteristics, getPersonalityAnalysis, getGenreName, getArtistName } from '@/lib/genreTranslations';
 import AnimatedSection from './ui/AnimatedSection';
 import MUSICRadarChart from './ui/charts/MUSICRadarChart';
 import { analytics } from '@/lib/analytics';
@@ -36,11 +36,13 @@ const GenreExplorer: React.FC<GenreExplorerProps> = ({ genres, onGenreSelect }) 
   // 필터링 및 정렬된 장르 목록
   const filteredAndSortedGenres = useMemo(() => {
     const filtered = genres.filter(genre => {
-      const genreName = language === 'ko' ? genre.nameKo : genre.name;
+      const genreName = getGenreName(genre, language);
+      const genreDescription = getGenreDescription(genre.id, genre.description, language);
+      const genreCharacteristics = getGenreCharacteristics(genre.id, genre.characteristics, language);
       const matchesSearch = 
         genreName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        genre.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        genre.characteristics.some(char => char.toLowerCase().includes(searchTerm.toLowerCase()));
+        genreDescription.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        genreCharacteristics.some(char => char.toLowerCase().includes(searchTerm.toLowerCase()));
       
       const matchesCategory = selectedCategory === 'all' || genre.category === selectedCategory;
       
@@ -51,8 +53,8 @@ const GenreExplorer: React.FC<GenreExplorerProps> = ({ genres, onGenreSelect }) 
     filtered.sort((a, b) => {
       switch (sortBy) {
         case 'name':
-          const aName = language === 'ko' ? a.nameKo : a.name;
-          const bName = language === 'ko' ? b.nameKo : b.name;
+          const aName = getGenreName(a, language);
+          const bName = getGenreName(b, language);
           return aName.localeCompare(bName);
         case 'popularity':
           return (b.popularity || 0) - (a.popularity || 0);
@@ -111,10 +113,10 @@ const GenreExplorer: React.FC<GenreExplorerProps> = ({ genres, onGenreSelect }) 
           <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center rounded-t-xl">
             <div>
               <h2 className="text-2xl font-bold text-gray-900">
-                {language === 'ko' ? selectedGenre.nameKo : selectedGenre.name}
+                {getGenreName(selectedGenre, language)}
               </h2>
               <p className="text-sm text-gray-600">
-                {language === 'ko' ? selectedGenre.name : selectedGenre.nameKo}
+                {getGenreName(selectedGenre, language === 'ko' ? 'en' : 'ko')}
               </p>
             </div>
             <button
@@ -209,7 +211,7 @@ const GenreExplorer: React.FC<GenreExplorerProps> = ({ genres, onGenreSelect }) 
                             <div key={i} className="bg-white border border-gray-200 p-3 rounded-lg">
                               <div className="flex justify-between items-center mb-2">
                                 <h6 className="font-medium text-gray-900">{trait.traitName}</h6>
-                                <span className="text-sm font-bold text-green-600">{trait.score}{language === 'ko' ? '점' : ' pts'}</span>
+                                <span className="text-sm font-bold text-green-600">{trait.score}{t('results.points')}</span>
                               </div>
                               <p className="text-sm text-gray-600 mb-1">{trait.description}</p>
                               <p className="text-xs text-gray-500">{trait.impact}</p>
@@ -358,7 +360,7 @@ const GenreExplorer: React.FC<GenreExplorerProps> = ({ genres, onGenreSelect }) 
                         <div className="flex items-center">
                           <User size={16} className="text-gray-500 mr-2" />
                           <span className="font-medium text-gray-900">
-                            {language === 'ko' ? (artist.nameKo || artist.name) : artist.name}
+                             {getArtistName(artist, language)}
                           </span>
                         </div>
                         <div className="flex space-x-0.5">
@@ -446,7 +448,7 @@ const GenreExplorer: React.FC<GenreExplorerProps> = ({ genres, onGenreSelect }) 
         <div className="flex justify-between items-start mb-3">
           <div>
             <h3 className="text-xl font-bold text-gray-900">
-              {language === 'ko' ? genre.nameKo : genre.name}
+               {getGenreName(genre, language)}
             </h3>
             <p className="text-sm text-gray-600">
               {language === 'ko' ? genre.name : genre.nameKo}
@@ -464,12 +466,12 @@ const GenreExplorer: React.FC<GenreExplorerProps> = ({ genres, onGenreSelect }) 
 
         {/* 설명 */}
         <p className={`text-gray-700 mb-4 ${viewMode === 'list' ? 'text-sm' : ''}`}>
-          {genre.description}
+          {getGenreDescription(genre.id, genre.description, language)}
         </p>
 
         {/* 특성 태그 */}
         <div className="flex flex-wrap gap-2 mb-4">
-          {genre.characteristics.slice(0, viewMode === 'list' ? 3 : 4).map((trait, i) => (
+          {getGenreCharacteristics(genre.id, genre.characteristics, language).slice(0, viewMode === 'list' ? 3 : 4).map((trait, i) => (
             <span
               key={i}
               className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full"

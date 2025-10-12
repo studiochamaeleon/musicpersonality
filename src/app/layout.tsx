@@ -3,6 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import StructuredData from "@/components/StructuredData";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import DynamicLang from "@/components/DynamicLang";
+import DynamicStructuredData from "@/components/DynamicStructuredData";
+import DynamicMetadata from "@/components/DynamicMetadata";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -73,7 +76,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <head>
         <StructuredData type="website" />
         <script
@@ -98,6 +101,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <LanguageProvider>
+          <DynamicLang />
+          <DynamicStructuredData />
+          <DynamicMetadata />
           {children}
         </LanguageProvider>
       </body>

@@ -4,8 +4,6 @@
     "category": "mellow",
     "text": "나는 조용하고 차분한 음악을 선호한다",
     "textEn": "I prefer quiet and calm music",
-    "description": "평화롭고 편안한 느낌의 음악에 대한 선호도",
-    "descriptionEn": "Preference for peaceful and comfortable feeling music",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",

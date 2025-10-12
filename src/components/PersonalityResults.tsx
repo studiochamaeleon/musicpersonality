@@ -7,10 +7,11 @@ import { generateEnhancedRelationshipCompatibility, getCompatiblePersonalityType
 import { useTranslation } from '@/hooks/useTranslation';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { generateYouTubeSearchUrl, openYouTubeLink, getEnglishArtistName } from '@/lib/youtube';
-import { getGenreDescription, getGenreCharacteristics } from '@/lib/genreTranslations';
+import { getGenreDescription, getGenreCharacteristics, getPersonalityAnalysis, getGenreName, getArtistName, getArtistSubtitle } from '@/lib/genreTranslations';
 import { analytics } from '@/lib/analytics';
 import PersonalityAnalysisReport from './PersonalityAnalysisReport';
 import AnimatedSection from './ui/AnimatedSection';
+import ShareableCard from './ui/ShareableCard';
 
 // Lazy load heavy components
 const MUSICRadarChart = lazy(() => import('./ui/charts/MUSICRadarChart'));
@@ -43,99 +44,67 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({
     const genreDescription = getGenreDescription(topGenreData.id, topGenreData.description, language);
     const genreCharacteristics = getGenreCharacteristics(topGenreData.id, topGenreData.characteristics, language);
     
+    const genreName = getGenreName(topGenreData, language);
+    
     return {
-      typeTitle: language === 'en' 
-        ? `${topGenreData.name} Music Enthusiast`
-        : `${topGenreData.nameKo} 성향의 음악 애호가`,
-      description: language === 'en'
-        ? `You have a unique taste for ${topGenreData.name} music. ${genreDescription}`
-        : `당신은 ${topGenreData.nameKo} 음악을 선호하는 독특한 취향을 가지고 있습니다. ${genreDescription}`,
+      typeTitle: `${genreName} ${t('results.fallbackTitles.enthusiast')}`,
+      description: t('results.templates.typeDescription', { genreName, description: genreDescription }),
       coreTraits: [
         {
-          traitName: language === 'en' ? "Musical Openness" : "음악적 개방성",
+          traitName: t('results.fallbackTraits.musicalOpenness'),
           score: 80,
-          description: language === 'en'
-            ? `You have an open mind that enjoys music like ${topGenreData.name}.`
-            : `${topGenreData.nameKo}와 같은 음악을 즐기는 열린 마음을 가지고 있습니다.`,
-          impact: language === 'en'
-            ? "Strong exploratory spirit for various music genres."
-            : "다양한 음악 장르에 대한 탐구 정신이 강합니다."
+          description: t('results.fallbackDescriptions.musicalOpennessDesc'),
+          impact: t('results.fallbackDescriptions.musicalOpennessImpact')
         },
         {
-          traitName: language === 'en' ? "Emotional Expression" : "감정 표현력",
+          traitName: t('results.fallbackTraits.emotionalExpression'),
           score: 75,
-          description: language === 'en'
-            ? "You enjoy expressing your emotions through music."
-            : "음악을 통해 자신의 감정을 표현하는 것을 좋아합니다.",
-          impact: language === 'en'
-            ? "Music is an important means of emotional communication."
-            : "음악이 감정적 소통의 중요한 수단입니다."
+          description: t('results.fallbackDescriptions.emotionalExpressionDesc'),
+          impact: t('results.fallbackDescriptions.emotionalExpressionImpact')
         },
         {
-          traitName: language === 'en' ? "Creative Thinking" : "창의적 사고",
+          traitName: t('results.fallbackTraits.creativeThinking'),
           score: 85,
-          description: language === 'en'
-            ? "You show creative and original aspects in your musical taste."
-            : "음악적 취향에서 창의적이고 독창적인 면모를 보입니다.",
-          impact: language === 'en'
-            ? "Excellent artistic sense and creativity."
-            : "예술적 감각과 창의성이 뛰어납니다."
+          description: t('results.fallbackDescriptions.creativeThinkingDesc'),
+          impact: t('results.fallbackDescriptions.creativeThinkingImpact')
         }
       ],
-      lifestyleInsights: language === 'en' ? [
-        `You relieve daily stress through ${topGenreData.name} music.`,
-        "You value your personal time through music appreciation.",
-        "Musical taste has a significant impact on your lifestyle."
-      ] : [
-        `${topGenreData.nameKo} 음악을 통해 일상의 스트레스를 해소합니다.`,
-        "음악 감상을 통해 자신만의 시간을 소중히 여깁니다.",
-        "음악적 취향이 라이프스타일에 큰 영향을 미칩니다."
+      lifestyleInsights: [
+        t('results.templates.lifestyleTemplate', { message: t('results.fallbackLifestyle.stressRelief'), genreName }),
+        t('results.fallbackLifestyle.personalTime'),
+        t('results.fallbackLifestyle.lifestyleImpact')
       ],
-      strengths: language === 'en' ? [
-        "Unique and distinctive musical taste",
-        "Artistic sensitivity and creative thinking",
-        "Ability to regulate emotions through music"
-      ] : [
-        "독특하고 개성 있는 음악적 취향",
-        "예술적 감수성과 창의적 사고력",
-        "음악을 통한 감정 조절 능력"
+      strengths: [
+        t('results.fallbackStrengths.uniqueTaste'),
+        t('results.fallbackStrengths.artisticSense'),
+        t('results.fallbackStrengths.emotionalRegulation')
       ],
-      challenges: language === 'en' ? [
-        "Sometimes feeling isolated due to non-mainstream taste",
-        "Musical perfectionist tendencies",
-        "Fear of exploring new genres"
-      ] : [
-        "때로는 대중적이지 않은 취향으로 인한 소외감",
-        "음악적 완벽주의 성향",
-        "새로운 장르 탐험에 대한 두려움"
+      challenges: [
+        t('results.fallbackChallenges.isolation'),
+        t('results.fallbackChallenges.perfectionism'),
+        t('results.fallbackChallenges.exploration')
       ],
-      relationshipCompatibility: generateEnhancedRelationshipCompatibility(personalityScores, genres),
-      musicPreferences: language === 'en' ? [
-        `Deeply captivated by the special charm of ${topGenreData.name}.`,
-        ...genreCharacteristics.map(char => `You value ${char} musical elements.`)
-      ] : [
-        `${topGenreData.nameKo}의 특별한 매력에 깊이 빠져있습니다.`,
-        ...genreCharacteristics.map(char => `${char}한 음악적 요소를 중요하게 생각합니다.`)
+      relationshipCompatibility: generateEnhancedRelationshipCompatibility(personalityScores, genres, language),
+      musicPreferences: [
+        t('results.templates.musicPreferenceTemplate', { genreName }),
+        ...genreCharacteristics.map(char => t('results.fallbackMusic.elementTemplate', { element: char }))
       ],
-      recommendedActivities: language === 'en' ? [
-        `Attend ${topGenreData.name} concerts or festivals`,
-        "Participate in music-related community activities",
-        "Discover new artists and curate music",
-        "Try music production or performance"
-      ] : [
-        `${topGenreData.nameKo} 콘서트나 페스티벌 참가`,
-        "음악 관련 커뮤니티 활동",
-        "새로운 아티스트 발굴 및 음악 큐레이션",
-        "음악 제작이나 연주 도전"
+      recommendedActivities: [
+        t('results.templates.activitiesTemplate', { activity: t('results.fallbackActivities.concerts'), genreName }),
+        t('results.fallbackActivities.community'),
+        t('results.fallbackActivities.curation'),
+        t('results.fallbackActivities.creation')
       ]
     };
   };
   
   // 실제 분석 데이터 또는 폴백 데이터 결정
-  const personalityAnalysis = topGenre?.personalityAnalysis || createFallbackAnalysis();
+  const personalityAnalysis = topGenreData?.personalityAnalysis 
+    ? getPersonalityAnalysis(topGenreData.id, topGenreData.personalityAnalysis, language)
+    : createFallbackAnalysis();
   
   // 호환되는 성격 유형들 계산
-  const compatibleTypes = getCompatiblePersonalityTypes(personalityScores, genres);
+  const compatibleTypes = getCompatiblePersonalityTypes(personalityScores, genres, language);
 
   return (
     <div className="personality-results min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-8">
@@ -150,11 +119,11 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({
           
           {topGenreData ? (
             <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
-              <h2 className="text-2xl font-bold text-blue-600 mb-4">
-                {language === 'en' 
-                  ? `You are a ${topGenreData.name} enthusiast from ${topGenreData.category}!`
-                  : `당신은 ${topGenreData.category}의 ${topGenreData.nameKo} 입니다!`
-                }
+               <h2 className="text-2xl font-bold text-blue-600 mb-4">
+                  {t('results.yourGenreType', { 
+                    genre: getGenreName(topGenreData, language),
+                    category: topGenreData.category 
+                  })}
               </h2>
                <p className="text-lg text-gray-700 mb-4">
                  {getGenreDescription(topGenreData.id, topGenreData.description, language)}
@@ -235,7 +204,7 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({
                   }`}
                 >
                   <div className="flex justify-between items-start mb-2">
-                    <h4 className="font-semibold text-gray-900">{language === 'en' ? genre.name : genre.nameKo}</h4>
+                     <h4 className="font-semibold text-gray-900">{getGenreName(genre, language)}</h4>
                     <span className={`text-sm font-medium px-2 py-1 rounded ${
                       index === 0 ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-600'
                     }`}>
@@ -256,23 +225,14 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({
                      ))}
                   </div>
 
-                  {rec.reasoning.length > 0 && (
-                    <details className="mt-2">
-                      <summary className="text-xs text-blue-600 cursor-pointer">{t('results.recommendationReason')}</summary>
-                      <ul className="text-xs text-gray-600 mt-1 space-y-1">
-                        {rec.reasoning.slice(0, 2).map((reason, reasonIndex) => (
-                          <li key={reasonIndex}>• {reason}</li>
-                        ))}
-                      </ul>
-                    </details>
-                  )}
+
                 </div>
               );
             })}
           </div>
         </AnimatedSection>
 
-        {/* 추천 아티스트들 */}
+        {/* Recommended Artists */}
         {recommendedArtists.length > 0 && (
           <AnimatedSection delay={0.9} direction="up" className="bg-white rounded-xl shadow-lg p-6 mt-8">
             <h3 className="text-xl font-bold text-gray-900 mb-6">{t('results.recommendedArtists')}</h3>
@@ -289,8 +249,8 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({
                 >
                   <div className="flex justify-between items-start mb-2">
                     <div>
-                      <h4 className="font-semibold text-gray-900">{language === 'en' ? rec.artist.name : rec.artist.nameKo}</h4>
-                      <p className="text-sm text-gray-600">{language === 'en' ? rec.artist.nameKo : rec.artist.name}</p>
+                       <h4 className="font-semibold text-gray-900">{getArtistName(rec.artist, language)}</h4>
+                       <p className="text-sm text-gray-600">{getArtistSubtitle(rec.artist, language)}</p>
                     </div>
                     <span className={`text-sm font-medium px-2 py-1 rounded ${
                       index === 0 ? 'bg-purple-100 text-purple-800' : 'bg-gray-100 text-gray-600'
@@ -299,7 +259,7 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({
                     </span>
                   </div>
                   
-                  <p className="text-xs text-gray-500 mb-2">{language === 'en' ? `${rec.genreName} genre` : `${rec.genreNameKo} 장르`}</p>
+                    <p className="text-xs text-gray-500 mb-2">{t('results.genreLabel', { genre: getGenreName({ name: rec.genreName, nameKo: rec.genreNameKo }, language) })}</p>
                   
                    <div className="mb-2">
                      <p className="text-xs font-medium text-gray-700 mb-1">{t('results.keyTracks')}:</p>
@@ -369,6 +329,26 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({
               compatibleTypes={compatibleTypes}
             />
           </div>
+        )}
+
+        {/* 결과 공유하기 섹션 */}
+        {topGenreData && (
+          <AnimatedSection delay={1.4} direction="up" className="mt-8">
+            <div className="text-center mb-6">
+              <h3 className="text-2xl font-semibold text-gray-800 mb-2">
+                🎵 {t('results.shareResults')}
+              </h3>
+              <p className="text-gray-600">
+                {t('results.shareDescription')}
+              </p>
+            </div>
+            
+            <ShareableCard 
+              personalityScores={personalityScores}
+              topGenre={topGenreData}
+              topGenreScore={Math.round(topGenre.compatibility)}
+            />
+          </AnimatedSection>
         )}
 
         {/* 행동 버튼들 */}

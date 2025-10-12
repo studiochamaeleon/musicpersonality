@@ -74,7 +74,54 @@ export const genreTranslations: Record<string, {
   },
   "jazz_bebop": {
     description: "A complex and fast-paced jazz style that emerged in the 1940s, characterized by intricate improvisation and sophisticated harmonies.",
-    characteristics: ["Complex", "Intellectual", "Energetic", "Sophisticated"]
+    characteristics: ["Complex", "Intellectual", "Energetic", "Sophisticated"],
+    personalityAnalysis: {
+      typeTitle: "Brilliant Improviser",
+      description: "You are a highly intelligent and adaptable individual who thrives on complexity and intellectual challenge. The intricate harmonies and spontaneous improvisation of bebop jazz reflect your quick thinking and ability to navigate sophisticated concepts with ease.",
+      coreTraits: [
+        {
+          traitName: "Intellectual Agility",
+          description: "You process complex information quickly and can adapt your thinking in real-time to changing circumstances",
+          impact: "Exceptional problem-solving abilities in fast-paced, intellectually demanding environments"
+        },
+        {
+          traitName: "Creative Sophistication",
+          description: "You appreciate and create nuanced, multi-layered expressions that reward careful attention",
+          impact: "Leadership in creative fields requiring both technical skill and artistic vision"
+        },
+        {
+          traitName: "Spontaneous Excellence",
+          description: "You perform at your best when given freedom to improvise and respond instinctively to challenges",
+          impact: "Outstanding performance in dynamic situations requiring quick, creative responses"
+        }
+      ],
+      lifestyleInsights: [
+        "You enjoy intellectually stimulating conversations and environments that challenge your thinking",
+        "You prefer flexibility in your schedule to allow for spontaneous creative pursuits",
+        "You appreciate sophisticated cultural experiences like jazz clubs, art galleries, and literary events"
+      ],
+      strengths: [
+        "Exceptional ability to synthesize complex information and find elegant solutions",
+        "Natural talent for improvisation and adaptation in unpredictable situations",
+        "Deep appreciation for craftsmanship and mastery that inspires others to excel"
+      ],
+      challenges: [
+        "Impatience with overly simple or routine tasks that don't engage your intellect",
+        "Difficulty communicating complex ideas to those who prefer straightforward approaches",
+        "Tendency to overcomplicate situations where simple solutions would be more effective"
+      ],
+      relationshipCompatibility: "You connect with intellectually curious partners who appreciate complexity and can engage in stimulating conversations about ideas, art, and culture.",
+      musicPreferences: [
+        "Intricate instrumental compositions that reward careful listening and analysis",
+        "Live performances where musicians demonstrate technical mastery and creative risk-taking",
+        "Historical recordings that showcase the evolution of sophisticated musical techniques"
+      ],
+      recommendedActivities: [
+        "Jazz improvisation workshops to develop your spontaneous creative abilities",
+        "Philosophy or literature discussion groups that engage your intellectual curiosity",
+        "Complex strategy games or puzzles that challenge your analytical thinking"
+      ]
+    }
   },
   "classical_symphony": {
     description: "Large-scale orchestral compositions typically consisting of multiple movements, representing the pinnacle of classical music structure.",
@@ -86,31 +133,362 @@ export const genreTranslations: Record<string, {
   },
   "rock_classic": {
     description: "The foundational rock music of the 1960s-70s that established the genre's core elements and lasting influence.",
-    characteristics: ["Timeless", "Raw", "Powerful", "Influential"]
+    characteristics: ["Timeless", "Raw", "Powerful", "Influential"],
+    personalityAnalysis: {
+      typeTitle: "Timeless Pioneer",
+      description: "You are someone who values authenticity and foundational strength. The raw power and enduring influence of classic rock perfectly reflects your appreciation for what stands the test of time and your respect for those who paved the way.",
+      coreTraits: [
+        {
+          traitName: "Authentic Values",
+          description: "You value genuine expression and reject superficiality in favor of real substance",
+          impact: "Building trust through honest communication and reliable actions"
+        },
+        {
+          traitName: "Foundational Strength",
+          description: "You appreciate timeless principles and build upon proven foundations",
+          impact: "Creating lasting impact through solid groundwork and persistence"
+        },
+        {
+          traitName: "Powerful Presence",
+          description: "You command respect through natural confidence and straightforward communication",
+          impact: "Leading effectively through direct action and clear vision"
+        }
+      ],
+      lifestyleInsights: [
+        "You appreciate classic craftsmanship and items that improve with age",
+        "You value experiences that connect you to history and tradition",
+        "You prefer straightforward, honest relationships over complicated social dynamics"
+      ],
+      strengths: [
+        "Ability to discern lasting value from temporary trends",
+        "Natural leadership qualities that inspire confidence in others",
+        "Strong sense of integrity that guides decision-making"
+      ],
+      challenges: [
+        "Resistance to change that could benefit from modern approaches",
+        "Impatience with overly complex or indirect communication",
+        "Tendency to dismiss new ideas without proper consideration"
+      ],
+      relationshipCompatibility: "You seek partners who share your values of authenticity and loyalty, preferring relationships built on mutual respect and straightforward communication.",
+      musicPreferences: [
+        "High-energy music for motivation during workouts or projects",
+        "Driving music that enhances focus during challenging tasks",
+        "Background music that creates an atmosphere of strength and confidence"
+      ],
+      recommendedActivities: [
+        "Attending live rock concerts and music festivals",
+        "Learning to play guitar or other rock instruments",
+        "Exploring music history and the stories behind classic albums",
+        "Participating in community activities that build lasting traditions"
+      ]
+    }
   },
   "rock_alternative": {
     description: "Non-mainstream rock that emerged as an alternative to commercial rock, emphasizing artistic creativity and independence.",
-    characteristics: ["Independent", "Creative", "Rebellious", "Authentic"]
+    characteristics: ["Independent", "Creative", "Rebellious", "Authentic"],
+    personalityAnalysis: {
+      typeTitle: "Independent Rebel",
+      description: "You are a free-thinking individual who questions conventional wisdom and values authentic self-expression over conformity. The rebellious energy and creative independence of alternative rock mirrors your desire to forge your own path and challenge the status quo.",
+      coreTraits: [
+        {
+          traitName: "Independent Thinking",
+          description: "You form your own opinions and aren't easily swayed by popular opinion or social pressure",
+          impact: "Leadership through innovative thinking and courage to challenge ineffective systems"
+        },
+        {
+          traitName: "Authentic Rebellion",
+          description: "You rebel against superficiality and meaninglessness, seeking deeper truth and genuine expression",
+          impact: "Creating positive change by identifying and addressing real problems others might ignore"
+        },
+        {
+          traitName: "Creative Nonconformity",
+          description: "You express yourself creatively through unconventional means and value artistic freedom",
+          impact: "Inspiring others to embrace their individuality and pursue authentic self-expression"
+        }
+      ],
+      lifestyleInsights: [
+        "You prefer alternative venues and experiences that allow for authentic expression and creativity",
+        "You value quality and meaning in your possessions and experiences over quantity or status",
+        "You enjoy supporting independent artists, local businesses, and causes that align with your values"
+      ],
+      strengths: [
+        "Strong moral compass and willingness to stand up for what you believe in",
+        "Creative problem-solving that finds solutions others haven't considered",
+        "Authentic leadership that inspires others to think independently and act courageously"
+      ],
+      challenges: [
+        "Difficulty working within rigid hierarchical structures or bureaucratic systems",
+        "Tendency to be overly critical of mainstream culture or conventional approaches",
+        "Resistance to compromise when core values or creative vision are at stake"
+      ],
+      relationshipCompatibility: "You connect with independent-minded partners who share your values and respect your need for authenticity, seeking relationships based on mutual growth and creative inspiration.",
+      musicPreferences: [
+        "Guitar-driven compositions that balance raw energy with sophisticated songwriting",
+        "Lyrics that address social issues, personal struggles, or challenge conventional thinking",
+        "Artists who maintain creative control and authenticity despite commercial pressures"
+      ],
+      recommendedActivities: [
+        "Independent music festivals or underground venues that showcase emerging alternative talent",
+        "Creative workshops or maker spaces where you can experiment with artistic expression",
+        "Social activism or volunteer work for causes that align with your values and desire for positive change"
+      ]
+    }
   },
   "electronic_ambient": {
     description: "Atmospheric electronic music designed to create immersive soundscapes and mood-enhancing environments.",
-    characteristics: ["Atmospheric", "Meditative", "Spacious", "Ethereal"]
+    characteristics: ["Atmospheric", "Meditative", "Spacious", "Ethereal"],
+    personalityAnalysis: {
+      typeTitle: "Contemplative Dreamer",
+      description: "You are a deeply introspective individual who seeks peace and mental clarity. The expansive soundscapes and ethereal textures of ambient electronic music mirror your inner world and desire for transcendent experiences.",
+      coreTraits: [
+        {
+          traitName: "Introspective Depth",
+          description: "You possess a rich inner life and enjoy deep contemplation and self-reflection",
+          impact: "Exceptional ability to process complex emotions and find innovative solutions through reflection"
+        },
+        {
+          traitName: "Aesthetic Sensitivity",
+          description: "You have heightened sensitivity to atmosphere, mood, and subtle environmental changes",
+          impact: "Creating harmonious spaces and experiences that promote well-being and creativity"
+        },
+        {
+          traitName: "Mindful Presence",
+          description: "You value being present in the moment and appreciate subtle, nuanced experiences",
+          impact: "Natural ability to reduce stress and help others find calm in chaotic situations"
+        }
+      ],
+      lifestyleInsights: [
+        "You prefer quiet, serene environments where you can think and create without interruption",
+        "You enjoy activities that promote mindfulness such as meditation, nature walks, or artistic pursuits",
+        "You value quality over quantity in relationships and prefer meaningful conversations"
+      ],
+      strengths: [
+        "Exceptional ability to remain calm and centered during stressful situations",
+        "Creative problem-solving through intuitive and non-linear thinking",
+        "Natural talent for creating peaceful, harmonious environments for others"
+      ],
+      challenges: [
+        "Difficulty adapting to high-energy or chaotic social environments",
+        "Tendency to withdraw when overwhelmed rather than seeking direct help",
+        "May struggle with time management when absorbed in contemplative activities"
+      ],
+      relationshipCompatibility: "You connect best with partners who appreciate depth and introspection, seeking relationships that provide emotional security and space for individual growth.",
+      musicPreferences: [
+        "Extended instrumental pieces that allow for deep listening and reflection",
+        "Nature sounds and field recordings that create immersive atmospheric experiences",
+        "Minimal electronic textures that evolve slowly and subtly over time"
+      ],
+      recommendedActivities: [
+        "Meditation retreats or mindfulness workshops to deepen your contemplative practice",
+        "Art therapy or creative writing to express your rich inner world",
+        "Sound healing sessions or ambient music performances for community connection"
+      ]
+    }
   },
   "electronic_techno": {
     description: "Repetitive, high-energy electronic dance music characterized by driving beats and synthesized sounds.",
-    characteristics: ["Rhythmic", "Hypnotic", "Energetic", "Futuristic"]
+    characteristics: ["Rhythmic", "Hypnotic", "Energetic", "Futuristic"],
+    personalityAnalysis: {
+      typeTitle: "Rhythmic Visionary",
+      description: "You are a high-energy individual with a futuristic mindset and strong sense of rhythm. The driving beats and innovative sounds of techno reflect your dynamic nature and desire to push boundaries.",
+      coreTraits: [
+        {
+          traitName: "Rhythmic Intelligence",
+          description: "You have an innate understanding of patterns, timing, and synchronization in all aspects of life",
+          impact: "Exceptional coordination skills and ability to maintain consistent performance under pressure"
+        },
+        {
+          traitName: "Innovation Drive",
+          description: "You constantly seek new experiences and are excited by technological advancement and creative possibilities",
+          impact: "Leading edge thinking in problem-solving and embracing cutting-edge solutions"
+        },
+        {
+          traitName: "High Energy Focus",
+          description: "You thrive in dynamic environments and can maintain intense focus for extended periods",
+          impact: "Outstanding productivity in fast-paced work environments and ability to energize teams"
+        }
+      ],
+      lifestyleInsights: [
+        "You prefer active, stimulating environments with constant activity and challenge",
+        "You enjoy late-night activities and have peak energy during evening hours",
+        "You value technology and innovation, often being an early adopter of new tools and trends"
+      ],
+      strengths: [
+        "Exceptional ability to maintain focus and energy during long, intensive projects",
+        "Natural leadership in high-pressure situations requiring quick decision-making",
+        "Strong physical coordination and timing that enhances athletic or performance abilities"
+      ],
+      challenges: [
+        "Difficulty relaxing or slowing down when rest is needed",
+        "May become impatient with slow-paced processes or traditional approaches",
+        "Tendency to overstimulate yourself with too many concurrent activities"
+      ],
+      relationshipCompatibility: "You connect with partners who can match your energy and enthusiasm for new experiences, seeking dynamic relationships that fuel mutual growth and adventure.",
+      musicPreferences: [
+        "High-BPM electronic tracks that maintain consistent energy and drive",
+        "Innovative sound design and cutting-edge production techniques",
+        "Music designed for movement and physical expression through dance"
+      ],
+      recommendedActivities: [
+        "Electronic music production workshops to channel your innovative musical instincts",
+        "Dance classes or club events where you can express your rhythmic nature",
+        "Technology meetups or innovation conferences to connect with like-minded forward-thinkers"
+      ]
+    }
   },
   "pop_mainstream": {
     description: "Commercially successful popular music designed for broad appeal and radio play.",
-    characteristics: ["Catchy", "Accessible", "Polished", "Commercial"]
+    characteristics: ["Catchy", "Accessible", "Polished", "Commercial"],
+    personalityAnalysis: {
+      typeTitle: "Social Connector",
+      description: "You are naturally social and enjoy connecting with a wide range of people. The catchy melodies and broad appeal of mainstream pop reflect your ability to find common ground and your appreciation for shared experiences.",
+      coreTraits: [
+        {
+          traitName: "Social Adaptability",
+          description: "You excel at connecting with diverse groups and finding common interests",
+          impact: "Building wide networks and fostering inclusive environments"
+        },
+        {
+          traitName: "Trend Awareness",
+          description: "You stay current with popular culture and understand what resonates with people",
+          impact: "Effective communication through understanding of contemporary references"
+        },
+        {
+          traitName: "Positive Energy",
+          description: "You bring uplifting energy to social situations and enjoy shared celebrations",
+          impact: "Creating memorable experiences and maintaining group morale"
+        }
+      ],
+      lifestyleInsights: [
+        "You enjoy social gatherings and events where you can meet new people",
+        "You stay up-to-date with trends in fashion, technology, and entertainment",
+        "You prefer activities that can be shared and enjoyed with friends"
+      ],
+      strengths: [
+        "Natural ability to make others feel welcomed and included",
+        "Strong communication skills that work across different social groups",
+        "Optimistic outlook that helps navigate challenges with resilience"
+      ],
+      challenges: [
+        "Tendency to prioritize popularity over personal authenticity",
+        "Difficulty making decisions without input from others",
+        "Potential for feeling overwhelmed by too many social commitments"
+      ],
+      relationshipCompatibility: "You thrive with partners who enjoy social activities and shared experiences, seeking relationships that enhance your social life while providing emotional support.",
+      musicPreferences: [
+        "Upbeat music for social gatherings and parties",
+        "Current hits that you can share and discuss with friends",
+        "Feel-good music that enhances positive moods and celebrations"
+      ],
+      recommendedActivities: [
+        "Attending concerts and music festivals with friends",
+        "Participating in group fitness classes or dance lessons",
+        "Organizing social events and bringing people together",
+        "Engaging with music communities and fan groups online"
+      ]
+    }
   },
   "pop_indie": {
     description: "Independent pop music that maintains artistic integrity while exploring creative and unconventional approaches.",
-    characteristics: ["Creative", "Authentic", "Quirky", "Independent"]
+    characteristics: ["Creative", "Authentic", "Quirky", "Independent"],
+    personalityAnalysis: {
+      typeTitle: "Creative Independent",
+      description: "You are a uniquely creative individual who values artistic integrity and authentic self-expression. The unconventional melodies and independent spirit of indie pop reflect your desire to create meaningful art while staying true to your personal vision.",
+      coreTraits: [
+        {
+          traitName: "Artistic Integrity",
+          description: "You prioritize creative authenticity over commercial success and maintain your unique perspective",
+          impact: "Creating original, meaningful work that resonates deeply with like-minded individuals"
+        },
+        {
+          traitName: "Independent Spirit",
+          description: "You prefer working autonomously and value freedom to explore creative directions without external pressure",
+          impact: "Innovation through unique approaches that often inspire new trends and movements"
+        },
+        {
+          traitName: "Quirky Charm",
+          description: "You embrace unconventional perspectives and find beauty in the unexpected or overlooked",
+          impact: "Bringing fresh perspectives to problems and helping others see familiar things in new ways"
+        }
+      ],
+      lifestyleInsights: [
+        "You prefer small, intimate venues and authentic experiences over mainstream entertainment",
+        "You enjoy discovering and supporting emerging artists and independent creators",
+        "You value personal expression through fashion, art, or lifestyle choices that reflect your individuality"
+      ],
+      strengths: [
+        "Exceptional creativity and ability to generate original ideas and solutions",
+        "Strong sense of personal identity that remains consistent despite external pressures",
+        "Natural ability to spot emerging trends and authentic talent before they become mainstream"
+      ],
+      challenges: [
+        "Resistance to compromise when creative vision conflicts with practical considerations",
+        "Difficulty promoting yourself or your work in traditional professional environments",
+        "Tendency to be overly critical of commercialized or mainstream approaches"
+      ],
+      relationshipCompatibility: "You connect with creative, open-minded partners who appreciate your unique perspective and support your artistic pursuits without trying to change your independent nature.",
+      musicPreferences: [
+        "Innovative songwriting that combines familiar pop elements with unexpected creative twists",
+        "Intimate acoustic arrangements that highlight authentic vocal and lyrical expression",
+        "Artists who maintain creative control and authenticity throughout their career evolution"
+      ],
+      recommendedActivities: [
+        "Independent film festivals or art shows that showcase emerging creative talent",
+        "Songwriting workshops or creative writing groups for collaborative artistic expression",
+        "Local music venues or coffee shops that support independent artists and foster community"
+      ]
+    }
   },
   "hiphop_oldschool": {
     description: "The foundational hip-hop of the 1970s-80s that established the genre's core elements of rap, DJing, and street culture.",
-    characteristics: ["Foundational", "Raw", "Street", "Rhythmic"]
+    characteristics: ["Foundational", "Raw", "Street", "Rhythmic"],
+    personalityAnalysis: {
+      typeTitle: "Authentic Pioneer",
+      description: "You are someone who values authenticity, originality, and staying true to your roots. The raw energy and foundational spirit of old-school hip-hop reflects your respect for tradition and your desire to build something meaningful from the ground up.",
+      coreTraits: [
+        {
+          traitName: "Authentic Expression",
+          description: "You prioritize genuine self-expression and staying true to your values regardless of trends",
+          impact: "Building trust and respect through consistent authenticity and reliable character"
+        },
+        {
+          traitName: "Cultural Awareness",
+          description: "You have deep appreciation for history, community, and the stories that shape identity",
+          impact: "Bridging generational gaps and preserving important knowledge and traditions"
+        },
+        {
+          traitName: "Rhythmic Leadership",
+          description: "You naturally create rhythm and flow in group settings, bringing people together through shared experiences",
+          impact: "Exceptional ability to motivate teams and create cohesive group dynamics"
+        }
+      ],
+      lifestyleInsights: [
+        "You value community connections and enjoy bringing people together through shared experiences",
+        "You prefer authentic, unpretentious environments where people can be themselves",
+        "You appreciate craftsmanship and the process of building skills through dedicated practice"
+      ],
+      strengths: [
+        "Strong moral compass and ability to stay grounded during challenging times",
+        "Natural storytelling ability that helps others understand complex situations",
+        "Leadership through example rather than authority, inspiring others through authenticity"
+      ],
+      challenges: [
+        "May resist change or new approaches that seem to compromise core values",
+        "Difficulty relating to people who prioritize appearance over substance",
+        "Tendency to be overly critical of superficial or commercialized trends"
+      ],
+      relationshipCompatibility: "You connect with partners who value authenticity and depth, seeking relationships built on mutual respect, shared values, and genuine communication.",
+      musicPreferences: [
+        "Raw, unpolished recordings that capture authentic energy and emotion",
+        "Lyrical content that tells meaningful stories and addresses real-life experiences",
+        "Rhythmic patterns that encourage movement and community participation"
+      ],
+      recommendedActivities: [
+        "Community workshops on history, culture, or traditional arts and crafts",
+        "Mentoring programs where you can share knowledge with younger generations",
+        "Local music venues or cultural events that celebrate authentic artistic expression"
+      ]
+    }
   },
   "hiphop_contemporary": {
     description: "Modern hip-hop that incorporates current production techniques and reflects contemporary social issues.",
@@ -1408,6 +1786,18 @@ export function getGenreTranslation(genreId: string) {
 }
 
 // 언어에 따라 적절한 텍스트를 반환하는 함수들
+export function getGenreName(genre: { name: string; nameKo: string }, language: 'ko' | 'en'): string {
+  return language === 'ko' ? genre.nameKo : genre.name;
+}
+
+export function getArtistName(artist: { name: string; nameKo?: string }, language: 'ko' | 'en'): string {
+  return language === 'ko' ? (artist.nameKo || artist.name) : artist.name;
+}
+
+export function getArtistSubtitle(artist: { name: string; nameKo: string }, language: 'ko' | 'en'): string {
+  return language === 'ko' ? artist.name : '';
+}
+
 export function getGenreDescription(genreId: string, originalDescription: string, language: 'ko' | 'en'): string {
   if (language === 'ko') return originalDescription;
   const translation = getGenreTranslation(genreId);
@@ -1429,9 +1819,9 @@ export function getPersonalityAnalysis(genreId: string, originalAnalysis: Person
     return {
       typeTitle: translatedAnalysis.typeTitle,
       description: translatedAnalysis.description,
-      coreTraits: translatedAnalysis.coreTraits?.map(trait => ({
+      coreTraits: translatedAnalysis.coreTraits?.map((trait, index) => ({
         traitName: trait.traitName,
-        score: 0, // Default score since it's not provided in translations
+        score: originalAnalysis.coreTraits?.[index]?.score || 0, // Preserve original score
         description: trait.description,
         impact: trait.impact
       })) || originalAnalysis.coreTraits,

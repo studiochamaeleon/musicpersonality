@@ -14,7 +14,8 @@
       "initializing": "Initializing app...",
       "preparingSurvey": "Preparing survey...",
       "analyzingResults": "Analyzing results...",
-      "loadingGenres": "Loading genre data..."
+      "loadingGenres": "Loading genre data...",
+      "default": "Loading..."
     },
     "labels": {
       "required": "Answer Required",
@@ -38,23 +39,28 @@
     "musicModelTraits": {
       "mellow": {
         "name": "Mellow",
-        "description": "Calm"
+        "description": "Calm",
+        "abbrev": "MEL"
       },
       "unpretentious": {
         "name": "Unpretentious",
-        "description": "Down-to-earth"
+        "description": "Down-to-earth",
+        "abbrev": "UNP"
       },
       "sophisticated": {
         "name": "Sophisticated", 
-        "description": "Refined"
+        "description": "Refined",
+        "abbrev": "SOP"
       },
       "intense": {
         "name": "Intense",
-        "description": "Passionate"
+        "description": "Passionate",
+        "abbrev": "INT"
       },
       "contemporary": {
         "name": "Contemporary",
-        "description": "Modern"
+        "description": "Modern",
+        "abbrev": "CON"
       }
     },
     "stats": "📝 40 Questions | ⏱️ 5-10 Minutes | 🎵 32 Genres to Explore",
@@ -84,7 +90,8 @@
       "neutral": "Neutral", 
       "agree": "Agree",
       "stronglyAgree": "Strongly Agree"
-    }
+    },
+    "scoreLabel": "Score"
   },
   "results": {
     "title": "Your Results",
@@ -94,15 +101,84 @@
     "recommendedGenres": "Recommended Genres",
     "recommendedArtists": "Recommended Artists", 
     "shareResults": "Share Results",
+    "shareDescription": "Share your musical personality with friends!",
     "exploreMore": "Explore More Genres",
     "showSimpleResults": "Show Simple Results",
     "showDetailedAnalysis": "Show Detailed Analysis",
+    "fallbackTitle": "Your Unique Music Personality",
+    "fallbackDescription": "You have a distinctive and unique musical taste that reflects your personality.",
+    "musicProfileTitle": "Your MUSIC Personality Profile",
+    "unknownGenre": "Unknown Genre",
+    "cannotLoadGenre": "Cannot load genre information.",
+    "recommendationReason": "Why recommended",
+    "keyTracks": "Key Tracks",
+    "clickToListen": "Click to listen",
+    "retakeTest": "Take Test Again",
+    "exploreGenres": "Explore Genres",
+    "musicModelNote": "Based on the MUSIC Model • musicpersonality.app",
+    "fallbackAnalysisNote": "Analysis based on your musical preferences",
+    "uniqueTaste": "Unique taste",
+    "distinctive": "Distinctive",
+    "points": "pts",
+    "selected": "Selected",
     "personalityAnalysis": {
       "coreTraits": "Core Traits",
       "lifestyleInsights": "Lifestyle Insights",
       "strengths": "Strengths", 
       "growthAreas": "Growth Areas"
-    }
+    },
+    "fallbackTraits": {
+      "musicalOpenness": "Musical Openness",
+      "emotionalExpression": "Emotional Expression", 
+      "creativeThinking": "Creative Thinking"
+    },
+    "fallbackDescriptions": {
+      "musicalOpennessDesc": "You have an open mind that enjoys diverse musical styles",
+      "musicalOpennessImpact": "Strong exploratory spirit for various music genres",
+      "emotionalExpressionDesc": "You enjoy expressing your emotions through music",
+      "emotionalExpressionImpact": "Music is an important means of emotional communication",
+      "creativeThinkingDesc": "You show creative and original aspects in your musical taste",
+      "creativeThinkingImpact": "Excellent artistic sense and creativity"
+    },
+    "fallbackLifestyle": {
+      "stressRelief": "You relieve daily stress through music",
+      "personalTime": "You value your personal time through music appreciation",
+      "lifestyleImpact": "Musical taste has a significant impact on your lifestyle"
+    },
+    "fallbackStrengths": {
+      "uniqueTaste": "Unique and distinctive musical taste",
+      "artisticSense": "Artistic sensitivity and creative thinking",
+      "emotionalRegulation": "Ability to regulate emotions through music"
+    },
+    "fallbackChallenges": {
+      "isolation": "Sometimes feeling isolated due to non-mainstream taste",
+      "perfectionism": "Musical perfectionist tendencies",
+      "exploration": "Fear of exploring new genres"
+    },
+    "fallbackActivities": {
+      "concerts": "Attend concerts or festivals",
+      "community": "Participate in music-related community activities",
+      "curation": "Discover new artists and curate music",
+      "creation": "Try music production or performance"
+    },
+    "fallbackMusic": {
+      "captivated": "Deeply captivated by the special charm of this genre",
+      "valueElements": "You value these musical elements",
+      "elementTemplate": "You value {element} musical elements"
+    },
+    "fallbackTitles": {
+      "enthusiast": "Music Enthusiast",
+      "uniqueTaste": "You have a unique taste for this music.",
+      "uniqueDescription": "You have a unique taste that reflects your personality."
+    },
+    "templates": {
+      "typeDescription": "You have a unique taste for {genreName} music. {description}",
+      "lifestyleTemplate": "{message} through {genreName} music.",
+      "musicPreferenceTemplate": "Deeply captivated by the special charm of {genreName}.",
+      "activitiesTemplate": "{activity} for {genreName}"
+    },
+    "yourGenreType": "You are a {genre} enthusiast from {category}!",
+    "genreLabel": "{genre} genre"
   },
   "genreExplorer": {
     "title": "Music Genre Explorer",
@@ -152,7 +228,8 @@
   },
   "chart": {
     "interpretationGuide": "Each axis is displayed on a 0-100 scale,",
-    "interpretationGuide2": "with higher scores indicating stronger traits."
+    "interpretationGuide2": "with higher scores indicating stronger traits.",
+    "musicPersonality": "MUSIC Personality"
   },
   "pwa": {
     "installTitle": "Install App",
@@ -193,10 +270,56 @@
     "compatibilityReason": "Compatibility Reason:",
     "recommendedActivities": "Recommended Activities",
     "shareButton": "📲 Share Results",
-    "resultsCopied": "Results copied to clipboard!"
+    "resultsCopied": "Results copied to clipboard!",
+    "relationshipDynamics": {
+      "complementary": "A relationship that fosters musical growth by filling each other's gaps. You can discover new emotions through {genreName}.",
+      "similarEnhanced": "A relationship for deeper musical exploration based on similar tastes. Share and develop understanding of {genreName} together.",
+      "balanced": "A relationship of balanced musical exchange, recognizing each other's strengths. Harmonious communication is possible centered around {genreName}."
+    },
+    "musicalSynergy": {
+      "complementary": "The characteristics of {genreName} expand your musical experience, creating richer emotions when listening together.",
+      "similarEnhanced": "Common interest in {genreName} enables deep musical conversations and enjoying discovering new artists together.",
+      "balanced": "Share musical perspectives through {genreName} and create balanced playlists together."
+    }
   },
   "error": {
     "occurred": "An error occurred.",
     "tryAgain": "Please try again."
+  },
+  "seo": {
+    "website": {
+      "title": "Music Personality Test - Discover Your Musical Identity",
+      "description": "Take our comprehensive music personality assessment based on the MUSIC model. Discover your unique musical preferences, get personalized genre recommendations, and explore new artists tailored to your personality.",
+      "siteName": "Music Personality Test",
+      "keywords": ["music personality test", "MUSIC model", "music psychology", "genre recommendations", "personality assessment", "musical preferences", "music discovery"],
+      "author": "Music Personality Research",
+      "creator": "Music Personality Test",
+      "publisher": "Music Personality Test",
+      "ogTitle": "Music Personality Test - Discover Your Musical Identity",
+      "ogDescription": "Take our comprehensive music personality assessment and discover your unique musical preferences with personalized recommendations.",
+      "ogImageAlt": "Music Personality Test - Discover Your Musical Identity",
+      "twitterTitle": "Music Personality Test - Discover Your Musical Identity",
+      "twitterDescription": "Take our comprehensive music personality assessment and discover your unique musical preferences with personalized recommendations.",
+      "twitterCreator": "@musicpersonality"
+    },
+    "structuredData": {
+      "website": {
+        "name": "Music Personality Test",
+        "description": "Comprehensive music personality assessment based on the MUSIC model",
+        "organizationName": "Music Personality Research"
+      },
+      "quiz": {
+        "educationalLevel": "General",
+        "learningResourceType": "Assessment",
+        "aboutName": "Music Psychology",
+        "aboutDescription": "MUSIC model personality assessment",
+        "questionName": "Music Preference Questions",
+        "questionText": "Questions about musical preferences and listening habits"
+      },
+      "article": {
+        "headline": "Understanding Your Music Personality",
+        "authorName": "Music Personality Research"
+      }
+    }
   }
 }

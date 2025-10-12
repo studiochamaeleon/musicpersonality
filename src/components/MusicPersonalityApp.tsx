@@ -7,6 +7,7 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import PWAInstallPrompt from '@/components/PWAInstallPrompt';
 import LanguageSelector from '@/components/LanguageSelector';
 import { useTranslation } from '@/hooks/useTranslation';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { analytics } from '@/lib/analytics';
 
 // Lazy load heavy components
@@ -20,6 +21,7 @@ type AppState = 'intro' | 'survey' | 'results' | 'genre-explorer';
 
 const MusicPersonalityApp: React.FC = () => {
   const { t } = useTranslation();
+  const { language } = useLanguage();
   const [appState, setAppState] = useState<AppState>('intro');
   const [personalityScores, setPersonalityScores] = useState<MUSICPersonality | null>(null);
   const [recommendedGenres, setRecommendedGenres] = useState<EnhancedRecommendationScore[]>([]);
@@ -58,7 +60,7 @@ const MusicPersonalityApp: React.FC = () => {
     setRecommendedGenres(recommendations);
 
     // 아티스트 추천
-    const artists = recommendArtists(recommendations, genres);
+    const artists = recommendArtists(recommendations, genres, 6, language);
     setRecommendedArtistsList(artists);
 
     // 분석 추적
@@ -85,7 +87,7 @@ const MusicPersonalityApp: React.FC = () => {
 
   // 데이터 로딩 중
   if (!dataLoaded) {
-    return <LoadingSpinner message={t('loading.initializing')} />;
+    return <LoadingSpinner message={t('common.loading.initializing')} />;
   }
 
   // 인트로 화면
@@ -164,10 +166,11 @@ const MusicPersonalityApp: React.FC = () => {
   // 설문 화면
   if (appState === 'survey') {
     return (
-      <Suspense fallback={<LoadingSpinner message={t('loading.preparingSurvey')} />}>
+      <Suspense fallback={<LoadingSpinner message={t('common.loading.preparingSurvey')} />}>
         <Survey
           questions={questions}
           onComplete={handleSurveyComplete}
+          onGoHome={() => setAppState('intro')}
         />
       </Suspense>
     );
@@ -176,7 +179,7 @@ const MusicPersonalityApp: React.FC = () => {
   // 결과 화면
   if (appState === 'results' && personalityScores) {
     return (
-      <Suspense fallback={<LoadingSpinner message={t('loading.analyzingResults')} />}>
+      <Suspense fallback={<LoadingSpinner message={t('common.loading.analyzingResults')} />}>
         <PersonalityResults
           personalityScores={personalityScores}
           recommendedGenres={recommendedGenres}
@@ -198,12 +201,12 @@ const MusicPersonalityApp: React.FC = () => {
               onClick={() => setAppState('intro')}
               className="text-blue-600 hover:text-blue-800 font-medium"
             >
-              ← {t('common.backToHome')}
+              ← {t('common.buttons.backToHome')}
             </button>
           </div>
         </div>
         
-        <Suspense fallback={<LoadingSpinner message={t('loading.loadingGenres')} />}>
+        <Suspense fallback={<LoadingSpinner message={t('common.loading.loadingGenres')} />}>
           <GenreExplorer
             genres={genres}
             onGenreSelect={() => {

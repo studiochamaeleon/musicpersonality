@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { useTranslation } from '@/hooks/useTranslation';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ProgressIndicatorProps {
   currentStep: number;
@@ -16,7 +15,6 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
   stepLabels = []
 }) => {
   const { t } = useTranslation();
-  const { language } = useLanguage();
   const progressPercentage = (currentStep / totalSteps) * 100;
 
   return (
@@ -58,12 +56,12 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
       {/* MUSIC 모델 카테고리 진행도 */}
       <div className="mt-6 grid grid-cols-5 gap-2 text-xs">
         {[
-          { key: 'MELLOW', ko: '침착', en: 'MEL' },
-          { key: 'UNPRETENTIOUS', ko: '소탈', en: 'UNP' },
-          { key: 'SOPHISTICATED', ko: '세련', en: 'SOP' },
-          { key: 'INTENSE', ko: '강렬', en: 'INT' },
-          { key: 'CONTEMPORARY', ko: '현대', en: 'CON' }
-        ].map((category, categoryIndex) => {
+          'mellow',
+          'unpretentious', 
+          'sophisticated',
+          'intense',
+          'contemporary'
+        ].map((categoryKey, categoryIndex) => {
             const categoryStart = categoryIndex * 8 + 1;
             const categoryEnd = (categoryIndex + 1) * 8;
             const isCategoryActive = currentStep >= categoryStart;
@@ -71,7 +69,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
             
             return (
               <div
-                key={category.key}
+                key={categoryKey}
                 className={`
                   text-center p-2 rounded-md border
                   ${isCategoryComplete 
@@ -82,7 +80,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({
                   }
                 `}
               >
-                <div className="font-semibold">{language === 'ko' ? category.ko : category.en}</div>
+                <div className="font-semibold">{t(`intro.musicModelTraits.${categoryKey}.abbrev`)}</div>
                 <div className="text-[10px] mt-1">
                   {Math.max(0, Math.min(8, currentStep - categoryStart + (categoryStart <= currentStep ? 1 : 0)))}/8
                 </div>
