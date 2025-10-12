@@ -70,7 +70,7 @@ export const metadata: Metadata = {
   verification: {
     // TODO: Google Search Console에서 발급받은 실제 인증 코드로 교체하세요
     // https://search.google.com/search-console 에서 속성 추가 -> HTML 태그 방법 선택
-    google: 'your-google-verification-code',
+    google: '897h18-AYZCjwMGmgsBpLGqcLj306BDOaleFgmFbYOg',
     yandex: 'your-yandex-verification-code',
   },
 };
