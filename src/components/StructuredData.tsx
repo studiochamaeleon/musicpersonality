@@ -18,7 +18,7 @@ const StructuredData: React.FC<LocalizedStructuredDataProps> = ({ type, data = {
     const baseData = {
       "@context": "https://schema.org",
       "@type": type === 'website' ? "WebSite" : type === 'quiz' ? "Quiz" : "Article",
-      "url": "https://music-personality-test.vercel.app",
+      "url": "https://musicpersonalitytest.pages.dev",
       "name": getLocalizedText('Music Personality Test', '음악 성격 테스트'),
       "description": getLocalizedText(
         'Comprehensive music personality assessment based on the MUSIC model',
@@ -27,7 +27,7 @@ const StructuredData: React.FC<LocalizedStructuredDataProps> = ({ type, data = {
       "publisher": {
         "@type": "Organization",
         "name": getLocalizedText('Music Personality Research', '음악 성격 연구소'),
-        "url": "https://music-personality-test.vercel.app"
+        "url": "https://musicpersonalitytest.pages.dev"
       }
     };
 
@@ -37,7 +37,7 @@ const StructuredData: React.FC<LocalizedStructuredDataProps> = ({ type, data = {
           ...baseData,
           "potentialAction": {
             "@type": "SearchAction",
-            "target": "https://music-personality-test.vercel.app/search?q={search_term_string}",
+            "target": "https://musicpersonalitytest.pages.dev/search?q={search_term_string}",
             "query-input": "required name=search_term_string"
           }
         };
@@ -81,11 +81,11 @@ const StructuredData: React.FC<LocalizedStructuredDataProps> = ({ type, data = {
           "dateModified": data.dateModified || new Date().toISOString(),
           "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https://music-personality-test.vercel.app"
+            "@id": "https://musicpersonalitytest.pages.dev"
           },
           "image": {
             "@type": "ImageObject",
-            "url": "https://music-personality-test.vercel.app/og-image.jpg",
+            "url": "https://musicpersonalitytest.pages.dev/og-image.jpg",
             "width": 1200,
             "height": 630
           },

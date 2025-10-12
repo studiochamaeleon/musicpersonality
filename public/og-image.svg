@@ -31,5 +31,5 @@
   <text x="600" y="460" text-anchor="middle" fill="#6366f1" font-family="system-ui" font-size="24" font-weight="bold">Take the Test</text>
   
   <!-- Domain -->
-  <text x="600" y="580" text-anchor="middle" fill="white" font-family="system-ui" font-size="18" font-weight="normal">music-personality-test.vercel.app</text>
+  <text x="600" y="580" text-anchor="middle" fill="white" font-family="system-ui" font-size="18" font-weight="normal">musicpersonalitytest.pages.dev</text>
 </svg>

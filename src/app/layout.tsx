@@ -29,11 +29,11 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://music-personality-test.vercel.app'),
+  metadataBase: new URL('https://musicpersonalitytest.pages.dev'),
   openGraph: {
     title: "Music Personality Test - Discover Your Musical Identity",
     description: "Take our comprehensive music personality assessment and discover your unique musical preferences with personalized recommendations.",
-    url: 'https://music-personality-test.vercel.app',
+    url: 'https://musicpersonalitytest.pages.dev',
     siteName: 'Music Personality Test',
     images: [
       {

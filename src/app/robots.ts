@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/private/', '/admin/'],
     },
-    sitemap: 'https://music-personality-test.vercel.app/sitemap.xml',
+    sitemap: 'https://musicpersonalitytest.pages.dev/sitemap.xml',
   }
 }
