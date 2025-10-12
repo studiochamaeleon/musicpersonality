@@ -20,7 +20,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Music Personality Test - Discover Your Musical Identity",
   description: "Take our comprehensive music personality assessment based on the MUSIC model. Discover your unique musical preferences, get personalized genre recommendations, and explore new artists tailored to your personality.",
-  keywords: ["music personality test", "MUSIC model", "music psychology", "genre recommendations", "personality assessment", "musical preferences", "music discovery"],
+  keywords: [
+    "music personality test", "MUSIC model", "music psychology", "genre recommendations", "personality assessment", "musical preferences", "music discovery",
+    "음악 성격 테스트", "음악 취향 테스트", "성격 유형 검사", "음악 MBTI", "음악 심리 테스트", "음악 성향 분석", "음악 선호도 테스트", "성격 테스트", "심리 테스트", "음악 추천", "장르 추천"
+  ],
   authors: [{ name: "Music Personality Research" }],
   creator: "Music Personality Test",
   publisher: "Music Personality Test",
@@ -65,6 +68,8 @@ export const metadata: Metadata = {
     },
   },
   verification: {
+    // TODO: Google Search Console에서 발급받은 실제 인증 코드로 교체하세요
+    // https://search.google.com/search-console 에서 속성 추가 -> HTML 태그 방법 선택
     google: 'your-google-verification-code',
     yandex: 'your-yandex-verification-code',
   },
@@ -76,7 +81,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    <html lang="en">
       <head>
         <StructuredData type="website" />
         <script

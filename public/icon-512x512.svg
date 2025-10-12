@@ -5,5 +5,6 @@
   <circle cx="256" cy="256" r="80" fill="white" fill-opacity="0.3"/>
   <circle cx="256" cy="256" r="40" fill="white"/>
   <path d="M256 216 L296 256 L256 296 L216 256 Z" fill="#6366f1"/>
-  <text x="256" y="380" text-anchor="middle" fill="white" font-family="system-ui" font-size="32" font-weight="bold">MUSIC</text>
+  <text x="256" y="410" text-anchor="middle" fill="white" font-family="system-ui" font-size="28" font-weight="bold">MUSIC</text>
+  <text x="256" y="440" text-anchor="middle" fill="white" font-family="system-ui" font-size="20" font-weight="normal">PERSONALITY TEST</text>
 </svg>

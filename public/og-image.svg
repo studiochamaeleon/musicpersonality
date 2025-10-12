@@ -9,13 +9,7 @@
   
   <rect width="1200" height="630" fill="url(#bgGradient)"/>
   
-  <!-- Radar Chart Background -->
-  <circle cx="300" cy="315" r="120" fill="white" fill-opacity="0.1"/>
-  <circle cx="300" cy="315" r="80" fill="white" fill-opacity="0.1"/>
-  <circle cx="300" cy="315" r="40" fill="white" fill-opacity="0.1"/>
-  
-  <!-- Pentagon shape for MUSIC model -->
-  <polygon points="300,195 374,255 344,343 256,343 226,255" fill="white" fill-opacity="0.3" stroke="white" stroke-width="2"/>
+
   
   <!-- Title -->
   <text x="600" y="200" text-anchor="middle" fill="white" font-family="system-ui" font-size="64" font-weight="bold">Music Personality Test</text>

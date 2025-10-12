@@ -14,7 +14,7 @@ export default function DynamicMetadata() {
     // Update document title
     document.title = getLocalizedText(
       'Music Personality Test - Discover Your Musical Identity',
-      '음악 성격 테스트 - 나만의 음악적 정체성 발견하기'
+      '음악 성격 테스트 | 음악 취향 분석으로 나만의 MUSIC 성향 찾기'
     );
 
     // Update meta description
@@ -22,7 +22,7 @@ export default function DynamicMetadata() {
     if (metaDescription) {
       metaDescription.setAttribute('content', getLocalizedText(
         'Take our comprehensive music personality assessment based on the MUSIC model. Discover your unique musical preferences, get personalized genre recommendations, and explore new artists tailored to your personality.',
-        'MUSIC 모델을 기반으로 한 포괄적인 음악 성격 평가를 받아보세요. 고유한 음악적 선호도를 발견하고, 개인 맞춤형 장르 추천과 성격에 맞는 새로운 아티스트를 탐색해보세요.'
+        '무료 음악 성격 테스트로 나의 음악 취향을 분석해보세요! MUSIC 모델 기반의 심리 테스트로 개인 맞춤 장르 추천과 음악 성향 분석을 받아보실 수 있습니다. 5분만에 완료 가능한 음악 MBTI 테스트.'
       ));
     }
 
@@ -31,7 +31,7 @@ export default function DynamicMetadata() {
     if (ogTitle) {
       ogTitle.setAttribute('content', getLocalizedText(
         'Music Personality Test - Discover Your Musical Identity',
-        '음악 성격 테스트 - 나만의 음악적 정체성 발견하기'
+        '음악 성격 테스트 | 음악 취향 분석으로 나만의 MUSIC 성향 찾기'
       ));
     }
 
@@ -40,7 +40,7 @@ export default function DynamicMetadata() {
     if (ogDescription) {
       ogDescription.setAttribute('content', getLocalizedText(
         'Take our comprehensive music personality assessment and discover your unique musical preferences with personalized recommendations.',
-        '포괄적인 음악 성격 평가를 통해 고유한 음악적 선호도를 발견하고 개인 맞춤형 추천을 받아보세요.'
+        '무료 음악 성격 테스트로 나의 음악 취향 분석! MUSIC 모델 기반 심리 테스트로 개인 맞춤 장르 추천을 받아보세요.'
       ));
     }
 
@@ -58,7 +58,7 @@ export default function DynamicMetadata() {
     if (twitterTitle) {
       twitterTitle.setAttribute('content', getLocalizedText(
         'Music Personality Test - Discover Your Musical Identity',
-        '음악 성격 테스트 - 나만의 음악적 정체성 발견하기'
+        '음악 성격 테스트 | 음악 취향 분석으로 나만의 MUSIC 성향 찾기'
       ));
     }
 
@@ -67,7 +67,7 @@ export default function DynamicMetadata() {
     if (twitterDescription) {
       twitterDescription.setAttribute('content', getLocalizedText(
         'Take our comprehensive music personality assessment and discover your unique musical preferences with personalized recommendations.',
-        '포괄적인 음악 성격 평가를 통해 고유한 음악적 선호도를 발견하고 개인 맞춤형 추천을 받아보세요.'
+        '무료 음악 성격 테스트로 나의 음악 취향 분석! MUSIC 모델 기반 심리 테스트로 개인 맞춤 장르 추천을 받아보세요.'
       ));
     }
 

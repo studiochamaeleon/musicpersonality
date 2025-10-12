@@ -528,26 +528,26 @@ const GenreExplorer: React.FC<GenreExplorerProps> = ({ genres, onGenreSelect }) 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-4 mb-4">
             {/* 검색 */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" size={18} />
               <input
                 type="text"
                 placeholder={t('genreExplorer.searchPlaceholder')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-600"
               />
             </div>
 
             {/* 카테고리 필터 */}
             <div className="relative">
-              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" size={18} />
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none text-gray-900"
               >
                 {categories.map(cat => (
-                  <option key={cat} value={cat}>
+                  <option key={cat} value={cat} className="text-gray-900">
                     {cat === 'all' ? t('genreExplorer.categories.all') : cat}
                   </option>
                 ))}
@@ -558,12 +558,12 @@ const GenreExplorer: React.FC<GenreExplorerProps> = ({ genres, onGenreSelect }) 
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as 'name' | 'popularity' | 'energy' | 'era')}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
             >
-              <option value="popularity">{t('genreExplorer.sortBy.popularity')}</option>
-              <option value="name">{t('genreExplorer.sortBy.name')}</option>
-              <option value="energy">{t('genreExplorer.sortBy.energy')}</option>
-              <option value="era">{t('genreExplorer.sortBy.era')}</option>
+              <option value="popularity" className="text-gray-900">{t('genreExplorer.sortBy.popularity')}</option>
+              <option value="name" className="text-gray-900">{t('genreExplorer.sortBy.name')}</option>
+              <option value="energy" className="text-gray-900">{t('genreExplorer.sortBy.energy')}</option>
+              <option value="era" className="text-gray-900">{t('genreExplorer.sortBy.era')}</option>
             </select>
 
             {/* 뷰 모드 */}

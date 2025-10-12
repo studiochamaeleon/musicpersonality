@@ -93,14 +93,14 @@ const MusicPersonalityApp: React.FC = () => {
   // 인트로 화면
   if (appState === 'intro') {
     return (
-      <div className="intro-screen min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 flex items-center justify-center relative">
+      <div className="intro-screen min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 flex items-center justify-center relative py-8">
         {/* Language Selector - responsive positioning */}
         <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-10">
           <LanguageSelector />
         </div>
         
-        <div className="text-center text-white max-w-2xl mx-auto px-4">
-          <div className="text-8xl mb-8">🎵</div>
+        <div className="text-center text-white max-w-2xl mx-auto px-4 py-8">
+          <div className="text-8xl mb-12 mt-8">🎵</div>
           
           <h1 className="text-5xl font-bold mb-6">
             {t('intro.title')}
@@ -153,7 +153,7 @@ const MusicPersonalityApp: React.FC = () => {
               </button>
             </div>
             
-            <div className="text-sm opacity-80">
+            <div className="text-sm opacity-80 mb-8">
               <p>{t('intro.testInfo')}</p>
             </div>
           </div>

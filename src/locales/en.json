@@ -115,7 +115,7 @@
     "clickToListen": "Click to listen",
     "retakeTest": "Take Test Again",
     "exploreGenres": "Explore Genres",
-    "musicModelNote": "Based on the MUSIC Model • musicpersonality.app",
+    "musicModelNote": "Based on the MUSIC Model • musicpersonalitytest.pages.dev",
     "fallbackAnalysisNote": "Analysis based on your musical preferences",
     "uniqueTaste": "Unique taste",
     "distinctive": "Distinctive",
@@ -246,7 +246,7 @@
     "myMusicalPersonality": "My Musical Personality",
     "myMusicalTraits": "My Musical Traits",
     "match": "match",
-    "basedOnMusicModel": "Based on MUSIC Model • musicpersonality.app"
+    "basedOnMusicModel": "Based on MUSIC Model • musicpersonalitytest.pages.dev"
   },
   "analysisReport": {
     "coreTraits": "Core Traits",

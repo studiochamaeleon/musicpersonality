@@ -53,18 +53,66 @@ const StructuredData: React.FC<LocalizedStructuredDataProps> = ({ type, data = {
             "name": getLocalizedText('Music Psychology', '음악 심리학'),
             "description": getLocalizedText('MUSIC model personality assessment', 'MUSIC 모델 성격 평가')
           },
+          "teaches": getLocalizedText(
+            'Understanding personal music preferences and personality traits through the MUSIC model',
+            'MUSIC 모델을 통한 개인 음악 선호도 및 성격 특성 이해'
+          ),
+          "assesses": getLocalizedText(
+            'Musical preferences across five dimensions: Mellow, Unpretentious, Sophisticated, Intense, and Contemporary',
+            '다섯 차원의 음악적 선호도: 부드러움, 솔직함, 세련됨, 강렬함, 현대성'
+          ),
           "hasPart": [
             {
               "@type": "Question",
-              "name": getLocalizedText('Music Preference Questions', '음악 선호도 질문'),
+              "name": getLocalizedText('Mellow Dimension Assessment', '부드러움 차원 평가'),
               "text": getLocalizedText(
-                'Questions about musical preferences and listening habits',
-                '음악적 선호도와 청취 습관에 관한 질문'
+                'Questions about preference for soft, romantic, and slow music',
+                '부드럽고 로맨틱하며 느린 음악에 대한 선호도 질문'
+              )
+            },
+            {
+              "@type": "Question", 
+              "name": getLocalizedText('Unpretentious Dimension Assessment', '솔직함 차원 평가'),
+              "text": getLocalizedText(
+                'Questions about preference for uncomplicated, relaxing music',
+                '복잡하지 않고 편안한 음악에 대한 선호도 질문'
+              )
+            },
+            {
+              "@type": "Question",
+              "name": getLocalizedText('Sophisticated Dimension Assessment', '세련됨 차원 평가'), 
+              "text": getLocalizedText(
+                'Questions about preference for complex, intelligent music',
+                '복잡하고 지적인 음악에 대한 선호도 질문'
+              )
+            },
+            {
+              "@type": "Question",
+              "name": getLocalizedText('Intense Dimension Assessment', '강렬함 차원 평가'),
+              "text": getLocalizedText(
+                'Questions about preference for distorted, loud, and aggressive music',
+                '일그러지고 큰 소리의 공격적인 음악에 대한 선호도 질문'
+              )
+            },
+            {
+              "@type": "Question",
+              "name": getLocalizedText('Contemporary Dimension Assessment', '현대성 차원 평가'),
+              "text": getLocalizedText(
+                'Questions about preference for rap, electronica, and modern music',
+                '랩, 일렉트로니카, 현대 음악에 대한 선호도 질문'
               )
             }
           ],
+          "numberOfQuestions": 25,
+          "timeRequired": "PT5M",
           "totalTime": "PT5M",
           "isAccessibleForFree": true,
+          "inLanguage": language === 'ko' ? 'ko' : 'en',
+          "audience": {
+            "@type": "Audience",
+            "audienceType": getLocalizedText('Music enthusiasts', '음악 애호가')
+          },
+          "typicalAgeRange": "13-99",
           ...data
         };
 

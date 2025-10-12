@@ -2,7 +2,7 @@
 
 import React, { useRef } from 'react';
 import html2canvas from 'html2canvas';
-import { Download, Share2 } from 'lucide-react';
+import { Share2 } from 'lucide-react';
 import { MUSICPersonality, GenreSchema } from '@/types';
 import { analytics } from '@/lib/analytics';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -38,34 +38,7 @@ const ShareableCard: React.FC<ShareableCardProps> = ({
     .sort(([,a], [,b]) => b - a)
     .slice(0, 3);
 
-  const downloadImage = async () => {
-    if (!cardRef.current) return;
 
-    // Track download action
-    analytics.track('result_shared', {
-      shareType: 'download',
-      topGenre: topGenre.name,
-      topGenreKo: topGenre.nameKo,
-      personalityScores
-    });
-
-    try {
-      const canvas = await html2canvas(cardRef.current, {
-        background: '#ffffff',
-        useCORS: true,
-        allowTaint: false,
-        width: 600,
-        height: 800
-      });
-
-      const link = document.createElement('a');
-      link.download = `music-personality-${topGenre.name}.png`;
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    } catch (error) {
-      console.error('Failed to download image:', error);
-    }
-  };
 
   const shareUnified = async () => {
     // Track unified share action
@@ -261,19 +234,11 @@ const ShareableCard: React.FC<ShareableCardProps> = ({
         </div>
       </div>
 
-      {/* 공유 버튼들 */}
-      <div className="mt-6 flex flex-wrap justify-center gap-2 md:gap-3 px-4 md:px-0">
-        <button
-          onClick={downloadImage}
-          className="flex items-center space-x-2 px-3 md:px-4 py-2 md:py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 active:bg-green-700 transition-colors touch-feedback min-h-[44px] text-sm md:text-base"
-        >
-          <Download size={18} />
-          <span>{t('sharing.download')}</span>
-        </button>
-        
+      {/* 공유 버튼들 - 3버튼 레이아웃 */}
+      <div className="mt-6 flex justify-center gap-3 md:gap-4 px-4 md:px-0">
         <button
           onClick={shareUnified}
-          className="flex items-center space-x-2 px-3 md:px-4 py-2 md:py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 active:bg-purple-700 transition-colors touch-feedback min-h-[44px] text-sm md:text-base"
+          className="flex items-center space-x-2 px-4 md:px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 active:bg-purple-700 transition-colors touch-feedback min-h-[44px] text-sm md:text-base font-medium"
         >
           <Share2 size={18} />
           <span>{t('sharing.share')}</span>
@@ -281,14 +246,14 @@ const ShareableCard: React.FC<ShareableCardProps> = ({
         
         <button
           onClick={shareToTwitter}
-          className="flex items-center space-x-2 px-3 md:px-4 py-2 md:py-3 bg-black text-white rounded-lg hover:bg-gray-800 active:bg-gray-900 transition-colors touch-feedback min-h-[44px] text-sm md:text-base"
+          className="flex items-center justify-center px-4 md:px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 active:bg-gray-900 transition-colors touch-feedback min-h-[44px] text-sm md:text-base font-medium min-w-[60px]"
         >
           <span>𝕏</span>
         </button>
         
         <button
           onClick={shareToFacebook}
-          className="flex items-center space-x-2 px-3 md:px-4 py-2 md:py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-800 active:bg-blue-900 transition-colors touch-feedback min-h-[44px] text-sm md:text-base"
+          className="flex items-center justify-center px-4 md:px-6 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-800 active:bg-blue-900 transition-colors touch-feedback min-h-[44px] text-sm md:text-base font-medium min-w-[100px]"
         >
           <span>Facebook</span>
         </button>
