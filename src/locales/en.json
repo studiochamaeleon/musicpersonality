@@ -321,5 +321,168 @@
         "authorName": "Music Personality Research"
       }
     }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated:",
+    "sections": {
+      "introduction": {
+        "title": "Introduction",
+        "content": "Welcome to Music Personality Test. We are committed to protecting your privacy. This policy explains our privacy-focused approach: we do not collect or store your personal information. All survey responses and results remain private in your browser."
+      },
+      "dataCollection": {
+        "title": "Information We Collect",
+        "noCollectionTitle": "Information We DO NOT Collect",
+        "noCollectionContent": "We are committed to protecting your privacy. Our music personality test operates entirely in your browser and does not collect or store any personal information on our servers.",
+        "localStorageTitle": "Local Browser Storage Only",
+        "localStorageItems": [
+          "Survey responses are stored only in your browser's local storage",
+          "Language preferences are saved locally in your browser", 
+          "Test results remain on your device and are never transmitted to us",
+          "No personal identifiers (name, email, phone) are collected"
+        ],
+        "thirdPartyTitle": "Third-Party Data Collection",
+        "thirdPartyItems": [
+          "Google AdSense may collect cookies and usage data for advertising purposes",
+          "We do not have access to or control over third-party data collection"
+        ]
+      },
+      "dataUsage": {
+        "title": "How We Use Your Information", 
+        "noUsageContent": "We do not use your personal information because we do not collect it.",
+        "browserProcessingContent": "What happens in your browser:",
+        "browserProcessingItems": [
+          "Survey responses are processed locally to generate your personality results",
+          "Language preferences are remembered for your convenience",
+          "All processing happens on your device - nothing is sent to our servers"
+        ]
+      },
+      "thirdPartyServices": {
+        "title": "Third-Party Services",
+        "googleAdsenseTitle": "Google AdSense",
+        "googleAdsenseContent": "We use Google AdSense to display advertisements. Google may use cookies and web beacons to collect information about your visits to this and other websites to provide targeted advertisements. You can opt out of personalized advertising by visiting Google's Ad Settings.",
+        "noAnalyticsTitle": "No Analytics Services",
+        "noAnalyticsContent": "We do not use any analytics services or tracking tools to monitor your behavior. Your usage of our website is completely private."
+      },
+      "cookies": {
+        "title": "Cookies and Local Storage",
+        "ourStorageTitle": "Our Use of Local Storage",
+        "ourStorageContent": "We use only local browser storage to:",
+        "ourStorageItems": [
+          "Save your survey progress and results locally on your device",
+          "Remember your language preference",
+          "No tracking or analytics cookies are used by us"
+        ],
+        "thirdPartyCookiesTitle": "Third-Party Cookies",
+        "thirdPartyCookiesContent": "Google AdSense may use cookies for advertising purposes. You can control these through your browser settings or Google's Ad Settings. Disabling cookies will not affect the core functionality of our personality test."
+      },
+      "dataSecurity": {
+        "title": "Data Security",
+        "content": "Your data is secure because it never leaves your device. All survey responses and results are processed and stored locally in your browser. Since we don't collect or transmit your personal information to our servers, there is no risk of data breaches or unauthorized access to your survey responses."
+      },
+      "userRights": {
+        "title": "Your Data Control",
+        "content": "You have complete control over your data because it's stored locally in your browser:",
+        "controlItems": [
+          "Clear your browser's local storage to delete all survey data",
+          "Your data never leaves your device, so there's nothing for us to access or delete", 
+          "You can retake the test anytime without any account or registration"
+        ],
+        "noTraditionalRights": "Since we don't collect personal information, traditional data rights (access, correction, deletion requests) don't apply to our service."
+      },
+      "childrenPrivacy": {
+        "title": "Children's Privacy",
+        "content": "Since we do not collect any personal information from users of any age, our service is safe for children to use. All data remains on the user's device. However, we recommend parental guidance for children under 13 when using any online service."
+      },
+      "policyChanges": {
+        "title": "Changes to This Policy", 
+        "content": "We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the \"Last updated\" date at the top of this policy."
+      },
+      "contact": {
+        "title": "Contact Us",
+        "content": "If you have any questions about this privacy policy or our data practices, please contact us at:",
+        "email": "Email: studiochamaeleon@gmail.com",
+        "website": "Website: https://musicpersonalitytest.pages.dev"
+      }
+    }
+  },
+  "terms": {
+    "title": "Terms of Service", 
+    "lastUpdated": "Last updated:",
+    "sections": {
+      "acceptance": {
+        "title": "Acceptance of Terms",
+        "content": "By accessing and using Music Personality Test (\"the Service\"), you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service."
+      },
+      "serviceDescription": {
+        "title": "Description of Service",
+        "content": "Music Personality Test is a free online service that provides music personality assessments based on scientific research. The service analyzes your responses to provide personalized insights about your musical preferences and personality traits."
+      },
+      "userResponsibilities": {
+        "title": "User Responsibilities",
+        "content": "By using our service, you agree to:",
+        "responsibilities": [
+          "Provide accurate and truthful information in your responses",
+          "Use the service for personal, non-commercial purposes only",
+          "Not attempt to manipulate, hack, or disrupt the service",
+          "Not use the service for any illegal or unauthorized purpose", 
+          "Respect the intellectual property rights of the service"
+        ]
+      },
+      "privacyData": {
+        "title": "Privacy and Data",
+        "content": "Your privacy is important to us. Please review our Privacy Policy, which also governs your use of the service, to understand our practices regarding your personal information."
+      },
+      "intellectualProperty": {
+        "title": "Intellectual Property",
+        "content": "The service and its original content, features, and functionality are owned by Music Personality Test and are protected by international copyright, trademark, patent, trade secret, and other intellectual property laws."
+      },
+      "warranties": {
+        "title": "Disclaimer of Warranties",
+        "content": "The service is provided on an \"AS IS\" and \"AS AVAILABLE\" basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including without limitation:",
+        "disclaimers": [
+          "Implied warranties or conditions of merchantability",
+          "Fitness for a particular purpose",
+          "Non-infringement of intellectual property", 
+          "Accuracy, reliability, or completeness of assessment results"
+        ]
+      },
+      "liability": {
+        "title": "Limitation of Liability", 
+        "content": "In no event shall Music Personality Test, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from your use of the service."
+      },
+      "assessmentDisclaimer": {
+        "title": "Assessment Results Disclaimer",
+        "content": "Please note that:",
+        "disclaimers": [
+          "Assessment results are for entertainment and educational purposes only",
+          "Results should not be used for making important life decisions", 
+          "The assessment is not a substitute for professional psychological evaluation",
+          "Results may vary based on your mood, circumstances, and other factors"
+        ]
+      },
+      "advertising": {
+        "title": "Advertising",
+        "content": "The service may display advertisements and promotional content. We are not responsible for the content of third-party advertisements or any products or services advertised therein."
+      },
+      "termination": {
+        "title": "Termination",
+        "content": "We may terminate or suspend access to our service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms."
+      },
+      "changes": {
+        "title": "Changes to Terms",
+        "content": "We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will try to provide at least 30 days notice prior to any new terms taking effect."
+      },
+      "governingLaw": {
+        "title": "Governing Law",
+        "content": "These Terms shall be interpreted and governed by the laws of the jurisdiction in which the service operates, without regard to conflict of law provisions."
+      },
+      "contact": {
+        "title": "Contact Information",
+        "content": "If you have any questions about these Terms of Service, please contact us at:",
+        "email": "Email: studiochamaeleon@gmail.com",
+        "website": "Website: https://musicpersonalitytest.pages.dev"
+      }
+    }
   }
 }

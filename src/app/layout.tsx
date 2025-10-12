@@ -6,6 +6,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import DynamicLang from "@/components/DynamicLang";
 import DynamicStructuredData from "@/components/DynamicStructuredData";
 import DynamicMetadata from "@/components/DynamicMetadata";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -108,13 +109,16 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <LanguageProvider>
           <DynamicLang />
           <DynamicStructuredData />
           <DynamicMetadata />
-          {children}
+          <div className="flex-1">
+            {children}
+          </div>
+          <Footer />
         </LanguageProvider>
       </body>
     </html>
