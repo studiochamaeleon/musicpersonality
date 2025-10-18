@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     siteName: 'Music Personality Test',
     images: [
       {
-        url: '/og-image.svg',
+        url: '/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Music Personality Test - Discover Your Musical Identity',
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: "Music Personality Test - Discover Your Musical Identity",
     description: "Take our comprehensive music personality assessment and discover your unique musical preferences with personalized recommendations.",
-    images: ['/og-image.svg'],
+    images: ['/og-image.png'],
     creator: '@musicpersonality',
   },
   robots: {
