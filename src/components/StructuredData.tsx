@@ -27,7 +27,13 @@ const StructuredData: React.FC<LocalizedStructuredDataProps> = ({ type, data = {
       "publisher": {
         "@type": "Organization",
         "name": getLocalizedText('Music Personality Research', '음악 성격 연구소'),
-        "url": "https://musicpersonalitytest.pages.dev"
+        "url": "https://musicpersonalitytest.pages.dev",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://musicpersonalitytest.pages.dev/favicon-64x64.png",
+          "width": 64,
+          "height": 64
+        }
       }
     };
 
@@ -35,6 +41,12 @@ const StructuredData: React.FC<LocalizedStructuredDataProps> = ({ type, data = {
       case 'website':
         return {
           ...baseData,
+          "image": {
+            "@type": "ImageObject",
+            "url": "https://musicpersonalitytest.pages.dev/favicon-64x64.png",
+            "width": 64,
+            "height": 64
+          },
           "potentialAction": {
             "@type": "SearchAction",
             "target": "https://musicpersonalitytest.pages.dev/search?q={search_term_string}",
