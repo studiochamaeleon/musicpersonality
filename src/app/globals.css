@@ -75,8 +75,8 @@ button { -webkit-tap-highlight-color: transparent; }
 
 .intro-matrix-fade {
   background:
-    radial-gradient(circle at 50% 44%, rgba(7, 8, 10, 0.2) 0%, rgba(7, 8, 10, 0.54) 48%, rgba(7, 8, 10, 0.94) 100%),
-    linear-gradient(180deg, rgba(7, 8, 10, 0.34), rgba(7, 8, 10, 0.12) 50%, rgba(7, 8, 10, 0.62));
+    radial-gradient(circle at 50% 44%, rgba(7, 8, 10, 0.08) 0%, rgba(7, 8, 10, 0.34) 50%, rgba(7, 8, 10, 0.9) 100%),
+    linear-gradient(180deg, rgba(7, 8, 10, 0.24), rgba(7, 8, 10, 0.04) 50%, rgba(7, 8, 10, 0.52));
 }
 
 .glass-panel {
