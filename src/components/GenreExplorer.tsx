@@ -1,16 +1,21 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
-import { Search, Filter, Grid, List, Music, Star, TrendingUp, X, User, Calendar, Activity, Brain, User2, Lightbulb, Target, AlertTriangle, ExternalLink } from 'lucide-react';
+import React, { CSSProperties, useMemo, useState } from 'react';
+import { ExternalLink, Search, SlidersHorizontal, X } from 'lucide-react';
 import { GenreSchema } from '@/types';
-import { useTranslation } from '@/hooks/useTranslation';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { getEnglishArtistName } from '@/lib/youtube';
-import { getGenreDescription, getGenreCharacteristics, getPersonalityAnalysis, getGenreName, getArtistName } from '@/lib/genreTranslations';
+import { analytics } from '@/lib/analytics';
+import {
+  getArtistName,
+  getGenreCharacteristics,
+  getGenreDescription,
+  getGenreName,
+  getPersonalityAnalysis,
+} from '@/lib/genreTranslations';
+import { generateYouTubeSearchUrl, getEnglishArtistName, openYouTubeLink } from '@/lib/youtube';
+import { getGenreTheme } from '@/lib/resultTheme';
 import AnimatedSection from './ui/AnimatedSection';
 import MUSICRadarChart from './ui/charts/MUSICRadarChart';
-import { analytics } from '@/lib/analytics';
-import { generateYouTubeSearchUrl, openYouTubeLink } from '@/lib/youtube';
 
 interface GenreExplorerProps {
   genres: GenreSchema[];
@@ -18,604 +23,144 @@ interface GenreExplorerProps {
 }
 
 const GenreExplorer: React.FC<GenreExplorerProps> = ({ genres, onGenreSelect }) => {
-  const { t } = useTranslation();
   const { language } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState<'name' | 'popularity' | 'energy' | 'era'>('popularity');
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [selectedGenre, setSelectedGenre] = useState<GenreSchema | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // 카테고리 목록 추출
-  const categories = useMemo(() => {
-    const cats = ['all', ...new Set(genres.map(g => g.category))];
-    return cats;
-  }, [genres]);
-
-  // 필터링 및 정렬된 장르 목록
-  const filteredAndSortedGenres = useMemo(() => {
-    const filtered = genres.filter(genre => {
-      const genreName = getGenreName(genre, language);
-      const genreDescription = getGenreDescription(genre.id, genre.description, language);
-      const genreCharacteristics = getGenreCharacteristics(genre.id, genre.characteristics, language);
-      const matchesSearch = 
-        genreName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        genreDescription.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        genreCharacteristics.some(char => char.toLowerCase().includes(searchTerm.toLowerCase()));
-      
-      const matchesCategory = selectedCategory === 'all' || genre.category === selectedCategory;
-      
-      return matchesSearch && matchesCategory;
-    });
-
-    // 정렬
-    filtered.sort((a, b) => {
-      switch (sortBy) {
-        case 'name':
-          const aName = getGenreName(a, language);
-          const bName = getGenreName(b, language);
-          return aName.localeCompare(bName);
-        case 'popularity':
-          return (b.popularity || 0) - (a.popularity || 0);
-        case 'energy':
-          return (b.energy || 0) - (a.energy || 0);
-        case 'era':
-          return (a.era || '').localeCompare(b.era || '');
-        default:
-          return 0;
-      }
-    });
-
-    return filtered;
-  }, [genres, searchTerm, selectedCategory, sortBy, language]);
-
-  const getEnergyColor = (energy: number) => {
-    if (energy >= 80) return 'bg-red-500';
-    if (energy >= 60) return 'bg-orange-500';
-    if (energy >= 40) return 'bg-yellow-500';
-    if (energy >= 20) return 'bg-green-500';
-    return 'bg-blue-500';
+  const copy = language === 'ko' ? {
+    eyebrow: 'GENRE PERSONALITIES', title: '장르에도 성격이 있습니다.', subtitle: '32개 장르의 음악 성향과 대표 아티스트를 살펴보세요.',
+    search: '장르, 분위기, 특성 검색', all: '전체 장르', popularity: '인기도 순', name: '이름 순', energy: '에너지 순', era: '시대 순',
+    results: '개의 장르', noResults: '조건에 맞는 장르가 없습니다.', profile: 'MUSIC 성향', core: '핵심 특성', lifestyle: '라이프스타일 통찰',
+    metrics: '음악적 특성', artists: '대표 아티스트와 트랙', popularityLabel: '인기도', energyLabel: '에너지', valenceLabel: '긍정성', acousticLabel: '어쿠스틱',
+  } : {
+    eyebrow: 'GENRE PERSONALITIES', title: 'Every genre has a personality.', subtitle: 'Explore the traits and defining artists of 32 genres.',
+    search: 'Search genres, moods, and traits', all: 'All genres', popularity: 'Popularity', name: 'Name', energy: 'Energy', era: 'Era',
+    results: 'genres', noResults: 'No genres match these filters.', profile: 'MUSIC profile', core: 'Core traits', lifestyle: 'Lifestyle insights',
+    metrics: 'Musical profile', artists: 'Defining artists and tracks', popularityLabel: 'Popularity', energyLabel: 'Energy', valenceLabel: 'Positivity', acousticLabel: 'Acoustic',
   };
 
-  const getPopularityStars = (popularity: number) => {
-    const stars = Math.round(popularity / 20);
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star
-        key={i}
-        size={12}
-        className={i < stars ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}
-      />
-    ));
-  };
+  const categories = useMemo(() => ['all', ...new Set(genres.map(genre => genre.category))], [genres]);
 
-  const handleGenreClick = (genre: GenreSchema) => {
+  const filteredGenres = useMemo(() => {
+    const query = searchTerm.trim().toLowerCase();
+    return genres
+      .filter(genre => {
+        const searchFields = [
+          getGenreName(genre, language),
+          getGenreDescription(genre.id, genre.description, language),
+          ...getGenreCharacteristics(genre.id, genre.characteristics, language),
+        ].join(' ').toLowerCase();
+        return (!query || searchFields.includes(query)) && (selectedCategory === 'all' || genre.category === selectedCategory);
+      })
+      .sort((a, b) => {
+        if (sortBy === 'name') return getGenreName(a, language).localeCompare(getGenreName(b, language));
+        if (sortBy === 'energy') return b.energy - a.energy;
+        if (sortBy === 'era') return a.era.localeCompare(b.era);
+        return b.popularity - a.popularity;
+      });
+  }, [genres, language, searchTerm, selectedCategory, sortBy]);
+
+  const openGenre = (genre: GenreSchema) => {
     setSelectedGenre(genre);
-    setIsModalOpen(true);
-    // Track genre view
     analytics.track('genre_viewed', {
-      genreName: genre.name,
-      genreKo: genre.nameKo,
-      category: genre.category,
-      popularity: genre.popularity,
-      energy: genre.energy
+      genreName: genre.name, genreKo: genre.nameKo, category: genre.category, popularity: genre.popularity, energy: genre.energy,
     });
     onGenreSelect?.(genre);
   };
 
-  const GenreDetailModal: React.FC = () => {
-    if (!selectedGenre || !isModalOpen) return null;
-
-    return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-        <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-          {/* Modal Header */}
-          <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center rounded-t-xl">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900">
-                {getGenreName(selectedGenre, language)}
-              </h2>
-              <p className="text-sm text-gray-600">
-                {getGenreName(selectedGenre, language === 'ko' ? 'en' : 'ko')}
-              </p>
-            </div>
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-            >
-              <X size={20} />
-            </button>
+  return (
+    <div className="result-surface relative min-h-screen pb-24 text-white">
+      <section className="mx-auto max-w-6xl px-5 pb-10 pt-14 sm:px-8 sm:pt-20">
+        <AnimatedSection direction="fade">
+          <p className="eyebrow mb-4">{copy.eyebrow}</p>
+          <div className="grid gap-5 lg:grid-cols-[1fr_.7fr] lg:items-end">
+            <h1 className="max-w-3xl text-4xl font-extrabold leading-[1.02] tracking-[-0.055em] sm:text-6xl">{copy.title}</h1>
+            <p className="max-w-lg text-sm leading-7 text-white/50 lg:justify-self-end">{copy.subtitle}</p>
           </div>
+        </AnimatedSection>
 
-          {/* Modal Content */}
-          <div className="p-6 space-y-6">
-            {/* Category and Era */}
-            <div className="flex flex-wrap gap-2">
-              <span className="px-3 py-1 bg-blue-100 text-blue-800 text-sm font-medium rounded-full">
-                {selectedGenre.category}
-              </span>
-              {selectedGenre.era && (
-                <span className="px-3 py-1 bg-gray-100 text-gray-700 text-sm font-medium rounded-full flex items-center">
-                  <Calendar size={14} className="mr-1" />
-                  {selectedGenre.era}
-                </span>
-              )}
-            </div>
+        <div className="glass-panel mt-10 grid gap-3 rounded-3xl p-3 sm:grid-cols-[1fr_auto_auto] sm:p-4">
+          <label className="relative block">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/35" size={17} />
+            <input value={searchTerm} onChange={event => setSearchTerm(event.target.value)} placeholder={copy.search} className="min-h-12 w-full rounded-2xl border border-white/10 bg-black/25 pl-11 pr-4 text-sm text-white outline-none placeholder:text-white/28 focus:border-[var(--signal)]" />
+          </label>
+          <label className="relative block">
+            <SlidersHorizontal className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-white/35" size={16} />
+            <select value={selectedCategory} onChange={event => setSelectedCategory(event.target.value)} className="min-h-12 w-full appearance-none rounded-2xl border border-white/10 bg-[#111216] pl-11 pr-10 text-sm text-white/70 outline-none focus:border-[var(--signal)] sm:w-44">
+              {categories.map(category => <option key={category} value={category}>{category === 'all' ? copy.all : category}</option>)}
+            </select>
+          </label>
+          <select value={sortBy} onChange={event => setSortBy(event.target.value as typeof sortBy)} className="min-h-12 rounded-2xl border border-white/10 bg-[#111216] px-4 text-sm text-white/70 outline-none focus:border-[var(--signal)] sm:w-40">
+            <option value="popularity">{copy.popularity}</option><option value="name">{copy.name}</option><option value="energy">{copy.energy}</option><option value="era">{copy.era}</option>
+          </select>
+        </div>
+        <div className="mt-5 flex items-center justify-between text-xs text-white/35"><span>{filteredGenres.length} {copy.results}</span><span>32 / MUSIC 5</span></div>
+      </section>
 
-            {/* Description */}
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">{t('genreExplorer.genreModal.description')}</h3>
-              <p className="text-gray-700 leading-relaxed">{getGenreDescription(selectedGenre.id, selectedGenre.description, language)}</p>
-            </div>
-
-            {/* MUSIC 성격 지표 */}
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center">
-                <Brain size={20} className="mr-2 text-purple-600" />
-                {t('genreExplorer.genreModal.personalityProfile')}
-              </h3>
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <MUSICRadarChart 
-                  personalityScores={selectedGenre.personalityProfile}
-                  animated={false}
-                  size="sm"
-                  className="w-full"
-                />
-              </div>
-            </div>
-
-            {/* Characteristics */}
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('genreExplorer.metrics.characteristics')}</h3>
-              <div className="flex flex-wrap gap-2">
-                {getGenreCharacteristics(selectedGenre.id, selectedGenre.characteristics, language).map((trait, i) => (
-                  <span
-                    key={i}
-                    className="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full"
-                  >
-                    {trait}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* 성격 유형 분석 */}
-            {selectedGenre.personalityAnalysis && (() => {
-              const analysis = getPersonalityAnalysis(selectedGenre.id, selectedGenre.personalityAnalysis, language);
+      <section className="mx-auto max-w-6xl px-5 sm:px-8">
+        {filteredGenres.length > 0 ? (
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {filteredGenres.map((genre, index) => {
+              const theme = getGenreTheme(genre);
+              const traits = getGenreCharacteristics(genre.id, genre.characteristics, language);
               return (
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3 flex items-center">
-                    <User2 size={20} className="mr-2 text-blue-600" />
-                    {t('genreExplorer.genreModal.personalityAnalysis')}
-                  </h3>
-                  <div className="space-y-4">
-                    {/* 유형 제목 및 설명 */}
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h4 className="text-xl font-bold text-blue-900 mb-2">
-                        {analysis.typeTitle}
-                      </h4>
-                      <p className="text-blue-800 leading-relaxed">
-                        {analysis.description}
-                      </p>
-                    </div>
-
-                    {/* 핵심 특성 */}
-                    {analysis.coreTraits && analysis.coreTraits.length > 0 && (
-                      <div>
-                        <h5 className="font-semibold text-gray-900 mb-3 flex items-center">
-                          <Target size={16} className="mr-2 text-green-600" />
-                          {t('genreExplorer.genreModal.coreTraits')}
-                        </h5>
-                        <div className="grid gap-3">
-                          {analysis.coreTraits.map((trait: { traitName: string; score: number; description: string; impact: string }, i: number) => (
-                            <div key={i} className="bg-white border border-gray-200 p-3 rounded-lg">
-                              <div className="flex justify-between items-center mb-2">
-                                <h6 className="font-medium text-gray-900">{trait.traitName}</h6>
-                                <span className="text-sm font-bold text-green-600">{trait.score}{t('results.points')}</span>
-                              </div>
-                              <p className="text-sm text-gray-600 mb-1">{trait.description}</p>
-                              <p className="text-xs text-gray-500">{trait.impact}</p>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                   {/* 라이프스타일 통찰 */}
-                   {analysis.lifestyleInsights && analysis.lifestyleInsights.length > 0 && (
-                     <div>
-                       <h5 className="font-semibold text-gray-900 mb-3 flex items-center">
-                         <Lightbulb size={16} className="mr-2 text-yellow-600" />
-                         {t('genreExplorer.genreModal.lifestyleInsights')}
-                       </h5>
-                       <ul className="space-y-2">
-                         {analysis.lifestyleInsights.map((insight: string, i: number) => (
-                           <li key={i} className="flex items-start">
-                             <span className="text-yellow-500 mr-2">•</span>
-                             <span className="text-gray-700 text-sm">{insight}</span>
-                           </li>
-                         ))}
-                       </ul>
-                     </div>
-                   )}
-
-                   {/* 강점 */}
-                   {analysis.strengths && analysis.strengths.length > 0 && (
-                     <div>
-                       <h5 className="font-semibold text-gray-900 mb-3 flex items-center">
-                         <Star size={16} className="mr-2 text-purple-600" />
-                         {t('genreExplorer.genreModal.strengths')}
-                       </h5>
-                       <div className="flex flex-wrap gap-2">
-                         {analysis.strengths.map((strength: string, i: number) => (
-                           <span key={i} className="px-3 py-1 bg-purple-100 text-purple-800 text-sm rounded-full">
-                             {strength}
-                           </span>
-                         ))}
-                       </div>
-                     </div>
-                   )}
-
-                   {/* 도전 과제 (있다면) */}
-                   {analysis.challenges && analysis.challenges.length > 0 && (
-                     <div>
-                       <h5 className="font-semibold text-gray-900 mb-3 flex items-center">
-                         <AlertTriangle size={16} className="mr-2 text-orange-600" />
-                         {t('genreExplorer.genreModal.challenges')}
-                       </h5>
-                       <div className="flex flex-wrap gap-2">
-                         {analysis.challenges.map((challenge: string, i: number) => (
-                           <span key={i} className="px-3 py-1 bg-orange-100 text-orange-800 text-sm rounded-full">
-                             {challenge}
-                           </span>
-                         ))}
-                       </div>
-                     </div>
-                   )}
-                  </div>
-                </div>
+                <AnimatedSection key={genre.id} delay={Math.min(index * 0.025, 0.25)}>
+                  <button onClick={() => openGenre(genre)} className="result-card group h-full w-full p-5 text-left transition duration-300 hover:-translate-y-1 hover:border-white/20">
+                    <div className="flex items-start justify-between gap-5"><span className="rounded-full border border-white/10 px-2.5 py-1 text-[9px] font-bold tracking-[0.14em] text-white/38">{genre.category}</span><span className="score-tabular text-sm font-bold" style={{ color: theme.accent }}>{genre.popularity}%</span></div>
+                    <h2 className="mt-8 text-2xl font-bold tracking-[-0.035em]">{getGenreName(genre, language)}</h2>
+                    <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/43">{getGenreDescription(genre.id, genre.description, language)}</p>
+                    <div className="mt-6 flex flex-wrap gap-2">{traits.slice(0, 3).map(trait => <span key={trait} className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/34">#{trait}</span>)}</div>
+                    <div className="mt-6 grid grid-cols-2 gap-4 border-t border-white/8 pt-4 text-xs text-white/35"><span>{copy.energyLabel} <strong className="ml-1 text-white/68">{genre.energy}</strong></span><span>{copy.valenceLabel} <strong className="ml-1 text-white/68">{genre.valence}</strong></span></div>
+                  </button>
+                </AnimatedSection>
               );
-            })()}
-
-            {/* Metrics */}
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('genreExplorer.genreModal.musicalCharacteristics')}</h3>
-              <div className="grid grid-cols-2 gap-4">
-                {/* Popularity */}
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-700">{t('genreExplorer.metrics.popularity')}</span>
-                    <span className="text-sm text-gray-600">{selectedGenre.popularity}%</span>
-                  </div>
-                  <div className="flex space-x-0.5">
-                    {getPopularityStars(selectedGenre.popularity || 0)}
-                  </div>
-                </div>
-
-                {/* Energy */}
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-gray-700">{t('genreExplorer.metrics.energy')}</span>
-                    <span className="text-sm text-gray-600">{selectedGenre.energy}%</span>
-                  </div>
-                  <div className="flex items-center">
-                    <div className={`w-4 h-4 rounded-full mr-2 ${getEnergyColor(selectedGenre.energy || 0)}`}></div>
-                    <div className="flex-1 bg-gray-200 rounded-full h-2">
-                      <div 
-                        className={`h-2 rounded-full ${getEnergyColor(selectedGenre.energy || 0)}`}
-                        style={{ width: `${selectedGenre.energy || 0}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Valence */}
-                {selectedGenre.valence !== undefined && (
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-gray-700">{t('genreExplorer.metrics.valence')}</span>
-                      <span className="text-sm text-gray-600">{selectedGenre.valence}%</span>
-                    </div>
-                    <div className="flex items-center">
-                      <TrendingUp size={16} className="text-green-500 mr-2" />
-                      <div className="flex-1 bg-gray-200 rounded-full h-2">
-                        <div 
-                          className="h-2 rounded-full bg-green-500"
-                          style={{ width: `${selectedGenre.valence}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Acousticness */}
-                {selectedGenre.acousticness !== undefined && (
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-gray-700">{t('genreExplorer.metrics.acousticness')}</span>
-                      <span className="text-sm text-gray-600">{selectedGenre.acousticness}%</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Activity size={16} className="text-orange-500 mr-2" />
-                      <div className="flex-1 bg-gray-200 rounded-full h-2">
-                        <div 
-                          className="h-2 rounded-full bg-orange-500"
-                          style={{ width: `${selectedGenre.acousticness}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Representative Artists */}
-            {selectedGenre.representativeArtists && selectedGenre.representativeArtists.length > 0 && (
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('genreExplorer.genreModal.representativeArtists')}</h3>
-                <div className="space-y-3">
-                  {selectedGenre.representativeArtists.map((artist, i) => (
-                    <div key={i} className="bg-gray-50 p-4 rounded-lg">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center">
-                          <User size={16} className="text-gray-500 mr-2" />
-                          <span className="font-medium text-gray-900">
-                             {getArtistName(artist, language)}
-                          </span>
-                        </div>
-                        <div className="flex space-x-0.5">
-                          {getPopularityStars(artist.popularity)}
-                        </div>
-                      </div>
-                        {artist.keyTracks && artist.keyTracks.length > 0 && (
-                          <div>
-                            <div className="text-sm font-medium text-gray-700 mb-2">{t('genreExplorer.genreModal.recommendedTracks')}:</div>
-                           <div className="flex flex-wrap gap-2">
-                             {artist.keyTracks.slice(0, 3).map((track, trackIndex) => {
-                               const englishArtistName = getEnglishArtistName(artist.nameKo || artist.name);
-                               const youtubeUrl = generateYouTubeSearchUrl(englishArtistName, track);
-                               
-                               return (
-                                 <button
-                                   key={trackIndex}
-                                   onClick={() => {
-                                     // Analytics tracking
-                                     analytics.track('youtube_track_click', {
-                                       artist: artist.name,
-                                       track: track,
-                                       genre: selectedGenre.name
-                                     });
-                                     openYouTubeLink(youtubeUrl, track);
-                                   }}
-                                   className="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-700 text-xs font-medium rounded-full hover:bg-red-100 active:bg-red-200 transition-colors border border-red-200 hover:border-red-300"
-                                    title={`${t('genreExplorer.genreModal.clickToListen')} "${track}"`}
-                                 >
-                                   <span>{track}</span>
-                                   <ExternalLink size={12} className="ml-1.5 opacity-70" />
-                                 </button>
-                               );
-                             })}
-                              {artist.keyTracks.length > 3 && (
-                                <span className="text-xs text-gray-500 self-center px-2">
-                                  {t('genreExplorer.genreModal.moreTracksPrefix')} {artist.keyTracks.length - 3}{t('genreExplorer.genreModal.moreTracksSuffix')}
-                                </span>
-                              )}
-                           </div>
-                         </div>
-                       )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Sub-genres */}
-            {selectedGenre.subGenres && selectedGenre.subGenres.length > 0 && (
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">{t('genreExplorer.genreModal.subGenres')}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {selectedGenre.subGenres.map((subGenre, i) => (
-                    <span
-                      key={i}
-                      className="px-3 py-1 bg-purple-100 text-purple-800 text-sm rounded-full"
-                    >
-                      {subGenre}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
+            })}
           </div>
-        </div>
-      </div>
-    );
-  };
+        ) : <div className="result-card py-20 text-center text-sm text-white/45">{copy.noResults}</div>}
+      </section>
 
-  const GenreCard: React.FC<{ genre: GenreSchema; index: number }> = ({ genre, index }) => (
-    <AnimatedSection
-      delay={index * 0.1}
-      direction="up"
-      className={`genre-card bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-4 md:p-6 cursor-pointer border-2 border-transparent hover:border-blue-300 active:scale-[0.98] touch-feedback ${
-        viewMode === 'list' ? 'flex items-center space-x-4 md:space-x-6' : ''
-      }`}
-    >
-      <div 
-        className="w-full h-full" 
-        onClick={() => handleGenreClick(genre)}
-      >
-        <div className={viewMode === 'list' ? 'flex-1' : ''}>
-        {/* 헤더 */}
-        <div className="flex justify-between items-start mb-3">
-          <div>
-            <h3 className="text-xl font-bold text-gray-900">
-               {getGenreName(genre, language)}
-            </h3>
-            <p className="text-sm text-gray-600">
-              {language === 'ko' ? genre.name : genre.nameKo}
-            </p>
-          </div>
-          <div className="flex flex-col items-end space-y-1">
-            <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded">
-              {genre.category}
-            </span>
-            {genre.era && (
-              <span className="text-xs text-gray-500">{genre.era}</span>
-            )}
-          </div>
-        </div>
-
-        {/* 설명 */}
-        <p className={`text-gray-700 mb-4 ${viewMode === 'list' ? 'text-sm' : ''}`}>
-          {getGenreDescription(genre.id, genre.description, language)}
-        </p>
-
-        {/* 특성 태그 */}
-        <div className="flex flex-wrap gap-2 mb-4">
-          {getGenreCharacteristics(genre.id, genre.characteristics, language).slice(0, viewMode === 'list' ? 3 : 4).map((trait, i) => (
-            <span
-              key={i}
-              className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full"
-            >
-              {trait}
-            </span>
-          ))}
-        </div>
-
-        {/* 메트릭스 */}
-        <div className={`grid gap-3 ${viewMode === 'list' ? 'grid-cols-3' : 'grid-cols-2'}`}>
-           {/* 인기도 */}
-           <div className="flex items-center space-x-2">
-             <div className="flex space-x-0.5">
-               {getPopularityStars(genre.popularity || 0)}
-             </div>
-             <span className="text-xs text-gray-600">{t('genreExplorer.metrics.popularity')}</span>
-           </div>
-
-           {/* 에너지 */}
-           <div className="flex items-center space-x-2">
-             <div className="flex items-center space-x-1">
-               <div className={`w-3 h-3 rounded-full ${getEnergyColor(genre.energy || 0)}`}></div>
-               <span className="text-xs text-gray-600">{genre.energy || 0}%</span>
-             </div>
-             <span className="text-xs text-gray-600">{t('genreExplorer.metrics.energy')}</span>
-           </div>
-
-           {/* 긍정성 (valence) */}
-           {genre.valence !== undefined && (
-             <div className="flex items-center space-x-2">
-               <TrendingUp size={12} className="text-green-500" />
-               <span className="text-xs text-gray-600">{genre.valence}% {t('genreExplorer.metrics.valence')}</span>
-             </div>
-           )}
-        </div>
-        </div>
-      </div>
-    </AnimatedSection>
+      {selectedGenre && <GenreDetailModal genre={selectedGenre} copy={copy} language={language} onClose={() => setSelectedGenre(null)} />}
+    </div>
   );
+};
+
+interface DetailCopy {
+  profile: string; core: string; lifestyle: string; metrics: string; artists: string;
+  popularityLabel: string; energyLabel: string; valenceLabel: string; acousticLabel: string;
+}
+
+const GenreDetailModal = ({ genre, copy, language, onClose }: { genre: GenreSchema; copy: DetailCopy; language: 'ko' | 'en'; onClose: () => void }) => {
+  const analysis = genre.personalityAnalysis ? getPersonalityAnalysis(genre.id, genre.personalityAnalysis, language) : null;
+  const theme = getGenreTheme(genre);
+  const style = { '--result-accent': theme.accent, '--result-secondary': theme.secondary } as CSSProperties;
+  const metrics = [[copy.popularityLabel, genre.popularity], [copy.energyLabel, genre.energy], [copy.valenceLabel, genre.valence], [copy.acousticLabel, genre.acousticness]] as const;
 
   return (
-    <div className="genre-explorer min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 py-8">
-      <div className="container mx-auto px-4 max-w-7xl">
-        {/* 헤더 */}
-        <AnimatedSection delay={0} direction="fade" className="text-center mb-8">
-          <div className="text-6xl mb-4">🎵</div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">{t('genreExplorer.title')}</h1>
-          <p className="text-lg text-gray-600">{t('genreExplorer.subtitle')}</p>
-        </AnimatedSection>
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/75 p-0 backdrop-blur-md sm:items-center sm:p-5" onClick={onClose}>
+      <div role="dialog" aria-modal="true" aria-label={getGenreName(genre, language)} style={style} onClick={event => event.stopPropagation()} className="result-surface max-h-[94dvh] w-full max-w-5xl overflow-y-auto rounded-t-[28px] border border-white/10 shadow-2xl sm:rounded-[28px]">
+        <header className="sticky top-0 z-10 flex items-start justify-between gap-5 border-b border-white/10 bg-[#090a0d]/90 px-5 py-5 backdrop-blur-xl sm:px-8">
+          <div><p className="text-[10px] font-bold tracking-[0.16em] text-white/35">{genre.category} · {genre.era}</p><h2 className="mt-2 text-3xl font-extrabold tracking-[-0.045em] sm:text-4xl">{getGenreName(genre, language)}</h2></div>
+          <button onClick={onClose} aria-label="Close" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 text-white/55 transition-colors hover:bg-white/10 hover:text-white"><X size={19} /></button>
+        </header>
 
-        {/* 필터 및 검색 */}
-        <AnimatedSection delay={0.2} direction="up" className="bg-white rounded-xl shadow-lg p-4 md:p-6 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-4 mb-4">
-            {/* 검색 */}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" size={18} />
-              <input
-                type="text"
-                placeholder={t('genreExplorer.searchPlaceholder')}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 placeholder-gray-600"
-              />
-            </div>
-
-            {/* 카테고리 필터 */}
-            <div className="relative">
-              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" size={18} />
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none text-gray-900"
-              >
-                {categories.map(cat => (
-                  <option key={cat} value={cat} className="text-gray-900">
-                    {cat === 'all' ? t('genreExplorer.categories.all') : cat}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* 정렬 */}
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as 'name' | 'popularity' | 'energy' | 'era')}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
-            >
-              <option value="popularity" className="text-gray-900">{t('genreExplorer.sortBy.popularity')}</option>
-              <option value="name" className="text-gray-900">{t('genreExplorer.sortBy.name')}</option>
-              <option value="energy" className="text-gray-900">{t('genreExplorer.sortBy.energy')}</option>
-              <option value="era" className="text-gray-900">{t('genreExplorer.sortBy.era')}</option>
-            </select>
-
-            {/* 뷰 모드 */}
-            <div className="flex space-x-2">
-              <button
-                onClick={() => setViewMode('grid')}
-                className={`flex-1 flex items-center justify-center py-3 px-4 rounded-lg transition-colors touch-feedback min-h-[44px] ${
-                  viewMode === 'grid' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200 active:bg-gray-300'
-                }`}
-              >
-                <Grid size={18} />
-              </button>
-              <button
-                onClick={() => setViewMode('list')}
-                className={`flex-1 flex items-center justify-center py-3 px-4 rounded-lg transition-colors touch-feedback min-h-[44px] ${
-                  viewMode === 'list' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200 active:bg-gray-300'
-                }`}
-              >
-                <List size={18} />
-              </button>
-            </div>
+        <div className="space-y-10 px-5 py-7 sm:px-8 sm:py-10">
+          <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr] lg:items-center">
+            <div><p className="eyebrow mb-4">{copy.profile}</p><p className="text-base leading-8 text-white/62">{getGenreDescription(genre.id, genre.description, language)}</p><div className="mt-5 flex flex-wrap gap-2">{getGenreCharacteristics(genre.id, genre.characteristics, language).map(trait => <span key={trait} className="rounded-full border border-white/10 px-3 py-1.5 text-xs text-white/52">{trait}</span>)}</div></div>
+            <div className="result-card p-2 sm:p-4"><MUSICRadarChart personalityScores={genre.personalityProfile} animated={false} size="sm" /></div>
           </div>
 
-          {/* 결과 개수 */}
-          <div className="text-sm text-gray-600">
-            {t('genreExplorer.resultsCount', { count: filteredAndSortedGenres.length })}
-          </div>
-        </AnimatedSection>
+          {analysis && <div className="grid gap-4 lg:grid-cols-2">
+            <section className="result-card p-6"><h3 className="text-xl font-bold">{copy.core}</h3><div className="mt-5 space-y-5">{analysis.coreTraits.slice(0, 4).map(trait => <div key={trait.traitName}><div className="flex justify-between gap-4"><h4 className="font-semibold text-white/82">{trait.traitName}</h4><span className="score-tabular font-bold" style={{ color: theme.accent }}>{trait.score}</span></div><p className="mt-2 text-sm leading-6 text-white/45">{trait.description}</p></div>)}</div></section>
+            <section className="result-card p-6"><h3 className="text-xl font-bold">{copy.lifestyle}</h3><ul className="mt-5 space-y-4">{analysis.lifestyleInsights.slice(0, 5).map((insight, index) => <li key={insight} className="grid grid-cols-[auto_1fr] gap-3 text-sm leading-6 text-white/52"><span className="score-tabular font-bold" style={{ color: theme.accent }}>0{index + 1}</span>{insight}</li>)}</ul></section>
+          </div>}
 
-        {/* 장르 목록 */}
-        <div className={`genre-grid ${
-          viewMode === 'grid' 
-            ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' 
-            : 'space-y-4'
-        }`}>
-          {filteredAndSortedGenres.map((genre, index) => (
-            <GenreCard key={genre.id} genre={genre} index={index} />
-          ))}
+          <section><h3 className="text-xl font-bold">{copy.metrics}</h3><div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{metrics.map(([label, value]) => <div key={label} className="result-card p-5"><div className="flex items-end justify-between gap-3"><span className="text-sm text-white/48">{label}</span><strong className="score-tabular text-2xl">{value}%</strong></div><div className="mt-4 h-1.5 overflow-hidden rounded-full bg-white/8"><div className="h-full rounded-full" style={{ width: `${value}%`, background: `linear-gradient(90deg, ${theme.accent}, ${theme.secondary})` }} /></div></div>)}</div></section>
+
+          {genre.representativeArtists && genre.representativeArtists.length > 0 && <section><h3 className="text-xl font-bold">{copy.artists}</h3><div className="mt-5 grid gap-3 sm:grid-cols-2">{genre.representativeArtists.map(artist => <article key={artist.name} className="result-card p-5"><div className="flex items-center justify-between gap-4"><h4 className="font-semibold">{getArtistName(artist, language)}</h4><span className="score-tabular text-xs text-white/35">{artist.popularity}%</span></div><div className="mt-4 flex flex-wrap gap-2">{artist.keyTracks.slice(0, 3).map(track => <button key={track} onClick={() => { analytics.track('youtube_track_click', { artist: artist.name, track, genre: genre.name }); openYouTubeLink(generateYouTubeSearchUrl(getEnglishArtistName(artist.nameKo || artist.name), track), track); }} className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-white/10 px-3 text-xs text-white/50 transition-colors hover:bg-white/10 hover:text-white">{track}<ExternalLink size={11} /></button>)}</div></article>)}</div></section>}
         </div>
-
-        {/* 결과 없음 */}
-        {filteredAndSortedGenres.length === 0 && (
-          <AnimatedSection delay={0.5} direction="fade" className="text-center py-12">
-            <Music size={64} className="text-gray-400 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-600 mb-2">{t('genreExplorer.noResults.title')}</h3>
-            <p className="text-gray-500">{t('genreExplorer.noResults.subtitle')}</p>
-          </AnimatedSection>
-        )}
       </div>
-
-      {/* Genre Detail Modal */}
-      <GenreDetailModal />
     </div>
   );
 };

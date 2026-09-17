@@ -44,6 +44,15 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
   const resultCopy = language === 'ko'
     ? { eyebrow: '당신의 음악 성격', lead: '당신과 가장 닮은 사운드', match: '취향 일치', spectrum: '나의 취향 스펙트럼', spectrumBody: '다섯 개의 축이 당신의 음악 취향을 어떻게 구성하는지 보여줍니다.', next: '함께 들으면 좋은 장르', artists: '당신을 위한 아티스트', detail: '성격 해석 더 보기', share: '친구에게 내 결과 보여주기', again: '다시 검사하기' }
     : { eyebrow: 'YOUR MUSIC PERSONALITY', lead: 'The sound most like you', match: 'taste match', spectrum: 'Your taste spectrum', spectrumBody: 'Five dimensions show how your music taste is put together.', next: 'Genres to try next', artists: 'Artists for your taste', detail: 'Read the full personality note', share: 'Share my result', again: 'Take it again' };
+  const insightCopy = language === 'ko'
+    ? { eyebrow: 'PERSONALITY NOTES', title: '취향에서 읽은 당신의 모습', core: '핵심 특성', lifestyle: '라이프스타일 통찰', music: '음악적 특성', popularity: '인기도', energy: '에너지', valence: '긍정성', acousticness: '어쿠스틱' }
+    : { eyebrow: 'PERSONALITY NOTES', title: 'What your taste says about you', core: 'Core traits', lifestyle: 'Lifestyle insights', music: 'Musical profile', popularity: 'Popularity', energy: 'Energy', valence: 'Positivity', acousticness: 'Acoustic' };
+  const musicMetrics = [
+    { label: insightCopy.popularity, value: topGenre.popularity },
+    { label: insightCopy.energy, value: topGenre.energy },
+    { label: insightCopy.valence, value: topGenre.valence },
+    { label: insightCopy.acousticness, value: topGenre.acousticness },
+  ];
 
   return (
     <main className="result-surface min-h-screen text-white" style={pageStyle}>
@@ -99,6 +108,70 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
       </section>
 
       <section className="mx-auto max-w-6xl px-5 py-16 sm:px-8 lg:py-24">
+        <div className="mb-9">
+          <p className="eyebrow mb-3">{insightCopy.eyebrow}</p>
+          <h2 className="max-w-3xl text-3xl font-bold tracking-[-0.04em] sm:text-5xl">{insightCopy.title}</h2>
+        </div>
+
+        <div className="grid gap-4 lg:grid-cols-12">
+          <article className="result-card p-6 sm:p-8 lg:col-span-7">
+            <div className="mb-6 flex items-center justify-between gap-4">
+              <h3 className="text-xl font-bold tracking-[-0.025em]">{insightCopy.core}</h3>
+              <span className="text-[10px] font-semibold tracking-[0.16em] text-white/28">01</span>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {personalityAnalysis?.coreTraits.slice(0, 4).map(trait => (
+                <div key={trait.traitName} className="rounded-2xl border border-white/10 bg-[#0c0d0f] p-5">
+                  <div className="flex items-start justify-between gap-4">
+                    <h4 className="font-semibold text-white/88">{trait.traitName}</h4>
+                    <span className="score-tabular text-sm font-bold" style={{ color: theme.accent }}>{trait.score}</span>
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-white/50">{trait.description}</p>
+                  <p className="mt-3 border-l border-white/15 pl-3 text-xs leading-5 text-white/34">{trait.impact}</p>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <article className="result-card p-6 sm:p-8 lg:col-span-5">
+            <div className="mb-6 flex items-center justify-between gap-4">
+              <h3 className="text-xl font-bold tracking-[-0.025em]">{insightCopy.lifestyle}</h3>
+              <span className="text-[10px] font-semibold tracking-[0.16em] text-white/28">02</span>
+            </div>
+            <ul className="space-y-4">
+              {personalityAnalysis?.lifestyleInsights.slice(0, 5).map((insight, index) => (
+                <li key={insight} className="grid grid-cols-[auto_1fr] gap-4 border-b border-white/8 pb-4 last:border-0 last:pb-0">
+                  <span className="score-tabular text-xs font-bold" style={{ color: theme.accent }}>0{index + 1}</span>
+                  <span className="text-sm leading-6 text-white/57">{insight}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+
+          <article className="result-card p-6 sm:p-8 lg:col-span-12">
+            <div className="mb-7 flex items-center justify-between gap-4">
+              <h3 className="text-xl font-bold tracking-[-0.025em]">{insightCopy.music}</h3>
+              <span className="text-[10px] font-semibold tracking-[0.16em] text-white/28">03</span>
+            </div>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {musicMetrics.map(metric => (
+                <div key={metric.label}>
+                  <div className="mb-3 flex items-end justify-between gap-4">
+                    <span className="text-sm font-semibold text-white/58">{metric.label}</span>
+                    <span className="score-tabular text-2xl font-bold tracking-[-0.04em]">{metric.value}<span className="text-xs text-white/35">%</span></span>
+                  </div>
+                  <div className="h-1.5 overflow-hidden rounded-full bg-white/8">
+                    <div className="h-full rounded-full" style={{ width: `${metric.value}%`, background: `linear-gradient(90deg, ${theme.accent}, ${theme.secondary})` }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section className="border-t border-white/10 bg-black/15">
+        <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 lg:py-24">
         <div className="mb-8 flex items-end justify-between gap-4">
           <div><p className="eyebrow mb-3">NEXT LISTEN</p><h2 className="text-3xl font-bold tracking-[-0.04em] sm:text-5xl">{resultCopy.next}</h2></div>
           <p className="hidden text-xs text-white/30 sm:block">TOP 06</p>
@@ -119,6 +192,7 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
               </article>
             );
           })}
+        </div>
         </div>
       </section>
 
