@@ -15,7 +15,7 @@ export function calculateMUSICScores(questions: Question[], answers: Record<stri
     contemporary: 0
   };
 
-  const counts = {
+  const weightSums = {
     mellow: 0,
     unpretentious: 0,
     sophisticated: 0,
@@ -41,14 +41,14 @@ export function calculateMUSICScores(questions: Question[], answers: Record<stri
       normalizedScore *= question.weight;
       
       scores[category] += normalizedScore;
-      counts[category]++;
+      weightSums[category] += question.weight;
     }
   });
 
   // 평균 계산
   (Object.keys(scores) as Array<keyof MUSICPersonality>).forEach(key => {
-    if (counts[key] > 0) {
-      scores[key] = Math.round(scores[key] / counts[key]);
+    if (weightSums[key] > 0) {
+      scores[key] = Math.round(scores[key] / weightSums[key]);
     }
   });
 

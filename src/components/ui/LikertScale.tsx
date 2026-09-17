@@ -2,59 +2,37 @@
 
 import React from 'react';
 import { LikertScaleProps } from '@/types';
-import { useTranslation } from '@/hooks/useTranslation';
 
-const LikertScale: React.FC<LikertScaleProps> = ({
-  scale,
-  value,
-  onChange,
-  labels
-}) => {
-  const { t } = useTranslation();
-  const options = Array.from({ length: scale }, (_, i) => i + 1);
-
+const LikertScale: React.FC<LikertScaleProps> = ({ scale, value, onChange, labels }) => {
+  const options = Array.from({ length: scale }, (_, index) => index + 1);
   return (
-    <div className="likert-scale w-full max-w-md mx-auto">
-      {/* 스케일 라벨 */}
-      <div className="flex justify-between text-sm text-gray-600 mb-2">
-        <span className="text-left w-1/3">{labels.min}</span>
-        <span className="text-right w-1/3">{labels.max}</span>
-      </div>
-      
-      {/* 스케일 옵션들 */}
-      <div className="flex justify-center items-center space-x-2 mb-4 md:space-x-3">
-        {options.map((option) => (
-          <div key={option} className="flex flex-col items-center">
+    <div className="w-full">
+      <div className="grid grid-cols-5 gap-2 sm:gap-3" role="radiogroup" aria-label={`${labels.min} — ${labels.max}`}>
+        {options.map(option => {
+          const selected = value === option;
+          return (
             <button
+              key={option}
               type="button"
+              role="radio"
+              aria-checked={selected}
+              aria-label={`${option}: ${option === 1 ? labels.min : option === scale ? labels.max : ''}`.trim()}
               onClick={() => onChange(option)}
-              className={`
-                w-10 h-10 md:w-12 md:h-12 rounded-full border-2 transition-all duration-200
-                flex items-center justify-center text-sm md:text-base font-medium
-                touch-feedback select-none
-                ${value === option
-                  ? 'bg-blue-500 border-blue-500 text-white shadow-lg scale-110'
-                  : 'bg-white border-gray-300 text-gray-700 hover:border-blue-300 hover:bg-blue-50 active:scale-95'
-                }
-                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50
-                min-w-[44px] min-h-[44px]
-              `}
-              aria-label={`${t('survey.scoreLabel')} ${option}`}
-              style={{ WebkitTapHighlightColor: 'rgba(59, 130, 246, 0.1)' }}
+              className={`score-tabular flex aspect-square min-h-14 items-center justify-center rounded-2xl border text-lg font-bold transition-all duration-200 sm:min-h-20 sm:text-2xl ${
+                selected
+                  ? 'scale-[1.03] border-[#c8ff3d] bg-[#c8ff3d] text-[#050507] shadow-[0_12px_36px_rgba(200,255,61,.15)]'
+                  : 'border-white/10 bg-white/[0.035] text-white/55 hover:border-white/30 hover:bg-white/[0.08] hover:text-white'
+              }`}
             >
               {option}
             </button>
-            <span className="text-xs text-gray-500 mt-1 select-none">{option}</span>
-          </div>
-        ))}
+          );
+        })}
       </div>
-      
-      {/* 현재 선택 표시 */}
-      {value && (
-        <div className="text-center text-sm text-blue-600">
-          {t('results.selected')}: {value}{t('results.points')}
-        </div>
-      )}
+      <div className="mt-4 flex justify-between gap-8 text-[11px] leading-4 text-white/38 sm:text-xs">
+        <span className="max-w-[42%]">{labels.min}</span>
+        <span className="max-w-[42%] text-right">{labels.max}</span>
+      </div>
     </div>
   );
 };

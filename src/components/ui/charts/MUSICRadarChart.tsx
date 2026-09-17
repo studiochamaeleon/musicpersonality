@@ -54,13 +54,13 @@ const CustomTooltip = ({ active, payload }: TooltipProps) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
-      <div className="bg-white p-3 rounded-lg shadow-lg border border-gray-200">
-         <p className="font-semibold text-gray-900">
+      <div className="rounded-xl border border-white/15 bg-[#111116]/95 p-3 text-white shadow-2xl backdrop-blur-xl">
+         <p className="font-semibold text-white">
            {language === 'ko' 
              ? t(`intro.musicModelTraits.${data.trait}.description`)
              : t(`intro.musicModelTraits.${data.trait}.name`)}
          </p>
-        <p className="text-sm text-gray-600 mb-1">{data.description}</p>
+        <p className="mb-1 text-sm text-white/48">{data.description}</p>
         <p className="text-lg font-bold" style={{ color: data.color }}>
           {Math.round(data.score)}{t('results.points')}
         </p>
@@ -99,19 +99,19 @@ const MUSICRadarChart: React.FC<RadarChartProps> = ({
 
   // 크기별 설정
   const sizeConfig = {
-    sm: { width: 320, height: 450 },
-    md: { width: 450, height: 500 },
-    lg: { width: 550, height: 600 }
+    sm: { width: 320, height: 340 },
+    md: { width: 450, height: 420 },
+    lg: { width: 550, height: 500 }
   };
 
   const currentSize = sizeConfig[size];
 
   // 애니메이션 설정
   const containerVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
+    hidden: { opacity: 0, y: 12 },
     visible: {
       opacity: 1,
-      scale: 1,
+      y: 0,
       transition: {
         duration: 0.6,
         ease: [0.4, 0, 0.2, 1] as const
@@ -128,38 +128,38 @@ const MUSICRadarChart: React.FC<RadarChartProps> = ({
         className="w-full flex justify-center"
       >
         <ResponsiveContainer width="100%" height={currentSize.height}>
-          <RadarChart data={chartData} margin={{ top: 60, right: 80, bottom: 60, left: 80 }}>
+          <RadarChart data={chartData} margin={{ top: 42, right: 58, bottom: 42, left: 58 }}>
             <PolarGrid 
-              stroke="#E5E7EB" 
+              stroke="rgba(255,255,255,0.12)"
               strokeWidth={1}
               radialLines={true}
             />
             <PolarAngleAxis 
               dataKey="traitDisplay"
               tick={{ 
-                fontSize: 16, 
-                fontWeight: 'bold',
-                fill: '#374151'
+                fontSize: 12,
+                fontWeight: 700,
+                fill: 'rgba(244,244,246,0.7)'
               }}
               className="text-base font-medium"
             />
             <PolarRadiusAxis
               angle={90}
               domain={[0, 100]}
-              tick={{ fontSize: 14, fill: '#9CA3AF' }}
+              tick={{ fontSize: 10, fill: 'rgba(244,244,246,0.28)' }}
               tickCount={4}
             />
             <Radar
               name={t('chart.musicPersonality')}
               dataKey="score"
-              stroke="#3B82F6"
-              fill="#3B82F6"
-              fillOpacity={0.15}
-              strokeWidth={3}
+              stroke="#C8FF3D"
+              fill="#C8FF3D"
+              fillOpacity={0.13}
+              strokeWidth={2}
               dot={{ 
-                r: 7, 
+                r: 5,
                 strokeWidth: 2,
-                fill: '#FFFFFF'
+                fill: '#07080A'
               }}
             />
             {showTooltip && <Tooltip content={<CustomTooltip />} />}
@@ -169,21 +169,21 @@ const MUSICRadarChart: React.FC<RadarChartProps> = ({
 
       {/* 점수 범례 */}
       <motion.div 
-        className="mt-4 grid grid-cols-2 md:grid-cols-5 gap-3 w-full max-w-2xl"
+        className="mt-1 grid w-full max-w-2xl grid-cols-5 gap-2"
         initial={animated ? { opacity: 0, y: 20 } : undefined}
         animate={animated ? { opacity: 1, y: 0 } : undefined}
         transition={animated ? { delay: 0.3, duration: 0.5 } : undefined}
       >
          {MUSIC_TRAITS.map((trait) => (
-           <div key={trait.key} className="text-center">
+           <div key={trait.key} className="min-w-0 text-center">
              <div 
-               className="w-4 h-4 rounded-full mx-auto mb-1"
+               className="mx-auto mb-2 h-2 w-2 rounded-full"
                style={{ backgroundColor: trait.color }}
              />
-             <div className="text-xs font-medium text-gray-700">
+             <div className="truncate text-[9px] font-semibold text-white/42 sm:text-[11px]">
                {getTraitName(trait.key)}
              </div>
-             <div className="text-lg font-bold text-gray-900">
+             <div className="score-tabular mt-1 text-base font-bold text-white sm:text-lg">
                {Math.round(personalityScores[trait.key])}
              </div>
            </div>
@@ -192,12 +192,12 @@ const MUSICRadarChart: React.FC<RadarChartProps> = ({
 
       {/* 해석 가이드 */}
       <motion.div 
-        className="mt-6 text-center max-w-md"
+        className="mt-6 max-w-md text-center"
         initial={animated ? { opacity: 0 } : undefined}
         animate={animated ? { opacity: 1 } : undefined}
         transition={animated ? { delay: 0.6, duration: 0.5 } : undefined}
       >
-        <p className="text-sm text-gray-600">
+        <p className="text-xs leading-5 text-white/35">
           {t('chart.interpretationGuide')} <br />
           {t('chart.interpretationGuide2')}
         </p>

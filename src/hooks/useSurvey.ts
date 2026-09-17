@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { SurveyState, Question } from '@/types';
 import { calculateMUSICScores } from '@/lib/musicCalculations';
 
@@ -11,6 +11,31 @@ export const useSurvey = (questions: Question[]) => {
     startTime: new Date(),
     isComplete: false,
   });
+  const [hasRestored, setHasRestored] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved = window.sessionStorage.getItem('music-personality-survey');
+      if (saved) {
+        const parsed = JSON.parse(saved) as SurveyState;
+        const validStep = Math.min(Math.max(parsed.currentStep || 1, 1), Math.max(questions.length, 1));
+        setSurveyState({ ...parsed, currentStep: validStep, startTime: new Date(parsed.startTime), isComplete: false });
+      }
+    } catch {
+      window.sessionStorage.removeItem('music-personality-survey');
+    } finally {
+      setHasRestored(true);
+    }
+  }, [questions.length]);
+
+  useEffect(() => {
+    if (!hasRestored) return;
+    if (surveyState.isComplete) {
+      window.sessionStorage.removeItem('music-personality-survey');
+      return;
+    }
+    window.sessionStorage.setItem('music-personality-survey', JSON.stringify(surveyState));
+  }, [hasRestored, surveyState]);
 
   // 현재 질문
   const currentQuestion = useMemo(() => {

@@ -1,27 +1,26 @@
 'use client';
 
-import React, { useState, lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import { ArrowRight, Clock3, Layers3, Sparkles } from 'lucide-react';
 import { Question, GenreSchema, MUSICPersonality, EnhancedRecommendationScore, RecommendedArtist } from '@/types';
 import { calculateMUSICScores, recommendGenres, recommendArtists } from '@/lib/musicCalculations';
+import { createResultSearchParams, parseResultSearchParams } from '@/lib/resultTheme';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
-import PWAInstallPrompt from '@/components/PWAInstallPrompt';
 import LanguageSelector from '@/components/LanguageSelector';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { analytics } from '@/lib/analytics';
 
-// Lazy load heavy components
 const Survey = lazy(() => import('@/components/Survey'));
 const PersonalityResults = lazy(() => import('@/components/PersonalityResults'));
 const GenreExplorer = lazy(() => import('@/components/GenreExplorer'));
-
-// 데이터는 동적으로 로드
 
 type AppState = 'intro' | 'survey' | 'results' | 'genre-explorer';
 
 const MusicPersonalityApp: React.FC = () => {
   const { t } = useTranslation();
   const { language } = useLanguage();
+  const initializedFromUrl = useRef(false);
   const [appState, setAppState] = useState<AppState>('intro');
   const [personalityScores, setPersonalityScores] = useState<MUSICPersonality | null>(null);
   const [recommendedGenres, setRecommendedGenres] = useState<EnhancedRecommendationScore[]>([]);
@@ -30,15 +29,13 @@ const MusicPersonalityApp: React.FC = () => {
   const [genres, setGenres] = useState<GenreSchema[]>([]);
   const [dataLoaded, setDataLoaded] = useState(false);
 
-  // 데이터 로딩
-  React.useEffect(() => {
+  useEffect(() => {
     const loadData = async () => {
       try {
         const [questionsModule, genresModule] = await Promise.all([
           import('@/data/questions.json'),
-          import('@/data/genres.json')
+          import('@/data/genres.json'),
         ]);
-        
         setQuestions(questionsModule.default as Question[]);
         setGenres(genresModule.default as GenreSchema[]);
         setDataLoaded(true);
@@ -46,35 +43,56 @@ const MusicPersonalityApp: React.FC = () => {
         console.error('Failed to load data:', error);
       }
     };
-    
-    loadData();
+    void loadData();
   }, []);
 
+  const buildRecommendations = useCallback((scores: MUSICPersonality, nextGenres: GenreSchema[]) => {
+    const recommendations = recommendGenres(scores, nextGenres, language);
+    setRecommendedGenres(recommendations);
+    setRecommendedArtistsList(recommendArtists(recommendations, nextGenres, 6, language));
+    return recommendations;
+  }, [language]);
+
+  useEffect(() => {
+    if (!dataLoaded || initializedFromUrl.current || typeof window === 'undefined') return;
+    initializedFromUrl.current = true;
+    const params = new URLSearchParams(window.location.search);
+    const restoredScores = parseResultSearchParams(params);
+
+    if (restoredScores) {
+      setPersonalityScores(restoredScores);
+      buildRecommendations(restoredScores, genres);
+      setAppState('results');
+    } else if (params.get('view') === 'genre-explorer') {
+      setAppState('genre-explorer');
+    }
+  }, [buildRecommendations, dataLoaded, genres]);
+
+  useEffect(() => {
+    if (personalityScores && genres.length > 0) buildRecommendations(personalityScores, genres);
+  }, [buildRecommendations, genres, personalityScores]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [appState]);
+
   const handleSurveyComplete = (answers: Record<string, number>) => {
-    // MUSIC 점수 계산
     const scores = calculateMUSICScores(questions, answers);
     setPersonalityScores(scores);
+    const recommendations = buildRecommendations(scores, genres);
+    const topGenre = genres.find(genre => genre.id === recommendations[0]?.genreId);
 
-    // 장르 추천
-    const recommendations = recommendGenres(scores, genres);
-    setRecommendedGenres(recommendations);
-
-    // 아티스트 추천
-    const artists = recommendArtists(recommendations, genres, 6, language);
-    setRecommendedArtistsList(artists);
-
-    // 분석 추적
-    const topGenreId = recommendations[0]?.genreId;
-    const topGenre = topGenreId ? genres.find(g => g.id === topGenreId) : null;
-    
     analytics.track('survey_completed', {
       personalityScores: scores,
       topGenre: topGenre?.name || 'Unknown',
       recommendedGenresCount: recommendations.length,
-      completionTime: Date.now()
+      completionTime: Date.now(),
     });
 
-    // 결과 화면으로 이동
+    if (typeof window !== 'undefined') {
+      window.history.replaceState({}, '', `/?${createResultSearchParams(scores).toString()}`);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     setAppState('results');
   };
 
@@ -83,100 +101,95 @@ const MusicPersonalityApp: React.FC = () => {
     setPersonalityScores(null);
     setRecommendedGenres([]);
     setRecommendedArtistsList([]);
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.removeItem('music-personality-survey');
+      window.history.replaceState({}, '', '/');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
-  // 데이터 로딩 중
-  if (!dataLoaded) {
-    return <LoadingSpinner message={t('common.loading.initializing')} />;
-  }
+  if (!dataLoaded) return <LoadingSpinner message={t('common.loading.initializing')} />;
 
-  // 인트로 화면
   if (appState === 'intro') {
+    const copy = language === 'ko' ? {
+      eyebrow: 'MUSIC PERSONALITY TEST',
+      headline: '취향을 들으면,\n당신이 보입니다.',
+      body: '좋아하는 음악에 답하고 나와 닮은 장르와 음악 성격을 발견해보세요.',
+      cta: '내 음악 성격 찾기',
+      explore: '장르별 성향 먼저 보기',
+      note: '재미로 즐기는 음악 취향 테스트예요.',
+    } : {
+      eyebrow: 'MUSIC PERSONALITY TEST',
+      headline: 'Your taste says\nmore than words.',
+      body: 'Answer a few questions and discover the genres that sound most like you.',
+      cta: 'Find my music type',
+      explore: 'Browse genre personalities',
+      note: 'A lighthearted test inspired by music psychology.',
+    };
+
     return (
-      <div className="intro-screen min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 flex items-center justify-center relative py-8">
-        {/* Language Selector - responsive positioning */}
-        <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-10">
+      <main className="app-canvas text-white">
+        <header className="mx-auto flex max-w-6xl items-center justify-between px-5 py-5 sm:px-8">
+          <div>
+            <p className="text-sm font-extrabold tracking-[-0.03em]">MUSIC PERSONALITY</p>
+            <p className="mt-0.5 text-[10px] font-semibold tracking-[0.18em] text-white/35">BY CHAMELEONS</p>
+          </div>
           <LanguageSelector />
-        </div>
-        
-        <div className="text-center text-white max-w-2xl mx-auto px-4 py-8">
-          <div className="text-8xl mb-12 mt-8">🎵</div>
-          
-          <h1 className="text-5xl font-bold mb-6">
-            {t('intro.title')}
-          </h1>
-          
-          <p className="text-xl mb-8 opacity-90">
-            {t('intro.description')}
-          </p>
+        </header>
 
-          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8">
-            <h3 className="text-lg font-semibold mb-4">{t('intro.musicModelTitle')}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-4 text-sm">
-              <div className="bg-white/10 rounded-lg p-3">
-                <div className="font-medium">{t('intro.musicModelTraits.mellow.name')}</div>
-                <div className="text-xs opacity-80">{t('intro.musicModelTraits.mellow.description')}</div>
-              </div>
-              <div className="bg-white/10 rounded-lg p-3">
-                <div className="font-medium">{t('intro.musicModelTraits.unpretentious.name')}</div>
-                <div className="text-xs opacity-80">{t('intro.musicModelTraits.unpretentious.description')}</div>
-              </div>
-              <div className="bg-white/10 rounded-lg p-3">
-                <div className="font-medium">{t('intro.musicModelTraits.sophisticated.name')}</div>
-                <div className="text-xs opacity-80">{t('intro.musicModelTraits.sophisticated.description')}</div>
-              </div>
-              <div className="bg-white/10 rounded-lg p-3">
-                <div className="font-medium">{t('intro.musicModelTraits.intense.name')}</div>
-                <div className="text-xs opacity-80">{t('intro.musicModelTraits.intense.description')}</div>
-              </div>
-              <div className="bg-white/10 rounded-lg p-3">
-                <div className="font-medium">{t('intro.musicModelTraits.contemporary.name')}</div>
-                <div className="text-xs opacity-80">{t('intro.musicModelTraits.contemporary.description')}</div>
-              </div>
-            </div>
-          </div>
+        <section className="mx-auto grid min-h-[calc(100dvh-80px)] max-w-6xl items-center gap-14 px-5 pb-12 pt-6 sm:px-8 lg:grid-cols-[1.08fr_.92fr] lg:gap-20 lg:py-10">
+          <div className="relative z-10 max-w-3xl fade-in">
+            <p className="eyebrow mb-5">{copy.eyebrow}</p>
+            <h1 className={`${language === 'ko' ? 'text-[clamp(3rem,5.2vw,4.8rem)] font-extrabold leading-[0.94] tracking-[-0.065em]' : 'display-title'} whitespace-pre-line text-balance`}>
+              {copy.headline.split('\n').map((line, index) => (
+                <React.Fragment key={line}>
+                  {index === 1 ? <span className="text-gradient">{line}</span> : line}
+                  {index === 0 && <br />}
+                </React.Fragment>
+              ))}
+            </h1>
+            <p className="mt-5 max-w-xl text-base leading-7 text-white/62 sm:text-lg">{copy.body}</p>
 
-          <div className="space-y-4">
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={() => setAppState('survey')}
-                className="px-8 py-4 bg-white text-purple-600 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg"
-              >
-                {t('intro.startTest')}
-              </button>
-              
-              <button
-                onClick={() => setAppState('genre-explorer')}
-                className="px-8 py-4 bg-white/20 backdrop-blur-sm text-white border-2 border-white/30 rounded-xl font-bold text-lg hover:bg-white/30 transition-all transform hover:scale-105 shadow-lg"
-              >
-                {t('intro.exploreGenres')}
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <button onClick={() => setAppState('survey')} className="primary-action group inline-flex items-center justify-center gap-2">
+                {copy.cta}
+                <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
               </button>
             </div>
-            
-            <div className="text-sm opacity-80 mb-8">
-              <p>{t('intro.testInfo')}</p>
+
+            <div className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-xs text-white/45">
+              <span className="inline-flex items-center gap-2"><Layers3 size={14} />40 {language === 'ko' ? '문항' : 'questions'}</span>
+              <span className="inline-flex items-center gap-2"><Clock3 size={14} />{language === 'ko' ? '약 5분' : 'about 5 min'}</span>
+              <span className="inline-flex items-center gap-2"><Sparkles size={14} />32 {language === 'ko' ? '개 장르' : 'genres'}</span>
             </div>
+            <p className="mt-3 text-[11px] text-white/28">{copy.note}</p>
           </div>
-        </div>
-        <PWAInstallPrompt />
-      </div>
+
+          <div className="relative mx-auto aspect-square w-full max-w-[500px]" aria-hidden="true">
+            <div className="absolute inset-[8%] animate-pulse-ring rounded-full bg-[conic-gradient(from_220deg,#c8ff3d,#43f5ff,#6c3bff,#ff77a8,#ffc533,#c8ff3d)] opacity-80 blur-[1px]" />
+            <div className="absolute inset-[17%] rounded-full bg-[#07080a] shadow-[0_0_90px_rgba(108,59,255,.32)]" />
+            <div className="absolute inset-[28%] flex flex-col items-center justify-center rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-2xl">
+              <span className="text-7xl font-extrabold tracking-[-0.09em] sm:text-8xl">M</span>
+              <span className="mt-1 text-[10px] font-bold tracking-[0.34em] text-white/45">YOUR SOUND</span>
+            </div>
+            {['MELLOW', 'HONEST', 'REFINED', 'INTENSE', 'NOW'].map((label, index) => {
+              const positions = ['left-[6%] top-[47%]', 'left-[26%] top-[3%]', 'right-[4%] top-[28%]', 'bottom-[9%] right-[12%]', 'bottom-[3%] left-[20%]'];
+              return <span key={label} className={`absolute ${positions[index]} text-[9px] font-bold tracking-[0.16em] text-white/38`}>{label}</span>;
+            })}
+          </div>
+        </section>
+      </main>
     );
   }
 
-  // 설문 화면
   if (appState === 'survey') {
     return (
       <Suspense fallback={<LoadingSpinner message={t('common.loading.preparingSurvey')} />}>
-        <Survey
-          questions={questions}
-          onComplete={handleSurveyComplete}
-          onGoHome={() => setAppState('intro')}
-        />
+        <Survey questions={questions} onComplete={handleSurveyComplete} onGoHome={() => setAppState('intro')} />
       </Suspense>
     );
   }
 
-  // 결과 화면
   if (appState === 'results' && personalityScores) {
     return (
       <Suspense fallback={<LoadingSpinner message={t('common.loading.analyzingResults')} />}>
@@ -185,53 +198,29 @@ const MusicPersonalityApp: React.FC = () => {
           recommendedGenres={recommendedGenres}
           genres={genres}
           recommendedArtists={recommendedArtistsList}
+          onRestart={handleRestart}
         />
       </Suspense>
     );
   }
 
-  // 장르 탐험 화면
   if (appState === 'genre-explorer') {
     return (
-      <div>
-        {/* 네비게이션 바 */}
-        <div className="bg-white shadow-sm border-b">
-          <div className="container mx-auto px-4 py-3">
-            <button
-              onClick={() => setAppState('intro')}
-              className="text-blue-600 hover:text-blue-800 font-medium"
-            >
-              ← {t('common.buttons.backToHome')}
-            </button>
+      <main className="min-h-screen bg-[#07080a] text-white">
+        <div className="sticky top-0 z-40 border-b border-white/10 bg-[#07080a]/90 px-5 py-4 backdrop-blur-xl">
+          <div className="mx-auto flex max-w-6xl items-center justify-between">
+            <button onClick={() => setAppState('intro')} className="text-sm font-semibold text-white/65 transition-colors hover:text-white">← {t('common.buttons.backToHome')}</button>
+            <LanguageSelector />
           </div>
         </div>
-        
         <Suspense fallback={<LoadingSpinner message={t('common.loading.loadingGenres')} />}>
-          <GenreExplorer
-            genres={genres}
-            onGenreSelect={() => {
-              // Genre selection is now handled by the GenreExplorer modal
-            }}
-          />
+          <GenreExplorer genres={genres} />
         </Suspense>
-      </div>
+      </main>
     );
   }
 
-  return (
-    <div className="error-screen min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <p className="text-red-600">{t('common.errorOccurred')}</p>
-        <button
-          onClick={handleRestart}
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          {t('common.restart')}
-        </button>
-      </div>
-      <PWAInstallPrompt />
-    </div>
-  );
+  return <LoadingSpinner message={t('common.errorOccurred')} />;
 };
 
 export default MusicPersonalityApp;

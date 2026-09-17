@@ -14,16 +14,16 @@ interface AnimatedSectionProps {
 const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   children,
   delay = 0,
-  duration = 0.6,
+  duration = 0.42,
   direction = 'up',
   className = ''
 }) => {
   const variants = {
     hidden: {
       opacity: 0,
-      y: direction === 'up' ? 50 : direction === 'down' ? -50 : 0,
-      x: direction === 'left' ? 50 : direction === 'right' ? -50 : 0,
-      scale: direction === 'fade' ? 0.95 : 1
+      y: direction === 'up' ? 18 : direction === 'down' ? -18 : 0,
+      x: direction === 'left' ? 18 : direction === 'right' ? -18 : 0,
+      scale: 1
     },
     visible: {
       opacity: 1,

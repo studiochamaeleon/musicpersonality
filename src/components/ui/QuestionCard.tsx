@@ -5,49 +5,21 @@ import { QuestionCardProps } from '@/types';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LikertScale from './LikertScale';
 
-const QuestionCard: React.FC<QuestionCardProps> = ({
-  question,
-  answer,
-  onAnswer,
-}) => {
+const QuestionCard: React.FC<QuestionCardProps> = ({ question, answer, onAnswer }) => {
   const { language } = useLanguage();
-  
-  // Use bilingual text based on language
   const questionText = language === 'en' ? question.textEn || question.text : question.text;
-  const scaleLabels = language === 'en' ? question.scaleLabelsEn || question.scaleLabels : question.scaleLabels;
-  
+  const description = language === 'en' ? question.descriptionEn || question.description : question.description;
+  const labels = language === 'en' ? question.scaleLabelsEn || question.scaleLabels : question.scaleLabels;
+
   return (
-    <div className="question-card bg-white rounded-lg shadow-md p-4 md:p-6 max-w-2xl mx-auto touch-feedback">
-      {/* 질문 카테고리 태그 */}
-      <div className="mb-4">
-        <span className="inline-block px-3 py-1 text-xs font-semibold text-blue-600 bg-blue-100 rounded-full uppercase tracking-wide">
-          {question.category}
-        </span>
+    <section className="mx-auto w-full max-w-2xl fade-in" key={question.id}>
+      <p className="eyebrow mb-5">{language === 'ko' ? '당신의 느낌에 가장 가까운 답' : 'Choose what feels closest'}</p>
+      <h1 className="max-w-[18ch] text-3xl font-bold leading-[1.28] tracking-[-0.035em] text-balance sm:text-5xl">{questionText}</h1>
+      {description && <p className="mt-4 max-w-xl text-sm leading-6 text-white/45">{description}</p>}
+      <div className="mt-10 sm:mt-14">
+        <LikertScale scale={question.scale} value={answer} onChange={onAnswer} labels={labels} />
       </div>
-
-      {/* 질문 텍스트 */}
-      <div className="mb-6">
-        <h3 className="text-base md:text-lg font-medium text-gray-900 mb-2 leading-relaxed">
-          {questionText}
-        </h3>
-        
-        {question.description && (
-          <p className="text-sm text-gray-600">
-            {question.description}
-          </p>
-        )}
-      </div>
-
-      {/* 리커트 척도 */}
-      <div className="mb-4">
-        <LikertScale
-          scale={question.scale}
-          value={answer}
-          onChange={onAnswer}
-          labels={scaleLabels}
-        />
-      </div>
-    </div>
+    </section>
   );
 };
 
