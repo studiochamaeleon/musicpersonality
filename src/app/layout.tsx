@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import StructuredData from "@/components/StructuredData";
 import { LanguageProvider } from "@/contexts/LanguageContext";
@@ -7,16 +6,6 @@ import DynamicLang from "@/components/DynamicLang";
 import DynamicStructuredData from "@/components/DynamicStructuredData";
 import DynamicMetadata from "@/components/DynamicMetadata";
 import Footer from "@/components/Footer";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Music Personality Test - Discover Your Musical Identity",
@@ -140,9 +129,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
-      >
+      <body className="min-h-screen flex flex-col">
         <LanguageProvider>
           <DynamicLang />
           <DynamicStructuredData />

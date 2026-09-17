@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { CSSProperties, useRef, useState } from 'react';
 import html2canvas from 'html2canvas';
-import { Share2 } from 'lucide-react';
+import { Check, Download, Link2, Share2 } from 'lucide-react';
 import { MUSICPersonality, GenreSchema } from '@/types';
 import { analytics } from '@/lib/analytics';
 import { useTranslation } from '@/hooks/useTranslation';
 import { getGenreName, getGenreCharacteristics } from '@/lib/genreTranslations';
+import { getGenreTheme, getResultUrl } from '@/lib/resultTheme';
 
 interface ShareableCardProps {
   personalityScores: MUSICPersonality;
@@ -15,249 +16,134 @@ interface ShareableCardProps {
   className?: string;
 }
 
-const ShareableCard: React.FC<ShareableCardProps> = ({
-  personalityScores,
-  topGenre,
-  topGenreScore,
-  className = ''
-}) => {
+const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGenre, topGenreScore, className = '' }) => {
   const { t, language } = useTranslation();
   const cardRef = useRef<HTMLDivElement>(null);
+  const [feedback, setFeedback] = useState<string | null>(null);
+  const theme = getGenreTheme(topGenre);
+  const topTraits = Object.entries(personalityScores).sort(([, a], [, b]) => b - a).slice(0, 3);
+  const cardStyle = { '--card-accent': theme.accent, '--card-secondary': theme.secondary } as CSSProperties;
 
-  // MUSIC 트레이트 색상 매핑
-  const traitColors = {
-    mellow: '#10B981', // 초록색
-    unpretentious: '#F59E0B', // 주황색
-    sophisticated: '#8B5CF6', // 보라색
-    intense: '#EF4444', // 빨간색
-    contemporary: '#3B82F6' // 파란색
+  const getTraitName = (trait: string) => language === 'ko'
+    ? t(`intro.musicModelTraits.${trait}.description`)
+    : t(`intro.musicModelTraits.${trait}.name`);
+
+  const makeCanvas = async () => {
+    if (!cardRef.current) throw new Error('Card is not ready');
+    return html2canvas(cardRef.current, { background: '#050507', useCORS: true, allowTaint: false });
   };
 
-  // 최고 점수를 가진 MUSIC 트레이트 찾기
-  const topTraits = Object.entries(personalityScores)
-    .sort(([,a], [,b]) => b - a)
-    .slice(0, 3);
+  const createBlob = async () => {
+    const canvas = await makeCanvas();
+    return new Promise<Blob>((resolve, reject) => canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('Image creation failed')), 'image/png'));
+  };
 
+  const notify = (message: string) => {
+    setFeedback(message);
+    window.setTimeout(() => setFeedback(null), 2400);
+  };
 
-
-  const shareUnified = async () => {
-    // Track unified share action
-    analytics.track('result_shared', {
-      shareType: 'unified',
-      topGenre: topGenre.name,
-      topGenreKo: topGenre.nameKo,
-      personalityScores
-    });
-
-    // Step 1: Try image + native sharing (highest quality option)
-    if (cardRef.current) {
-      try {
-        const canvas = await html2canvas(cardRef.current, {
-          width: 600,
-          height: 800,
-          background: '#6366f1',
-          useCORS: true,
-          allowTaint: false
-        });
-
-        await new Promise((resolve, reject) => {
-          canvas.toBlob(async (blob) => {
-            if (!blob) return reject(new Error('Failed to create blob'));
-
-            // Try native sharing with image file
-            if (navigator.share) {
-              try {
-                const file = new File([blob], 'music-personality.png', { type: 'image/png' });
-                const shareData = {
-                  title: language === 'ko' ? '내 음악적 성격 검사 결과' : 'My Music Personality Test Results',
-                  text: language === 'ko' 
-                    ? `저는 ${getGenreName(topGenre, language)} 음악을 좋아해요! 당신의 음악적 정체성을 발견해보세요.`
-                    : `I'm a ${getGenreName(topGenre, language)} music lover! Discover your musical identity.`,
-                  files: [file]
-                };
-                
-                if (navigator.canShare?.(shareData)) {
-                  await navigator.share(shareData);
-                  return resolve(true);
-                }
-              } catch {
-                console.log('Image sharing failed, trying URL sharing');
-              }
-            }
-            reject(new Error('Image sharing not available'));
-          }, 'image/png');
-        });
-        return; // Success, exit early
-      } catch {
-        console.log('Image generation or sharing failed, falling back to URL sharing');
-      }
-    }
-
-    // Step 2: Fallback to URL/text sharing (if image sharing failed)
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: language === 'ko' ? `내 음악적 성격: ${getGenreName(topGenre, language)}` : `My Music Personality: ${getGenreName(topGenre, language)}`,
-          text: language === 'ko' 
-            ? `저는 ${getGenreName(topGenre, language)} 음악을 좋아해요! 당신의 음악적 성격을 발견해보세요.`
-            : `I'm a ${getGenreName(topGenre, language)} music lover! Discover your music personality.`,
-          url: window.location.href
-        });
-        return; // Success, exit early
-      } catch {
-        console.log('URL sharing failed, falling back to clipboard');
-      }
-    }
-
-    // Step 3: Final fallback - Copy to clipboard
+  const share = async () => {
+    const url = getResultUrl(personalityScores);
+    analytics.track('result_shared', { shareType: 'unified', topGenre: topGenre.name, personalityScores });
     try {
-      const shareUrl = `${window.location.origin}?mellow=${personalityScores.mellow}&unpretentious=${personalityScores.unpretentious}&sophisticated=${personalityScores.sophisticated}&intense=${personalityScores.intense}&contemporary=${personalityScores.contemporary}`;
-      await navigator.clipboard.writeText(shareUrl);
-      alert(language === 'ko' ? '공유 URL이 클립보드에 복사되었습니다!' : 'Share URL copied to clipboard!');
-    } catch (clipboardError) {
-      console.error('All share methods failed:', clipboardError);
-      alert(language === 'ko' ? '공유에 실패했습니다. 다시 시도해주세요.' : 'Sharing failed. Please try again.');
+      const blob = await createBlob();
+      const file = new File([blob], 'music-personality-result.png', { type: 'image/png' });
+      const data: ShareData = {
+        title: language === 'ko' ? `내 음악 성격은 ${getGenreName(topGenre, language)}` : `My music personality is ${getGenreName(topGenre, language)}`,
+        text: language === 'ko' ? `나는 ${getGenreName(topGenre, language)} 타입! 당신의 음악 성격도 확인해보세요.` : `I'm a ${getGenreName(topGenre, language)} type. What's yours?`,
+        url,
+        files: [file],
+      };
+      if (navigator.share && navigator.canShare?.(data)) {
+        await navigator.share(data);
+        return;
+      }
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') return;
+    }
+
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: 'Music Personality', url });
+        return;
+      }
+      await navigator.clipboard.writeText(url);
+      notify(language === 'ko' ? '결과 링크를 복사했어요.' : 'Result link copied.');
+    } catch {
+      notify(language === 'ko' ? '공유하지 못했어요. 다시 시도해 주세요.' : 'Could not share. Please try again.');
     }
   };
 
-  const shareToTwitter = () => {
-    // Track Twitter share
-    analytics.track('result_shared', {
-      shareType: 'twitter',
-      topGenre: topGenre.name,
-      topGenreKo: topGenre.nameKo,
-      personalityScores
-    });
-
-    const topTraitsText = topTraits.slice(0, 2).map(([trait]) => getTraitName(trait)).join(' & ');
-    const text = language === 'ko' 
-      ? `내 음악적 성격을 발견했어요: ${topTraitsText}! 제가 가장 좋아하는 장르는 ${getGenreName(topGenre, language)}입니다. 당신은 어떤가요?`
-      : `I just discovered my music personality: ${topTraitsText}! My top genre is ${getGenreName(topGenre, language)}. What's yours?`;
-    const url = `${window.location.origin}?mellow=${personalityScores.mellow}&unpretentious=${personalityScores.unpretentious}&sophisticated=${personalityScores.sophisticated}&intense=${personalityScores.intense}&contemporary=${personalityScores.contemporary}`;
-    const hashtags = language === 'ko' ? '음악성격검사,MUSIC,성격검사' : 'MusicPersonality,MUSIC';
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}&hashtags=${hashtags}`;
-    window.open(twitterUrl, '_blank');
+  const download = async () => {
+    try {
+      const canvas = await makeCanvas();
+      const anchor = document.createElement('a');
+      anchor.download = 'music-personality-result.png';
+      anchor.href = canvas.toDataURL('image/png');
+      anchor.click();
+      analytics.track('result_shared', { shareType: 'download', topGenre: topGenre.name, personalityScores });
+      notify(language === 'ko' ? '결과 이미지를 저장했어요.' : 'Result image saved.');
+    } catch {
+      notify(language === 'ko' ? '이미지를 만들지 못했어요.' : 'Could not create the image.');
+    }
   };
 
-  const shareToFacebook = () => {
-    // Track Facebook share
-    analytics.track('result_shared', {
-      shareType: 'facebook',
-      topGenre: topGenre.name,
-      topGenreKo: topGenre.nameKo,
-      personalityScores
-    });
-
-    const url = `${window.location.origin}?mellow=${personalityScores.mellow}&unpretentious=${personalityScores.unpretentious}&sophisticated=${personalityScores.sophisticated}&intense=${personalityScores.intense}&contemporary=${personalityScores.contemporary}`;
-    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
-    window.open(facebookUrl, '_blank');
-  };
-
-  const getTraitName = (trait: string): string => {
-    // For Korean, use the description (침착함, 소탈함, etc.)
-    // For English, use the name (Mellow, Unpretentious, etc.)
-    const key = language === 'ko' ? `intro.musicModelTraits.${trait}.description` : `intro.musicModelTraits.${trait}.name`;
-    return t(key) || trait;
+  const copyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(getResultUrl(personalityScores));
+      notify(language === 'ko' ? '결과 링크를 복사했어요.' : 'Result link copied.');
+    } catch {
+      notify(language === 'ko' ? '링크를 복사하지 못했어요.' : 'Could not copy the link.');
+    }
   };
 
   return (
     <div className={`shareable-card-container ${className}`}>
-      {/* 실제 공유될 카드 */}
       <div
         ref={cardRef}
-        className="shareable-card w-full max-w-[600px] h-[800px] mx-auto bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 text-white p-8 flex flex-col justify-between relative overflow-hidden"
-        style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}
+        style={cardStyle}
+        className="relative mx-auto aspect-[3/4] w-full max-w-[600px] overflow-hidden rounded-[32px] border border-white/20 bg-[#050507] p-7 text-white shadow-2xl sm:p-10"
       >
-        {/* 배경 패턴 */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-32 h-32 rounded-full bg-white/20"></div>
-          <div className="absolute bottom-20 right-16 w-24 h-24 rounded-full bg-white/15"></div>
-          <div className="absolute top-1/2 right-8 w-16 h-16 rounded-full bg-white/25"></div>
-        </div>
+        <div className="absolute -right-[18%] -top-[8%] h-[58%] w-[72%] rounded-full opacity-45 blur-[80px]" style={{ background: theme.accent }} />
+        <div className="absolute -bottom-[18%] -left-[18%] h-[55%] w-[70%] rounded-full opacity-28 blur-[90px]" style={{ background: theme.secondary }} />
+        <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '22px 22px' }} />
 
-          {/* 헤더 */}
-        <div className="relative z-10">
-          <div className="text-center mb-8">
-            <div className="text-6xl mb-4">🎵</div>
-            <h1 className="text-2xl font-bold mb-2">
-              {language === 'ko' ? '음악적 성격 유형 검사' : 'Music Personality Test'}
-            </h1>
-            <p className="text-lg opacity-90">{t('shareableCard.myMusicalPersonality')}</p>
-          </div>
+        <div className="relative z-10 flex h-full flex-col">
+          <header className="flex items-start justify-between gap-4 border-b border-white/15 pb-5">
+            <div><p className="text-sm font-extrabold tracking-[-0.03em]">MUSIC PERSONALITY</p><p className="mt-1 text-[9px] font-semibold tracking-[0.18em] text-white/40">BY CHAMELEONS</p></div>
+            <p className="text-[10px] font-bold tracking-[0.14em] text-white/45">RESULT / 01</p>
+          </header>
 
-          {/* 메인 결과 */}
-          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 mb-6">
-            <div className="text-center">
-              <h2 className="text-3xl font-bold mb-2">{getGenreName(topGenre, language)}</h2>
-              <p className="text-lg opacity-90 mb-4">{topGenre.category}</p>
-              <div className="bg-white/20 rounded-full px-4 py-2 inline-block">
-                <span className="text-xl font-bold">{topGenreScore}% {t('shareableCard.match')}</span>
-              </div>
+          <div className="flex flex-1 flex-col justify-center py-6 sm:py-8">
+            <p className="text-[10px] font-bold tracking-[0.18em]" style={{ color: theme.accent }}>{language === 'ko' ? '나와 가장 닮은 사운드' : 'THE SOUND MOST LIKE ME'}</p>
+            <h3 className="mt-3 max-w-[9ch] text-5xl font-extrabold leading-[0.92] tracking-[-0.065em] sm:text-7xl">{getGenreName(topGenre, language)}</h3>
+            <p className="score-tabular mt-6 text-6xl font-extrabold tracking-[-0.07em] sm:text-8xl" style={{ color: theme.accent }}>{topGenreScore}<span className="text-2xl">%</span></p>
+            <p className="mt-1 text-[10px] font-bold tracking-[0.15em] text-white/38 uppercase">{language === 'ko' ? '취향 일치' : 'taste match'}</p>
+
+            <div className="mt-7 space-y-3 sm:mt-10">
+              {topTraits.map(([trait, score]) => (
+                <div key={trait}>
+                  <div className="mb-1.5 flex justify-between text-[10px] font-semibold text-white/58"><span>{getTraitName(trait)}</span><span className="score-tabular">{score}</span></div>
+                  <div className="h-[3px] overflow-hidden rounded-full bg-white/12"><div className="h-full rounded-full" style={{ width: `${score}%`, background: `linear-gradient(90deg, ${theme.accent}, ${theme.secondary})` }} /></div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* 상위 3개 MUSIC 트레이트 */}
-          <div className="space-y-3">
-            <h3 className="text-lg font-semibold text-center mb-4">{t('shareableCard.myMusicalTraits')}</h3>
-            {topTraits.map(([trait, score]) => (
-              <div key={trait} className="flex items-center space-x-3">
-                <div className="flex-1">
-                  <div className="flex justify-between items-center mb-1">
-                    <span className="font-medium">{getTraitName(trait)}</span>
-                    <span className="text-sm font-bold">{Math.round(score)}%</span>
-                  </div>
-                  <div className="h-2 bg-white/20 rounded-full overflow-hidden">
-                    <div
-                      className="h-full rounded-full transition-all duration-1000"
-                      style={{
-                        width: `${score}%`,
-                        backgroundColor: traitColors[trait as keyof typeof traitColors]
-                      }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* 푸터 */}
-        <div className="relative z-10 text-center">
-          <div className="bg-white/10 backdrop-blur-md rounded-xl p-4">
-            <p className="text-sm opacity-80 mb-2">
-              {getGenreCharacteristics(topGenre.id, topGenre.characteristics, language).slice(0, 3).join(' • ')}
-            </p>
-            <p className="text-xs opacity-70">
-{t('shareableCard.basedOnMusicModel')}
-            </p>
-          </div>
+          <footer className="border-t border-white/15 pt-5">
+            <p className="line-clamp-1 text-[10px] text-white/48">{getGenreCharacteristics(topGenre.id, topGenre.characteristics, language).slice(0, 3).join('  ·  ')}</p>
+            <div className="mt-3 flex items-end justify-between gap-4"><p className="text-[9px] leading-4 text-white/28">MUSIC 5 MODEL<br />FOR FUN, NOT A DIAGNOSIS</p><p className="text-[9px] font-bold tracking-[0.1em] text-white/42">MUSICPERSONALITYTEST</p></div>
+          </footer>
         </div>
       </div>
 
-      {/* 공유 버튼들 - 3버튼 레이아웃 */}
-      <div className="mt-6 flex justify-center gap-3 md:gap-4 px-4 md:px-0">
-        <button
-          onClick={shareUnified}
-          className="flex items-center space-x-2 px-4 md:px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 active:bg-purple-700 transition-colors touch-feedback min-h-[44px] text-sm md:text-base font-medium"
-        >
-          <Share2 size={18} />
-          <span>{t('sharing.share')}</span>
-        </button>
-        
-        <button
-          onClick={shareToTwitter}
-          className="flex items-center justify-center px-4 md:px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 active:bg-gray-900 transition-colors touch-feedback min-h-[44px] text-sm md:text-base font-medium min-w-[60px]"
-        >
-          <span>𝕏</span>
-        </button>
-        
-        <button
-          onClick={shareToFacebook}
-          className="flex items-center justify-center px-4 md:px-6 py-3 bg-blue-700 text-white rounded-lg hover:bg-blue-800 active:bg-blue-900 transition-colors touch-feedback min-h-[44px] text-sm md:text-base font-medium min-w-[100px]"
-        >
-          <span>Facebook</span>
-        </button>
+      <div className="mt-6 grid gap-3 sm:grid-cols-3">
+        <button onClick={() => void share()} className="primary-action inline-flex items-center justify-center gap-2" style={{ background: theme.accent, borderColor: theme.accent }}><Share2 size={17} />{language === 'ko' ? '공유하기' : 'Share'}</button>
+        <button onClick={() => void download()} className="secondary-action inline-flex items-center justify-center gap-2"><Download size={17} />{language === 'ko' ? '이미지 저장' : 'Save image'}</button>
+        <button onClick={() => void copyLink()} className="secondary-action inline-flex items-center justify-center gap-2"><Link2 size={17} />{language === 'ko' ? '링크 복사' : 'Copy link'}</button>
       </div>
+      <div className="mt-3 min-h-6 text-center text-xs text-white/45" role="status" aria-live="polite">{feedback && <span className="inline-flex items-center gap-1.5"><Check size={13} />{feedback}</span>}</div>
     </div>
   );
 };

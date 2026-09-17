@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { Home } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { ArrowLeft, ArrowRight, X } from 'lucide-react';
 import { Question } from '@/types';
 import { useSurvey } from '@/hooks/useSurvey';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -15,122 +15,64 @@ interface SurveyProps {
 }
 
 const Survey: React.FC<SurveyProps> = ({ questions, onComplete, onGoHome }) => {
-  const { t } = useTranslation();
-  const {
-    surveyState,
-    currentQuestion,
-    progress,
-    setAnswer,
-    nextQuestion,
-    previousQuestion,
-    canGoNext,
-    canGoPrevious,
-    hasCurrentAnswer,
-  } = useSurvey(questions);
+  const { t, language } = useTranslation();
+  const { surveyState, currentQuestion, progress, setAnswer, nextQuestion, previousQuestion, canGoNext, canGoPrevious } = useSurvey(questions);
 
-  // 설문 완료 처리
-  React.useEffect(() => {
-    if (surveyState.isComplete && onComplete) {
-      onComplete(surveyState.answers);
-    }
+  useEffect(() => {
+    if (surveyState.isComplete && onComplete) onComplete(surveyState.answers);
   }, [surveyState.isComplete, surveyState.answers, onComplete]);
 
+  useEffect(() => {
+    const handleKey = (event: KeyboardEvent) => {
+      if (!currentQuestion) return;
+      const option = Number(event.key);
+      if (option >= 1 && option <= currentQuestion.scale) setAnswer(currentQuestion.id, option);
+      if (event.key === 'ArrowLeft' && canGoPrevious) previousQuestion();
+      if ((event.key === 'ArrowRight' || event.key === 'Enter') && canGoNext) nextQuestion();
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [canGoNext, canGoPrevious, currentQuestion, nextQuestion, previousQuestion, setAnswer]);
+
   if (surveyState.isComplete) {
-    return (
-      <div className="survey-complete text-center py-12">
-        <div className="max-w-md mx-auto">
-          <div className="text-6xl mb-4">🎵</div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            {t('survey.completed')}
-          </h2>
-          <p className="text-gray-600 mb-6">
-            {t('survey.analyzing')}
-          </p>
-          <div className="animate-spin h-8 w-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto"></div>
-        </div>
-      </div>
-    );
+    return <div className="app-canvas flex min-h-screen items-center justify-center"><p className="text-sm text-white/55">{t('survey.analyzing')}</p></div>;
   }
 
   if (!currentQuestion) {
-    return (
-      <div className="survey-error text-center py-12">
-        <p className="text-red-600">{t('survey.errorLoadingQuestion')}</p>
-      </div>
-    );
+    return <div className="app-canvas flex min-h-screen items-center justify-center"><p className="text-sm text-[#ff6161]">{t('survey.errorLoadingQuestion')}</p></div>;
   }
 
   return (
-    <div className="survey min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4">
-        {/* 홈 버튼 */}
+    <main className="app-canvas flex min-h-screen flex-col text-white">
+      <header className="mx-auto flex w-full max-w-4xl items-center justify-between px-5 py-5 sm:px-8">
+        <div>
+          <p className="text-sm font-extrabold tracking-[-0.03em]">MUSIC PERSONALITY</p>
+          <p className="mt-0.5 text-[10px] tracking-[0.16em] text-white/30">LISTEN TO YOUR TASTE</p>
+        </div>
         {onGoHome && (
-          <div className="mb-4">
-            <button
-              onClick={onGoHome}
-              className="flex items-center space-x-2 px-3 py-2 text-gray-600 hover:text-gray-900 hover:bg-white rounded-lg transition-colors touch-feedback"
-            >
-              <Home size={18} />
-              <span className="text-sm font-medium">{t('common.buttons.backToHome')}</span>
-            </button>
-          </div>
+          <button onClick={onGoHome} aria-label={t('common.buttons.backToHome')} className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/55 transition-colors hover:bg-white/10 hover:text-white">
+            <X size={19} />
+          </button>
         )}
-        
-        {/* 진행도 표시 */}
-        <ProgressIndicator
-          currentStep={progress.current}
-          totalSteps={progress.total}
-        />
+      </header>
 
-        {/* 현재 질문 */}
-        <div className="mb-8">
-          <QuestionCard
-            question={currentQuestion}
-            answer={surveyState.answers[currentQuestion.id]}
-            onAnswer={(value) => setAnswer(currentQuestion.id, value)}
-          />
+      <div className="mx-auto flex w-full max-w-4xl flex-1 flex-col px-5 pb-8 sm:px-8">
+        <ProgressIndicator currentStep={progress.current} totalSteps={progress.total} />
+        <div className="flex flex-1 items-center py-8 sm:py-12">
+          <QuestionCard question={currentQuestion} answer={surveyState.answers[currentQuestion.id]} onAnswer={(value) => setAnswer(currentQuestion.id, value)} />
         </div>
 
-        {/* 네비게이션 버튼 */}
-        <div className="flex justify-between items-center max-w-2xl mx-auto px-4">
-          <button
-            onClick={previousQuestion}
-            disabled={!canGoPrevious}
-            className={`
-              px-4 md:px-6 py-3 rounded-lg font-medium transition-all touch-feedback min-h-[44px]
-              ${canGoPrevious
-                ? 'bg-gray-200 text-gray-700 hover:bg-gray-300 active:bg-gray-400'
-                : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              }
-            `}
-          >
-            {t('survey.previous')}
+        <nav className="mx-auto flex w-full max-w-2xl items-center justify-between gap-3 border-t border-white/10 pt-5" aria-label={language === 'ko' ? '설문 이동' : 'Survey navigation'}>
+          <button onClick={previousQuestion} disabled={!canGoPrevious} className="secondary-action !min-h-12 !w-auto inline-flex items-center gap-2 !px-5">
+            <ArrowLeft size={17} /><span className="hidden sm:inline">{t('survey.previous')}</span>
           </button>
-
-          <div className="flex space-x-2 md:space-x-4">
-            {/* 답변 상태 표시 */}
-            <div className="flex items-center space-x-2 text-xs md:text-sm text-gray-600">
-              <div className={`w-3 h-3 rounded-full ${hasCurrentAnswer ? 'bg-green-500' : 'bg-gray-300'}`} />
-              <span className="hidden sm:block">{hasCurrentAnswer ? t('survey.answerComplete') : t('survey.answerNeeded')}</span>
-            </div>
-          </div>
-
-          <button
-            onClick={nextQuestion}
-            disabled={!canGoNext}
-            className={`
-              px-4 md:px-6 py-3 rounded-lg font-medium transition-all touch-feedback min-h-[44px]
-              ${canGoNext
-                ? 'bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700'
-                : 'bg-gray-100 text-gray-400 cursor-not-allowed'
-              }
-            `}
-          >
-            {progress.current >= progress.total ? t('survey.complete') : t('survey.next')}
+          <p className="hidden text-xs text-white/28 sm:block">{language === 'ko' ? '숫자 키 1–5로도 답할 수 있어요' : 'You can also use keys 1–5'}</p>
+          <button onClick={nextQuestion} disabled={!canGoNext} className="primary-action !min-h-12 !w-auto inline-flex items-center gap-2 !px-5">
+            {progress.current >= progress.total ? t('survey.complete') : t('survey.next')}<ArrowRight size={17} />
           </button>
-        </div>
+        </nav>
       </div>
-    </div>
+    </main>
   );
 };
 
