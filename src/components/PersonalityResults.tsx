@@ -1,13 +1,13 @@
 'use client';
 
-import React, { CSSProperties, lazy } from 'react';
-import { ArrowDown, ExternalLink, RotateCcw, Share2, Users } from 'lucide-react';
+import React, { CSSProperties, lazy, useEffect, useState } from 'react';
+import { ArrowDown, Check, ExternalLink, RotateCcw, Share2, Users } from 'lucide-react';
 import { MUSICPersonality, EnhancedRecommendationScore, GenreSchema, RecommendedArtist } from '@/types';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { getGenreDescription, getGenreCharacteristics, getPersonalityAnalysis, getGenreName, getArtistName, getArtistSubtitle } from '@/lib/genreTranslations';
 import { analytics } from '@/lib/analytics';
-import { getGenreTheme } from '@/lib/resultTheme';
+import { getGenreTheme, getResultUrl } from '@/lib/resultTheme';
 import AnimatedSection from './ui/AnimatedSection';
 import ShareableCard from './ui/ShareableCard';
 
@@ -25,6 +25,8 @@ interface PersonalityResultsProps {
 const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScores, recommendedGenres, genres, recommendedArtists = [], onRestart, onInviteFriend }) => {
   const { t } = useTranslation();
   const { language } = useLanguage();
+  const [showStickyActions, setShowStickyActions] = useState(false);
+  const [shareFeedback, setShareFeedback] = useState<string | null>(null);
   const topRecommendation = recommendedGenres[0];
   const topGenre = genres.find(genre => genre.id === topRecommendation?.genreId);
   const theme = getGenreTheme(topGenre);
@@ -36,14 +38,22 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
     '--result-secondary': theme.secondary,
   } as CSSProperties;
 
+  useEffect(() => {
+    const updateStickyActions = () => setShowStickyActions(window.scrollY > 480);
+    updateStickyActions();
+    window.addEventListener('scroll', updateStickyActions, { passive: true });
+    return () => window.removeEventListener('scroll', updateStickyActions);
+  }, []);
+
   if (!topGenre || !topRecommendation) {
     return <div className="app-canvas flex min-h-screen items-center justify-center"><p className="text-white/60">{t('results.cannotLoadGenre')}</p></div>;
   }
 
   const traits = getGenreCharacteristics(topGenre.id, topGenre.characteristics, language).slice(0, 4);
+  const typeTitle = personalityAnalysis?.typeTitle || getGenreName(topGenre, language);
   const resultCopy = language === 'ko'
-    ? { eyebrow: '당신의 음악 성격', lead: '당신과 가장 닮은 사운드', match: '취향 일치', spectrum: '나의 취향 스펙트럼', spectrumBody: '다섯 개의 축이 당신의 음악 취향을 어떻게 구성하는지 보여줍니다.', next: '함께 들으면 좋은 장르', artists: '당신을 위한 아티스트와 앨범', detail: '성격 해석 더 보기', invite: '친구와 음악 궁합 보기', share: '결과 공유하기', again: '다시 검사하기' }
-    : { eyebrow: 'YOUR MUSIC PERSONALITY', lead: 'The sound most like you', match: 'taste match', spectrum: 'Your taste spectrum', spectrumBody: 'Five dimensions show how your music taste is put together.', next: 'Genres to try next', artists: 'Artists and albums for your taste', detail: 'Read the full personality note', invite: 'Compare with a friend', share: 'Share my result', again: 'Take it again' };
+    ? { eyebrow: '당신의 음악 성격', lead: '당신과 가장 닮은 장르', match: '취향 일치', spectrum: '나의 취향 스펙트럼', spectrumBody: '다섯 개의 축이 당신의 음악 취향을 어떻게 구성하는지 보여줍니다.', next: '함께 들으면 좋은 장르', artists: '당신을 위한 아티스트와 앨범', detail: '성격 해석 더 보기', invite: '친구와 음악 궁합 보기', share: '결과 공유하기', again: '다시 검사하기' }
+    : { eyebrow: 'YOUR MUSIC PERSONALITY', lead: 'The genre most like you', match: 'taste match', spectrum: 'Your taste spectrum', spectrumBody: 'Five dimensions show how your music taste is put together.', next: 'Genres to try next', artists: 'Artists and albums for your taste', detail: 'Read the full personality note', invite: 'Compare with a friend', share: 'Share my result', again: 'Take it again' };
   const albumCopy = language === 'ko'
     ? { anchor: '장르의 기준점', discovery: '새롭게 발견할 앨범', listen: 'Spotify에서 앨범 듣기' }
     : { anchor: 'Genre cornerstone', discovery: 'Your next discovery', listen: 'Listen to the album on Spotify' };
@@ -57,8 +67,34 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
     { label: insightCopy.acousticness, value: topGenre.acousticness },
   ];
 
+  const notifyShare = (message: string) => {
+    setShareFeedback(message);
+    window.setTimeout(() => setShareFeedback(null), 2400);
+  };
+
+  const shareResultLink = async () => {
+    const url = getResultUrl(personalityScores, language);
+    const title = language === 'ko' ? `내 음악 성격은 ${typeTitle}` : `My music personality is ${typeTitle}`;
+    const text = language === 'ko'
+      ? `나는 ${getGenreName(topGenre, language)}와 닮은 ${typeTitle} 타입! 너는 어떤 음악 성격일까?`
+      : `I'm a ${typeTitle} with a ${getGenreName(topGenre, language)} sound. What's your music type?`;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title, text, url });
+        analytics.track('result_shared', { shareType: 'sticky-native-link', topGenre: topGenre.name, personalityScores });
+        return;
+      }
+      await navigator.clipboard.writeText(url);
+      analytics.track('result_shared', { shareType: 'sticky-copy', topGenre: topGenre.name, personalityScores });
+      notifyShare(language === 'ko' ? '결과 링크를 복사했어요.' : 'Result link copied.');
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') return;
+      notifyShare(language === 'ko' ? '공유하지 못했어요.' : 'Could not share the result.');
+    }
+  };
+
   return (
-    <main className="result-surface min-h-screen text-white" style={pageStyle}>
+    <main className="result-surface min-h-screen pb-24 text-white sm:pb-0" style={pageStyle}>
       <section className="mx-auto max-w-6xl px-5 pb-16 pt-8 sm:px-8 sm:pt-12">
         <AnimatedSection direction="fade" duration={0.45}>
           <div className="mb-12 flex items-center justify-between">
@@ -72,9 +108,9 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
           <div className="grid items-end gap-8 lg:grid-cols-[1fr_auto]">
             <div>
               <p className="eyebrow mb-5" style={{ color: theme.accent }}>{resultCopy.eyebrow}</p>
-              <p className="mb-3 text-sm text-white/45">{resultCopy.lead}</p>
-              <h1 className="max-w-[12ch] text-6xl font-extrabold leading-[0.94] tracking-[-0.065em] text-balance sm:text-8xl lg:text-9xl">
-                {getGenreName(topGenre, language)}
+              <p className="mb-3 text-sm font-semibold text-white/48">{resultCopy.lead} · <span style={{ color: theme.accent }}>{getGenreName(topGenre, language)}</span></p>
+              <h1 className="max-w-[13ch] text-5xl font-extrabold leading-[0.94] tracking-[-0.065em] text-balance sm:text-7xl lg:text-8xl">
+                {typeTitle}
               </h1>
             </div>
             <div className="lg:pb-2 lg:text-right">
@@ -84,7 +120,7 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
           </div>
 
           <div className="mt-10 grid gap-8 border-t border-white/10 pt-8 lg:grid-cols-[1.25fr_.75fr]">
-            <p className="max-w-2xl text-lg leading-8 text-white/67">{getGenreDescription(topGenre.id, topGenre.description, language)}</p>
+            <p className="max-w-2xl text-lg leading-8 text-white/67">{personalityAnalysis?.description || getGenreDescription(topGenre.id, topGenre.description, language)}</p>
             <div className="flex flex-wrap content-start gap-2 lg:justify-end">
               {traits.map(trait => <span key={trait} className="rounded-full border border-white/12 bg-white/[0.045] px-3 py-2 text-xs font-semibold text-white/68">{trait}</span>)}
             </div>
@@ -257,6 +293,18 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
           {onRestart && <div className="mt-8 text-center"><button onClick={onRestart} className="secondary-action !w-auto inline-flex items-center gap-2"><RotateCcw size={17} />{resultCopy.again}</button></div>}
         </div>
       </section>
+
+      {shareFeedback && (
+        <div className="fixed inset-x-0 bottom-24 z-[60] flex justify-center px-4 sm:hidden" role="status" aria-live="polite">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-[#111216]/95 px-4 py-2 text-xs text-white/72 shadow-2xl backdrop-blur-xl"><Check size={14} style={{ color: theme.accent }} />{shareFeedback}</span>
+        </div>
+      )}
+      {showStickyActions && (
+        <div className="fixed inset-x-3 bottom-3 z-50 grid grid-cols-2 gap-2 rounded-[22px] border border-white/12 bg-[#090a0d]/92 p-2 shadow-2xl backdrop-blur-xl sm:hidden" style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}>
+          {onInviteFriend ? <button onClick={onInviteFriend} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl px-3 text-xs font-bold text-black" style={{ background: theme.accent }}><Users size={16} />{resultCopy.invite}</button> : <a href="#share" className="inline-flex min-h-12 items-center justify-center rounded-2xl px-3 text-xs font-bold text-black" style={{ background: theme.accent }}>{resultCopy.share}</a>}
+          <button onClick={() => void shareResultLink()} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-white/12 bg-white/[0.06] px-3 text-xs font-bold text-white"><Share2 size={16} />{resultCopy.share}</button>
+        </div>
+      )}
     </main>
   );
 };

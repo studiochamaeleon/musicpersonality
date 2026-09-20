@@ -78,3 +78,12 @@ test('the genre explorer reuses the fixed dot matrix background', async ({ page 
   await expect(backgroundCanvas).toBeVisible();
   await expect(backgroundCanvas.locator('..')).toHaveCSS('position', 'fixed');
 });
+
+test('the personal result keeps viral actions within reach on mobile', async ({ page }) => {
+  await page.goto('/?v=1&m=70&u=61&s=79&i=48&c=75');
+  await page.evaluate(() => window.scrollTo(0, 700));
+
+  const stickyActions = page.locator('div.fixed').filter({ has: page.getByRole('button', { name: '결과 공유하기' }) });
+  await expect(stickyActions).toBeVisible();
+  await expect(stickyActions.getByRole('button', { name: '친구와 음악 궁합 보기' })).toBeVisible();
+});

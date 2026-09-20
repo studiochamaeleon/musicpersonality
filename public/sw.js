@@ -31,7 +31,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-const isDynamicShareRequest = (url) => url.pathname === '/share' || url.pathname.startsWith('/api/');
+const isDynamicShareRequest = (url) => url.pathname === '/share' || url.pathname === '/result' || url.pathname.startsWith('/api/');
 
 // Keep navigations fresh after deploys while retaining an offline home fallback.
 self.addEventListener('fetch', (event) => {

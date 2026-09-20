@@ -22,10 +22,13 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
   // 컴포넌트 마운트 시 저장된 언어 설정 불러오기
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      const queryLanguage = new URLSearchParams(window.location.search).get('lang') as Language;
       const savedLanguage = localStorage.getItem('music-personality-language') as Language;
       const hasSelectedLanguage = localStorage.getItem('music-personality-language-selected');
       
-      if (savedLanguage && (savedLanguage === 'ko' || savedLanguage === 'en')) {
+      if (queryLanguage === 'ko' || queryLanguage === 'en') {
+        setLanguageState(queryLanguage);
+      } else if (savedLanguage && (savedLanguage === 'ko' || savedLanguage === 'en')) {
         setLanguageState(savedLanguage);
       }
       

@@ -1,4 +1,5 @@
 import { GenreSchema, MUSICPersonality } from '@/types';
+import { encodeScores } from './compatibility';
 
 const CATEGORY_THEMES: Record<GenreSchema['category'], { accent: string; secondary: string }> = {
   JAZZ: { accent: '#BCA7FF', secondary: '#43F5FF' },
@@ -55,7 +56,9 @@ export function parseResultSearchParams(params: URLSearchParams): MUSICPersonali
   };
 }
 
-export function getResultUrl(scores: MUSICPersonality) {
+export function getResultUrl(scores: MUSICPersonality, language: 'ko' | 'en' = 'ko') {
   if (typeof window === 'undefined') return '';
-  return `${window.location.origin}/?${createResultSearchParams(scores).toString()}`;
+  const params = new URLSearchParams({ score: encodeScores(scores) });
+  if (language === 'en') params.set('lang', 'en');
+  return `${window.location.origin}/result?${params.toString()}`;
 }

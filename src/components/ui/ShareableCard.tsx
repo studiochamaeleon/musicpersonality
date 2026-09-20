@@ -5,7 +5,7 @@ import { Check, Download, Link2, Share2 } from 'lucide-react';
 import { MUSICPersonality, GenreSchema } from '@/types';
 import { analytics } from '@/lib/analytics';
 import { useTranslation } from '@/hooks/useTranslation';
-import { getGenreName, getGenreCharacteristics } from '@/lib/genreTranslations';
+import { getGenreName, getGenreCharacteristics, getPersonalityAnalysis } from '@/lib/genreTranslations';
 import { getGenreTheme, getResultUrl } from '@/lib/resultTheme';
 import { captureCardBlob, saveCardImage } from '@/lib/cardExport';
 
@@ -22,6 +22,10 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
   const [feedback, setFeedback] = useState<string | null>(null);
   const theme = getGenreTheme(topGenre);
   const topTraits = Object.entries(personalityScores).sort(([, a], [, b]) => b - a).slice(0, 3);
+  const personalityAnalysis = topGenre.personalityAnalysis
+    ? getPersonalityAnalysis(topGenre.id, topGenre.personalityAnalysis, language)
+    : null;
+  const typeTitle = personalityAnalysis?.typeTitle || getGenreName(topGenre, language);
   const cardStyle = { '--card-accent': theme.accent, '--card-secondary': theme.secondary } as CSSProperties;
 
   const getTraitName = (trait: string) => language === 'ko'
@@ -39,14 +43,16 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
   };
 
   const share = async () => {
-    const url = getResultUrl(personalityScores);
+    const url = getResultUrl(personalityScores, language);
+    const title = language === 'ko' ? `내 음악 성격은 ${typeTitle}` : `My music personality is ${typeTitle}`;
+    const text = language === 'ko' ? `나는 ${getGenreName(topGenre, language)}와 닮은 ${typeTitle} 타입! 너는 어떤 음악 성격일까?` : `I'm a ${typeTitle} with a ${getGenreName(topGenre, language)} sound. What's your music type?`;
     analytics.track('result_shared', { shareType: 'unified', topGenre: topGenre.name, personalityScores });
     try {
       const blob = await createBlob();
       const file = new File([blob], 'music-personality-result.png', { type: 'image/png' });
       const data: ShareData = {
-        title: language === 'ko' ? `내 음악 성격은 ${getGenreName(topGenre, language)}` : `My music personality is ${getGenreName(topGenre, language)}`,
-        text: language === 'ko' ? `나는 ${getGenreName(topGenre, language)} 타입! 당신의 음악 성격도 확인해보세요.` : `I'm a ${getGenreName(topGenre, language)} type. What's yours?`,
+        title,
+        text,
         url,
         files: [file],
       };
@@ -60,7 +66,7 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
 
     try {
       if (navigator.share) {
-        await navigator.share({ title: 'Music Personality', url });
+        await navigator.share({ title, text, url });
         return;
       }
       await navigator.clipboard.writeText(url);
@@ -88,7 +94,7 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
 
   const copyLink = async () => {
     try {
-      await navigator.clipboard.writeText(getResultUrl(personalityScores));
+      await navigator.clipboard.writeText(getResultUrl(personalityScores, language));
       notify(language === 'ko' ? '결과 링크를 복사했어요.' : 'Result link copied.');
     } catch {
       notify(language === 'ko' ? '링크를 복사하지 못했어요.' : 'Could not copy the link.');
@@ -113,8 +119,8 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
           </header>
 
           <div className="flex flex-1 flex-col justify-center py-6 sm:py-8">
-            <p className="text-[10px] font-bold tracking-[0.18em]" style={{ color: theme.accent }}>{language === 'ko' ? '나와 가장 닮은 사운드' : 'THE SOUND MOST LIKE ME'}</p>
-            <h3 className="mt-3 max-w-[9ch] text-5xl font-extrabold leading-[0.92] tracking-[-0.065em] sm:text-7xl">{getGenreName(topGenre, language)}</h3>
+            <p className="text-[10px] font-bold tracking-[0.18em]" style={{ color: theme.accent }}>{language === 'ko' ? `나와 가장 닮은 장르 · ${getGenreName(topGenre, language)}` : `THE SOUND MOST LIKE ME · ${getGenreName(topGenre, language)}`}</p>
+            <h3 className="mt-3 max-w-[10ch] text-5xl font-extrabold leading-[0.92] tracking-[-0.065em] sm:text-7xl">{typeTitle}</h3>
             <p className="score-tabular mt-6 text-6xl font-extrabold tracking-[-0.07em] sm:text-8xl" style={{ color: theme.accent }}>{topGenreScore}<span className="text-2xl">%</span></p>
             <p className="mt-1 text-[10px] font-bold tracking-[0.15em] text-white/38 uppercase">{language === 'ko' ? '취향 일치' : 'taste match'}</p>
 
@@ -130,7 +136,7 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
 
           <footer className="border-t border-white/15 pt-5">
             <p className="line-clamp-1 text-[10px] text-white/48">{getGenreCharacteristics(topGenre.id, topGenre.characteristics, language).slice(0, 3).join('  ·  ')}</p>
-            <div className="mt-3 flex items-end justify-between gap-4"><p className="text-[9px] leading-4 text-white/28">MUSIC 5 MODEL<br />FOR FUN, NOT A DIAGNOSIS</p><p className="text-[9px] font-bold tracking-[0.1em] text-white/42">MUSICPERSONALITYTEST</p></div>
+            <div className="mt-3 flex items-end justify-between gap-4"><p className="text-[9px] leading-4 text-white/28">{language === 'ko' ? '너는 어떤 음악 타입?' : 'WHAT IS YOUR MUSIC TYPE?'}<br />FOR FUN, NOT A DIAGNOSIS</p><p className="text-[9px] font-bold tracking-[0.1em] text-white/42">BY CHAMELEONS</p></div>
           </footer>
         </div>
       </div>
