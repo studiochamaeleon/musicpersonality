@@ -300,7 +300,7 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
         </div>
       )}
       {showStickyActions && (
-        <div className="fixed inset-x-3 bottom-3 z-50 grid grid-cols-2 gap-2 rounded-[22px] border border-white/12 bg-[#090a0d]/92 p-2 shadow-2xl backdrop-blur-xl sm:hidden" style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}>
+        <div data-testid="mobile-result-actions" className="fixed inset-x-3 bottom-3 z-50 grid grid-cols-2 gap-2 rounded-[22px] border border-white/12 bg-[#090a0d]/92 p-2 shadow-2xl backdrop-blur-xl sm:hidden" style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}>
           {onInviteFriend ? <button onClick={onInviteFriend} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl px-3 text-xs font-bold text-black" style={{ background: theme.accent }}><Users size={16} />{resultCopy.invite}</button> : <a href="#share" className="inline-flex min-h-12 items-center justify-center rounded-2xl px-3 text-xs font-bold text-black" style={{ background: theme.accent }}>{resultCopy.share}</a>}
           <button onClick={() => void shareResultLink()} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-white/12 bg-white/[0.06] px-3 text-xs font-bold text-white"><Share2 size={16} />{resultCopy.share}</button>
         </div>
