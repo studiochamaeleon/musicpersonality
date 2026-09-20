@@ -19,13 +19,15 @@
 #compare=v1.82.46.74.31.68&guest=v1.70.61.79.48.75
 ```
 
-URL fragment는 일반적인 HTTP 요청에 포함되지 않으며 앱이 브라우저에서 직접 해석합니다. 이름, 이메일 같은 개인 식별 정보는 링크에 포함하지 않습니다.
+앱 내부 결과는 URL fragment로 복원하며 이름, 이메일 같은 개인 식별 정보는 링크에 포함하지 않습니다. 실제 공유 링크는 `/share?host=...&guest=...` 형태로 발급됩니다. 이 경로만 Cloudflare Pages Function을 거쳐 결과 점수에 맞는 SNS 미리보기 카드와 메타데이터를 제공한 뒤 브라우저를 앱 결과로 이동시킵니다.
 
 ## 기술 구성
 
 - Next.js 15 / React 19 / TypeScript
 - Tailwind CSS 4 / Framer Motion / Recharts
-- `html2canvas` 기반 공유 이미지
+- `html-to-image` 기반 공유 이미지 및 iOS 파일 공유 시트 지원
+- Cloudflare Pages Functions 기반 동적 SNS 미리보기 카드
+- Playwright 모바일 E2E 테스트
 - 정적 JSON 기반 질문·장르 데이터
 - 정적 export 및 PWA 지원
 
@@ -43,9 +45,28 @@ npm run dev
 ```bash
 npm run lint
 npm run build
+npm run test:e2e
 ```
 
 `npm run build`는 정적 결과물을 `out/`에 생성합니다.
+
+`npm run test:e2e`는 정적 빌드와 Cloudflare Pages Functions를 함께 실행해 다음 흐름을 모바일 Chromium에서 검증합니다.
+
+- 친구 초대에서 40문항 완료 후 궁합 결과 표시
+- 궁합 결과 링크 및 개인 결과 복원
+- 개인·궁합 결과 카드의 PNG 저장
+- 동적 Open Graph 메타데이터와 1200×630 이미지
+
+Pull Request와 `main` 브랜치 push에서도 같은 E2E 검증이 GitHub Actions로 자동 실행됩니다.
+
+## Cloudflare Pages 배포
+
+- Build command: `npm run build`
+- Build output directory: `out`
+- Functions: 저장소의 `functions/` 디렉터리에서 자동 배포
+- Function routes: `/share`, `/api/og`만 `public/_routes.json`에 포함
+
+나머지 앱과 정적 자산은 Pages에서 그대로 제공되므로 데이터베이스나 별도 이미지 렌더링 서비스가 필요하지 않습니다.
 
 ## 데이터와 개인정보
 

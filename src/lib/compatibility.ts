@@ -75,7 +75,9 @@ export function parseComparisonHash(hash: string) {
 
 export function getComparisonUrl(hostScores: MUSICPersonality, guestScores?: MUSICPersonality | null) {
   if (typeof window === 'undefined') return '';
-  return `${window.location.origin}/#${createComparisonHash(hostScores, guestScores)}`;
+  const params = new URLSearchParams({ host: encodeScores(hostScores) });
+  if (guestScores) params.set('guest', encodeScores(guestScores));
+  return `${window.location.origin}/share?${params.toString()}`;
 }
 
 export function averageScores(first: MUSICPersonality, second: MUSICPersonality): MUSICPersonality {

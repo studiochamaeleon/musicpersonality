@@ -1,7 +1,6 @@
 'use client';
 
 import React, { CSSProperties, useMemo, useRef, useState } from 'react';
-import html2canvas from 'html2canvas';
 import { ArrowLeft, Check, Download, Link2, RefreshCw, Share2, Sparkles, Users } from 'lucide-react';
 import { GenreSchema, MUSICPersonality } from '@/types';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -11,6 +10,7 @@ import { getGenreName } from '@/lib/genreTranslations';
 import { getGenreTheme } from '@/lib/resultTheme';
 import { analytics } from '@/lib/analytics';
 import LanguageSelector from '@/components/LanguageSelector';
+import { captureCardBlob, saveCardImage } from '@/lib/cardExport';
 
 interface CompatibilityResultsProps {
   hostScores: MUSICPersonality;
@@ -48,11 +48,6 @@ const CompatibilityResults: React.FC<CompatibilityResultsProps> = ({ hostScores,
     window.setTimeout(() => setFeedback(null), 2400);
   };
 
-  const makeCanvas = async () => {
-    if (!cardRef.current) throw new Error('Card is not ready');
-    return html2canvas(cardRef.current, { background: '#050507', useCORS: true, allowTaint: false });
-  };
-
   const copyLink = async () => {
     try {
       await navigator.clipboard.writeText(getComparisonUrl(hostScores, guestScores));
@@ -66,8 +61,8 @@ const CompatibilityResults: React.FC<CompatibilityResultsProps> = ({ hostScores,
   const shareResult = async () => {
     const url = getComparisonUrl(hostScores, guestScores);
     try {
-      const canvas = await makeCanvas();
-      const blob = await new Promise<Blob>((resolve, reject) => canvas.toBlob(value => value ? resolve(value) : reject(new Error('Image creation failed')), 'image/png'));
+      if (!cardRef.current) throw new Error('Card is not ready');
+      const blob = await captureCardBlob(cardRef.current);
       const file = new File([blob], 'our-music-match.png', { type: 'image/png' });
       const data: ShareData = {
         title: language === 'ko' ? `우리 음악 궁합은 ${compatibility.score}%` : `Our music match is ${compatibility.score}%`,
@@ -94,14 +89,16 @@ const CompatibilityResults: React.FC<CompatibilityResultsProps> = ({ hostScores,
 
   const download = async () => {
     try {
-      const canvas = await makeCanvas();
-      const anchor = document.createElement('a');
-      anchor.download = 'our-music-match.png';
-      anchor.href = canvas.toDataURL('image/png');
-      anchor.click();
+      if (!cardRef.current) throw new Error('Card is not ready');
+      await saveCardImage(
+        cardRef.current,
+        'our-music-match.png',
+        language === 'ko' ? `우리 음악 궁합 ${compatibility.score}%` : `Our music match ${compatibility.score}%`,
+      );
       analytics.track('compatibility_result_shared', { shareType: 'download', score: compatibility.score });
-      notify(language === 'ko' ? '궁합 이미지를 저장했어요.' : 'Match image saved.');
-    } catch {
+      notify(language === 'ko' ? '궁합 이미지를 준비했어요.' : 'Match image is ready.');
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') return;
       notify(language === 'ko' ? '이미지를 만들지 못했어요.' : 'Could not create the image.');
     }
   };

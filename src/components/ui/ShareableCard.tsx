@@ -1,13 +1,13 @@
 'use client';
 
 import React, { CSSProperties, useRef, useState } from 'react';
-import html2canvas from 'html2canvas';
 import { Check, Download, Link2, Share2 } from 'lucide-react';
 import { MUSICPersonality, GenreSchema } from '@/types';
 import { analytics } from '@/lib/analytics';
 import { useTranslation } from '@/hooks/useTranslation';
 import { getGenreName, getGenreCharacteristics } from '@/lib/genreTranslations';
 import { getGenreTheme, getResultUrl } from '@/lib/resultTheme';
+import { captureCardBlob, saveCardImage } from '@/lib/cardExport';
 
 interface ShareableCardProps {
   personalityScores: MUSICPersonality;
@@ -28,14 +28,9 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
     ? t(`intro.musicModelTraits.${trait}.description`)
     : t(`intro.musicModelTraits.${trait}.name`);
 
-  const makeCanvas = async () => {
-    if (!cardRef.current) throw new Error('Card is not ready');
-    return html2canvas(cardRef.current, { background: '#050507', useCORS: true, allowTaint: false });
-  };
-
   const createBlob = async () => {
-    const canvas = await makeCanvas();
-    return new Promise<Blob>((resolve, reject) => canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('Image creation failed')), 'image/png'));
+    if (!cardRef.current) throw new Error('Card is not ready');
+    return captureCardBlob(cardRef.current);
   };
 
   const notify = (message: string) => {
@@ -77,14 +72,16 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
 
   const download = async () => {
     try {
-      const canvas = await makeCanvas();
-      const anchor = document.createElement('a');
-      anchor.download = 'music-personality-result.png';
-      anchor.href = canvas.toDataURL('image/png');
-      anchor.click();
+      if (!cardRef.current) throw new Error('Card is not ready');
+      await saveCardImage(
+        cardRef.current,
+        'music-personality-result.png',
+        language === 'ko' ? '내 음악 성격 결과' : 'My music personality result',
+      );
       analytics.track('result_shared', { shareType: 'download', topGenre: topGenre.name, personalityScores });
-      notify(language === 'ko' ? '결과 이미지를 저장했어요.' : 'Result image saved.');
-    } catch {
+      notify(language === 'ko' ? '결과 이미지를 준비했어요.' : 'Result image is ready.');
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') return;
       notify(language === 'ko' ? '이미지를 만들지 못했어요.' : 'Could not create the image.');
     }
   };

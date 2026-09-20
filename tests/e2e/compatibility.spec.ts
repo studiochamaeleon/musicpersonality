@@ -1,0 +1,61 @@
+import { expect, test } from '@playwright/test';
+
+const hostToken = 'v1.82.46.74.31.68';
+const guestToken = 'v1.70.61.79.48.75';
+
+test('an invited friend can finish the survey and see the pair result', async ({ page }) => {
+  await page.goto(`/#compare=${hostToken}`);
+  await expect(page.getByRole('heading', { name: '친구가 음악 궁합을 기다리고 있어요.' })).toBeVisible();
+
+  await page.getByRole('button', { name: '내 음악 성격 검사하기' }).click();
+  await expect(page.getByRole('heading', { name: '나는 조용하고 차분한 음악을 선호한다' })).toBeVisible();
+
+  for (let index = 0; index < 40; index += 1) {
+    await page.getByRole('radio', { name: /^3:/ }).click();
+    const advanceButton = page.getByRole('button', { name: index === 39 ? '완료' : '다음' });
+    await expect(advanceButton).toBeEnabled();
+    await advanceButton.click();
+  }
+
+  await expect(page.getByRole('heading', { level: 1, name: /플레이리스트|사이|균형|발견/ })).toBeVisible();
+  await expect(page).toHaveURL(/#compare=v1\.[\d.]+&guest=v1\.[\d.]+$/);
+  await expect(page.getByRole('heading', { name: '취향을 나란히 보기' })).toBeVisible();
+});
+
+test('a pair result link restores and opens the guest personal result', async ({ page }) => {
+  await page.goto(`/#compare=${hostToken}&guest=${guestToken}`);
+  await expect(page.getByText('89%', { exact: true }).first()).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: '거의 같은 플레이리스트' })).toBeVisible();
+
+  await page.getByRole('button', { name: '내 개인 결과 보기' }).click();
+  await expect(page).toHaveURL(/\?v=1&m=70&u=61&s=79&i=48&c=75$/);
+  await expect(page.getByRole('button', { name: '친구와 음악 궁합 보기' })).toBeVisible();
+});
+
+test('the compatibility card downloads as a non-empty PNG', async ({ page }) => {
+  await page.goto(`/#compare=${hostToken}&guest=${guestToken}`);
+  const downloadPromise = page.waitForEvent('download');
+  await page.getByRole('button', { name: '이미지 저장' }).click();
+  const download = await downloadPromise;
+  expect(download.suggestedFilename()).toBe('our-music-match.png');
+  const stream = await download.createReadStream();
+  const chunks: Buffer[] = [];
+  for await (const chunk of stream) chunks.push(Buffer.from(chunk));
+  const image = Buffer.concat(chunks);
+  expect(image.subarray(0, 8)).toEqual(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
+  expect(image.length).toBeGreaterThan(20_000);
+});
+
+test('the personal result card downloads as a non-empty PNG', async ({ page }) => {
+  await page.goto('/?v=1&m=70&u=61&s=79&i=48&c=75');
+  const downloadPromise = page.waitForEvent('download');
+  await page.getByRole('button', { name: '이미지 저장' }).click();
+  const download = await downloadPromise;
+  expect(download.suggestedFilename()).toBe('music-personality-result.png');
+  const stream = await download.createReadStream();
+  const chunks: Buffer[] = [];
+  for await (const chunk of stream) chunks.push(Buffer.from(chunk));
+  const image = Buffer.concat(chunks);
+  expect(image.subarray(0, 8)).toEqual(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
+  expect(image.length).toBeGreaterThan(20_000);
+});
