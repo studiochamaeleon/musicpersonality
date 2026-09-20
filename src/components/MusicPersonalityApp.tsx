@@ -361,7 +361,9 @@ const MusicPersonalityApp: React.FC = () => {
 
   if (appState === 'genre-explorer') {
     return (
-      <main className="min-h-screen bg-[#07080a] text-white">
+      <main className="relative isolate min-h-screen overflow-x-hidden bg-[#07080a] text-white">
+        <DotMatrixBackground style={{ position: 'fixed' }} />
+        <div className="intro-matrix-fade pointer-events-none fixed inset-0" aria-hidden="true" />
         <div className="sticky top-0 z-40 border-b border-white/10 bg-[#07080a]/90 px-5 py-4 backdrop-blur-xl">
           <div className="mx-auto flex max-w-6xl items-center justify-between">
             <button onClick={handleBackToIntro} className="text-sm font-semibold text-white/65 transition-colors hover:text-white">← {t('common.buttons.backToHome')}</button>

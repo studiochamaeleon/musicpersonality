@@ -69,3 +69,12 @@ test('the personal result offers curated direct Spotify album links', async ({ p
   expect(new Set(hrefs).size).toBe(6);
   for (const href of hrefs) expect(href).toMatch(/^https:\/\/open\.spotify\.com\/album\/[A-Za-z0-9]{22}$/);
 });
+
+test('the genre explorer reuses the fixed dot matrix background', async ({ page }) => {
+  await page.goto('/?view=genre-explorer');
+  await expect(page.getByRole('heading', { name: '장르에도 성격이 있습니다.' })).toBeVisible();
+
+  const backgroundCanvas = page.locator('main canvas').first();
+  await expect(backgroundCanvas).toBeVisible();
+  await expect(backgroundCanvas.locator('..')).toHaveCSS('position', 'fixed');
+});

@@ -71,7 +71,7 @@ const GenreExplorer: React.FC<GenreExplorerProps> = ({ genres, musicCatalog, onG
   };
 
   return (
-    <div className="result-surface relative min-h-screen pb-24 text-white">
+    <div className="relative z-10 min-h-screen pb-24 text-white">
       <section className="mx-auto max-w-6xl px-5 pb-10 pt-14 sm:px-8 sm:pt-20">
         <AnimatedSection direction="fade">
           <p className="eyebrow mb-4">{copy.eyebrow}</p>
