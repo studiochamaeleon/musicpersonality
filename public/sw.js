@@ -1,10 +1,10 @@
-const CACHE_NAME = 'music-personality-v1';
+const CACHE_NAME = 'music-personality-v2';
 const STATIC_ASSETS = [
   '/',
   '/icon-192x192.svg',
   '/icon-512x512.svg',
   '/og-image.svg',
-  '/globals.css'
+  '/favicon-32x32.png'
 ];
 
 // Install event - cache static assets
