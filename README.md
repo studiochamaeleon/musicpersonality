@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Music Personality
 
-## Getting Started
+음악 취향 40문항을 통해 MUSIC 5요인 점수를 계산하고, 닮은 장르·아티스트·성격 해석을 보여주는 가벼운 바이럴 웹 테스트입니다. 한국어와 영어를 지원하며 별도 계정이나 백엔드 없이 정적 사이트로 동작합니다.
 
-First, run the development server:
+## 주요 흐름
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- 개인 테스트: 설문 → MUSIC 점수 → 장르·아티스트·성격 결과
+- 친구 궁합: 내 결과 → 초대 링크 → 친구 테스트 → 2인 취향 비교
+- 공유: 개인 결과 카드와 2인 궁합 카드를 이미지 또는 링크로 공유
+- 탐색: 설문 없이 32개 장르의 성향과 대표 음악 확인
+- 최근 결과: 브라우저에 최근 결과를 최대 3개까지 저장
+
+## 친구 궁합 데이터 방식
+
+친구 궁합에는 데이터베이스를 사용하지 않습니다. MUSIC 점수는 URL fragment에 버전이 포함된 압축 형태로 저장됩니다.
+
+```text
+#compare=v1.82.46.74.31.68
+#compare=v1.82.46.74.31.68&guest=v1.70.61.79.48.75
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+URL fragment는 일반적인 HTTP 요청에 포함되지 않으며 앱이 브라우저에서 직접 해석합니다. 이름, 이메일 같은 개인 식별 정보는 링크에 포함하지 않습니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 기술 구성
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Next.js 15 / React 19 / TypeScript
+- Tailwind CSS 4 / Framer Motion / Recharts
+- `html2canvas` 기반 공유 이미지
+- 정적 JSON 기반 질문·장르 데이터
+- 정적 export 및 PWA 지원
 
-## Learn More
+## 로컬 실행
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm install
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+브라우저에서 [http://localhost:3000](http://localhost:3000)을 엽니다.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 검증 및 빌드
 
-## Deploy on Vercel
+```bash
+npm run lint
+npm run build
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`npm run build`는 정적 결과물을 `out/`에 생성합니다.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 데이터와 개인정보
+
+- 설문 계산과 추천은 모두 브라우저에서 처리됩니다.
+- 최근 결과와 자체 이벤트 기록은 브라우저 `localStorage`에만 저장됩니다.
+- 서비스 서버에는 사용자 계정이나 테스트 결과를 저장하지 않습니다.
+- 광고가 활성화된 배포에서는 Google AdSense의 별도 데이터 정책이 적용될 수 있습니다.
+
+이 테스트는 음악 심리학 모델에서 영감을 받은 엔터테인먼트 콘텐츠이며 의료·임상 진단 도구가 아닙니다.

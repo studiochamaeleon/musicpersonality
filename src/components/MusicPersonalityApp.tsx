@@ -11,12 +11,17 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { analytics } from '@/lib/analytics';
 import DotMatrixBackground from '@/components/ui/DotMatrixBackground';
+import { createComparisonHash, parseComparisonHash } from '@/lib/compatibility';
+import { loadRecentResults, RecentMusicResult, saveRecentResult } from '@/lib/recentResults';
+import { getGenreName } from '@/lib/genreTranslations';
 
 const Survey = lazy(() => import('@/components/Survey'));
 const PersonalityResults = lazy(() => import('@/components/PersonalityResults'));
 const GenreExplorer = lazy(() => import('@/components/GenreExplorer'));
+const CompatibilityInvite = lazy(() => import('@/components/CompatibilityInvite'));
+const CompatibilityResults = lazy(() => import('@/components/CompatibilityResults'));
 
-type AppState = 'intro' | 'survey' | 'results' | 'genre-explorer';
+type AppState = 'intro' | 'survey' | 'results' | 'genre-explorer' | 'compare-invite' | 'comparison-results';
 
 const MusicPersonalityApp: React.FC = () => {
   const { t } = useTranslation();
@@ -29,6 +34,9 @@ const MusicPersonalityApp: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [genres, setGenres] = useState<GenreSchema[]>([]);
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [comparisonHostScores, setComparisonHostScores] = useState<MUSICPersonality | null>(null);
+  const [comparisonGuestScores, setComparisonGuestScores] = useState<MUSICPersonality | null>(null);
+  const [recentResults, setRecentResults] = useState<RecentMusicResult[]>([]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -47,6 +55,10 @@ const MusicPersonalityApp: React.FC = () => {
     void loadData();
   }, []);
 
+  useEffect(() => {
+    setRecentResults(loadRecentResults());
+  }, []);
+
   const buildRecommendations = useCallback((scores: MUSICPersonality, nextGenres: GenreSchema[]) => {
     const recommendations = recommendGenres(scores, nextGenres, language);
     setRecommendedGenres(recommendations);
@@ -57,6 +69,13 @@ const MusicPersonalityApp: React.FC = () => {
   useEffect(() => {
     if (!dataLoaded || initializedFromUrl.current || typeof window === 'undefined') return;
     initializedFromUrl.current = true;
+    const comparison = parseComparisonHash(window.location.hash);
+    if (comparison) {
+      setComparisonHostScores(comparison.hostScores);
+      setComparisonGuestScores(comparison.guestScores);
+      setAppState(comparison.guestScores ? 'comparison-results' : 'compare-invite');
+      return;
+    }
     const params = new URLSearchParams(window.location.search);
     const restoredScores = parseResultSearchParams(params);
 
@@ -82,6 +101,7 @@ const MusicPersonalityApp: React.FC = () => {
     setPersonalityScores(scores);
     const recommendations = buildRecommendations(scores, genres);
     const topGenre = genres.find(genre => genre.id === recommendations[0]?.genreId);
+    setRecentResults(saveRecentResult(scores, topGenre?.id || recommendations[0]?.genreId || 'unknown'));
 
     analytics.track('survey_completed', {
       personalityScores: scores,
@@ -89,6 +109,20 @@ const MusicPersonalityApp: React.FC = () => {
       recommendedGenresCount: recommendations.length,
       completionTime: Date.now(),
     });
+
+    if (comparisonHostScores) {
+      setComparisonGuestScores(scores);
+      analytics.track('compatibility_completed', {
+        hostScores: comparisonHostScores,
+        guestScores: scores,
+      });
+      if (typeof window !== 'undefined') {
+        window.history.replaceState({}, '', `/#${createComparisonHash(comparisonHostScores, scores)}`);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      setAppState('comparison-results');
+      return;
+    }
 
     if (typeof window !== 'undefined') {
       window.history.replaceState({}, '', `/?${createResultSearchParams(scores).toString()}`);
@@ -102,6 +136,8 @@ const MusicPersonalityApp: React.FC = () => {
     setPersonalityScores(null);
     setRecommendedGenres([]);
     setRecommendedArtistsList([]);
+    setComparisonHostScores(null);
+    setComparisonGuestScores(null);
     if (typeof window !== 'undefined') {
       window.sessionStorage.removeItem('music-personality-survey');
       window.history.replaceState({}, '', '/');
@@ -116,7 +152,69 @@ const MusicPersonalityApp: React.FC = () => {
 
   const handleBackToIntro = () => {
     setAppState('intro');
+    setComparisonHostScores(null);
+    setComparisonGuestScores(null);
     if (typeof window !== 'undefined') window.history.replaceState({}, '', '/');
+  };
+
+  const handleCreateInvite = (scores: MUSICPersonality) => {
+    setComparisonHostScores(scores);
+    setComparisonGuestScores(null);
+    setAppState('compare-invite');
+    analytics.track('compatibility_invite_created', { hostScores: scores });
+    if (typeof window !== 'undefined') window.history.replaceState({}, '', `/#${createComparisonHash(scores)}`);
+  };
+
+  const handleStartComparisonSurvey = () => {
+    setComparisonGuestScores(null);
+    if (typeof window !== 'undefined') window.sessionStorage.removeItem('music-personality-survey');
+    setAppState('survey');
+  };
+
+  const handleUseRecentForComparison = (result: RecentMusicResult) => {
+    if (!comparisonHostScores) return;
+    setComparisonGuestScores(result.scores);
+    setPersonalityScores(result.scores);
+    setAppState('comparison-results');
+    analytics.track('compatibility_completed', { source: 'recent-result' });
+    if (typeof window !== 'undefined') window.history.replaceState({}, '', `/#${createComparisonHash(comparisonHostScores, result.scores)}`);
+  };
+
+  const handleViewGuestResult = () => {
+    if (!comparisonGuestScores) return;
+    setPersonalityScores(comparisonGuestScores);
+    buildRecommendations(comparisonGuestScores, genres);
+    setComparisonHostScores(null);
+    setComparisonGuestScores(null);
+    setAppState('results');
+    if (typeof window !== 'undefined') window.history.replaceState({}, '', `/?${createResultSearchParams(comparisonGuestScores).toString()}`);
+  };
+
+  const handleInviteAnotherFriend = () => {
+    if (!comparisonGuestScores) return;
+    setPersonalityScores(comparisonGuestScores);
+    buildRecommendations(comparisonGuestScores, genres);
+    handleCreateInvite(comparisonGuestScores);
+  };
+
+  const handleBackFromInvite = () => {
+    if (personalityScores) {
+      setComparisonHostScores(null);
+      setComparisonGuestScores(null);
+      buildRecommendations(personalityScores, genres);
+      setAppState('results');
+      if (typeof window !== 'undefined') window.history.replaceState({}, '', `/?${createResultSearchParams(personalityScores).toString()}`);
+      return;
+    }
+    handleBackToIntro();
+  };
+
+  const handleRestoreRecentResult = (result: RecentMusicResult) => {
+    setPersonalityScores(result.scores);
+    buildRecommendations(result.scores, genres);
+    setAppState('results');
+    analytics.track('recent_result_opened', { topGenreId: result.topGenreId });
+    if (typeof window !== 'undefined') window.history.replaceState({}, '', `/?${createResultSearchParams(result.scores).toString()}`);
   };
 
   if (!dataLoaded) return <LoadingSpinner message={t('common.loading.initializing')} />;
@@ -129,6 +227,7 @@ const MusicPersonalityApp: React.FC = () => {
       cta: '내 음악 성격 찾기',
       explore: '장르별 성향 먼저 보기',
       note: '재미로 즐기는 음악 취향 테스트예요.',
+      recent: '최근 결과',
     } : {
       eyebrow: 'MUSIC PERSONALITY TEST',
       headline: 'Your taste says\nmore than words.',
@@ -136,6 +235,7 @@ const MusicPersonalityApp: React.FC = () => {
       cta: 'Find my music type',
       explore: 'Browse genre personalities',
       note: 'A lighthearted test inspired by music psychology.',
+      recent: 'Recent results',
     };
 
     return (
@@ -181,6 +281,22 @@ const MusicPersonalityApp: React.FC = () => {
               <span className="inline-flex items-center gap-2"><Sparkles size={14} />32 {language === 'ko' ? '개 장르' : 'genres'}</span>
             </div>
             <p className="mt-3 text-[11px] text-white/28">{copy.note}</p>
+            {recentResults.length > 0 && (
+              <details className="mx-auto mt-6 max-w-sm text-left">
+                <summary className="cursor-pointer list-none text-center text-xs font-semibold text-white/38 transition-colors hover:text-white/70">{copy.recent} {recentResults.length} ↓</summary>
+                <div className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-black/30 p-2 backdrop-blur-xl">
+                  {recentResults.map((result, index) => {
+                    const genre = genres.find(item => item.id === result.topGenreId);
+                    return (
+                      <button key={result.id} onClick={() => handleRestoreRecentResult(result)} className="flex min-h-12 w-full items-center justify-between rounded-xl px-3 text-left text-xs text-white/55 transition-colors hover:bg-white/8 hover:text-white">
+                        <span>{genre ? getGenreName(genre, language) : (language === 'ko' ? '음악 성격 결과' : 'Music personality result')}</span>
+                        <span className="score-tabular text-[10px] text-white/25">#{index + 1}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </details>
+            )}
           </div>
         </section>
       </main>
@@ -190,7 +306,7 @@ const MusicPersonalityApp: React.FC = () => {
   if (appState === 'survey') {
     return (
       <Suspense fallback={<LoadingSpinner message={t('common.loading.preparingSurvey')} />}>
-        <Survey questions={questions} onComplete={handleSurveyComplete} onGoHome={() => setAppState('intro')} />
+        <Survey questions={questions} onComplete={handleSurveyComplete} onGoHome={handleBackToIntro} />
       </Suspense>
     );
   }
@@ -203,6 +319,37 @@ const MusicPersonalityApp: React.FC = () => {
           recommendedGenres={recommendedGenres}
           genres={genres}
           recommendedArtists={recommendedArtistsList}
+          onRestart={handleRestart}
+          onInviteFriend={() => handleCreateInvite(personalityScores)}
+        />
+      </Suspense>
+    );
+  }
+
+  if (appState === 'compare-invite' && comparisonHostScores) {
+    return (
+      <Suspense fallback={<LoadingSpinner message={t('common.loading.initializing')} />}>
+        <CompatibilityInvite
+          hostScores={comparisonHostScores}
+          genres={genres}
+          recentResults={recentResults}
+          onStartSurvey={handleStartComparisonSurvey}
+          onUseRecent={handleUseRecentForComparison}
+          onBack={handleBackFromInvite}
+        />
+      </Suspense>
+    );
+  }
+
+  if (appState === 'comparison-results' && comparisonHostScores && comparisonGuestScores) {
+    return (
+      <Suspense fallback={<LoadingSpinner message={t('common.loading.analyzingResults')} />}>
+        <CompatibilityResults
+          hostScores={comparisonHostScores}
+          guestScores={comparisonGuestScores}
+          genres={genres}
+          onViewMyResult={handleViewGuestResult}
+          onCreateInvite={handleInviteAnotherFriend}
           onRestart={handleRestart}
         />
       </Suspense>

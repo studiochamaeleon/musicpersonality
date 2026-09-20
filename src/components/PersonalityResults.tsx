@@ -1,7 +1,7 @@
 'use client';
 
 import React, { CSSProperties, lazy } from 'react';
-import { ArrowDown, ExternalLink, RotateCcw, Share2 } from 'lucide-react';
+import { ArrowDown, ExternalLink, RotateCcw, Share2, Users } from 'lucide-react';
 import { MUSICPersonality, EnhancedRecommendationScore, GenreSchema, RecommendedArtist } from '@/types';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -20,9 +20,10 @@ interface PersonalityResultsProps {
   genres: GenreSchema[];
   recommendedArtists?: RecommendedArtist[];
   onRestart?: () => void;
+  onInviteFriend?: () => void;
 }
 
-const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScores, recommendedGenres, genres, recommendedArtists = [], onRestart }) => {
+const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScores, recommendedGenres, genres, recommendedArtists = [], onRestart, onInviteFriend }) => {
   const { t } = useTranslation();
   const { language } = useLanguage();
   const topRecommendation = recommendedGenres[0];
@@ -42,8 +43,8 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
 
   const traits = getGenreCharacteristics(topGenre.id, topGenre.characteristics, language).slice(0, 4);
   const resultCopy = language === 'ko'
-    ? { eyebrow: '당신의 음악 성격', lead: '당신과 가장 닮은 사운드', match: '취향 일치', spectrum: '나의 취향 스펙트럼', spectrumBody: '다섯 개의 축이 당신의 음악 취향을 어떻게 구성하는지 보여줍니다.', next: '함께 들으면 좋은 장르', artists: '당신을 위한 아티스트', detail: '성격 해석 더 보기', share: '친구에게 내 결과 보여주기', again: '다시 검사하기' }
-    : { eyebrow: 'YOUR MUSIC PERSONALITY', lead: 'The sound most like you', match: 'taste match', spectrum: 'Your taste spectrum', spectrumBody: 'Five dimensions show how your music taste is put together.', next: 'Genres to try next', artists: 'Artists for your taste', detail: 'Read the full personality note', share: 'Share my result', again: 'Take it again' };
+    ? { eyebrow: '당신의 음악 성격', lead: '당신과 가장 닮은 사운드', match: '취향 일치', spectrum: '나의 취향 스펙트럼', spectrumBody: '다섯 개의 축이 당신의 음악 취향을 어떻게 구성하는지 보여줍니다.', next: '함께 들으면 좋은 장르', artists: '당신을 위한 아티스트', detail: '성격 해석 더 보기', invite: '친구와 음악 궁합 보기', share: '결과 공유하기', again: '다시 검사하기' }
+    : { eyebrow: 'YOUR MUSIC PERSONALITY', lead: 'The sound most like you', match: 'taste match', spectrum: 'Your taste spectrum', spectrumBody: 'Five dimensions show how your music taste is put together.', next: 'Genres to try next', artists: 'Artists for your taste', detail: 'Read the full personality note', invite: 'Compare with a friend', share: 'Share my result', again: 'Take it again' };
   const insightCopy = language === 'ko'
     ? { eyebrow: 'PERSONALITY NOTES', title: '취향에서 읽은 당신의 모습', core: '핵심 특성', lifestyle: '라이프스타일 통찰', music: '음악적 특성', popularity: '인기도', energy: '에너지', valence: '긍정성', acousticness: '어쿠스틱' }
     : { eyebrow: 'PERSONALITY NOTES', title: 'What your taste says about you', core: 'Core traits', lifestyle: 'Lifestyle insights', music: 'Musical profile', popularity: 'Popularity', energy: 'Energy', valence: 'Positivity', acousticness: 'Acoustic' };
@@ -88,8 +89,13 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
           </div>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <a href="#share" className="primary-action inline-flex items-center justify-center gap-2" style={{ background: theme.accent, borderColor: theme.accent }}><Share2 size={17} />{resultCopy.share}</a>
+            {onInviteFriend ? (
+              <button onClick={onInviteFriend} className="primary-action inline-flex items-center justify-center gap-2" style={{ background: theme.accent, borderColor: theme.accent }}><Users size={17} />{resultCopy.invite}</button>
+            ) : (
+              <a href="#share" className="primary-action inline-flex items-center justify-center gap-2" style={{ background: theme.accent, borderColor: theme.accent }}><Share2 size={17} />{resultCopy.share}</a>
+            )}
             <a href="#spectrum" className="secondary-action inline-flex items-center justify-center gap-2">{resultCopy.spectrum}<ArrowDown size={17} /></a>
+            {onInviteFriend && <a href="#share" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold text-white/45 transition-colors hover:text-white"><Share2 size={16} />{resultCopy.share}</a>}
           </div>
         </AnimatedSection>
       </section>

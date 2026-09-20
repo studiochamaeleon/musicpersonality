@@ -339,6 +339,8 @@
           "Survey responses are stored only in your browser's local storage",
           "Language preferences are saved locally in your browser", 
           "Test results remain on your device and are never transmitted to us",
+          "Up to three recent test results are stored only in your browser",
+          "Friend match links include only both MUSIC scores in the URL fragment (#), which is not sent to our server",
           "No personal identifiers (name, email, phone) are collected"
         ],
         "thirdPartyTitle": "Third-Party Data Collection",
@@ -353,6 +355,7 @@
         "browserProcessingContent": "What happens in your browser:",
         "browserProcessingItems": [
           "Survey responses are processed locally to generate your personality results",
+          "Friend compatibility and shared genre recommendations are calculated from both scores in your browser",
           "Language preferences are remembered for your convenience",
           "All processing happens on your device - nothing is sent to our servers"
         ]
