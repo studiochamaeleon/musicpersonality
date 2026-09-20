@@ -69,21 +69,7 @@
         "독서 모임이나 토론 그룹 참여",
         "요가, 명상, 차 마시기 등 정적인 휴식 활동"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "Miles Davis",
-        "nameKo": "마일스 데이비스",
-        "popularity": 95,
-        "keyTracks": ["Kind of Blue", "So What"]
-      },
-      {
-        "name": "Chet Baker",
-        "nameKo": "쳇 베이커",
-        "popularity": 85,
-        "keyTracks": ["My Funny Valentine", "Let's Get Lost"]
-      }
-    ]
+    }
   },
   {
     "id": "jazz_bebop", 
@@ -155,21 +141,7 @@
         "전문 분야의 마스터클래스나 고급 세미나 참석",
         "창의적 협업 프로젝트나 혁신 챌린지 참여"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "Charlie Parker",
-        "nameKo": "찰리 파커",
-        "popularity": 95,
-        "keyTracks": ["Ornithology", "Ko Ko"]
-      },
-      {
-        "name": "Dizzy Gillespie",
-        "nameKo": "디지 길레스피",
-        "popularity": 90,
-        "keyTracks": ["Salt Peanuts", "A Night in Tunisia"]
-      }
-    ]
+    }
   },
   {
     "id": "rock_alternative",
@@ -241,21 +213,7 @@
         "창작 워크숍이나 DIY 프로젝트 참여",
         "자연 속에서의 트레킹이나 사진 촬영 등 개인적 탐험"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "Nirvana",
-        "nameKo": "너바나",
-        "popularity": 95,
-        "keyTracks": ["Smells Like Teen Spirit", "Come As You Are"]
-      },
-      {
-        "name": "Radiohead",
-        "nameKo": "라디오헤드",
-        "popularity": 92,
-        "keyTracks": ["Creep", "Karma Police"]
-      }
-    ]
+    }
   },
   {
     "id": "rock_indie",
@@ -327,21 +285,7 @@
         "창작 워크숍이나 아티스트 레지던시 프로그램 참여",
         "도시 탐험이나 독특한 카페, 갤러리 발굴 활동"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "Arctic Monkeys",
-        "nameKo": "아틱 몽키스",
-        "popularity": 90,
-        "keyTracks": ["Do I Wanna Know?", "R U Mine?"]
-      },
-      {
-        "name": "The Strokes",
-        "nameKo": "더 스트록스",
-        "popularity": 88,
-        "keyTracks": ["Last Nite", "Someday"]
-      }
-    ]
+    }
   },
   {
     "id": "electronic_ambient",
@@ -413,21 +357,7 @@
         "플로팅 탱크나 스파에서의 감각 차단 명상 체험",
         "천체 관측이나 일출/일몰 감상 등 우주적 체험"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "Brian Eno",
-        "nameKo": "브라이언 이노",
-        "popularity": 88,
-        "keyTracks": ["Music for Airports", "An Ending (Ascent)"]
-      },
-      {
-        "name": "Stars of the Lid",
-        "nameKo": "스타스 오브 더 리드",
-        "popularity": 75,
-        "keyTracks": ["The Tired Sounds of", "Apreludes"]
-      }
-    ]
+    }
   },
   {
     "id": "electronic_house",
@@ -499,21 +429,7 @@
         "댄스 수업이나 그룹 피트니스 클래스 참여",
         "여행이나 그룹 액티비티를 통한 새로운 인맥 형성"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "Daft Punk",
-        "nameKo": "다프트 펑크",
-        "popularity": 94,
-        "keyTracks": ["One More Time", "Around the World"]
-      },
-      {
-        "name": "Disclosure",
-        "nameKo": "디스클로저",
-        "popularity": 85,
-        "keyTracks": ["Latch", "White Noise"]
-      }
-    ]
+    }
   },
   {
     "id": "classical_baroque",
@@ -585,21 +501,7 @@
         "고전 문학 독서나 역사 관련 강의 수강",
         "전통 공예나 예술 기법을 배우는 마스터클래스 참여"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "Johann Sebastian Bach",
-        "nameKo": "요한 세바스티안 바흐",
-        "popularity": 95,
-        "keyTracks": ["Brandenburg Concerto No. 3", "Air on the G String"]
-      },
-      {
-        "name": "Antonio Vivaldi",
-        "nameKo": "안토니오 비발디",
-        "popularity": 90,
-        "keyTracks": ["The Four Seasons: Spring", "Gloria in D Major"]
-      }
-    ]
+    }
   },
   {
     "id": "classical_minimalism",
@@ -671,21 +573,7 @@
         "명상 수업이나 마음챙김 워크숍 체험",
         "정원가꾸기나 서예 등 정적이고 집중적인 취미 활동"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "Steve Reich",
-        "nameKo": "스티브 라이히",
-        "popularity": 82,
-        "keyTracks": ["Music for 18 Musicians", "Different Trains"]
-      },
-      {
-        "name": "Philip Glass",
-        "nameKo": "필립 글래스",
-        "popularity": 85,
-        "keyTracks": ["Glassworks", "Einstein on the Beach"]
-      }
-    ]
+    }
   },
   {
     "id": "pop_indie",
@@ -757,21 +645,7 @@
         "창작 워크숍이나 DIY 공예 활동 참여",
         "자연 속 피크닉이나 감성적인 장소에서의 사진 촬영"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "Vampire Weekend",
-        "nameKo": "뱀파이어 위켄드",
-        "popularity": 88,
-        "keyTracks": ["A-Punk", "Oxford Comma"]
-      },
-      {
-        "name": "Belle and Sebastian",
-        "nameKo": "벨 앤 세바스찬",
-        "popularity": 82,
-        "keyTracks": ["The Boy with the Arab Strap", "I'm a Cuckoo"]
-      }
-    ]
+    }
   },
   {
     "id": "pop_dream",
@@ -843,21 +717,7 @@
         "창작 일기나 시 쓰기를 통한 내적 세계 표현",
         "자연 속에서의 사색이나 일출/일몰 감상 등 명상적 체험"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "Cocteau Twins",
-        "nameKo": "콕토 트윈스",
-        "popularity": 78,
-        "keyTracks": ["Heaven or Las Vegas", "Lorelei"]
-      },
-      {
-        "name": "Beach House",
-        "nameKo": "비치 하우스",
-        "popularity": 82,
-        "keyTracks": ["Space Song", "Myth"]
-      }
-    ]
+    }
   },
   {
     "id": "rock_classic",
@@ -929,21 +789,7 @@
         "오토바이 라이딩이나 캠핑 등 모험적이고 자유로운 야외 활동",
         "스포츠 관람이나 팀 스포츠 참여를 통한 동료애 형성"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "Queen",
-        "nameKo": "퀸",
-        "popularity": 98,
-        "keyTracks": ["Bohemian Rhapsody", "We Will Rock You"]
-      },
-      {
-        "name": "Led Zeppelin",
-        "nameKo": "레드 제플린",
-        "popularity": 95,
-        "keyTracks": ["Stairway to Heaven", "Kashmir"]
-      }
-    ]
+    }
   },
   {
     "id": "electronic_techno",
@@ -1015,21 +861,7 @@
         "VR, AR 등 최신 기술 체험",
         "야간 러닝이나 사이클링 등 리듬감 있는 운동"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "Carl Cox",
-        "nameKo": "칼 콕스",
-        "popularity": 85,
-        "keyTracks": ["I Want You (Forever)", "The Player"]
-      },
-      {
-        "name": "Richie Hawtin",
-        "nameKo": "리치 호틴",
-        "popularity": 82,
-        "keyTracks": ["Spastik", "DE9: Closer to the Edit"]
-      }
-    ]
+    }
   },
   {
     "id": "jazz_fusion",
@@ -1101,21 +933,7 @@
         "스타트업이나 혁신 프로젝트에서의 멘토링 역할",
         "다양한 스포츠나 예술 활동을 통한 크로스 트레이닝"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "Weather Report",
-        "nameKo": "웨더 리포트",
-        "popularity": 90,
-        "keyTracks": ["Birdland", "Heavy Weather"]
-      },
-      {
-        "name": "Herbie Hancock",
-        "nameKo": "허비 행콕",
-        "popularity": 92,
-        "keyTracks": ["Chameleon", "Rockit"]
-      }
-    ]
+    }
   },
   {
     "id": "classical_romantic",
@@ -1187,21 +1005,7 @@
         "문학 창작이나 시 쓰기 등 감정을 표현하는 예술 활동",
         "자연 속에서의 사색이나 감성적 여행을 통한 영감 추구"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "Frédéric Chopin",
-        "nameKo": "프레데리크 쇼팽",
-        "popularity": 93,
-        "keyTracks": ["Nocturne in E-flat Major", "Minute Waltz"]
-      },
-      {
-        "name": "Pyotr Ilyich Tchaikovsky",
-        "nameKo": "표트르 일리치 차이코프스키",
-        "popularity": 95,
-        "keyTracks": ["Swan Lake", "1812 Overture"]
-      }
-    ]
+    }
   },
   {
     "id": "pop_kpop",
@@ -1273,21 +1077,7 @@
         "패션쇼나 뷰티 이벤트 참여를 통한 트렌드 체험",
         "해외 여행이나 문화 교류 프로그램을 통한 글로벌 경험 확장"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "BTS",
-        "nameKo": "방탄소년단",
-        "popularity": 98,
-        "keyTracks": ["Dynamite", "Butter", "Permission to Dance"]
-      },
-      {
-        "name": "BLACKPINK",
-        "nameKo": "블랙핑크", 
-        "popularity": 95,
-        "keyTracks": ["DDU-DU DDU-DU", "How You Like That", "Pink Venom"]
-      }
-    ]
+    }
   },
   {
     "id": "jazz_smooth",
@@ -1359,21 +1149,7 @@
         "네트워킹 이벤트나 사교 모임 주최 및 참여",
         "골프나 요가 등 여유롭고 사교적인 스포츠 활동"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "Kenny G",
-        "nameKo": "케니 지",
-        "popularity": 88,
-        "keyTracks": ["Songbird", "Going Home"]
-      },
-      {
-        "name": "George Benson",
-        "nameKo": "조지 벤슨",
-        "popularity": 85,
-        "keyTracks": ["Breezin'", "Give Me the Night"]
-      }
-    ]
+    }
   },
   {
     "id": "rock_progressive",
@@ -1445,21 +1221,7 @@
         "건축이나 디자인 전시회 관람을 통한 구조적 아름다움 탐구",
         "철학이나 예술 이론 관련 강의나 토론회 참여"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "Pink Floyd",
-        "nameKo": "핑크 플로이드",
-        "popularity": 96,
-        "keyTracks": ["Comfortably Numb", "Wish You Were Here"]
-      },
-      {
-        "name": "Yes",
-        "nameKo": "예스",
-        "popularity": 82,
-        "keyTracks": ["Roundabout", "Owner of a Lonely Heart"]
-      }
-    ]
+    }
   },
   {
     "id": "electronic_chillout",
@@ -1531,21 +1293,7 @@
         "요가나 명상 수업을 통한 마음챙김 실천",
         "아늑한 카페나 라운지에서의 독서나 사색 시간"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "Moby",
-        "nameKo": "모비",
-        "popularity": 88,
-        "keyTracks": ["Porcelain", "Natural Blues"]
-      },
-      {
-        "name": "Zero 7",
-        "nameKo": "제로 7",
-        "popularity": 78,
-        "keyTracks": ["Destiny", "In the Waiting Line"]
-      }
-    ]
+    }
   },
   {
     "id": "pop_mainstream",
@@ -1617,21 +1365,7 @@
         "댄스나 노래방 등 여러 사람과 함께 즐길 수 있는 엔터테인먼트 활동",
         "인기 있는 여행지나 핫플레이스 탐방을 통한 소셜 경험 확장"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "Taylor Swift",
-        "nameKo": "테일러 스위프트",
-        "popularity": 98,
-        "keyTracks": ["Shake It Off", "Anti-Hero"]
-      },
-      {
-        "name": "Ed Sheeran",
-        "nameKo": "에드 시런",
-        "popularity": 95,
-        "keyTracks": ["Shape of You", "Perfect"]
-      }
-    ]
+    }
   },
   {
     "id": "classical_contemporary",
@@ -1703,21 +1437,7 @@
         "학술 세미나나 미래학 관련 강연 참석",
         "아방가르드 예술이나 개념 미술 작품 탐구"
       ]
-    },
-    "representativeArtists": [
-      {
-        "name": "John Adams",
-        "nameKo": "존 아담스",
-        "popularity": 78,
-        "keyTracks": ["Short Ride in a Fast Machine", "The Chairman Dances"]
-      },
-      {
-        "name": "Arvo Pärt",
-        "nameKo": "아르보 패르트",
-        "popularity": 75,
-        "keyTracks": ["Spiegel im Spiegel", "Für Alina"]
-      }
-    ]
+    }
   },
   {
     "id": "hiphop_oldschool",
@@ -1739,20 +1459,6 @@
     "energy": 85,
     "valence": 70,
     "acousticness": 10,
-    "representativeArtists": [
-      {
-        "name": "Grandmaster Flash",
-        "nameKo": "그랜드마스터 플래시",
-        "popularity": 85,
-        "keyTracks": ["The Message", "White Lines"]
-      },
-      {
-        "name": "Run-DMC",
-        "nameKo": "런 디엠씨",
-        "popularity": 90,
-        "keyTracks": ["Walk This Way", "It's Tricky"]
-      }
-    ],
     "personalityAnalysis": {
       "typeTitle": "진실한 스토리텔러",
       "description": "당신은 진실을 두려워하지 않고 직면하는 용기 있는 사람입니다. 올드스쿨 힙합의 원초적 에너지와 사회 비판적 메시지는 당신의 정의감과 진정성을 추구하는 마음을 반영합니다.",
@@ -1825,20 +1531,6 @@
     "energy": 95,
     "valence": 60,
     "acousticness": 5,
-    "representativeArtists": [
-      {
-        "name": "Travis Scott",
-        "nameKo": "트래비스 스캇",
-        "popularity": 95,
-        "keyTracks": ["SICKO MODE", "Goosebumps"]
-      },
-      {
-        "name": "Future",
-        "nameKo": "퓨처",
-        "popularity": 85,
-        "keyTracks": ["Mask Off", "Life Is Good"]
-      }
-    ],
     "personalityAnalysis": {
       "typeTitle": "트렌디한 혁신가",
       "description": "당신은 시대의 흐름을 선도하고 새로운 것을 추구하는 현대적인 감각의 소유자입니다. 트랩 힙합의 강렬한 에너지와 혁신적 사운드는 당신의 진취적 성향과 현재에 충실한 라이프스타일을 완벽하게 반영합니다.",
@@ -1911,20 +1603,6 @@
     "energy": 60,
     "valence": 70,
     "acousticness": 60,
-    "representativeArtists": [
-      {
-        "name": "Aretha Franklin",
-        "nameKo": "아레사 프랭클린",
-        "popularity": 95,
-        "keyTracks": ["Respect", "Natural Woman"]
-      },
-      {
-        "name": "Marvin Gaye",
-        "nameKo": "마빈 게이",
-        "popularity": 90,
-        "keyTracks": ["What's Going On", "Let's Get It On"]
-      }
-    ],
     "personalityAnalysis": {
       "typeTitle": "깊은 감성의 소울 메이트",
       "description": "당신은 진정한 감정과 인간의 따뜻함을 중시하는 영혼이 깊은 사람입니다. 클래식 R&B의 깊은 감정 표현과 진솔한 메시지는 당신의 공감 능력과 인간에 대한 사랑을 완벽하게 반영합니다.",
@@ -1997,20 +1675,6 @@
     "energy": 55,
     "valence": 65,
     "acousticness": 40,
-    "representativeArtists": [
-      {
-        "name": "D'Angelo",
-        "nameKo": "디안젤로",
-        "popularity": 80,
-        "keyTracks": ["Untitled", "Brown Sugar"]
-      },
-      {
-        "name": "Erykah Badu",
-        "nameKo": "에리카 바두",
-        "popularity": 85,
-        "keyTracks": ["On & On", "Bag Lady"]
-      }
-    ],
     "personalityAnalysis": {
       "typeTitle": "영적 탐구자",
       "description": "당신은 깊은 영성과 현대적 감각을 동시에 추구하는 균형 잡힌 영혼입니다. 네오 소울의 세련된 실험성과 영적 깊이는 당신의 내적 성장 욕구와 창조적 표현력을 완벽하게 반영합니다.",
@@ -2083,20 +1747,6 @@
     "energy": 85,
     "valence": 90,
     "acousticness": 50,
-    "representativeArtists": [
-      {
-        "name": "Marc Anthony",
-        "nameKo": "마크 안소니",
-        "popularity": 85,
-        "keyTracks": ["Vivir Mi Vida", "Valió la Pena"]
-      },
-      {
-        "name": "Manu Chao",
-        "nameKo": "마누 차오",
-        "popularity": 80,
-        "keyTracks": ["Bongo Bong", "Me Gustas Tu"]
-      }
-    ],
     "personalityAnalysis": {
       "typeTitle": "열정적인 생명력의 화신",
       "description": "당신은 삶에 대한 뜨거운 열정과 타고난 생명력을 가진 에너지 넘치는 영혼입니다. 라틴 음악의 역동적 리듬과 축제적 분위기는 당신의 긍정적 에너지와 사람들을 하나로 모으는 매력을 완벽하게 반영합니다.",
@@ -2169,20 +1819,6 @@
     "energy": 40,
     "valence": 60,
     "acousticness": 90,
-    "representativeArtists": [
-      {
-        "name": "Ravi Shankar",
-        "nameKo": "라비 샨카르",
-        "popularity": 70,
-        "keyTracks": ["Raga Jog", "Sitar Concerto"]
-      },
-      {
-        "name": "Ali Farka Touré",
-        "nameKo": "알리 파르카 투레",
-        "popularity": 65,
-        "keyTracks": ["Savane", "Niafunké"]
-      }
-    ],
     "personalityAnalysis": {
       "typeTitle": "지혜로운 전승자",
       "description": "당신은 오랜 시간 축적된 지혜와 전통의 가치를 깊이 이해하는 문화적 수호자입니다. 세계 전통 음악의 고요한 명상성과 문화적 깊이는 당신의 성숙한 정신세계와 인간 본연의 진실함을 추구하는 마음을 완벽하게 반영합니다.",
@@ -2255,20 +1891,6 @@
     "energy": 95,
     "valence": 40,
     "acousticness": 10,
-    "representativeArtists": [
-      {
-        "name": "Metallica",
-        "nameKo": "메탈리카",
-        "popularity": 95,
-        "keyTracks": ["Master of Puppets", "Enter Sandman"]
-      },
-      {
-        "name": "Iron Maiden",
-        "nameKo": "아이언 메이든",
-        "popularity": 85,
-        "keyTracks": ["The Number of the Beast", "Run to the Hills"]
-      }
-     ],
      "personalityAnalysis": {
        "typeTitle": "강인한 전사",
        "description": "당신은 내면의 강인함과 불굴의 정신력을 가진 진정한 전사입니다. 메탈의 극도로 강렬하고 공격적인 사운드는 당신의 끊임없는 도전 정신과 어떤 역경도 이겨내는 강인한 의지를 완벽하게 반영합니다.",
@@ -2341,20 +1963,6 @@
     "energy": 90,
     "valence": 50,
     "acousticness": 20,
-    "representativeArtists": [
-      {
-        "name": "The Ramones",
-        "nameKo": "더 라몬즈",
-        "popularity": 85,
-        "keyTracks": ["Blitzkrieg Bop", "I Wanna Be Sedated"]
-      },
-      {
-        "name": "Sex Pistols",
-        "nameKo": "섹스 피스톨즈",
-        "popularity": 80,
-        "keyTracks": ["Anarchy in the U.K.", "God Save the Queen"]
-      }
-     ],
      "personalityAnalysis": {
        "typeTitle": "자유로운 반항자",
        "description": "당신은 기존 틀에 얽매이지 않는 자유로운 영혼이며, 진정성과 솔직함을 무엇보다 중시하는 진정한 반항자입니다. 펑크 록의 직설적이고 반항적인 에너지는 당신의 독립적인 정신과 불의에 맞서는 용기를 완벽하게 표현합니다.",
@@ -2427,20 +2035,6 @@
     "energy": 90,
     "valence": 60,
     "acousticness": 5,
-    "representativeArtists": [
-      {
-        "name": "LTJ Bukem",
-        "nameKo": "LTJ 부켐",
-        "popularity": 75,
-        "keyTracks": ["Music", "Horizons"]
-      },
-      {
-        "name": "Netsky",
-        "nameKo": "넷스키",
-        "popularity": 80,
-        "keyTracks": ["Come Alive", "Work It Out"]
-      }
-     ],
      "personalityAnalysis": {
        "typeTitle": "리듬의 마에스트로",
        "description": "당신은 복잡한 패턴과 정교한 구조를 이해하고 즐기는 분석적이고 창의적인 마음을 가진 음악적 천재입니다. 드럼 앤 베이스의 빠르고 복잡한 브레이크비트는 당신의 뛰어난 집중력과 다층적 사고 능력을 완벽하게 반영합니다.",
@@ -2513,20 +2107,6 @@
     "energy": 95,
     "valence": 50,
     "acousticness": 5,
-    "representativeArtists": [
-      {
-        "name": "Skrillex",
-        "nameKo": "스크릴렉스",
-        "popularity": 90,
-        "keyTracks": ["Bangarang", "Scary Monsters and Nice Sprites"]
-      },
-      {
-        "name": "Bassnectar",
-        "nameKo": "베이스넥타",
-        "popularity": 80,
-        "keyTracks": ["Bass Head", "Timestretch"]
-      }
-     ],
      "personalityAnalysis": {
        "typeTitle": "미래의 혁신가",
        "description": "당신은 기존의 한계를 뛰어넘어 새로운 가능성을 창조하는 혁신적인 비전가입니다. 덥스텝의 강렬한 베이스 드롭과 미래적 사운드는 당신의 파괴적 창조력과 예상치 못한 순간에 폭발적인 임팩트를 만들어내는 능력을 완벽하게 표현합니다.",
@@ -2599,20 +2179,6 @@
     "energy": 70,
     "valence": 75,
     "acousticness": 15,
-    "representativeArtists": [
-      {
-        "name": "Depeche Mode",
-        "nameKo": "데페쉬 모드",
-        "popularity": 85,
-        "keyTracks": ["Personal Jesus", "Enjoy the Silence"]
-      },
-      {
-        "name": "The Weeknd",
-        "nameKo": "더 위켄드",
-        "popularity": 95,
-        "keyTracks": ["Blinding Lights", "Midnight City"]
-      }
-     ],
      "personalityAnalysis": {
        "typeTitle": "세련된 미래주의자",
        "description": "당신은 과거의 향수와 미래의 비전을 완벽하게 조화시키는 세련된 감각의 소유자입니다. 신스팝의 미래적이면서도 멜로딕한 사운드는 당신의 진보적 사고와 동시에 인간적 감성을 잃지 않는 균형 잡힌 성격을 완벽하게 반영합니다.",
@@ -2685,20 +2251,6 @@
     "energy": 40,
     "valence": 70,
     "acousticness": 80,
-    "representativeArtists": [
-      {
-        "name": "Simon & Garfunkel",
-        "nameKo": "사이먼 앤 가펑클",
-        "popularity": 90,
-        "keyTracks": ["The Sound of Silence", "Bridge Over Troubled Water"]
-      },
-      {
-        "name": "Mumford & Sons",
-        "nameKo": "멈포드 앤 선즈",
-        "popularity": 80,
-        "keyTracks": ["Little Lion Man", "I Will Wait"]
-      }
-     ],
      "personalityAnalysis": {
        "typeTitle": "따뜻한 이야기꾼",
        "description": "당신은 진솔한 감정과 인간적인 이야기를 통해 다른 사람들과 깊이 연결되는 따뜻한 마음의 소유자입니다. 포크 팝의 서정적이고 어쿠스틱한 선율은 당신의 자연스러운 매력과 진정성 있는 소통 능력을 완벽하게 표현합니다.",

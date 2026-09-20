@@ -2,7 +2,7 @@
 
 import React, { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { ArrowRight, Clock3, Compass, Layers3, Sparkles } from 'lucide-react';
-import { Question, GenreSchema, MUSICPersonality, EnhancedRecommendationScore, RecommendedArtist } from '@/types';
+import { Question, GenreSchema, MUSICPersonality, EnhancedRecommendationScore, RecommendedArtist, MusicCatalog } from '@/types';
 import { calculateMUSICScores, recommendGenres, recommendArtists } from '@/lib/musicCalculations';
 import { createResultSearchParams, parseResultSearchParams } from '@/lib/resultTheme';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
@@ -33,6 +33,7 @@ const MusicPersonalityApp: React.FC = () => {
   const [recommendedArtistsList, setRecommendedArtistsList] = useState<RecommendedArtist[]>([]);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [genres, setGenres] = useState<GenreSchema[]>([]);
+  const [musicCatalog, setMusicCatalog] = useState<MusicCatalog>({ version: 1, reviewedAt: '', genres: {} });
   const [dataLoaded, setDataLoaded] = useState(false);
   const [comparisonHostScores, setComparisonHostScores] = useState<MUSICPersonality | null>(null);
   const [comparisonGuestScores, setComparisonGuestScores] = useState<MUSICPersonality | null>(null);
@@ -41,12 +42,14 @@ const MusicPersonalityApp: React.FC = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const [questionsModule, genresModule] = await Promise.all([
+        const [questionsModule, genresModule, catalogModule] = await Promise.all([
           import('@/data/questions.json'),
           import('@/data/genres.json'),
+          import('@/data/musicCatalog.json'),
         ]);
         setQuestions(questionsModule.default as Question[]);
         setGenres(genresModule.default as GenreSchema[]);
+        setMusicCatalog(catalogModule.default as MusicCatalog);
         setDataLoaded(true);
       } catch (error) {
         console.error('Failed to load data:', error);
@@ -62,9 +65,9 @@ const MusicPersonalityApp: React.FC = () => {
   const buildRecommendations = useCallback((scores: MUSICPersonality, nextGenres: GenreSchema[]) => {
     const recommendations = recommendGenres(scores, nextGenres, language);
     setRecommendedGenres(recommendations);
-    setRecommendedArtistsList(recommendArtists(recommendations, nextGenres, 6, language));
+    setRecommendedArtistsList(recommendArtists(recommendations, nextGenres, musicCatalog, 6, language));
     return recommendations;
-  }, [language]);
+  }, [language, musicCatalog]);
 
   useEffect(() => {
     if (!dataLoaded || initializedFromUrl.current || typeof window === 'undefined') return;
@@ -366,7 +369,7 @@ const MusicPersonalityApp: React.FC = () => {
           </div>
         </div>
         <Suspense fallback={<LoadingSpinner message={t('common.loading.loadingGenres')} />}>
-          <GenreExplorer genres={genres} />
+          <GenreExplorer genres={genres} musicCatalog={musicCatalog} />
         </Suspense>
       </main>
     );

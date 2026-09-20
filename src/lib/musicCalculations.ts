@@ -1,4 +1,4 @@
-import { MUSICPersonality, GenreSchema, RecommendationScore, Question, EnhancedRecommendationScore, RecommendedArtist, CompatiblePersonalityType, CompatibilityType } from '@/types';
+import { MUSICPersonality, GenreSchema, RecommendationScore, Question, EnhancedRecommendationScore, RecommendedArtist, CompatiblePersonalityType, CompatibilityType, MusicCatalog } from '@/types';
 import { getGenreName } from './genreTranslations';
 
 /**
@@ -294,6 +294,7 @@ export function determinePersonalityType(
 export function recommendArtists(
   topGenres: EnhancedRecommendationScore[],
   genres: GenreSchema[],
+  musicCatalog: MusicCatalog,
   maxArtists: number = 6,
   language: 'ko' | 'en' = 'ko'
 ): RecommendedArtist[] {
@@ -302,15 +303,11 @@ export function recommendArtists(
   // 상위 장르들에서 아티스트 추출
   topGenres.slice(0, 3).forEach(genreRec => {
     const genre = genres.find(g => g.id === genreRec.genreId);
-    if (genre && genre.representativeArtists) {
-      genre.representativeArtists.forEach(artist => {
+    const artists = musicCatalog.genres[genreRec.genreId] || [];
+    if (genre) {
+      artists.forEach(artist => {
         recommendedArtists.push({
-          artist: {
-            name: artist.name,
-            nameKo: artist.nameKo || artist.name,
-            popularity: artist.popularity,
-            keyTracks: artist.keyTracks
-          },
+          artist,
           genreName: genre.name,
           genreNameKo: getGenreName(genre, 'ko'),
           compatibility: genreRec.compatibility,
@@ -320,13 +317,6 @@ export function recommendArtists(
         });
       });
     }
-  });
-
-  // 인기도와 호환성을 고려하여 정렬
-  recommendedArtists.sort((a, b) => {
-    const scoreA = (a.artist.popularity * 0.3) + (a.compatibility * 0.7);
-    const scoreB = (b.artist.popularity * 0.3) + (b.compatibility * 0.7);
-    return scoreB - scoreA;
   });
 
   return recommendedArtists.slice(0, maxArtists);

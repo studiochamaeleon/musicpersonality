@@ -59,3 +59,13 @@ test('the personal result card downloads as a non-empty PNG', async ({ page }) =
   expect(image.subarray(0, 8)).toEqual(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
   expect(image.length).toBeGreaterThan(20_000);
 });
+
+test('the personal result offers curated direct Spotify album links', async ({ page }) => {
+  await page.goto('/?v=1&m=70&u=61&s=79&i=48&c=75');
+  const albumLinks = page.getByRole('link', { name: /Spotify에서 앨범 듣기/ });
+  await expect(albumLinks).toHaveCount(6);
+
+  const hrefs = await albumLinks.evaluateAll(links => links.map(link => link.getAttribute('href')));
+  expect(new Set(hrefs).size).toBe(6);
+  for (const href of hrefs) expect(href).toMatch(/^https:\/\/open\.spotify\.com\/album\/[A-Za-z0-9]{22}$/);
+});

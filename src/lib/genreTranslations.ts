@@ -1794,7 +1794,7 @@ export function getArtistName(artist: { name: string; nameKo?: string }, languag
   return language === 'ko' ? (artist.nameKo || artist.name) : artist.name;
 }
 
-export function getArtistSubtitle(artist: { name: string; nameKo: string }, language: 'ko' | 'en'): string {
+export function getArtistSubtitle(artist: { name: string; nameKo?: string }, language: 'ko' | 'en'): string {
   return language === 'ko' ? artist.name : '';
 }
 

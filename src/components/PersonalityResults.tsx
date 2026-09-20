@@ -5,7 +5,6 @@ import { ArrowDown, ExternalLink, RotateCcw, Share2, Users } from 'lucide-react'
 import { MUSICPersonality, EnhancedRecommendationScore, GenreSchema, RecommendedArtist } from '@/types';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { generateYouTubeSearchUrl, openYouTubeLink, getEnglishArtistName } from '@/lib/youtube';
 import { getGenreDescription, getGenreCharacteristics, getPersonalityAnalysis, getGenreName, getArtistName, getArtistSubtitle } from '@/lib/genreTranslations';
 import { analytics } from '@/lib/analytics';
 import { getGenreTheme } from '@/lib/resultTheme';
@@ -43,8 +42,11 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
 
   const traits = getGenreCharacteristics(topGenre.id, topGenre.characteristics, language).slice(0, 4);
   const resultCopy = language === 'ko'
-    ? { eyebrow: '당신의 음악 성격', lead: '당신과 가장 닮은 사운드', match: '취향 일치', spectrum: '나의 취향 스펙트럼', spectrumBody: '다섯 개의 축이 당신의 음악 취향을 어떻게 구성하는지 보여줍니다.', next: '함께 들으면 좋은 장르', artists: '당신을 위한 아티스트', detail: '성격 해석 더 보기', invite: '친구와 음악 궁합 보기', share: '결과 공유하기', again: '다시 검사하기' }
-    : { eyebrow: 'YOUR MUSIC PERSONALITY', lead: 'The sound most like you', match: 'taste match', spectrum: 'Your taste spectrum', spectrumBody: 'Five dimensions show how your music taste is put together.', next: 'Genres to try next', artists: 'Artists for your taste', detail: 'Read the full personality note', invite: 'Compare with a friend', share: 'Share my result', again: 'Take it again' };
+    ? { eyebrow: '당신의 음악 성격', lead: '당신과 가장 닮은 사운드', match: '취향 일치', spectrum: '나의 취향 스펙트럼', spectrumBody: '다섯 개의 축이 당신의 음악 취향을 어떻게 구성하는지 보여줍니다.', next: '함께 들으면 좋은 장르', artists: '당신을 위한 아티스트와 앨범', detail: '성격 해석 더 보기', invite: '친구와 음악 궁합 보기', share: '결과 공유하기', again: '다시 검사하기' }
+    : { eyebrow: 'YOUR MUSIC PERSONALITY', lead: 'The sound most like you', match: 'taste match', spectrum: 'Your taste spectrum', spectrumBody: 'Five dimensions show how your music taste is put together.', next: 'Genres to try next', artists: 'Artists and albums for your taste', detail: 'Read the full personality note', invite: 'Compare with a friend', share: 'Share my result', again: 'Take it again' };
+  const albumCopy = language === 'ko'
+    ? { anchor: '장르의 기준점', discovery: '새롭게 발견할 앨범', listen: 'Spotify에서 앨범 듣기' }
+    : { anchor: 'Genre cornerstone', discovery: 'Your next discovery', listen: 'Listen to the album on Spotify' };
   const insightCopy = language === 'ko'
     ? { eyebrow: 'PERSONALITY NOTES', title: '취향에서 읽은 당신의 모습', core: '핵심 특성', lifestyle: '라이프스타일 통찰', music: '음악적 특성', popularity: '인기도', energy: '에너지', valence: '긍정성', acousticness: '어쿠스틱' }
     : { eyebrow: 'PERSONALITY NOTES', title: 'What your taste says about you', core: 'Core traits', lifestyle: 'Lifestyle insights', music: 'Musical profile', popularity: 'Popularity', energy: 'Energy', valence: 'Positivity', acousticness: 'Acoustic' };
@@ -214,12 +216,13 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
                     <div><h3 className="font-bold">{getArtistName(recommendation.artist, language)}</h3><p className="mt-1 text-xs text-white/38">{getArtistSubtitle(recommendation.artist, language)}</p></div>
                     <span className="score-tabular text-xs font-bold text-white/42">{recommendation.compatibility}%</span>
                   </div>
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {recommendation.artist.keyTracks.slice(0, 2).map(track => (
-                      <button key={track} onClick={() => { analytics.track('youtube_track_click', { artist: recommendation.artist.name, track, genre: recommendation.genreName, compatibility: recommendation.compatibility }); openYouTubeLink(generateYouTubeSearchUrl(getEnglishArtistName(recommendation.artist.nameKo || recommendation.artist.name), track), track); }} className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-white/10 px-3 text-xs text-white/55 transition-colors hover:bg-white/10 hover:text-white">
-                        {track}<ExternalLink size={11} />
-                      </button>
-                    ))}
+                  <div className="mt-5 border-t border-white/10 pt-5">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-white/34">{albumCopy[recommendation.artist.role]}</p>
+                    <p className="mt-2 text-base font-semibold leading-6 text-white/82">{recommendation.artist.album.title}</p>
+                    <p className="mt-1 text-xs text-white/35">{recommendation.artist.album.year}{recommendation.artist.album.credit ? ` · ${recommendation.artist.album.credit}` : ''}</p>
+                    <a href={recommendation.artist.album.spotifyUrl} target="_blank" rel="noopener noreferrer" aria-label={`${getArtistName(recommendation.artist, language)} · ${recommendation.artist.album.title}: ${albumCopy.listen}`} onClick={() => analytics.track('music_link_click', { provider: 'spotify', contentType: 'album', artist: recommendation.artist.name, album: recommendation.artist.album.title, genre: recommendation.genreName, compatibility: recommendation.compatibility, context: 'results' })} className="mt-5 inline-flex min-h-10 items-center gap-2 rounded-full bg-[#1ed760] px-4 text-xs font-bold text-black transition-transform hover:-translate-y-0.5">
+                      {albumCopy.listen}<ExternalLink size={12} />
+                    </a>
                   </div>
                 </article>
               ))}

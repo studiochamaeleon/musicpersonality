@@ -2,7 +2,7 @@
 
 import React, { CSSProperties, useMemo, useState } from 'react';
 import { ExternalLink, Search, SlidersHorizontal, X } from 'lucide-react';
-import { GenreSchema } from '@/types';
+import { ArtistReference, GenreSchema, MusicCatalog } from '@/types';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { analytics } from '@/lib/analytics';
 import {
@@ -12,17 +12,17 @@ import {
   getGenreName,
   getPersonalityAnalysis,
 } from '@/lib/genreTranslations';
-import { generateYouTubeSearchUrl, getEnglishArtistName, openYouTubeLink } from '@/lib/youtube';
 import { getGenreTheme } from '@/lib/resultTheme';
 import AnimatedSection from './ui/AnimatedSection';
 import MUSICRadarChart from './ui/charts/MUSICRadarChart';
 
 interface GenreExplorerProps {
   genres: GenreSchema[];
+  musicCatalog: MusicCatalog;
   onGenreSelect?: (genre: GenreSchema) => void;
 }
 
-const GenreExplorer: React.FC<GenreExplorerProps> = ({ genres, onGenreSelect }) => {
+const GenreExplorer: React.FC<GenreExplorerProps> = ({ genres, musicCatalog, onGenreSelect }) => {
   const { language } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -33,12 +33,12 @@ const GenreExplorer: React.FC<GenreExplorerProps> = ({ genres, onGenreSelect }) 
     eyebrow: 'GENRE PERSONALITIES', title: '장르에도 성격이 있습니다.', subtitle: '32개 장르의 음악 성향과 대표 아티스트를 살펴보세요.',
     search: '장르, 분위기, 특성 검색', all: '전체 장르', popularity: '인기도 순', name: '이름 순', energy: '에너지 순', era: '시대 순',
     results: '개의 장르', noResults: '조건에 맞는 장르가 없습니다.', profile: 'MUSIC 성향', core: '핵심 특성', lifestyle: '라이프스타일 통찰',
-    metrics: '음악적 특성', artists: '대표 아티스트와 트랙', popularityLabel: '인기도', energyLabel: '에너지', valenceLabel: '긍정성', acousticLabel: '어쿠스틱',
+    metrics: '음악적 특성', artists: '대표 아티스트와 입문 앨범', anchor: '장르의 기준점', discovery: '새롭게 발견할 앨범', listen: 'Spotify에서 앨범 듣기', popularityLabel: '인기도', energyLabel: '에너지', valenceLabel: '긍정성', acousticLabel: '어쿠스틱',
   } : {
     eyebrow: 'GENRE PERSONALITIES', title: 'Every genre has a personality.', subtitle: 'Explore the traits and defining artists of 32 genres.',
     search: 'Search genres, moods, and traits', all: 'All genres', popularity: 'Popularity', name: 'Name', energy: 'Energy', era: 'Era',
     results: 'genres', noResults: 'No genres match these filters.', profile: 'MUSIC profile', core: 'Core traits', lifestyle: 'Lifestyle insights',
-    metrics: 'Musical profile', artists: 'Defining artists and tracks', popularityLabel: 'Popularity', energyLabel: 'Energy', valenceLabel: 'Positivity', acousticLabel: 'Acoustic',
+    metrics: 'Musical profile', artists: 'Defining artists and gateway albums', anchor: 'Genre cornerstone', discovery: 'Your next discovery', listen: 'Listen to the album on Spotify', popularityLabel: 'Popularity', energyLabel: 'Energy', valenceLabel: 'Positivity', acousticLabel: 'Acoustic',
   };
 
   const categories = useMemo(() => ['all', ...new Set(genres.map(genre => genre.category))], [genres]);
@@ -121,17 +121,18 @@ const GenreExplorer: React.FC<GenreExplorerProps> = ({ genres, onGenreSelect }) 
         ) : <div className="result-card py-20 text-center text-sm text-white/45">{copy.noResults}</div>}
       </section>
 
-      {selectedGenre && <GenreDetailModal genre={selectedGenre} copy={copy} language={language} onClose={() => setSelectedGenre(null)} />}
+      {selectedGenre && <GenreDetailModal genre={selectedGenre} artists={musicCatalog.genres[selectedGenre.id] || []} copy={copy} language={language} onClose={() => setSelectedGenre(null)} />}
     </div>
   );
 };
 
 interface DetailCopy {
   profile: string; core: string; lifestyle: string; metrics: string; artists: string;
+  anchor: string; discovery: string; listen: string;
   popularityLabel: string; energyLabel: string; valenceLabel: string; acousticLabel: string;
 }
 
-const GenreDetailModal = ({ genre, copy, language, onClose }: { genre: GenreSchema; copy: DetailCopy; language: 'ko' | 'en'; onClose: () => void }) => {
+const GenreDetailModal = ({ genre, artists, copy, language, onClose }: { genre: GenreSchema; artists: ArtistReference[]; copy: DetailCopy; language: 'ko' | 'en'; onClose: () => void }) => {
   const analysis = genre.personalityAnalysis ? getPersonalityAnalysis(genre.id, genre.personalityAnalysis, language) : null;
   const theme = getGenreTheme(genre);
   const style = { '--result-accent': theme.accent, '--result-secondary': theme.secondary } as CSSProperties;
@@ -158,7 +159,7 @@ const GenreDetailModal = ({ genre, copy, language, onClose }: { genre: GenreSche
 
           <section><h3 className="text-xl font-bold">{copy.metrics}</h3><div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{metrics.map(([label, value]) => <div key={label} className="result-card p-5"><div className="flex items-end justify-between gap-3"><span className="text-sm text-white/48">{label}</span><strong className="score-tabular text-2xl">{value}%</strong></div><div className="mt-4 h-1.5 overflow-hidden rounded-full bg-white/8"><div className="h-full rounded-full" style={{ width: `${value}%`, background: `linear-gradient(90deg, ${theme.accent}, ${theme.secondary})` }} /></div></div>)}</div></section>
 
-          {genre.representativeArtists && genre.representativeArtists.length > 0 && <section><h3 className="text-xl font-bold">{copy.artists}</h3><div className="mt-5 grid gap-3 sm:grid-cols-2">{genre.representativeArtists.map(artist => <article key={artist.name} className="result-card p-5"><div className="flex items-center justify-between gap-4"><h4 className="font-semibold">{getArtistName(artist, language)}</h4><span className="score-tabular text-xs text-white/35">{artist.popularity}%</span></div><div className="mt-4 flex flex-wrap gap-2">{artist.keyTracks.slice(0, 3).map(track => <button key={track} onClick={() => { analytics.track('youtube_track_click', { artist: artist.name, track, genre: genre.name }); openYouTubeLink(generateYouTubeSearchUrl(getEnglishArtistName(artist.nameKo || artist.name), track), track); }} className="inline-flex min-h-9 items-center gap-1.5 rounded-full border border-white/10 px-3 text-xs text-white/50 transition-colors hover:bg-white/10 hover:text-white">{track}<ExternalLink size={11} /></button>)}</div></article>)}</div></section>}
+          {artists.length > 0 && <section><h3 className="text-xl font-bold">{copy.artists}</h3><div className="mt-5 grid gap-3 sm:grid-cols-2">{artists.map(artist => <article key={artist.name} className="result-card p-5"><div className="flex items-start justify-between gap-4"><div><h4 className="font-semibold">{getArtistName(artist, language)}</h4>{language === 'ko' && <p className="mt-1 text-xs text-white/35">{artist.name}</p>}</div><span className="text-[10px] font-bold uppercase tracking-[0.12em] text-white/35">{copy[artist.role]}</span></div><div className="mt-5 border-t border-white/10 pt-5"><p className="font-semibold leading-6 text-white/82">{artist.album.title}</p><p className="mt-1 text-xs text-white/35">{artist.album.year}{artist.album.credit ? ` · ${artist.album.credit}` : ''}</p><a href={artist.album.spotifyUrl} target="_blank" rel="noopener noreferrer" aria-label={`${getArtistName(artist, language)} · ${artist.album.title}: ${copy.listen}`} onClick={() => analytics.track('music_link_click', { provider: 'spotify', contentType: 'album', artist: artist.name, album: artist.album.title, genre: genre.name, context: 'genre-explorer' })} className="mt-4 inline-flex min-h-10 items-center gap-2 rounded-full bg-[#1ed760] px-4 text-xs font-bold text-black transition-transform hover:-translate-y-0.5">{copy.listen}<ExternalLink size={12} /></a></div></article>)}</div></section>}
         </div>
       </div>
     </div>

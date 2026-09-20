@@ -1,10 +1,10 @@
 # Music Personality
 
-음악 취향 40문항을 통해 MUSIC 5요인 점수를 계산하고, 닮은 장르·아티스트·성격 해석을 보여주는 가벼운 바이럴 웹 테스트입니다. 한국어와 영어를 지원하며 별도 계정이나 백엔드 없이 정적 사이트로 동작합니다.
+음악 취향 40문항을 통해 MUSIC 5요인 점수를 계산하고, 닮은 장르·아티스트·입문 앨범·성격 해석을 보여주는 가벼운 바이럴 웹 테스트입니다. 한국어와 영어를 지원하며 별도 계정이나 백엔드 없이 정적 사이트로 동작합니다.
 
 ## 주요 흐름
 
-- 개인 테스트: 설문 → MUSIC 점수 → 장르·아티스트·성격 결과
+- 개인 테스트: 설문 → MUSIC 점수 → 장르·아티스트·입문 앨범·성격 결과
 - 친구 궁합: 내 결과 → 초대 링크 → 친구 테스트 → 2인 취향 비교
 - 공유: 개인 결과 카드와 2인 궁합 카드를 이미지 또는 링크로 공유
 - 탐색: 설문 없이 32개 장르의 성향과 대표 음악 확인
@@ -29,6 +29,8 @@
 - Cloudflare Pages Functions 기반 동적 SNS 미리보기 카드
 - Playwright 모바일 E2E 테스트
 - 정적 JSON 기반 질문·장르 데이터
+- 32개 장르, 64개 검수 앨범으로 구성된 정적 음악 카탈로그
+- 런타임 API 호출 없는 Spotify 직접 앨범 링크
 - 정적 export 및 PWA 지원
 
 ## 로컬 실행
@@ -44,11 +46,14 @@ npm run dev
 
 ```bash
 npm run lint
+npm run validate:catalog
 npm run build
 npm run test:e2e
 ```
 
 `npm run build`는 정적 결과물을 `out/`에 생성합니다.
+
+`npm run validate:catalog`는 모든 장르에 `anchor`와 `discovery` 앨범이 있는지, Spotify 앨범 URL 형식과 중복 여부가 올바른지 확인합니다. 카탈로그는 `src/data/musicCatalog.json`에서 관리하며 Spotify Web API나 사용자 로그인을 사용하지 않습니다.
 
 `npm run test:e2e`는 정적 빌드와 Cloudflare Pages Functions를 함께 실행해 다음 흐름을 모바일 Chromium에서 검증합니다.
 

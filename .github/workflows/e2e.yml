@@ -33,6 +33,9 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Validate music catalog
+        run: npm run validate:catalog
+
       - name: Run mobile end-to-end tests
         run: npm run test:e2e
 
