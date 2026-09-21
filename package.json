@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "validate:catalog": "node scripts/validate-music-catalog.mjs",
+    "test:unit": "node --experimental-strip-types --test tests/unit/*.test.mjs",
     "preview:e2e": "npm run build && wrangler pages dev out --port 4173 --ip 127.0.0.1 --compatibility-date=2026-09-18",
     "test:e2e": "playwright test"
   },

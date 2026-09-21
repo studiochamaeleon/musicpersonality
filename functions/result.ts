@@ -20,11 +20,13 @@ export async function onRequest(context: PagesFunctionContext) {
   const result = getPersonalResultSummary(scores);
   const title = language === 'ko'
     ? `내 음악 성격은 ${result.typeTitleKo} · ${result.genreNameKo}`
-    : `My music personality is ${result.genreName}`;
+    : `My music personality is ${result.typeTitleEn} · ${result.genreName}`;
   const description = language === 'ko'
-    ? `${result.compatibility}% 취향 일치 · ${result.characteristics.join(', ')}. 당신의 음악 성격도 확인해보세요.`
-    : `${result.compatibility}% taste match. Discover your music personality and compare it with a friend.`;
+    ? `장르 유사도 ${result.compatibility}% · ${result.characteristics.join(', ')}. 당신의 음악 성격도 확인해보세요.`
+    : `${result.compatibility}% genre similarity. Discover your music personality and compare it with a friend.`;
   const imageParams = new URLSearchParams({ score: scoreToken });
+  if (requestUrl.searchParams.get('sv') === '2') imageParams.set('sv', '2');
+  if (language === 'en') imageParams.set('lang', 'en');
   const imageUrl = `${requestUrl.origin}/api/og?${imageParams.toString()}`;
   const destination = createResultAppPath(scores, language);
 

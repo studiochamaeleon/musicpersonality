@@ -39,11 +39,11 @@ const CompatibilityInvite: React.FC<CompatibilityInviteProps> = ({ hostScores, g
   const pageStyle = { '--result-accent': theme.accent, '--result-secondary': theme.secondary } as CSSProperties;
   const copy = language === 'ko' ? {
     back: '돌아가기', eyebrow: 'MUSIC MATCH', title: '친구가 음악 궁합을\n기다리고 있어요.', body: '간단한 음악 취향 검사를 마치면 두 사람의 닮은 점, 다른 점, 함께 들으면 좋은 장르를 바로 확인할 수 있어요.',
-    host: '친구의 음악 성격', match: '취향 일치', start: '내 음악 성격 검사하기', recent: '최근 결과로 바로 궁합 보기', share: '초대 링크 보내기', copy: '링크 복사',
+    host: '친구의 음악 성격', match: '장르 유사도', start: '내 음악 성격 검사하기', recent: '최근 결과로 바로 궁합 보기', share: '초대 링크 보내기', copy: '링크 복사',
     privacy: '로그인 없이 진행되며, 점수는 이 링크와 내 브라우저에만 저장돼요.', time: '약 5분', questions: '40문항', fun: '가볍게 즐기는 테스트',
   } : {
     back: 'Back', eyebrow: 'MUSIC MATCH', title: 'A friend is waiting\nto compare tastes.', body: 'Finish a quick music taste test to see where you align, where you differ, and what you should listen to together.',
-    host: "Friend's music personality", match: 'taste match', start: 'Take my music test', recent: 'Use my recent result', share: 'Send invite link', copy: 'Copy link',
+    host: "Friend's music personality", match: 'genre similarity', start: 'Take my music test', recent: 'Use my recent result', share: 'Send invite link', copy: 'Copy link',
     privacy: 'No login. Scores stay in this link and your browser.', time: 'about 5 min', questions: '40 questions', fun: 'just for fun',
   };
 
@@ -105,14 +105,14 @@ const CompatibilityInvite: React.FC<CompatibilityInviteProps> = ({ hostScores, g
 
           <div className="mt-5 flex flex-col gap-3 sm:flex-row">
             <button onClick={() => void shareInvite()} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-5 text-xs font-semibold text-white/65 transition-colors hover:bg-white/10 hover:text-white"><Share2 size={15} />{copy.share}</button>
-            <button onClick={() => void copyLink()} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-4 text-xs font-semibold text-white/42 transition-colors hover:text-white"><Link2 size={15} />{copy.copy}</button>
+            <button onClick={() => void copyLink()} className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-4 text-xs font-semibold text-white/70 transition-colors hover:text-white"><Link2 size={15} />{copy.copy}</button>
           </div>
           <div className="mt-2 min-h-5 text-xs text-white/45" aria-live="polite">{feedback && <span className="inline-flex items-center gap-1.5"><Check size={13} />{feedback}</span>}</div>
 
-          <div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-xs text-white/35">
+          <div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-xs text-white/70">
             <span>{copy.questions}</span><span>{copy.time}</span><span>{copy.fun}</span>
           </div>
-          <p className="mt-4 flex max-w-xl items-start gap-2 text-[11px] leading-5 text-white/28"><LockKeyhole size={13} className="mt-0.5 shrink-0" />{copy.privacy}</p>
+          <p className="mt-4 flex max-w-xl items-start gap-2 text-[11px] leading-5 text-white/65"><LockKeyhole size={13} className="mt-0.5 shrink-0" />{copy.privacy}</p>
         </div>
 
         <article className="result-card relative overflow-hidden p-6 sm:p-8">
@@ -125,12 +125,12 @@ const CompatibilityInvite: React.FC<CompatibilityInviteProps> = ({ hostScores, g
             <div className="py-8">
               <h3 className="max-w-[10ch] text-5xl font-extrabold leading-[.95] tracking-[-.055em] sm:text-6xl">{hostGenre ? getGenreName(hostGenre, language) : 'MUSIC TYPE'}</h3>
               <p className="score-tabular mt-5 text-5xl font-extrabold tracking-[-.06em]" style={{ color: theme.accent }}>{Math.round(hostRecommendation?.compatibility || 0)}<span className="text-lg">%</span></p>
-              <p className="mt-1 text-[10px] font-semibold uppercase tracking-[.14em] text-white/34">{copy.match}</p>
+              <p className="mt-1 text-[10px] font-semibold uppercase tracking-[.14em] text-white/70">{copy.match}</p>
             </div>
             <div className="space-y-3 border-t border-white/10 pt-6">
               {MUSIC_TRAITS.map((trait, index) => (
                 <div key={trait}>
-                  <div className="mb-1.5 flex justify-between text-[10px] font-semibold text-white/46"><span>{TRAIT_LABELS[language][index]}</span><span className="score-tabular">{hostScores[trait]}</span></div>
+                  <div className="mb-1.5 flex justify-between text-[10px] font-semibold text-white/70"><span>{TRAIT_LABELS[language][index]}</span><span className="score-tabular">{hostScores[trait]}</span></div>
                   <div className="h-1 overflow-hidden rounded-full bg-white/8"><div className="h-full rounded-full" style={{ width: `${hostScores[trait]}%`, background: `linear-gradient(90deg, ${theme.accent}, ${theme.secondary})` }} /></div>
                 </div>
               ))}

@@ -43,8 +43,18 @@ export const useTranslation = () => {
     return result;
   };
 
+  const getArray = (key: string): string[] => {
+    const value = key.split('.').reduce<unknown>((current, segment) => {
+      if (!current || typeof current !== 'object') return undefined;
+      return (current as Record<string, unknown>)[segment];
+    }, translations);
+
+    return Array.isArray(value) && value.every(item => typeof item === 'string') ? value : [];
+  };
+
   return {
     t,
+    getArray,
     language,
     isLoading,
     translations

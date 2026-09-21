@@ -115,14 +115,14 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
         <div className="relative z-10 flex h-full flex-col">
           <header className="flex items-start justify-between gap-4 border-b border-white/15 pb-5">
             <div><p className="text-sm font-extrabold tracking-[-0.03em]">MUSIC PERSONALITY</p><p className="mt-1 text-[9px] font-semibold tracking-[0.18em] text-white/40">BY CHAMELEONS</p></div>
-            <p className="text-[10px] font-bold tracking-[0.14em] text-white/45">RESULT / 01</p>
+            <p className="text-[10px] font-bold tracking-[0.14em] text-white/65">{language === 'ko' ? '결과 / 01' : 'RESULT / 01'}</p>
           </header>
 
           <div className="flex flex-1 flex-col justify-center py-6 sm:py-8">
             <p className="text-[10px] font-bold tracking-[0.18em]" style={{ color: theme.accent }}>{language === 'ko' ? `나와 가장 닮은 장르 · ${getGenreName(topGenre, language)}` : `THE SOUND MOST LIKE ME · ${getGenreName(topGenre, language)}`}</p>
             <h3 className="mt-3 max-w-[10ch] text-5xl font-extrabold leading-[0.92] tracking-[-0.065em] sm:text-7xl">{typeTitle}</h3>
             <p className="score-tabular mt-6 text-6xl font-extrabold tracking-[-0.07em] sm:text-8xl" style={{ color: theme.accent }}>{topGenreScore}<span className="text-2xl">%</span></p>
-            <p className="mt-1 text-[10px] font-bold tracking-[0.15em] text-white/38 uppercase">{language === 'ko' ? '취향 일치' : 'taste match'}</p>
+            <p className="mt-1 text-[10px] font-bold tracking-[0.15em] text-white/60 uppercase">{language === 'ko' ? '장르 유사도' : 'genre similarity'}</p>
 
             <div className="mt-7 space-y-3 sm:mt-10">
               {topTraits.map(([trait, score]) => (
@@ -136,7 +136,7 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
 
           <footer className="border-t border-white/15 pt-5">
             <p className="line-clamp-1 text-[10px] text-white/48">{getGenreCharacteristics(topGenre.id, topGenre.characteristics, language).slice(0, 3).join('  ·  ')}</p>
-            <div className="mt-3 flex items-end justify-between gap-4"><p className="text-[9px] leading-4 text-white/28">{language === 'ko' ? '너는 어떤 음악 타입?' : 'WHAT IS YOUR MUSIC TYPE?'}<br />FOR FUN, NOT A DIAGNOSIS</p><p className="text-[9px] font-bold tracking-[0.1em] text-white/42">BY CHAMELEONS</p></div>
+            <div className="mt-3 flex items-end justify-between gap-4"><p className="text-[10px] leading-4 text-white/70">{language === 'ko' ? '너는 어떤 음악 타입?' : 'WHAT IS YOUR MUSIC TYPE?'}<br />{language === 'ko' ? '재미로 보는 음악 취향 · 진단 아님' : 'FOR FUN · NOT A DIAGNOSIS'}</p><p className="text-[9px] font-bold tracking-[0.1em] text-white/65">BY CHAMELEONS</p></div>
           </footer>
         </div>
       </div>

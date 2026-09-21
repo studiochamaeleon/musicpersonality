@@ -14,15 +14,15 @@ export default function DynamicMetadata() {
     // Update document title
     document.title = getLocalizedText(
       'Music Personality Test - Discover Your Musical Identity',
-      '음악 성격 테스트 | 음악 취향 분석으로 나만의 MUSIC 성향 찾기'
+      '음악 성격 테스트 | 나와 닮은 장르 찾기'
     );
 
     // Update meta description
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute('content', getLocalizedText(
-        'Take our comprehensive music personality assessment based on the MUSIC model. Discover your unique musical preferences, get personalized genre recommendations, and explore new artists tailored to your personality.',
-        '무료 음악 성격 테스트로 나의 음악 취향을 분석해보세요! MUSIC 모델 기반의 심리 테스트로 개인 맞춤 장르 추천과 음악 성향 분석을 받아보실 수 있습니다. 5분만에 완료 가능한 음악 MBTI 테스트.'
+        'A lighthearted music taste test inspired by the MUSIC model. Discover a genre, artists and albums that sound like you.',
+        '음악 취향에 답하고 나와 닮은 장르와 앨범을 발견해보세요. MUSIC 모델에서 영감을 받은 가벼운 테스트입니다.'
       ));
     }
 
@@ -31,7 +31,7 @@ export default function DynamicMetadata() {
     if (ogTitle) {
       ogTitle.setAttribute('content', getLocalizedText(
         'Music Personality Test - Discover Your Musical Identity',
-        '음악 성격 테스트 | 음악 취향 분석으로 나만의 MUSIC 성향 찾기'
+        '음악 성격 테스트 | 나와 닮은 장르 찾기'
       ));
     }
 
@@ -39,8 +39,8 @@ export default function DynamicMetadata() {
     const ogDescription = document.querySelector('meta[property="og:description"]');
     if (ogDescription) {
       ogDescription.setAttribute('content', getLocalizedText(
-        'Take our comprehensive music personality assessment and discover your unique musical preferences with personalized recommendations.',
-        '무료 음악 성격 테스트로 나의 음악 취향 분석! MUSIC 모델 기반 심리 테스트로 개인 맞춤 장르 추천을 받아보세요.'
+        'Take a lighthearted music taste test and discover genres and albums that sound like you.',
+        '음악 취향에 답하고 나와 닮은 장르와 앨범을 발견해보세요.'
       ));
     }
 
@@ -58,7 +58,7 @@ export default function DynamicMetadata() {
     if (twitterTitle) {
       twitterTitle.setAttribute('content', getLocalizedText(
         'Music Personality Test - Discover Your Musical Identity',
-        '음악 성격 테스트 | 음악 취향 분석으로 나만의 MUSIC 성향 찾기'
+        '음악 성격 테스트 | 나와 닮은 장르 찾기'
       ));
     }
 
@@ -66,8 +66,8 @@ export default function DynamicMetadata() {
     const twitterDescription = document.querySelector('meta[name="twitter:description"]');
     if (twitterDescription) {
       twitterDescription.setAttribute('content', getLocalizedText(
-        'Take our comprehensive music personality assessment and discover your unique musical preferences with personalized recommendations.',
-        '무료 음악 성격 테스트로 나의 음악 취향 분석! MUSIC 모델 기반 심리 테스트로 개인 맞춤 장르 추천을 받아보세요.'
+        'Take a lighthearted music taste test and discover genres and albums that sound like you.',
+        '음악 취향에 답하고 나와 닮은 장르와 앨범을 발견해보세요.'
       ));
     }
 

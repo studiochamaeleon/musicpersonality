@@ -18,7 +18,7 @@ export function getGenreTheme(genre?: GenreSchema | null) {
 
 export function createResultSearchParams(scores: MUSICPersonality) {
   const params = new URLSearchParams({
-    v: '1',
+    v: '2',
     m: String(Math.round(scores.mellow)),
     u: String(Math.round(scores.unpretentious)),
     s: String(Math.round(scores.sophisticated)),
@@ -58,7 +58,6 @@ export function parseResultSearchParams(params: URLSearchParams): MUSICPersonali
 
 export function getResultUrl(scores: MUSICPersonality, language: 'ko' | 'en' = 'ko') {
   if (typeof window === 'undefined') return '';
-  const params = new URLSearchParams({ score: encodeScores(scores) });
-  if (language === 'en') params.set('lang', 'en');
+  const params = new URLSearchParams({ score: encodeScores(scores), sv: '2', lang: language });
   return `${window.location.origin}/result?${params.toString()}`;
 }

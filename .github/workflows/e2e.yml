@@ -36,6 +36,9 @@ jobs:
       - name: Validate music catalog
         run: npm run validate:catalog
 
+      - name: Test score and content invariants
+        run: npm run test:unit
+
       - name: Run mobile end-to-end tests
         run: npm run test:e2e
 

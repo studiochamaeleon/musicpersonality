@@ -11,11 +11,13 @@ export async function onRequest(context: PagesFunctionContext) {
   const resultScores = decodeScoreToken(requestUrl.searchParams.get('score'));
   if (resultScores) {
     const result = getPersonalResultSummary(resultScores);
+    const language = requestUrl.searchParams.get('lang') === 'en' ? 'en' : 'ko';
     const image = createOgPng(resultScores, null, {
       genreName: result.genreName,
+      typeTitle: result.typeTitleEn,
       compatibility: result.compatibility,
     });
-    return pngResponse(image, 'music-personality-result.png');
+    return pngResponse(image, `music-personality-result-${language}.png`, 'public, max-age=86400');
   }
 
   const hostScores = decodeScoreToken(requestUrl.searchParams.get('host'));
@@ -31,11 +33,11 @@ export async function onRequest(context: PagesFunctionContext) {
   return pngResponse(image, 'music-match.png');
 }
 
-function pngResponse(image: Uint8Array, filename: string) {
+function pngResponse(image: Uint8Array, filename: string, cacheControl = 'public, max-age=31536000, immutable') {
   return new Response(image.buffer as ArrayBuffer, {
     headers: {
       'content-type': 'image/png',
-      'cache-control': 'public, max-age=31536000, immutable',
+      'cache-control': cacheControl,
       'content-disposition': `inline; filename="${filename}"`,
       'x-content-type-options': 'nosniff',
     },

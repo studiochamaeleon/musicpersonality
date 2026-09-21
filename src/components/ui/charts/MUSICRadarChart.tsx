@@ -60,7 +60,7 @@ const CustomTooltip = ({ active, payload }: TooltipProps) => {
              ? t(`intro.musicModelTraits.${data.trait}.description`)
              : t(`intro.musicModelTraits.${data.trait}.name`)}
          </p>
-        <p className="mb-1 text-sm text-white/48">{data.description}</p>
+        <p className="mb-1 text-sm text-white/70">{data.description}</p>
         <p className="text-lg font-bold" style={{ color: data.color }}>
           {Math.round(data.score)}{t('results.points')}
         </p>
@@ -146,7 +146,7 @@ const MUSICRadarChart: React.FC<RadarChartProps> = ({
             <PolarRadiusAxis
               angle={90}
               domain={[0, 100]}
-              tick={{ fontSize: 10, fill: 'rgba(244,244,246,0.28)' }}
+              tick={{ fontSize: 10, fill: 'rgba(244,244,246,0.65)' }}
               tickCount={4}
             />
             <Radar
@@ -180,7 +180,7 @@ const MUSICRadarChart: React.FC<RadarChartProps> = ({
                className="mx-auto mb-2 h-2 w-2 rounded-full"
                style={{ backgroundColor: trait.color }}
              />
-             <div className="truncate text-[9px] font-semibold text-white/42 sm:text-[11px]">
+             <div className="truncate text-[9px] font-semibold text-white/70 sm:text-[11px]">
                {getTraitName(trait.key)}
              </div>
              <div className="score-tabular mt-1 text-base font-bold text-white sm:text-lg">
@@ -197,7 +197,7 @@ const MUSICRadarChart: React.FC<RadarChartProps> = ({
         animate={animated ? { opacity: 1 } : undefined}
         transition={animated ? { delay: 0.6, duration: 0.5 } : undefined}
       >
-        <p className="text-xs leading-5 text-white/35">
+        <p className="text-xs leading-5 text-white/70">
           {t('chart.interpretationGuide')} <br />
           {t('chart.interpretationGuide2')}
         </p>

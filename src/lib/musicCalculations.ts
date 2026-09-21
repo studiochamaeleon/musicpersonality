@@ -1,78 +1,18 @@
-import { MUSICPersonality, GenreSchema, RecommendationScore, Question, EnhancedRecommendationScore, RecommendedArtist, CompatiblePersonalityType, CompatibilityType, MusicCatalog } from '@/types';
+import { MUSICPersonality, GenreSchema, RecommendationScore, EnhancedRecommendationScore, RecommendedArtist, CompatiblePersonalityType, CompatibilityType, MusicCatalog } from '@/types';
 import { getGenreName } from './genreTranslations';
+import { cosineSimilarity, euclideanSimilarity, rankGenres } from './genreScore';
+export { calculateMUSICScores } from './surveyScore';
 
 /**
  * MUSIC 모델 성격 점수 계산 함수들
  */
-
-// 설문 응답을 MUSIC 점수로 변환
-export function calculateMUSICScores(questions: Question[], answers: Record<string, number>): MUSICPersonality {
-  const scores: MUSICPersonality = {
-    mellow: 0,
-    unpretentious: 0,
-    sophisticated: 0,
-    intense: 0,
-    contemporary: 0
-  };
-
-  const weightSums = {
-    mellow: 0,
-    unpretentious: 0,
-    sophisticated: 0,
-    intense: 0,
-    contemporary: 0
-  };
-
-  // 각 카테고리별 점수 합산
-  questions.forEach(question => {
-    const answer = answers[question.id];
-    if (answer !== undefined) {
-      const category = question.category as keyof MUSICPersonality;
-      
-      // 5점 척도를 0-100 점수로 변환
-      let normalizedScore = ((answer - 1) / 4) * 100;
-      
-      // 역채점 처리
-      if (question.reverse) {
-        normalizedScore = 100 - normalizedScore;
-      }
-      
-      // 가중치 적용
-      normalizedScore *= question.weight;
-      
-      scores[category] += normalizedScore;
-      weightSums[category] += question.weight;
-    }
-  });
-
-  // 평균 계산
-  (Object.keys(scores) as Array<keyof MUSICPersonality>).forEach(key => {
-    if (weightSums[key] > 0) {
-      scores[key] = Math.round(scores[key] / weightSums[key]);
-    }
-  });
-
-  return scores;
-}
 
 // 코사인 유사도 계산
 export function calculateCosineSimilarity(
   user: MUSICPersonality, 
   genre: MUSICPersonality
 ): number {
-  const userVector = [user.mellow, user.unpretentious, user.sophisticated, user.intense, user.contemporary];
-  const genreVector = [genre.mellow, genre.unpretentious, genre.sophisticated, genre.intense, genre.contemporary];
-  
-  // 내적 계산
-  const dotProduct = userVector.reduce((sum, val, i) => sum + val * genreVector[i], 0);
-  
-  // 벡터 크기 계산
-  const userMagnitude = Math.sqrt(userVector.reduce((sum, val) => sum + val * val, 0));
-  const genreMagnitude = Math.sqrt(genreVector.reduce((sum, val) => sum + val * val, 0));
-  
-  // 코사인 유사도
-  if (userMagnitude === 0 || genreMagnitude === 0) return 0;
-  return dotProduct / (userMagnitude * genreMagnitude);
+  return cosineSimilarity(user, genre);
 }
 
 // 유클리드 거리 기반 유사도 계산
@@ -80,19 +20,7 @@ export function calculateEuclideanSimilarity(
   user: MUSICPersonality, 
   genre: MUSICPersonality
 ): number {
-  const userVector = [user.mellow, user.unpretentious, user.sophisticated, user.intense, user.contemporary];
-  const genreVector = [genre.mellow, genre.unpretentious, genre.sophisticated, genre.intense, genre.contemporary];
-  
-  // 유클리드 거리 계산
-  const distance = Math.sqrt(
-    userVector.reduce((sum, val, i) => sum + Math.pow(val - genreVector[i], 2), 0)
-  );
-  
-  // 최대 가능 거리로 정규화 (0-100 범위에서 최대 거리는 sqrt(5 * 100^2))
-  const maxDistance = Math.sqrt(5 * Math.pow(100, 2));
-  
-  // 거리를 유사도로 변환 (거리가 가까울수록 높은 점수)
-  return Math.max(0, 100 - (distance / maxDistance) * 100);
+  return euclideanSimilarity(user, genre);
 }
 
 // 장르 추천 점수 계산
@@ -101,45 +29,32 @@ export function calculateGenreRecommendations(
   genres: GenreSchema[],
   language: 'ko' | 'en' = 'ko'
 ): EnhancedRecommendationScore[] {
-  const recommendations: EnhancedRecommendationScore[] = genres.map(genre => {
-    const cosineSimilarity = calculateCosineSimilarity(userPersonality, genre.personalityProfile);
-    const euclideanSimilarity = calculateEuclideanSimilarity(userPersonality, genre.personalityProfile);
-    
-    // 가중 평균으로 최종 점수 계산 (0-1 범위)
-    const weightedScore = (cosineSimilarity * 0.6 + euclideanSimilarity * 0.4) * 0.01;
-    
-    // 15-95% 범위로 정규화 (현실적인 호환성 점수)
-    const minScore = 15;
-    const maxScore = 95;
-    const normalizedScore = minScore + (weightedScore * (maxScore - minScore));
-    const compatibility = Math.round(Math.max(minScore, Math.min(maxScore, normalizedScore)));
+  const recommendations: EnhancedRecommendationScore[] = rankGenres(userPersonality, genres).map(({ genre, match }) => {
     
     // 매칭 이유 생성
     const reasoning = generateMatchingReason(userPersonality, genre, language);
     
     // 상세 매칭 정보 생성
-    const detailedMatch = generateDetailedMatch(userPersonality, genre);
+    const detailedMatch = generateDetailedMatch(userPersonality, genre, language);
     
     return {
       genreId: genre.id,
-      compatibility,
+      compatibility: match.compatibility,
       matchDetails: {
-        cosineSimilarity: Math.round(cosineSimilarity * 100),
-        weightedScore: Math.round(weightedScore * 100)
+        cosineSimilarity: Math.round(match.cosine * 100),
+        weightedScore: Math.round(match.weighted * 100)
       },
-      confidence: calculateConfidence(compatibility, genre.popularity),
       reasoning,
       personalityAnalysis: genre.personalityAnalysis,
       detailedMatch
     };
   });
 
-  // 호환성 점수로 정렬
-  return recommendations.sort((a, b) => b.compatibility - a.compatibility);
+  return recommendations;
 }
 
 // 상세 매칭 정보 생성
-function generateDetailedMatch(user: MUSICPersonality, genre: GenreSchema) {
+function generateDetailedMatch(user: MUSICPersonality, genre: GenreSchema, language: 'ko' | 'en') {
   const strongestConnections: string[] = [];
   const potentialGrowthAreas: string[] = [];
   const listeningContexts: string[] = [];
@@ -153,12 +68,18 @@ function generateDetailedMatch(user: MUSICPersonality, genre: GenreSchema) {
 
   // 상위 2개 특성을 강한 연결점으로 설정
   connections.slice(0, 2).forEach(conn => {
-    const traitNames = {
+    const traitNames = language === 'ko' ? {
       mellow: '차분함과 평온함',
       unpretentious: '자연스럽고 진솔한 감성',
       sophisticated: '세련되고 지적인 취향',
       intense: '강렬하고 역동적인 에너지',
       contemporary: '현대적이고 트렌디한 스타일'
+    } : {
+      mellow: 'a calm, peaceful sound',
+      unpretentious: 'a natural, honest sound',
+      sophisticated: 'an intricate, thoughtful sound',
+      intense: 'bold, energetic sounds',
+      contemporary: 'contemporary sounds'
     };
     strongestConnections.push(traitNames[conn.trait]);
   });
@@ -166,12 +87,18 @@ function generateDetailedMatch(user: MUSICPersonality, genre: GenreSchema) {
   // 성장 가능 영역 (차이가 큰 특성들)
   connections.slice(-2).forEach(conn => {
     if (conn.similarity < 70) {
-      const traitNames = {
+      const traitNames = language === 'ko' ? {
         mellow: '더 차분한 음악적 경험',
         unpretentious: '더 자연스러운 음악적 표현',
         sophisticated: '더 복잡한 음악적 구조',
         intense: '더 강렬한 감정적 표현',
         contemporary: '더 현대적인 음악적 탐험'
+      } : {
+        mellow: 'calmer sounds',
+        unpretentious: 'more organic sounds',
+        sophisticated: 'more intricate arrangements',
+        intense: 'more powerful sounds',
+        contemporary: 'newer styles'
       };
       potentialGrowthAreas.push(traitNames[conn.trait]);
     }
@@ -179,21 +106,21 @@ function generateDetailedMatch(user: MUSICPersonality, genre: GenreSchema) {
 
   // 듣기 상황 추천
   if (genre.energy > 70) {
-    listeningContexts.push('운동이나 활동적인 순간에');
+    listeningContexts.push(language === 'ko' ? '운동이나 활동적인 순간에' : 'during a workout or active moment');
   } else if (genre.energy < 30) {
-    listeningContexts.push('휴식이나 명상할 때');
+    listeningContexts.push(language === 'ko' ? '휴식이나 명상할 때' : 'while resting or meditating');
   }
 
   if (genre.valence > 70) {
-    listeningContexts.push('기분을 좋게 하고 싶을 때');
+    listeningContexts.push(language === 'ko' ? '기분을 좋게 하고 싶을 때' : 'when you want a lift');
   } else if (genre.valence < 40) {
-    listeningContexts.push('감정을 정화하고 싶을 때');
+    listeningContexts.push(language === 'ko' ? '감정을 정리하고 싶을 때' : 'when you need to process a feeling');
   }
 
   if (genre.acousticness > 60) {
-    listeningContexts.push('집중이 필요한 작업 중에');
+    listeningContexts.push(language === 'ko' ? '집중이 필요한 작업 중에' : 'while focusing on a task');
   } else {
-    listeningContexts.push('사회적 모임이나 파티에서');
+    listeningContexts.push(language === 'ko' ? '친구와 함께 시간을 보낼 때' : 'when spending time with friends');
   }
 
   return {
@@ -203,77 +130,18 @@ function generateDetailedMatch(user: MUSICPersonality, genre: GenreSchema) {
   };
 }
 
-// 매칭 이유 생성 (한국어 조사 적용)
 function generateMatchingReason(user: MUSICPersonality, genre: GenreSchema, language: 'ko' | 'en' = 'ko'): string[] {
-  const reasons: string[] = [];
-  const threshold = 15; // 유사도 임계값
+  const labels = language === 'ko'
+    ? { mellow: '감성', unpretentious: '편안함', sophisticated: '탐구성', intense: '강렬함', contemporary: '트렌드' }
+    : { mellow: 'mellow', unpretentious: 'easygoing', sophisticated: 'sophisticated', intense: 'intense', contemporary: 'contemporary' };
   const genreName = getGenreName(genre, language);
-  
-  if (Math.abs(user.mellow - genre.personalityProfile.mellow) < threshold) {
-    if (user.mellow > 60) {
-      reasons.push(language === 'ko' 
-        ? `차분하고 평온한 성향이 ${genreName}의 특성과 잘 맞습니다`
-        : `Your calm and peaceful nature aligns well with ${genreName}`
-      );
-    }
-  }
-  
-  if (Math.abs(user.sophisticated - genre.personalityProfile.sophisticated) < threshold) {
-    if (user.sophisticated > 60) {
-      reasons.push(language === 'ko'
-        ? `세련되고 지적인 취향이 ${genreName}와 완벽하게 조화됩니다`
-        : `Your sophisticated and intellectual taste harmonizes perfectly with ${genreName}`
-      );
-    }
-  }
-  
-  if (Math.abs(user.intense - genre.personalityProfile.intense) < threshold) {
-    if (user.intense > 60) {
-      reasons.push(language === 'ko'
-        ? `강렬하고 역동적인 감성이 ${genreName}의 에너지와 일치합니다`
-        : `Your intense and dynamic emotions match the energy of ${genreName}`
-      );
-    } else {
-      reasons.push(language === 'ko'
-        ? `절제되고 차분한 성향이 ${genreName}의 분위기와 어울립니다`
-        : `Your restrained and calm nature suits the atmosphere of ${genreName}`
-      );
-    }
-  }
-  
-  if (Math.abs(user.contemporary - genre.personalityProfile.contemporary) < threshold) {
-    if (user.contemporary > 60) {
-      reasons.push(language === 'ko'
-        ? `현대적이고 트렌디한 취향이 ${genreName}와 매치됩니다`
-        : `Your modern and trendy taste matches well with ${genreName}`
-      );
-    }
-  }
-  
-  if (Math.abs(user.unpretentious - genre.personalityProfile.unpretentious) < threshold) {
-    if (user.unpretentious > 60) {
-      reasons.push(language === 'ko'
-        ? `자연스럽고 소탈한 감성이 ${genreName}의 매력과 일치합니다`
-        : `Your natural and unpretentious emotions align with the charm of ${genreName}`
-      );
-    }
-  }
-  
-  // 적어도 하나의 매칭 이유가 있어야 함
-  if (reasons.length === 0) {
-    reasons.push(language === 'ko'
-      ? `당신의 음악적 성향이 ${genreName}와 좋은 시너지를 만들어냅니다`
-      : `Your musical tendencies create great synergy with ${genreName}`
-    );
-  }
-  
-  return reasons.slice(0, 3); // 최대 3개의 이유만 반환
-}
-
-// 신뢰도 계산 (호환성 점수 + 장르 인기도 고려)
-function calculateConfidence(compatibility: number, popularity: number): number {
-  // 호환성이 높고 인기도도 적절한 장르일수록 높은 신뢰도
-  return Math.round((compatibility * 0.8 + popularity * 0.2));
+  return (Object.keys(labels) as Array<keyof MUSICPersonality>)
+    .map(key => ({ key, difference: Math.abs(user[key] - genre.personalityProfile[key]) }))
+    .sort((first, second) => first.difference - second.difference)
+    .slice(0, 2)
+    .map(({ key, difference }) => language === 'ko'
+      ? `${labels[key]} 축에서 내 점수 ${user[key]}와 ${genreName} 프로필 ${genre.personalityProfile[key]}의 차이가 ${difference}점이에요.`
+      : `On ${labels[key]}, your ${user[key]} and the ${genreName} profile's ${genre.personalityProfile[key]} are ${difference} points apart.`);
 }
 
 // 최고 매칭 장르로 성격 유형 결정
@@ -456,9 +324,9 @@ function findComplementaryTypes(
           contemporary: 'modernity'
         };
         const genreName = getGenreName(genre, language);
-        complementaryReasons.push(language === 'ko' 
-          ? `당신에게 부족한 ${traitNames[trait]}을 ${genreName}${getNominativeParticle(genreName)} 채워줍니다`
-          : `${genreName} fills the ${traitNamesEn[trait]} that you lack`);
+        complementaryReasons.push(language === 'ko'
+          ? `${traitNames[trait]} 축에서 내 점수 ${userPersonality[trait]}와 다른 ${genreName}의 ${genre.personalityProfile[trait]}점을 탐색할 수 있어요`
+          : `Explore ${genreName}'s ${genre.personalityProfile[trait]} on ${traitNamesEn[trait]}, beyond your ${userPersonality[trait]}`);
       }
     });
     
@@ -479,9 +347,9 @@ function findComplementaryTypes(
           nameKo: getGenreName(genre, 'ko'),
           compatibility: Math.min(95, 65 + complementaryScore)
         },
-        compatibilityReason: complementaryReasons[0] || (language === 'ko' 
-          ? `${getGenreName(genre, language)}와 서로를 보완하는 완벽한 조화를 이룹니다`
-          : `Perfect harmony that complements each other with ${getGenreName(genre, language)}`),
+        compatibilityReason: complementaryReasons[0] || (language === 'ko'
+          ? `${getGenreName(genre, language)}의 다른 사운드를 탐색해볼 수 있어요`
+          : `Explore a different sound through ${getGenreName(genre, language)}`),
         compatibilityType: 'COMPLEMENTARY',
         relationshipDynamics,
         musicalSynergy
@@ -561,8 +429,8 @@ function findBalancedTypes(
           compatibility: balanceScore
         },
         compatibilityReason: language === 'ko'
-          ? `${getGenreName(genre, language)}와 함께 완벽한 음악적 균형을 이룹니다`
-          : `Achieve perfect musical balance together with ${getGenreName(genre, language)}`,
+          ? `${getGenreName(genre, language)}는 현재 취향과 적당히 다른 방향이에요`
+          : `${getGenreName(genre, language)} takes your current taste in a moderately different direction`,
         compatibilityType: 'BALANCED',
         relationshipDynamics,
         musicalSynergy
@@ -659,20 +527,20 @@ function generateBalancedPersonalityType(genre: GenreSchema, language: 'ko' | 'e
  */
 function generateComplementaryDescription(language: 'ko' | 'en' = 'ko'): string {
   return language === 'ko' 
-    ? `당신과 상호 보완적인 음악적 성향을 가져 함께할 때 완벽한 균형을 이룹니다`
-    : `Has complementary musical tendencies with you, creating perfect balance when together`;
+    ? '현재 점수에서 낮게 나타난 축을 넓혀볼 수 있는 장르예요'
+    : 'A genre to explore a taste dimension that scored lower for you';
 }
 
 function generateEnhancedSimilarDescription(language: 'ko' | 'en' = 'ko'): string {
   return language === 'ko'
-    ? `비슷한 음악적 취향을 바탕으로 새로운 영역을 탐험하고 싶어하는 성향입니다`
-    : `Shares similar musical taste and desires to explore new territories together`;
+    ? '닮은 취향에서 조금 더 멀리 가볼 수 있는 장르예요'
+    : 'A genre that extends a familiar taste in a new direction';
 }
 
 function generateBalancedDescription(language: 'ko' | 'en' = 'ko'): string {
   return language === 'ko'
-    ? `당신과 조화로운 음악적 균형을 이루며 서로의 취향을 존중합니다`
-    : `Creates harmonious musical balance with you and respects each other's preferences`;
+    ? '현재 취향과 적당한 차이가 있어 새롭게 들어볼 만한 장르예요'
+    : 'A genre with a moderate difference from your current taste';
 }
 
 /**

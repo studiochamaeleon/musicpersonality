@@ -106,7 +106,6 @@ export interface RecommendationScore {
     cosineSimilarity: number;
     weightedScore: number;
   };
-  confidence: number;
   reasoning: string[];
 }
 

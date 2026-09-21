@@ -11,10 +11,9 @@ test('an invited friend can finish the survey and see the pair result', async ({
   await expect(page.getByRole('heading', { name: '나는 조용하고 차분한 음악을 선호한다' })).toBeVisible();
 
   for (let index = 0; index < 40; index += 1) {
+    const currentQuestion = await page.getByRole('heading', { level: 1 }).textContent();
     await page.getByRole('radio', { name: /^3:/ }).click();
-    const advanceButton = page.getByRole('button', { name: index === 39 ? '완료' : '다음' });
-    await expect(advanceButton).toBeEnabled();
-    await advanceButton.click();
+    if (index < 39) await expect(page.getByRole('heading', { level: 1 })).not.toHaveText(currentQuestion || '');
   }
 
   await expect(page.getByRole('heading', { level: 1, name: /플레이리스트|사이|균형|발견/ })).toBeVisible();
@@ -28,7 +27,7 @@ test('a pair result link restores and opens the guest personal result', async ({
   await expect(page.getByRole('heading', { level: 1, name: '거의 같은 플레이리스트' })).toBeVisible();
 
   await page.getByRole('button', { name: '내 개인 결과 보기' }).click();
-  await expect(page).toHaveURL(/\?v=1&m=70&u=61&s=79&i=48&c=75$/);
+  await expect(page).toHaveURL(/\?v=2&m=70&u=61&s=79&i=48&c=75$/);
   await expect(page.getByRole('button', { name: '친구와 음악 궁합 보기' })).toBeVisible();
 });
 

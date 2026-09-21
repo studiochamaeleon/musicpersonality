@@ -35,6 +35,8 @@ const MusicPersonalityApp: React.FC = () => {
   const [genres, setGenres] = useState<GenreSchema[]>([]);
   const [musicCatalog, setMusicCatalog] = useState<MusicCatalog>({ version: 1, reviewedAt: '', genres: {} });
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [dataLoadError, setDataLoadError] = useState(false);
+  const [loadAttempt, setLoadAttempt] = useState(0);
   const [comparisonHostScores, setComparisonHostScores] = useState<MUSICPersonality | null>(null);
   const [comparisonGuestScores, setComparisonGuestScores] = useState<MUSICPersonality | null>(null);
   const [recentResults, setRecentResults] = useState<RecentMusicResult[]>([]);
@@ -42,6 +44,7 @@ const MusicPersonalityApp: React.FC = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
+        setDataLoadError(false);
         const [questionsModule, genresModule, catalogModule] = await Promise.all([
           import('@/data/questions.json'),
           import('@/data/genres.json'),
@@ -53,10 +56,11 @@ const MusicPersonalityApp: React.FC = () => {
         setDataLoaded(true);
       } catch (error) {
         console.error('Failed to load data:', error);
+        setDataLoadError(true);
       }
     };
     void loadData();
-  }, []);
+  }, [loadAttempt]);
 
   useEffect(() => {
     setRecentResults(loadRecentResults());
@@ -220,6 +224,7 @@ const MusicPersonalityApp: React.FC = () => {
     if (typeof window !== 'undefined') window.history.replaceState({}, '', `/?${createResultSearchParams(result.scores).toString()}`);
   };
 
+  if (dataLoadError) return <main className="app-canvas flex min-h-screen flex-col items-center justify-center px-5 text-center text-white"><h1 className="text-2xl font-bold">{language === 'ko' ? '데이터를 불러오지 못했어요.' : 'We could not load the test.'}</h1><p className="mt-3 max-w-sm text-sm leading-6 text-white/65">{language === 'ko' ? '연결을 확인한 뒤 다시 시도해 주세요.' : 'Please check your connection and try again.'}</p><button onClick={() => setLoadAttempt(attempt => attempt + 1)} className="primary-action mt-7">{language === 'ko' ? '다시 시도하기' : 'Try again'}</button></main>;
   if (!dataLoaded) return <LoadingSpinner message={t('common.loading.initializing')} />;
 
   if (appState === 'intro') {
@@ -234,7 +239,7 @@ const MusicPersonalityApp: React.FC = () => {
     } : {
       eyebrow: 'MUSIC PERSONALITY TEST',
       headline: 'Your taste says\nmore than words.',
-      body: 'Answer a few questions and discover the genres that sound most like you.',
+      body: 'Answer 40 quick questions and discover the genres that sound most like you.',
       cta: 'Find my music type',
       explore: 'Browse genre personalities',
       note: 'A lighthearted test inspired by music psychology.',
@@ -278,15 +283,15 @@ const MusicPersonalityApp: React.FC = () => {
               </button>
             </div>
 
-            <div className="mt-7 flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs text-white/45">
+            <div className="mt-7 flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs text-white/65">
               <span className="inline-flex items-center gap-2"><Layers3 size={14} />40 {language === 'ko' ? '문항' : 'questions'}</span>
               <span className="inline-flex items-center gap-2"><Clock3 size={14} />{language === 'ko' ? '약 5분' : 'about 5 min'}</span>
               <span className="inline-flex items-center gap-2"><Sparkles size={14} />32 {language === 'ko' ? '개 장르' : 'genres'}</span>
             </div>
-            <p className="mt-3 text-[11px] text-white/28">{copy.note}</p>
+            <p className="mt-3 text-[11px] text-white/65">{copy.note}</p>
             {recentResults.length > 0 && (
               <details className="mx-auto mt-6 max-w-sm text-left">
-                <summary className="cursor-pointer list-none text-center text-xs font-semibold text-white/38 transition-colors hover:text-white/70">{copy.recent} {recentResults.length} ↓</summary>
+                <summary className="cursor-pointer list-none text-center text-xs font-semibold text-white/70 transition-colors hover:text-white">{copy.recent} {recentResults.length} ↓</summary>
                 <div className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-black/30 p-2 backdrop-blur-xl">
                   {recentResults.map((result, index) => {
                     const genre = genres.find(item => item.id === result.topGenreId);

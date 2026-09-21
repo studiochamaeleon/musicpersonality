@@ -1,5 +1,3 @@
-import { toBlob } from 'html-to-image';
-
 const CAPTURE_OPTIONS = {
   backgroundColor: '#050507',
   cacheBust: true,
@@ -8,6 +6,7 @@ const CAPTURE_OPTIONS = {
 
 export async function captureCardBlob(element: HTMLElement) {
   if (typeof document !== 'undefined' && document.fonts) await document.fonts.ready;
+  const { toBlob } = await import('html-to-image');
   const blob = await toBlob(element, CAPTURE_OPTIONS);
   if (!blob) throw new Error('Image creation failed');
   return blob;

@@ -8,8 +8,10 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { getGenreDescription, getGenreCharacteristics, getPersonalityAnalysis, getGenreName, getArtistName, getArtistSubtitle } from '@/lib/genreTranslations';
 import { analytics } from '@/lib/analytics';
 import { getGenreTheme, getResultUrl } from '@/lib/resultTheme';
+import { getCompatiblePersonalityTypes } from '@/lib/musicCalculations';
 import AnimatedSection from './ui/AnimatedSection';
 import ShareableCard from './ui/ShareableCard';
+import ResultMatchStory from './ResultMatchStory';
 
 const MUSICRadarChart = lazy(() => import('./ui/charts/MUSICRadarChart'));
 
@@ -29,6 +31,8 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
   const [shareFeedback, setShareFeedback] = useState<string | null>(null);
   const topRecommendation = recommendedGenres[0];
   const topGenre = genres.find(genre => genre.id === topRecommendation?.genreId);
+  const runnerUp = genres.find(genre => genre.id === recommendedGenres[1]?.genreId);
+  const hasDisplayTie = Boolean(runnerUp && recommendedGenres[1].compatibility === topRecommendation?.compatibility);
   const theme = getGenreTheme(topGenre);
   const personalityAnalysis = topGenre?.personalityAnalysis
     ? getPersonalityAnalysis(topGenre.id, topGenre.personalityAnalysis, language)
@@ -39,7 +43,10 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
   } as CSSProperties;
 
   useEffect(() => {
-    const updateStickyActions = () => setShowStickyActions(window.scrollY > 480);
+    const updateStickyActions = () => {
+      const shareTop = document.getElementById('share')?.getBoundingClientRect().top ?? Number.POSITIVE_INFINITY;
+      setShowStickyActions(window.scrollY > 480 && shareTop > window.innerHeight * 0.75);
+    };
     updateStickyActions();
     window.addEventListener('scroll', updateStickyActions, { passive: true });
     return () => window.removeEventListener('scroll', updateStickyActions);
@@ -51,15 +58,16 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
 
   const traits = getGenreCharacteristics(topGenre.id, topGenre.characteristics, language).slice(0, 4);
   const typeTitle = personalityAnalysis?.typeTitle || getGenreName(topGenre, language);
+  const compatibleTypes = getCompatiblePersonalityTypes(personalityScores, genres, language);
   const resultCopy = language === 'ko'
-    ? { eyebrow: '당신의 음악 성격', lead: '당신과 가장 닮은 장르', match: '취향 일치', spectrum: '나의 취향 스펙트럼', spectrumBody: '다섯 개의 축이 당신의 음악 취향을 어떻게 구성하는지 보여줍니다.', next: '함께 들으면 좋은 장르', artists: '당신을 위한 아티스트와 앨범', detail: '성격 해석 더 보기', invite: '친구와 음악 궁합 보기', share: '결과 공유하기', again: '다시 검사하기' }
-    : { eyebrow: 'YOUR MUSIC PERSONALITY', lead: 'The genre most like you', match: 'taste match', spectrum: 'Your taste spectrum', spectrumBody: 'Five dimensions show how your music taste is put together.', next: 'Genres to try next', artists: 'Artists and albums for your taste', detail: 'Read the full personality note', invite: 'Compare with a friend', share: 'Share my result', again: 'Take it again' };
+    ? { eyebrow: '당신의 음악 성격', lead: '당신과 가장 닮은 장르', match: '장르 유사도', spectrum: '나의 취향 스펙트럼', spectrumBody: '다섯 개의 축이 당신의 음악 취향을 어떻게 구성하는지 보여줍니다.', next: '함께 들으면 좋은 장르', artists: '당신을 위한 아티스트와 앨범', detail: '성격 해석 더 보기', invite: '친구와 음악 궁합 보기', share: '결과 공유하기', again: '다시 검사하기', genreProfile: '아래 성격 해석은 가장 닮은 장르의 대표 프로필을 바탕으로 한 재미있는 읽을거리예요.', metricNote: '이 수치는 내 검사 점수가 아닌 추천 장르의 사운드 프로필입니다.', traitScore: '장르 특성 점수', relationship: '관계에서의 모습', preferences: '어울리는 음악', activities: '해볼 만한 활동', compatible: '함께 탐색할 장르', exploreNote: '관계 궁합이 아니라, 다른 음악 취향을 발견하기 위한 아이디어예요.', contexts: '이럴 때 들어보세요', growth: '새롭게 탐험할 지점', genreMatch: '장르 유사도', card: '결과 카드', nextTag: '다음에 들을 음악', artistTag: '아티스트 추천', deepTag: '더 깊이 보기', shareTag: '결과 보여주기', nearTie: '같은 표시 점수의 장르도 있어요', shortNote: '자기보고 취향 비교 · 성격 진단 아님' }
+    : { eyebrow: 'YOUR MUSIC PERSONALITY', lead: 'The genre most like you', match: 'genre similarity', spectrum: 'Your taste spectrum', spectrumBody: 'Five dimensions show how your music taste is put together.', next: 'Genres to try next', artists: 'Artists and albums for your taste', detail: 'Read the full personality note', invite: 'Compare with a friend', share: 'Share my result', again: 'Take it again', genreProfile: 'The personality note below is a playful interpretation of your closest genre profile.', metricNote: 'These are the recommended genre’s sound attributes, not your survey scores.', traitScore: 'Genre profile score', relationship: 'Relationships', preferences: 'Music to try', activities: 'Activities to try', compatible: 'Other genres to explore', exploreNote: 'These are discovery ideas, not predictions of relationship compatibility.', contexts: 'Good moments to listen', growth: 'A different sound to discover', genreMatch: 'Genre similarity', card: 'RESULT CARD', nextTag: 'NEXT LISTEN', artistTag: 'ARTIST PICKS', deepTag: 'DEEP DIVE', shareTag: 'SHOW YOUR RESULT', nearTie: 'Another genre shares this displayed score', shortNote: 'Self-reported taste match · not a diagnosis' };
   const albumCopy = language === 'ko'
     ? { anchor: '장르의 기준점', discovery: '새롭게 발견할 앨범', listen: 'Spotify에서 앨범 듣기' }
     : { anchor: 'Genre cornerstone', discovery: 'Your next discovery', listen: 'Listen to the album on Spotify' };
   const insightCopy = language === 'ko'
-    ? { eyebrow: 'PERSONALITY NOTES', title: '취향에서 읽은 당신의 모습', core: '핵심 특성', lifestyle: '라이프스타일 통찰', music: '음악적 특성', popularity: '인기도', energy: '에너지', valence: '긍정성', acousticness: '어쿠스틱' }
-    : { eyebrow: 'PERSONALITY NOTES', title: 'What your taste says about you', core: 'Core traits', lifestyle: 'Lifestyle insights', music: 'Musical profile', popularity: 'Popularity', energy: 'Energy', valence: 'Positivity', acousticness: 'Acoustic' };
+    ? { eyebrow: '성격 해석', title: '취향에서 읽은 당신의 모습', core: '핵심 특성', lifestyle: '라이프스타일 통찰', music: '추천 장르의 사운드', popularity: '인기도', energy: '에너지', valence: '긍정성', acousticness: '어쿠스틱' }
+    : { eyebrow: 'PERSONALITY NOTES', title: 'What your taste says about you', core: 'Core traits', lifestyle: 'Lifestyle insights', music: 'Recommended genre sound', popularity: 'Popularity', energy: 'Energy', valence: 'Positivity', acousticness: 'Acoustic' };
   const musicMetrics = [
     { label: insightCopy.popularity, value: topGenre.popularity },
     { label: insightCopy.energy, value: topGenre.energy },
@@ -100,7 +108,7 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
           <div className="mb-12 flex items-center justify-between">
             <div>
               <p className="text-sm font-extrabold tracking-[-0.03em]">MUSIC PERSONALITY</p>
-              <p className="mt-0.5 text-[10px] font-semibold tracking-[0.18em] text-white/30">RESULT CARD</p>
+              <p className="mt-0.5 text-[10px] font-semibold tracking-[0.18em] text-white/60">{resultCopy.card}</p>
             </div>
             {onRestart && <button onClick={onRestart} className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 text-xs font-semibold text-white/60 transition-colors hover:bg-white/10 hover:text-white"><RotateCcw size={15} />{resultCopy.again}</button>}
           </div>
@@ -108,14 +116,16 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
           <div className="grid items-end gap-8 lg:grid-cols-[1fr_auto]">
             <div>
               <p className="eyebrow mb-5" style={{ color: theme.accent }}>{resultCopy.eyebrow}</p>
-              <p className="mb-3 text-sm font-semibold text-white/48">{resultCopy.lead} · <span style={{ color: theme.accent }}>{getGenreName(topGenre, language)}</span></p>
+              <p className="mb-3 text-sm font-semibold text-white/70">{resultCopy.lead} · <span style={{ color: theme.accent }}>{getGenreName(topGenre, language)}</span></p>
               <h1 className="max-w-[13ch] text-5xl font-extrabold leading-[0.94] tracking-[-0.065em] text-balance sm:text-7xl lg:text-8xl">
                 {typeTitle}
               </h1>
             </div>
             <div className="lg:pb-2 lg:text-right">
               <p className="score-tabular text-7xl font-extrabold tracking-[-0.07em] sm:text-8xl" style={{ color: theme.accent }}>{topRecommendation.compatibility}<span className="text-2xl">%</span></p>
-              <p className="mt-1 text-xs font-semibold tracking-[0.12em] text-white/40 uppercase">{resultCopy.match}</p>
+              <p className="mt-1 text-xs font-semibold tracking-[0.12em] text-white/70 uppercase">{resultCopy.match}</p>
+              <p className="mt-1 text-[11px] leading-5 text-white/70">{resultCopy.shortNote}</p>
+              {hasDisplayTie && runnerUp && <p className="mt-2 max-w-48 text-xs leading-5 text-white/70 lg:ml-auto">{resultCopy.nearTie}: <a href="#next-listen" className="underline underline-offset-2">{getGenreName(runnerUp, language)}</a></p>}
             </div>
           </div>
 
@@ -127,14 +137,11 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
           </div>
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            {onInviteFriend ? (
-              <button onClick={onInviteFriend} className="primary-action inline-flex items-center justify-center gap-2" style={{ background: theme.accent, borderColor: theme.accent }}><Users size={17} />{resultCopy.invite}</button>
-            ) : (
-              <a href="#share" className="primary-action inline-flex items-center justify-center gap-2" style={{ background: theme.accent, borderColor: theme.accent }}><Share2 size={17} />{resultCopy.share}</a>
-            )}
+            <a href="#share" className="primary-action inline-flex items-center justify-center gap-2" style={{ background: theme.accent, borderColor: theme.accent }}><Share2 size={17} />{resultCopy.share}</a>
             <a href="#spectrum" className="secondary-action inline-flex items-center justify-center gap-2">{resultCopy.spectrum}<ArrowDown size={17} /></a>
-            {onInviteFriend && <a href="#share" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold text-white/45 transition-colors hover:text-white"><Share2 size={16} />{resultCopy.share}</a>}
+            {onInviteFriend && <button onClick={onInviteFriend} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold text-white/70 transition-colors hover:text-white"><Users size={16} />{resultCopy.invite}</button>}
           </div>
+          <ResultMatchStory scores={personalityScores} genre={topGenre} accent={theme.accent} />
         </AnimatedSection>
       </section>
 
@@ -143,7 +150,7 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
           <AnimatedSection delay={0.05}>
             <p className="eyebrow mb-4">MUSIC 5</p>
             <h2 className="text-3xl font-bold tracking-[-0.04em] sm:text-5xl">{resultCopy.spectrum}</h2>
-            <p className="mt-5 max-w-md text-sm leading-7 text-white/48">{resultCopy.spectrumBody}</p>
+            <p className="mt-5 max-w-md text-sm leading-7 text-white/70">{resultCopy.spectrumBody}</p>
           </AnimatedSection>
           <div className="result-card overflow-hidden p-3 sm:p-6">
             <MUSICRadarChart personalityScores={personalityScores} animated showTooltip size="md" />
@@ -155,6 +162,7 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
         <div className="mb-9">
           <p className="eyebrow mb-3">{insightCopy.eyebrow}</p>
           <h2 className="max-w-3xl text-3xl font-bold tracking-[-0.04em] sm:text-5xl">{insightCopy.title}</h2>
+          <p className="mt-4 max-w-2xl text-sm leading-6 text-white/65">{resultCopy.genreProfile}</p>
         </div>
 
         <div className="grid gap-4 lg:grid-cols-12">
@@ -164,14 +172,14 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
               <span className="text-[10px] font-semibold tracking-[0.16em] text-white/28">01</span>
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
-              {personalityAnalysis?.coreTraits.slice(0, 4).map(trait => (
+              {personalityAnalysis?.coreTraits.map(trait => (
                 <div key={trait.traitName} className="rounded-2xl border border-white/10 bg-[#0c0d0f] p-5">
                   <div className="flex items-start justify-between gap-4">
                     <h4 className="font-semibold text-white/88">{trait.traitName}</h4>
-                    <span className="score-tabular text-sm font-bold" style={{ color: theme.accent }}>{trait.score}</span>
+                    <span className="score-tabular text-sm font-bold" aria-label={`${resultCopy.traitScore} ${trait.score}` } style={{ color: theme.accent }}>{trait.score}</span>
                   </div>
                   <p className="mt-3 text-sm leading-6 text-white/50">{trait.description}</p>
-                  <p className="mt-3 border-l border-white/15 pl-3 text-xs leading-5 text-white/34">{trait.impact}</p>
+                  <p className="mt-3 border-l border-white/15 pl-3 text-xs leading-5 text-white/65">{trait.impact}</p>
                 </div>
               ))}
             </div>
@@ -183,10 +191,10 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
               <span className="text-[10px] font-semibold tracking-[0.16em] text-white/28">02</span>
             </div>
             <ul className="space-y-4">
-              {personalityAnalysis?.lifestyleInsights.slice(0, 5).map((insight, index) => (
+              {personalityAnalysis?.lifestyleInsights.map((insight, index) => (
                 <li key={insight} className="grid grid-cols-[auto_1fr] gap-4 border-b border-white/8 pb-4 last:border-0 last:pb-0">
                   <span className="score-tabular text-xs font-bold" style={{ color: theme.accent }}>0{index + 1}</span>
-                  <span className="text-sm leading-6 text-white/57">{insight}</span>
+                  <span className="text-sm leading-6 text-white/70">{insight}</span>
                 </li>
               ))}
             </ul>
@@ -197,6 +205,7 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
               <h3 className="text-xl font-bold tracking-[-0.025em]">{insightCopy.music}</h3>
               <span className="text-[10px] font-semibold tracking-[0.16em] text-white/28">03</span>
             </div>
+            <p className="mb-6 text-xs leading-5 text-white/60">{resultCopy.metricNote}</p>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {musicMetrics.map(metric => (
                 <div key={metric.label}>
@@ -214,10 +223,10 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
         </div>
       </section>
 
-      <section className="border-t border-white/10 bg-black/15">
+      <section id="next-listen" className="border-t border-white/10 bg-black/15">
         <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 lg:py-24">
         <div className="mb-8 flex items-end justify-between gap-4">
-          <div><p className="eyebrow mb-3">NEXT LISTEN</p><h2 className="text-3xl font-bold tracking-[-0.04em] sm:text-5xl">{resultCopy.next}</h2></div>
+          <div><p className="eyebrow mb-3">{resultCopy.nextTag}</p><h2 className="text-3xl font-bold tracking-[-0.04em] sm:text-5xl">{resultCopy.next}</h2></div>
           <p className="hidden text-xs text-white/30 sm:block">TOP 06</p>
         </div>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -231,8 +240,8 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
                   <span className="score-tabular text-sm font-bold" style={{ color: index === 0 ? theme.accent : 'rgba(255,255,255,.55)' }}>{recommendation.compatibility}%</span>
                 </div>
                 <h3 className="mt-8 text-2xl font-bold tracking-[-0.035em]">{getGenreName(genre, language)}</h3>
-                <p className="mt-3 line-clamp-2 text-sm leading-6 text-white/45">{getGenreDescription(genre.id, genre.description, language)}</p>
-                <div className="mt-5 flex flex-wrap gap-2">{getGenreCharacteristics(genre.id, genre.characteristics, language).slice(0, 2).map(value => <span key={value} className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/35">#{value}</span>)}</div>
+                <p className="mt-3 line-clamp-2 text-sm leading-6 text-white/70">{getGenreDescription(genre.id, genre.description, language)}</p>
+                <div className="mt-5 flex flex-wrap gap-2">{getGenreCharacteristics(genre.id, genre.characteristics, language).slice(0, 2).map(value => <span key={value} className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/65">#{value}</span>)}</div>
               </article>
             );
           })}
@@ -243,19 +252,19 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
       {recommendedArtists.length > 0 && (
         <section className="border-y border-white/10 bg-white/[0.018]">
           <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 lg:py-24">
-            <p className="eyebrow mb-3">ARTIST PICKS</p>
+            <p className="eyebrow mb-3">{resultCopy.artistTag}</p>
             <h2 className="mb-8 text-3xl font-bold tracking-[-0.04em] sm:text-5xl">{resultCopy.artists}</h2>
             <div className="grid gap-px overflow-hidden rounded-3xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
               {recommendedArtists.map((recommendation, index) => (
                 <article key={`${recommendation.artist.name}-${index}`} className="bg-[#0d0d0f] p-5">
                   <div className="flex items-start justify-between gap-4">
-                    <div><h3 className="font-bold">{getArtistName(recommendation.artist, language)}</h3><p className="mt-1 text-xs text-white/38">{getArtistSubtitle(recommendation.artist, language)}</p></div>
-                    <span className="score-tabular text-xs font-bold text-white/42">{recommendation.compatibility}%</span>
+                    <div><h3 className="font-bold">{getArtistName(recommendation.artist, language)}</h3><p className="mt-1 text-xs text-white/65">{getArtistSubtitle(recommendation.artist, language)}</p></div>
+                    <span className="score-tabular text-right text-xs font-bold text-white/70">{recommendation.compatibility}%<small className="block text-[9px] font-medium">{resultCopy.genreMatch}</small></span>
                   </div>
                   <div className="mt-5 border-t border-white/10 pt-5">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-white/34">{albumCopy[recommendation.artist.role]}</p>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-white/65">{albumCopy[recommendation.artist.role]}</p>
                     <p className="mt-2 text-base font-semibold leading-6 text-white/82">{recommendation.artist.album.title}</p>
-                    <p className="mt-1 text-xs text-white/35">{recommendation.artist.album.year}{recommendation.artist.album.credit ? ` · ${recommendation.artist.album.credit}` : ''}</p>
+                    <p className="mt-1 text-xs text-white/65">{recommendation.artist.album.year}{recommendation.artist.album.credit ? ` · ${recommendation.artist.album.credit}` : ''}</p>
                     <a href={recommendation.artist.album.spotifyUrl} target="_blank" rel="noopener noreferrer" aria-label={`${getArtistName(recommendation.artist, language)} · ${recommendation.artist.album.title}: ${albumCopy.listen}`} onClick={() => analytics.track('music_link_click', { provider: 'spotify', contentType: 'album', artist: recommendation.artist.name, album: recommendation.artist.album.title, genre: recommendation.genreName, compatibility: recommendation.compatibility, context: 'results' })} className="mt-5 inline-flex min-h-10 items-center gap-2 rounded-full bg-[#1ed760] px-4 text-xs font-bold text-black transition-transform hover:-translate-y-0.5">
                       {albumCopy.listen}<ExternalLink size={12} />
                     </a>
@@ -271,16 +280,44 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
         <section className="mx-auto max-w-4xl px-5 py-16 sm:px-8 lg:py-24">
           <details className="result-card group overflow-hidden">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-5 p-6 sm:p-8">
-              <div><p className="eyebrow mb-2">DEEP DIVE</p><h2 className="text-2xl font-bold tracking-[-0.03em]">{resultCopy.detail}</h2></div>
+              <div><p className="eyebrow mb-2">{resultCopy.deepTag}</p><h2 className="text-2xl font-bold tracking-[-0.03em]">{resultCopy.detail}</h2></div>
               <span className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-white/55 transition-transform group-open:rotate-180"><ArrowDown size={18} /></span>
             </summary>
             <div className="border-t border-white/10 p-6 sm:p-8">
               <h3 className="text-2xl font-bold">{personalityAnalysis.typeTitle}</h3>
               <p className="mt-4 text-sm leading-7 text-white/58">{personalityAnalysis.description}</p>
-              <div className="mt-8 grid gap-6 sm:grid-cols-2">
-                <div><p className="eyebrow mb-3">{t('analysisReport.strengths')}</p><ul className="space-y-3 text-sm leading-6 text-white/58">{personalityAnalysis.strengths.map(item => <li key={item} className="border-l border-white/20 pl-3">{item}</li>)}</ul></div>
-                <div><p className="eyebrow mb-3">{t('analysisReport.challenges')}</p><ul className="space-y-3 text-sm leading-6 text-white/58">{personalityAnalysis.challenges.map(item => <li key={item} className="border-l border-white/20 pl-3">{item}</li>)}</ul></div>
+              <div className="mt-7 rounded-2xl border border-white/10 bg-black/20 p-5">
+                <h4 className="font-bold">{t('results.recommendationReason')}</h4>
+                <ul className="mt-3 space-y-2 text-sm leading-6 text-white/65">{topRecommendation.reasoning.map(item => <li key={item}>• {item}</li>)}</ul>
               </div>
+              <div className="mt-8 grid gap-6 sm:grid-cols-2">
+                <div><h4 className="eyebrow mb-3">{t('analysisReport.strengths')}</h4><ul className="space-y-3 text-sm leading-6 text-white/65">{personalityAnalysis.strengths.map(item => <li key={item} className="border-l border-white/20 pl-3">{item}</li>)}</ul></div>
+                <div><h4 className="eyebrow mb-3">{t('analysisReport.challenges')}</h4><ul className="space-y-3 text-sm leading-6 text-white/65">{personalityAnalysis.challenges.map(item => <li key={item} className="border-l border-white/20 pl-3">{item}</li>)}</ul></div>
+              </div>
+              <div className="mt-8 border-t border-white/10 pt-7">
+                <h4 className="font-bold">{resultCopy.relationship}</h4>
+                <p className="mt-3 text-sm leading-7 text-white/65">{personalityAnalysis.relationshipCompatibility}</p>
+              </div>
+              <div className="mt-8 grid gap-7 border-t border-white/10 pt-7 sm:grid-cols-2">
+                <div><h4 className="font-bold">{resultCopy.preferences}</h4><ul className="mt-4 space-y-3 text-sm leading-6 text-white/65">{personalityAnalysis.musicPreferences.map(item => <li key={item} className="border-l border-white/20 pl-3">{item}</li>)}</ul></div>
+                <div><h4 className="font-bold">{resultCopy.activities}</h4><ul className="mt-4 space-y-3 text-sm leading-6 text-white/65">{personalityAnalysis.recommendedActivities.map(item => <li key={item} className="border-l border-white/20 pl-3">{item}</li>)}</ul></div>
+              </div>
+              <div className="mt-8 grid gap-7 border-t border-white/10 pt-7 sm:grid-cols-2">
+                <div><h4 className="font-bold">{resultCopy.contexts}</h4><ul className="mt-4 space-y-2 text-sm leading-6 text-white/65">{topRecommendation.detailedMatch.listeningContexts.map(item => <li key={item}>• {item}</li>)}</ul></div>
+                {topRecommendation.detailedMatch.potentialGrowthAreas.length > 0 && <div><h4 className="font-bold">{resultCopy.growth}</h4><ul className="mt-4 space-y-2 text-sm leading-6 text-white/65">{topRecommendation.detailedMatch.potentialGrowthAreas.map(item => <li key={item}>• {item}</li>)}</ul></div>}
+              </div>
+              {compatibleTypes.length > 0 && <div className="mt-8 border-t border-white/10 pt-7">
+                <h4 className="font-bold">{resultCopy.compatible}</h4>
+                <p className="mt-2 text-xs leading-5 text-white/70">{resultCopy.exploreNote}</p>
+                <div className="mt-4 grid gap-3 sm:grid-cols-3">
+                  {compatibleTypes.map(item => <div key={`${item.compatibilityType}-${item.personalityType}`} className="rounded-2xl border border-white/10 bg-black/20 p-4">
+                    <p className="text-sm font-bold">{item.personalityType}</p>
+                    <p className="mt-1 text-xs font-semibold" style={{ color: theme.accent }}>{getGenreName(item.representativeGenre, language)}</p>
+                    <p className="mt-3 text-xs leading-5 text-white/70">{item.description}</p>
+                    <p className="mt-3 text-xs leading-5 text-white/65">{item.compatibilityReason}</p>
+                  </div>)}
+                </div>
+              </div>}
             </div>
           </details>
         </section>
@@ -288,7 +325,7 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
 
       <section id="share" className="border-t border-white/10 bg-black/20">
         <div className="mx-auto max-w-4xl px-5 py-16 sm:px-8 lg:py-24">
-          <div className="mb-8 text-center"><p className="eyebrow mb-3">SHOW YOUR RESULT</p><h2 className="text-3xl font-bold tracking-[-0.04em] sm:text-5xl">{t('results.shareResults')}</h2><p className="mt-4 text-sm text-white/42">{t('results.shareDescription')}</p></div>
+          <div className="mb-8 text-center"><p className="eyebrow mb-3">{resultCopy.shareTag}</p><h2 className="text-3xl font-bold tracking-[-0.04em] sm:text-5xl">{t('results.shareResults')}</h2><p className="mt-4 text-sm text-white/70">{t('results.shareDescription')}</p></div>
           <ShareableCard personalityScores={personalityScores} topGenre={topGenre} topGenreScore={Math.round(topRecommendation.compatibility)} />
           {onRestart && <div className="mt-8 text-center"><button onClick={onRestart} className="secondary-action !w-auto inline-flex items-center gap-2"><RotateCcw size={17} />{resultCopy.again}</button></div>}
         </div>
@@ -301,8 +338,8 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
       )}
       {showStickyActions && (
         <div data-testid="mobile-result-actions" className="fixed inset-x-3 bottom-3 z-50 grid grid-cols-2 gap-2 rounded-[22px] border border-white/12 bg-[#090a0d]/92 p-2 shadow-2xl backdrop-blur-xl sm:hidden" style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}>
-          {onInviteFriend ? <button onClick={onInviteFriend} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl px-3 text-xs font-bold text-black" style={{ background: theme.accent }}><Users size={16} />{resultCopy.invite}</button> : <a href="#share" className="inline-flex min-h-12 items-center justify-center rounded-2xl px-3 text-xs font-bold text-black" style={{ background: theme.accent }}>{resultCopy.share}</a>}
-          <button onClick={() => void shareResultLink()} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-white/12 bg-white/[0.06] px-3 text-xs font-bold text-white"><Share2 size={16} />{resultCopy.share}</button>
+          <button onClick={() => void shareResultLink()} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl px-3 text-xs font-bold text-black" style={{ background: theme.accent }}><Share2 size={16} />{resultCopy.share}</button>
+          {onInviteFriend ? <button onClick={onInviteFriend} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-2xl border border-white/12 bg-white/[0.06] px-3 text-xs font-bold text-white"><Users size={16} />{resultCopy.invite}</button> : <a href="#share" className="inline-flex min-h-12 items-center justify-center rounded-2xl border border-white/12 bg-white/[0.06] px-3 text-xs font-bold text-white">{resultCopy.share}</a>}
         </div>
       )}
     </main>

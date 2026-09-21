@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { ArrowLeft, ArrowRight, X } from 'lucide-react';
 import { Question } from '@/types';
 import { useSurvey } from '@/hooks/useSurvey';
@@ -17,22 +17,42 @@ interface SurveyProps {
 const Survey: React.FC<SurveyProps> = ({ questions, onComplete, onGoHome }) => {
   const { t, language } = useTranslation();
   const { surveyState, currentQuestion, progress, setAnswer, nextQuestion, previousQuestion, canGoNext, canGoPrevious } = useSurvey(questions);
+  const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const completionSent = useRef(false);
+
+  const cancelAdvance = useCallback(() => {
+    if (advanceTimer.current) clearTimeout(advanceTimer.current);
+    advanceTimer.current = null;
+  }, []);
+
+  const answerAndAdvance = useCallback((questionId: string, value: number) => {
+    cancelAdvance();
+    setAnswer(questionId, value);
+    advanceTimer.current = setTimeout(() => {
+      advanceTimer.current = null;
+      nextQuestion();
+    }, 550);
+  }, [cancelAdvance, nextQuestion, setAnswer]);
+
+  useEffect(() => cancelAdvance, [cancelAdvance, currentQuestion?.id]);
 
   useEffect(() => {
-    if (surveyState.isComplete && onComplete) onComplete(surveyState.answers);
+    if (surveyState.isComplete && onComplete && !completionSent.current) {
+      completionSent.current = true;
+      onComplete(surveyState.answers);
+    }
   }, [surveyState.isComplete, surveyState.answers, onComplete]);
 
   useEffect(() => {
     const handleKey = (event: KeyboardEvent) => {
       if (!currentQuestion) return;
+      if (event.target instanceof HTMLInputElement) return;
       const option = Number(event.key);
-      if (option >= 1 && option <= currentQuestion.scale) setAnswer(currentQuestion.id, option);
-      if (event.key === 'ArrowLeft' && canGoPrevious) previousQuestion();
-      if ((event.key === 'ArrowRight' || event.key === 'Enter') && canGoNext) nextQuestion();
+      if (option >= 1 && option <= currentQuestion.scale) answerAndAdvance(currentQuestion.id, option);
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [canGoNext, canGoPrevious, currentQuestion, nextQuestion, previousQuestion, setAnswer]);
+  }, [answerAndAdvance, currentQuestion]);
 
   if (surveyState.isComplete) {
     return <div className="app-canvas flex min-h-screen items-center justify-center"><p className="text-sm text-white/55">{t('survey.analyzing')}</p></div>;
@@ -59,15 +79,15 @@ const Survey: React.FC<SurveyProps> = ({ questions, onComplete, onGoHome }) => {
       <div className="mx-auto flex w-full max-w-4xl flex-1 flex-col px-5 pb-8 sm:px-8">
         <ProgressIndicator currentStep={progress.current} totalSteps={progress.total} />
         <div className="flex flex-1 items-center py-8 sm:py-12">
-          <QuestionCard question={currentQuestion} answer={surveyState.answers[currentQuestion.id]} onAnswer={(value) => setAnswer(currentQuestion.id, value)} />
+          <QuestionCard question={currentQuestion} answer={surveyState.answers[currentQuestion.id]} onAnswer={(value) => answerAndAdvance(currentQuestion.id, value)} />
         </div>
 
         <nav className="mx-auto flex w-full max-w-2xl items-center justify-between gap-3 border-t border-white/10 pt-5" aria-label={language === 'ko' ? '설문 이동' : 'Survey navigation'}>
-          <button onClick={previousQuestion} disabled={!canGoPrevious} className="secondary-action !min-h-12 !w-auto inline-flex items-center gap-2 !px-5">
+          <button onClick={() => { cancelAdvance(); previousQuestion(); }} disabled={!canGoPrevious} aria-label={t('survey.previous')} className="secondary-action !min-h-12 !w-auto inline-flex items-center gap-2 !px-5">
             <ArrowLeft size={17} /><span className="hidden sm:inline">{t('survey.previous')}</span>
           </button>
-          <p className="hidden text-xs text-white/28 sm:block">{language === 'ko' ? '숫자 키 1–5로도 답할 수 있어요' : 'You can also use keys 1–5'}</p>
-          <button onClick={nextQuestion} disabled={!canGoNext} className="primary-action !min-h-12 !w-auto inline-flex items-center gap-2 !px-5">
+          <p className="hidden text-xs text-white/60 sm:block">{language === 'ko' ? '답을 고르면 자동으로 넘어가요 · 숫자 키 1–5' : 'Choose an answer to advance · keys 1–5'}</p>
+          <button onClick={() => { cancelAdvance(); nextQuestion(); }} disabled={!canGoNext} className="primary-action !min-h-12 !w-auto inline-flex items-center gap-2 !px-5">
             {progress.current >= progress.total ? t('survey.complete') : t('survey.next')}<ArrowRight size={17} />
           </button>
         </nav>

@@ -1,4 +1,4 @@
-import { PersonalityAnalysisReport } from '@/types';
+import type { PersonalityAnalysisReport } from '@/types';
 
 // 장르별 영어 번역 데이터
 export const genreTranslations: Record<string, {

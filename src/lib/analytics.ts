@@ -41,10 +41,7 @@ class AnalyticsService {
 
   private initializeUserAnalytics(): void {
     if (typeof window === 'undefined') return;
-    
-    const stored = localStorage.getItem('musicPersonalityAnalytics');
-    if (!stored) {
-      const initialAnalytics: UserAnalytics = {
+    const initialAnalytics: UserAnalytics = {
         sessionId: this.sessionId,
         completedSurveys: 0,
         personalityHistory: [],
@@ -52,8 +49,20 @@ class AnalyticsService {
         shareCount: 0,
         installPromptShown: false,
         installPromptAccepted: false
-      };
+    };
+    try {
+      const stored = localStorage.getItem('musicPersonalityAnalytics');
+      if (stored) {
+        const parsed = JSON.parse(stored) as UserAnalytics;
+        if (Array.isArray(parsed.personalityHistory) && parsed.genreInteractions && typeof parsed.genreInteractions === 'object') {
+          parsed.personalityHistory = parsed.personalityHistory.slice(-3);
+          localStorage.setItem('musicPersonalityAnalytics', JSON.stringify(parsed));
+          return;
+        }
+      }
       localStorage.setItem('musicPersonalityAnalytics', JSON.stringify(initialAnalytics));
+    } catch {
+      try { localStorage.setItem('musicPersonalityAnalytics', JSON.stringify(initialAnalytics)); } catch { /* Storage may be unavailable. */ }
     }
   }
 
@@ -76,19 +85,22 @@ class AnalyticsService {
       events.splice(0, events.length - 100);
     }
     
-    localStorage.setItem('analyticsEvents', JSON.stringify(events));
+    try { localStorage.setItem('analyticsEvents', JSON.stringify(events)); } catch { /* Keep the interaction working without analytics. */ }
 
     // Update user analytics
     this.updateUserAnalytics(event, properties);
 
-    // Console log for development
-    console.log('📊 Analytics:', event, properties);
   }
 
   private getStoredEvents(): AnalyticsEvent[] {
     if (typeof window === 'undefined') return [];
-    const stored = localStorage.getItem('analyticsEvents');
-    return stored ? JSON.parse(stored) : [];
+    try {
+      const stored = localStorage.getItem('analyticsEvents');
+      const parsed: unknown = stored ? JSON.parse(stored) : [];
+      return Array.isArray(parsed) ? parsed.slice(-100) : [];
+    } catch {
+      return [];
+    }
   }
 
   private updateUserAnalytics(event: string, properties?: Record<string, unknown>): void {
@@ -97,7 +109,12 @@ class AnalyticsService {
     const stored = localStorage.getItem('musicPersonalityAnalytics');
     if (!stored) return;
     
-    const analytics: UserAnalytics = JSON.parse(stored);
+    let analytics: UserAnalytics;
+    try {
+      analytics = JSON.parse(stored) as UserAnalytics;
+    } catch {
+      return;
+    }
     
     switch (event) {
       case 'survey_completed':
@@ -108,6 +125,7 @@ class AnalyticsService {
             timestamp: Date.now(),
             topGenre: properties.topGenre as string
           });
+          analytics.personalityHistory = analytics.personalityHistory.slice(-3);
         }
         break;
         
@@ -135,7 +153,7 @@ class AnalyticsService {
         break;
     }
     
-    localStorage.setItem('musicPersonalityAnalytics', JSON.stringify(analytics));
+    try { localStorage.setItem('musicPersonalityAnalytics', JSON.stringify(analytics)); } catch { /* Keep the interaction working without analytics. */ }
   }
 
   public getAnalytics(): UserAnalytics | null {

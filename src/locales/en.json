@@ -328,74 +328,75 @@
     "sections": {
       "introduction": {
         "title": "Introduction",
-        "content": "Welcome to Music Personality Test. We are committed to protecting your privacy. This policy explains our privacy-focused approach: we do not collect or store your personal information. All survey responses and results remain private in your browser."
+        "content": "You can use this test without an account. Survey answers and result calculations stay in your browser. If you share a result or friend match link, MUSIC scores in the URL may reach the recipient and the hosting service that creates social previews. Advertising scripts have their own data practices."
       },
       "dataCollection": {
         "title": "Information We Collect",
-        "noCollectionTitle": "Information We DO NOT Collect",
-        "noCollectionContent": "We are committed to protecting your privacy. Our music personality test operates entirely in your browser and does not collect or store any personal information on our servers.",
-        "localStorageTitle": "Local Browser Storage Only",
+        "noCollectionTitle": "Accounts and Raw Answers",
+        "noCollectionContent": "The service does not require a login or operate a separate database for names, email addresses, phone numbers, or raw survey answers. Score-bearing share links and ordinary web requests are exceptions to browser-only processing.",
+        "localStorageTitle": "Browser Storage and Share Links",
         "localStorageItems": [
-          "Survey responses are stored only in your browser's local storage",
-          "Language preferences are saved locally in your browser", 
-          "Test results remain on your device and are never transmitted to us",
-          "Up to three recent test results are stored only in your browser",
-          "Friend match links include only both MUSIC scores in the URL fragment (#), which is not sent to our server",
-          "No personal identifiers (name, email, phone) are collected"
+          "Survey answers in progress are kept in browser session storage",
+          "Language settings, up to three recent results, and up to 100 local usage events are kept in browser local storage",
+          "The in-app friend comparison is restored from a URL fragment (#)",
+          "Personal and friend share links with social previews put scores in the URL query sent to a Cloudflare Pages Function",
+          "People and platforms that receive a shared link can see the scores it contains",
+          "The test does not ask for a name, email address, or phone number"
         ],
         "thirdPartyTitle": "Third-Party Data Collection",
         "thirdPartyItems": [
-          "Google AdSense may collect cookies and usage data for advertising purposes",
-          "We do not have access to or control over third-party data collection"
+          "Google AdSense may process cookies, web beacons, IP addresses, and other data for advertising",
+          "Cloudflare may process request URLs while serving the site and generating share previews",
+          "Opening a Spotify album link is subject to Spotify's data practices"
         ]
       },
       "dataUsage": {
         "title": "How We Use Your Information", 
-        "noUsageContent": "We do not use your personal information because we do not collect it.",
+        "noUsageContent": "The service does not operate an account or results database. Browser-stored data supports local restoration and features.",
         "browserProcessingContent": "What happens in your browser:",
         "browserProcessingItems": [
           "Survey responses are processed locally to generate your personality results",
           "Friend compatibility and shared genre recommendations are calculated from both scores in your browser",
           "Language preferences are remembered for your convenience",
-          "All processing happens on your device - nothing is sent to our servers"
+          "Using a share link passes scores in its URL for preview generation and result restoration"
         ]
       },
       "thirdPartyServices": {
         "title": "Third-Party Services",
         "googleAdsenseTitle": "Google AdSense",
         "googleAdsenseContent": "We use Google AdSense to display advertisements. Google may use cookies and web beacons to collect information about your visits to this and other websites to provide targeted advertisements. You can opt out of personalized advertising by visiting Google's Ad Settings.",
-        "noAnalyticsTitle": "No Analytics Services",
-        "noAnalyticsContent": "We do not use any analytics services or tracking tools to monitor your behavior. Your usage of our website is completely private."
+        "noAnalyticsTitle": "No Separate Analytics Server",
+        "noAnalyticsContent": "The service records its own interaction events only in browser local storage, not on a separate analytics server. Hosting requests and Google AdSense have separate data practices."
       },
       "cookies": {
         "title": "Cookies and Local Storage",
-        "ourStorageTitle": "Our Use of Local Storage",
-        "ourStorageContent": "We use only local browser storage to:",
+        "ourStorageTitle": "Our Use of Browser Storage",
+        "ourStorageContent": "The service uses browser session and local storage to:",
         "ourStorageItems": [
-          "Save your survey progress and results locally on your device",
+          "Save survey progress and recent results on your device",
           "Remember your language preference",
-          "No tracking or analytics cookies are used by us"
+          "Keep up to 100 recent local usage events and three results in local history"
         ],
         "thirdPartyCookiesTitle": "Third-Party Cookies",
         "thirdPartyCookiesContent": "Google AdSense may use cookies for advertising purposes. You can control these through your browser settings or Google's Ad Settings. Disabling cookies will not affect the core functionality of our personality test."
       },
       "dataSecurity": {
         "title": "Data Security",
-        "content": "Your data is secure because it never leaves your device. All survey responses and results are processed and stored locally in your browser. Since we don't collect or transmit your personal information to our servers, there is no risk of data breaches or unauthorized access to your survey responses."
+        "content": "Raw survey answers are processed in your browser. Creating or opening a share link passes scores in its URL, so do not send that link to someone you do not want to see it. Clearing browser storage removes progress and recent results kept on that device."
       },
       "userRights": {
         "title": "Your Data Control",
-        "content": "You have complete control over your data because it's stored locally in your browser:",
+        "content": "You can manage data stored on your device through your browser:",
         "controlItems": [
-          "Clear your browser's local storage to delete all survey data",
-          "Your data never leaves your device, so there's nothing for us to access or delete", 
+          "Clear browser session and local storage to remove the saved survey progress and result history on your device",
+          "Links already shared with other people or platforms are managed separately by those recipients",
           "You can retake the test anytime without any account or registration"
         ],
-        "noTraditionalRights": "Since we don't collect personal information, traditional data rights (access, correction, deletion requests) don't apply to our service."
+        "noTraditionalRights": "Contact us below with questions about share links or advertising and hosting data practices."
       },
       "childrenPrivacy": {
         "title": "Children's Privacy",
-        "content": "Since we do not collect any personal information from users of any age, our service is safe for children to use. All data remains on the user's device. However, we recommend parental guidance for children under 13 when using any online service."
+        "content": "The service does not ask for a user's age. We recommend parental guidance when children share results or open external music and advertising links."
       },
       "policyChanges": {
         "title": "Changes to This Policy", 
@@ -419,7 +420,7 @@
       },
       "serviceDescription": {
         "title": "Description of Service",
-        "content": "Music Personality Test is a free online service that provides music personality assessments based on scientific research. The service analyzes your responses to provide personalized insights about your musical preferences and personality traits."
+        "content": "Music Personality Test is a free entertainment website. It calculates five music-taste scores from your survey answers and compares them with curated genre profiles to suggest music and playful personality notes. Results are neither a validated psychological diagnosis nor the probability that you will like a genre."
       },
       "userResponsibilities": {
         "title": "User Responsibilities",

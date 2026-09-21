@@ -1,4 +1,4 @@
-const CACHE_NAME = 'music-personality-v3';
+const CACHE_NAME = 'music-personality-v4';
 const STATIC_ASSETS = [
   '/',
   '/icon-192x192.svg',
@@ -22,7 +22,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
+          if (cacheName.startsWith('music-personality-') && cacheName !== CACHE_NAME) {
             return caches.delete(cacheName);
           }
         })

@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import { SurveyState, Question } from '@/types';
-import { calculateMUSICScores } from '@/lib/musicCalculations';
+import { calculateMUSICScores, isValidAnswer } from '@/lib/surveyScore';
 
 export const useSurvey = (questions: Question[]) => {
   const [surveyState, setSurveyState] = useState<SurveyState>({
@@ -19,14 +19,17 @@ export const useSurvey = (questions: Question[]) => {
       if (saved) {
         const parsed = JSON.parse(saved) as SurveyState;
         const validStep = Math.min(Math.max(parsed.currentStep || 1, 1), Math.max(questions.length, 1));
-        setSurveyState({ ...parsed, currentStep: validStep, startTime: new Date(parsed.startTime), isComplete: false });
+        const restoredAnswers = Object.fromEntries(questions
+          .filter(question => isValidAnswer(question, parsed.answers?.[question.id]))
+          .map(question => [question.id, parsed.answers[question.id]]));
+        setSurveyState({ currentStep: validStep, answers: restoredAnswers, startTime: new Date(parsed.startTime), isComplete: false });
       }
     } catch {
       window.sessionStorage.removeItem('music-personality-survey');
     } finally {
       setHasRestored(true);
     }
-  }, [questions.length]);
+  }, [questions]);
 
   useEffect(() => {
     if (!hasRestored) return;
@@ -66,12 +69,13 @@ export const useSurvey = (questions: Question[]) => {
   // 다음 질문으로
   const nextQuestion = useCallback(() => {
     setSurveyState(prev => {
+      const firstUnanswered = questions.findIndex(question => !isValidAnswer(question, prev.answers[question.id]));
       const nextStep = prev.currentStep + 1;
-      const isComplete = nextStep > questions.length;
+      const isComplete = nextStep > questions.length && firstUnanswered === -1;
       
       return {
         ...prev,
-        currentStep: nextStep,
+        currentStep: nextStep > questions.length && !isComplete ? firstUnanswered + 1 : nextStep,
         isComplete,
         personalityScores: isComplete ? calculateMUSICScores(questions, prev.answers) : undefined,
       };
@@ -100,7 +104,7 @@ export const useSurvey = (questions: Question[]) => {
 
   // 현재 질문의 답변 여부
   const hasCurrentAnswer = useMemo(() => {
-    return currentQuestion ? surveyState.answers[currentQuestion.id] !== undefined : false;
+    return currentQuestion ? isValidAnswer(currentQuestion, surveyState.answers[currentQuestion.id]) : false;
   }, [currentQuestion, surveyState.answers]);
 
   // 다음 버튼 활성화 여부

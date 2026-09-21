@@ -158,6 +158,7 @@ function storeZlib(data: Uint8Array) {
 
 interface PersonalOgResult {
   genreName: string;
+  typeTitle: string;
   compatibility: number;
 }
 
@@ -193,11 +194,13 @@ export function createOgPng(hostScores: number[], matchScore?: number | null, pe
   drawText(raw, personalResult ? 'MY MUSIC TYPE' : matchScore === null || matchScore === undefined ? 'FRIEND INVITE' : 'OUR MUSIC MATCH', 930, 84, 3, 3);
 
   if (personalResult) {
-    const genreScale = Math.min(14, Math.max(6, Math.floor(980 / Math.max(1, personalResult.genreName.length * 6))));
-    drawText(raw, 'THE SOUND MOST LIKE ME', WIDTH / 2, 186, 4, 3);
-    drawText(raw, personalResult.genreName, WIDTH / 2, 252, genreScale, 5);
-    drawText(raw, `${personalResult.compatibility}% MATCH`, WIDTH / 2, 390, 8, 4);
-    drawText(raw, 'WHAT IS YOUR MUSIC TYPE', WIDTH / 2, 490, 4, 3);
+    const titleScale = Math.min(10, Math.max(4, Math.floor(1030 / Math.max(1, personalResult.typeTitle.length * 6))));
+    const genreScale = Math.min(7, Math.max(4, Math.floor(880 / Math.max(1, personalResult.genreName.length * 6))));
+    drawText(raw, 'MY MUSIC PERSONALITY', WIDTH / 2, 174, 4, 3);
+    drawText(raw, personalResult.typeTitle, WIDTH / 2, 238, titleScale, 5);
+    drawText(raw, personalResult.genreName, WIDTH / 2, 342, genreScale, 3);
+    drawText(raw, `${personalResult.compatibility}% GENRE MATCH`, WIDTH / 2, 422, 6, 4);
+    drawText(raw, 'WHAT IS YOUR MUSIC TYPE', WIDTH / 2, 502, 4, 3);
   } else if (matchScore === null || matchScore === undefined) {
     drawText(raw, 'A FRIEND INVITED YOU', WIDTH / 2, 226, 5, 3);
     drawText(raw, 'JOIN', WIDTH / 2, 302, 19, 5);
