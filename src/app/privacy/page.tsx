@@ -2,6 +2,7 @@
 
 import { useTranslation } from '@/hooks/useTranslation';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import { SITE_URL } from '@/lib/siteUrl';
 
 export default function PrivacyPolicy() {
   const { t, getArray, isLoading } = useTranslation();
@@ -142,7 +143,7 @@ export default function PrivacyPolicy() {
               <div className="bg-gray-50 p-4 rounded-lg mt-4">
                 <p className="text-gray-700">
                   {t('privacy.sections.contact.email')}<br />
-                  {t('privacy.sections.contact.website')}
+                  {t('privacy.sections.contact.website')} {SITE_URL}
                 </p>
               </div>
             </section>

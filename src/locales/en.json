@@ -115,7 +115,7 @@
     "clickToListen": "Click to listen",
     "retakeTest": "Take Test Again",
     "exploreGenres": "Explore Genres",
-    "musicModelNote": "Based on the MUSIC Model • musicpersonalitytest.pages.dev",
+    "musicModelNote": "Based on the MUSIC Model • Music Personality Test",
     "fallbackAnalysisNote": "Analysis based on your musical preferences",
     "uniqueTaste": "Unique taste",
     "distinctive": "Distinctive",
@@ -246,7 +246,7 @@
     "myMusicalPersonality": "My Musical Personality",
     "myMusicalTraits": "My Musical Traits",
     "match": "match",
-    "basedOnMusicModel": "Based on MUSIC Model • musicpersonalitytest.pages.dev"
+    "basedOnMusicModel": "Based on MUSIC Model • Music Personality Test"
   },
   "analysisReport": {
     "coreTraits": "Core Traits",
@@ -406,7 +406,7 @@
         "title": "Contact Us",
         "content": "If you have any questions about this privacy policy or our data practices, please contact us at:",
         "email": "Email: studiochamaeleon@gmail.com",
-        "website": "Website: https://musicpersonalitytest.pages.dev"
+        "website": "Website:"
       }
     }
   },
@@ -485,7 +485,7 @@
         "title": "Contact Information",
         "content": "If you have any questions about these Terms of Service, please contact us at:",
         "email": "Email: studiochamaeleon@gmail.com",
-        "website": "Website: https://musicpersonalitytest.pages.dev"
+        "website": "Website:"
       }
     }
   }

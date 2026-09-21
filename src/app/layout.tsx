@@ -5,6 +5,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import DynamicLang from "@/components/DynamicLang";
 import DynamicMetadata from "@/components/DynamicMetadata";
 import Footer from "@/components/Footer";
+import { SITE_URL } from "@/lib/siteUrl";
 
 export const metadata: Metadata = {
   title: "음악 성격 테스트 | 나와 닮은 장르 찾기",
@@ -21,11 +22,11 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://musicpersonalitytest.pages.dev'),
+  metadataBase: new URL(SITE_URL),
   openGraph: {
     title: "음악 성격 테스트 | 나와 닮은 장르 찾기",
     description: "음악 취향에 답하고 나와 닮은 장르와 앨범을 발견해보세요.",
-    url: 'https://musicpersonalitytest.pages.dev',
+    url: SITE_URL,
     siteName: 'Music Personality Test',
     images: [
       {
@@ -82,11 +83,13 @@ export default function RootLayout({
     <html lang="ko">
       <head>
         <StructuredData />
-        <script 
-          async 
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5112443746505917"
-          crossOrigin="anonymous"
-        />
+        {process.env.NEXT_PUBLIC_ADSENSE_ENABLED !== 'false' && (
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5112443746505917"
+            crossOrigin="anonymous"
+          />
+        )}
         <script
           dangerouslySetInnerHTML={{
             __html: `

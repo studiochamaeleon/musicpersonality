@@ -11,8 +11,8 @@ export function calculateMatchScore(host: number[], guest: number[]) {
   return Math.round(totalSimilarity / host.length);
 }
 
-export function createAppHash(host: string, guest?: string | null) {
+export function createAppHash(host: string, guest?: string | null, language: 'ko' | 'en' = 'ko') {
   const params = new URLSearchParams({ compare: host });
   if (guest) params.set('guest', guest);
-  return `/#${params.toString()}`;
+  return `${language === 'en' ? '/?lang=en' : '/'}#${params.toString()}`;
 }

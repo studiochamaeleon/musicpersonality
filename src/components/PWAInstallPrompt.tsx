@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Download } from 'lucide-react';
 import { analytics } from '@/lib/analytics';
 import { useTranslation } from '@/hooks/useTranslation';
+import { readBrowserStorage, writeBrowserStorage } from '@/lib/browserStorage';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
@@ -71,14 +72,14 @@ const PWAInstallPrompt: React.FC = () => {
   const handleDismiss = () => {
     setShowPrompt(false);
     // Remember user dismissed it for this session
-    sessionStorage.setItem('pwa-prompt-dismissed', 'true');
+    writeBrowserStorage('session', 'pwa-prompt-dismissed', 'true');
     
     // Track that user dismissed the prompt
     analytics.track('pwa_prompt_dismissed');
   };
 
   // Don't show if already dismissed this session
-  if (sessionStorage.getItem('pwa-prompt-dismissed') === 'true') {
+  if (readBrowserStorage('session', 'pwa-prompt-dismissed') === 'true') {
     return null;
   }
 

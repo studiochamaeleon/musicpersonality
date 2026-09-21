@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import { SurveyState, Question } from '@/types';
 import { calculateMUSICScores, isValidAnswer } from '@/lib/surveyScore';
+import { readBrowserStorage, removeBrowserStorage, writeBrowserStorage } from '@/lib/browserStorage';
 
 export const useSurvey = (questions: Question[]) => {
   const [surveyState, setSurveyState] = useState<SurveyState>({
@@ -15,7 +16,7 @@ export const useSurvey = (questions: Question[]) => {
 
   useEffect(() => {
     try {
-      const saved = window.sessionStorage.getItem('music-personality-survey');
+      const saved = readBrowserStorage('session', 'music-personality-survey');
       if (saved) {
         const parsed = JSON.parse(saved) as SurveyState;
         const validStep = Math.min(Math.max(parsed.currentStep || 1, 1), Math.max(questions.length, 1));
@@ -25,7 +26,7 @@ export const useSurvey = (questions: Question[]) => {
         setSurveyState({ currentStep: validStep, answers: restoredAnswers, startTime: new Date(parsed.startTime), isComplete: false });
       }
     } catch {
-      window.sessionStorage.removeItem('music-personality-survey');
+      removeBrowserStorage('session', 'music-personality-survey');
     } finally {
       setHasRestored(true);
     }
@@ -34,10 +35,10 @@ export const useSurvey = (questions: Question[]) => {
   useEffect(() => {
     if (!hasRestored) return;
     if (surveyState.isComplete) {
-      window.sessionStorage.removeItem('music-personality-survey');
+      removeBrowserStorage('session', 'music-personality-survey');
       return;
     }
-    window.sessionStorage.setItem('music-personality-survey', JSON.stringify(surveyState));
+    writeBrowserStorage('session', 'music-personality-survey', JSON.stringify(surveyState));
   }, [hasRestored, surveyState]);
 
   // 현재 질문

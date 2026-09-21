@@ -54,7 +54,7 @@ const CompatibilityInvite: React.FC<CompatibilityInviteProps> = ({ hostScores, g
 
   const copyLink = async () => {
     try {
-      await navigator.clipboard.writeText(getComparisonUrl(hostScores));
+      await navigator.clipboard.writeText(getComparisonUrl(hostScores, null, language));
       analytics.track('compatibility_invite_shared', { shareType: 'copy' });
       notify(language === 'ko' ? '초대 링크를 복사했어요.' : 'Invite link copied.');
     } catch {
@@ -63,7 +63,7 @@ const CompatibilityInvite: React.FC<CompatibilityInviteProps> = ({ hostScores, g
   };
 
   const shareInvite = async () => {
-    const url = getComparisonUrl(hostScores);
+    const url = getComparisonUrl(hostScores, null, language);
     try {
       if (navigator.share) {
         await navigator.share({

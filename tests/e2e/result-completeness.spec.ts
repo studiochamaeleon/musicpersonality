@@ -57,6 +57,28 @@ test('corrupted local usage history does not block genre exploration', async ({ 
   await expect(page.getByRole('dialog', { name: '미니멀리즘' })).toBeVisible();
 });
 
+test('the quiz and restored result work when browser storage is denied', async ({ page }) => {
+  await page.addInitScript(() => {
+    for (const name of ['localStorage', 'sessionStorage']) {
+      Object.defineProperty(window, name, {
+        configurable: true,
+        get() { throw new DOMException('Storage denied', 'SecurityError'); },
+      });
+    }
+  });
+  await page.goto('/');
+  await page.getByRole('button', { name: '내 음악 성격 찾기' }).click();
+  await expect(page.getByRole('heading', { level: 1, name: '나는 조용하고 차분한 음악을 선호한다' })).toBeVisible();
+  for (let index = 0; index < 40; index += 1) {
+    const currentQuestion = await page.getByRole('heading', { level: 1 }).textContent();
+    await page.getByRole('radio', { name: /^3:/ }).click();
+    if (index < 39) await expect(page.getByRole('heading', { level: 1 })).not.toHaveText(currentQuestion || '');
+  }
+  await expect(page).toHaveURL(/\?v=2&m=/);
+  await page.reload();
+  await expect(page.getByRole('button', { name: '친구와 음악 궁합 보기' })).toBeVisible();
+});
+
 test('answer selection advances, while Previous permits correction', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: '내 음악 성격 찾기' }).click();

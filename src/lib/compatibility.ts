@@ -73,10 +73,11 @@ export function parseComparisonHash(hash: string) {
   return { hostScores, guestScores: decodeScores(params.get('guest')) };
 }
 
-export function getComparisonUrl(hostScores: MUSICPersonality, guestScores?: MUSICPersonality | null) {
+export function getComparisonUrl(hostScores: MUSICPersonality, guestScores?: MUSICPersonality | null, language: 'ko' | 'en' = 'ko') {
   if (typeof window === 'undefined') return '';
   const params = new URLSearchParams({ host: encodeScores(hostScores) });
   if (guestScores) params.set('guest', encodeScores(guestScores));
+  if (language === 'en') params.set('lang', 'en');
   return `${window.location.origin}/share?${params.toString()}`;
 }
 

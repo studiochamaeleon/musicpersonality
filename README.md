@@ -72,6 +72,8 @@ npm run test:e2e
 - 궁합 결과 링크 및 개인 결과 복원
 - 개인·궁합 결과 카드의 PNG 저장
 - 동적 Open Graph 메타데이터와 1200×630 이미지
+- 한국어·영어 공유 미리보기 및 링크 진입 언어 유지
+- 브라우저 저장소 접근이 차단된 환경에서의 검사 완료·결과 복원
 - 설문 자동 진행·답변 수정, 결과 본문 완전성, 장르 상세의 키보드 조작
 
 Pull Request와 `main` 브랜치 push에서도 같은 E2E 검증이 GitHub Actions로 자동 실행됩니다.
@@ -82,14 +84,18 @@ Pull Request와 `main` 브랜치 push에서도 같은 E2E 검증이 GitHub Actio
 - Build output directory: `out`
 - Functions: 저장소의 `functions/` 디렉터리에서 자동 배포
 - Function routes: `/share`, `/result`, `/api/og`만 `public/_routes.json`에 포함
+- `NEXT_PUBLIC_SITE_URL`: 최종 공개 도메인(예: `https://quiz.example.com`). Cloudflare Pages의 빌드 환경 변수에 설정하면 canonical URL, 구조화 데이터, robots.txt, sitemap.xml, 정책 페이지의 사이트 주소가 함께 바뀝니다. 설정하지 않으면 `https://musicpersonalitytest.pages.dev`를 사용합니다. 도메인 연결 후에는 이 환경 변수로 다시 빌드하고 `/robots.txt`, `/sitemap.xml`을 확인하세요.
+- `NEXT_PUBLIC_ADSENSE_ENABLED=false`: AdSense 스크립트를 빌드에서 제외합니다. 설정하지 않으면 기존처럼 로드됩니다. 인증 CMP 설정 전 광고를 잠시 끄고 배포할 때 사용할 수 있습니다.
 
-나머지 앱과 정적 자산은 Pages에서 그대로 제공되므로 데이터베이스나 별도 이미지 렌더링 서비스가 필요하지 않습니다.
+나머지 앱과 정적 자산은 Pages에서 그대로 제공되므로 데이터베이스나 별도 이미지 렌더링 서비스가 필요하지 않습니다. 한국어 공유 이미지는 [Pretendard Bold](https://github.com/orioncactus/pretendard)의 비트맵 글리프(OFL-1.1)를 커밋해 사용합니다. 장르명·유형명을 추가한 경우 `npm run generate:og-glyphs -- /path/to/Pretendard-Bold.otf`로 글리프를 다시 생성하고 `npm run test:unit`으로 누락 여부를 확인하세요.
 
 ## 데이터와 개인정보
 
 - 설문 계산과 추천은 모두 브라우저에서 처리됩니다.
-- 최근 결과와 자체 이벤트 기록은 브라우저 `localStorage`에만 저장됩니다.
+- 최근 결과와 자체 이벤트 기록은 브라우저 `localStorage`에만 저장됩니다. 저장소가 차단된 환경에서도 검사는 계속되지만 최근 결과와 진행 상황은 보존되지 않습니다.
 - 서비스는 계정·결과 데이터베이스를 사용하지 않습니다. 다만 SNS 미리보기용 공유 링크를 열면 MUSIC 점수가 URL 쿼리에 포함되어 Cloudflare Pages Function과 링크를 받은 서비스에 전달될 수 있습니다. 공유 전 이 점을 확인해야 합니다.
 - 광고가 활성화된 배포에서는 Google AdSense의 별도 데이터 정책이 적용될 수 있습니다.
+
+배포 전 AdSense 계정의 Privacy & messaging에서 EEA·영국·스위스 방문자를 위한 Google 인증 CMP/TCF 메시지 설정을 확인하세요. 광고 스크립트는 기본적으로 로드되지만 `NEXT_PUBLIC_ADSENSE_ENABLED=false`로 제외할 수 있습니다. 계정 측 설정은 저장소에서 검증할 수 없으므로 해당 지역에 광고를 제공할 계획이라면 설정 확인 전에는 배포를 완료된 상태로 간주하지 마세요.
 
 이 테스트는 음악 심리학 모델에서 영감을 받은 엔터테인먼트 콘텐츠이며 의료·임상 진단 도구가 아닙니다.

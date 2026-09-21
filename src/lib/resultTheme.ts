@@ -16,7 +16,7 @@ export function getGenreTheme(genre?: GenreSchema | null) {
   return genre ? CATEGORY_THEMES[genre.category] : { accent: '#C8FF3D', secondary: '#43F5FF' };
 }
 
-export function createResultSearchParams(scores: MUSICPersonality) {
+export function createResultSearchParams(scores: MUSICPersonality, language: 'ko' | 'en' = 'ko') {
   const params = new URLSearchParams({
     v: '2',
     m: String(Math.round(scores.mellow)),
@@ -25,6 +25,7 @@ export function createResultSearchParams(scores: MUSICPersonality) {
     i: String(Math.round(scores.intense)),
     c: String(Math.round(scores.contemporary)),
   });
+  if (language === 'en') params.set('lang', 'en');
   return params;
 }
 

@@ -59,6 +59,27 @@ test('the personal result card downloads as a non-empty PNG', async ({ page }) =
   expect(image.length).toBeGreaterThan(20_000);
 });
 
+test('the prepared image reaches the Apple share sheet during the tap gesture', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'userAgent', { configurable: true, get: () => 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)' });
+    Object.defineProperty(navigator, 'canShare', { configurable: true, value: () => true });
+    Object.defineProperty(navigator, 'share', {
+      configurable: true,
+      value: async (payload: ShareData) => {
+        Object.defineProperty(window, '__capturedShare', {
+          configurable: true,
+          value: { active: navigator.userActivation?.isActive, files: payload.files?.length ?? 0 },
+        });
+      },
+    });
+  });
+  await page.goto('/?v=2&m=70&u=61&s=79&i=48&c=75');
+  const save = page.getByRole('button', { name: '이미지 저장' });
+  await expect(save).toBeEnabled({ timeout: 30_000 });
+  await save.click();
+  await expect.poll(() => page.evaluate(() => (window as Window & { __capturedShare?: { active: boolean; files: number } }).__capturedShare)).toEqual({ active: true, files: 1 });
+});
+
 test('the personal result offers curated direct Spotify album links', async ({ page }) => {
   await page.goto('/?v=1&m=70&u=61&s=79&i=48&c=75');
   const albumLinks = page.getByRole('link', { name: /Spotify에서 앨범 듣기/ });

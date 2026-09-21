@@ -1,6 +1,6 @@
 'use client';
 
-import React, { CSSProperties, useMemo, useRef, useState } from 'react';
+import React, { CSSProperties, useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowLeft, Check, Download, Link2, RefreshCw, Share2, Sparkles, Users } from 'lucide-react';
 import { GenreSchema, MUSICPersonality } from '@/types';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -10,7 +10,7 @@ import { getGenreName } from '@/lib/genreTranslations';
 import { getGenreTheme } from '@/lib/resultTheme';
 import { analytics } from '@/lib/analytics';
 import LanguageSelector from '@/components/LanguageSelector';
-import { captureCardBlob, saveCardImage } from '@/lib/cardExport';
+import { captureCardBlob, isAppleMobileBrowser, saveCardImage } from '@/lib/cardExport';
 
 interface CompatibilityResultsProps {
   hostScores: MUSICPersonality;
@@ -25,6 +25,9 @@ const CompatibilityResults: React.FC<CompatibilityResultsProps> = ({ hostScores,
   const { language } = useLanguage();
   const cardRef = useRef<HTMLDivElement>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [appleMobile, setAppleMobile] = useState(false);
+  const [preparedBlob, setPreparedBlob] = useState<Blob | null>(null);
+  const [imagePreparationFailed, setImagePreparationFailed] = useState(false);
   const compatibility = useMemo(() => calculatePairCompatibility(hostScores, guestScores, language), [guestScores, hostScores, language]);
   const hostRecommendation = useMemo(() => recommendGenres(hostScores, genres, language)[0], [genres, hostScores, language]);
   const guestRecommendation = useMemo(() => recommendGenres(guestScores, genres, language)[0], [genres, guestScores, language]);
@@ -33,6 +36,19 @@ const CompatibilityResults: React.FC<CompatibilityResultsProps> = ({ hostScores,
   const guestGenre = genres.find(genre => genre.id === guestRecommendation?.genreId);
   const theme = getGenreTheme(guestGenre || hostGenre);
   const pageStyle = { '--result-accent': theme.accent, '--result-secondary': theme.secondary } as CSSProperties;
+
+  useEffect(() => {
+    const apple = isAppleMobileBrowser();
+    setAppleMobile(apple);
+    if (!apple || !cardRef.current) return;
+    let active = true;
+    setPreparedBlob(null);
+    setImagePreparationFailed(false);
+    void captureCardBlob(cardRef.current)
+      .then(blob => { if (active) setPreparedBlob(blob); })
+      .catch(() => { if (active) setImagePreparationFailed(true); });
+    return () => { active = false; };
+  }, [language, compatibility.score, hostGenre?.id, guestGenre?.id]);
   const copy = language === 'ko' ? {
     back: '처음으로', eyebrow: '우리의 음악 궁합', score: '두 사람의 취향 유사도', similar: '가장 닮은 취향', different: '가장 다른 취향', compare: '취향을 나란히 보기', friend: '친구', me: '나',
     together: '함께 들으면 좋은 장르', shareTitle: '이 궁합을 친구에게 보여주세요', shareBody: '결과 이미지를 저장하거나 링크로 공유하면 같은 화면을 다시 볼 수 있어요.', share: '결과 공유', save: '이미지 저장', copy: '링크 복사',
@@ -50,7 +66,7 @@ const CompatibilityResults: React.FC<CompatibilityResultsProps> = ({ hostScores,
 
   const copyLink = async () => {
     try {
-      await navigator.clipboard.writeText(getComparisonUrl(hostScores, guestScores));
+      await navigator.clipboard.writeText(getComparisonUrl(hostScores, guestScores, language));
       analytics.track('compatibility_result_shared', { shareType: 'copy', score: compatibility.score });
       notify(language === 'ko' ? '궁합 링크를 복사했어요.' : 'Match link copied.');
     } catch {
@@ -59,24 +75,11 @@ const CompatibilityResults: React.FC<CompatibilityResultsProps> = ({ hostScores,
   };
 
   const shareResult = async () => {
-    const url = getComparisonUrl(hostScores, guestScores);
+    const url = getComparisonUrl(hostScores, guestScores, language);
     try {
-      if (!cardRef.current) throw new Error('Card is not ready');
-      const blob = await captureCardBlob(cardRef.current);
-      const file = new File([blob], 'our-music-match.png', { type: 'image/png' });
-      const data: ShareData = {
-        title: language === 'ko' ? `우리 음악 궁합은 ${compatibility.score}%` : `Our music match is ${compatibility.score}%`,
-        text: compatibility.title,
-        url,
-        files: [file],
-      };
-      if (navigator.share && navigator.canShare?.(data)) {
-        await navigator.share(data);
-        analytics.track('compatibility_result_shared', { shareType: 'native', score: compatibility.score });
-        return;
-      }
+      const title = language === 'ko' ? `우리 음악 궁합은 ${compatibility.score}%` : `Our music match is ${compatibility.score}%`;
       if (navigator.share) {
-        await navigator.share({ title: data.title, text: data.text, url });
+        await navigator.share({ title, text: compatibility.title, url });
         analytics.track('compatibility_result_shared', { shareType: 'native-link', score: compatibility.score });
         return;
       }
@@ -90,10 +93,12 @@ const CompatibilityResults: React.FC<CompatibilityResultsProps> = ({ hostScores,
   const download = async () => {
     try {
       if (!cardRef.current) throw new Error('Card is not ready');
+      if (appleMobile && !preparedBlob) throw new Error('Image is still being prepared');
       await saveCardImage(
         cardRef.current,
         'our-music-match.png',
         language === 'ko' ? `우리 음악 궁합 ${compatibility.score}%` : `Our music match ${compatibility.score}%`,
+        preparedBlob ?? undefined,
       );
       analytics.track('compatibility_result_shared', { shareType: 'download', score: compatibility.score });
       notify(language === 'ko' ? '궁합 이미지를 준비했어요.' : 'Match image is ready.');
@@ -101,6 +106,17 @@ const CompatibilityResults: React.FC<CompatibilityResultsProps> = ({ hostScores,
       if (error instanceof DOMException && error.name === 'AbortError') return;
       notify(language === 'ko' ? '이미지를 만들지 못했어요.' : 'Could not create the image.');
     }
+  };
+
+  const saveOrRetry = () => {
+    if (appleMobile && !preparedBlob && cardRef.current) {
+      setImagePreparationFailed(false);
+      void captureCardBlob(cardRef.current)
+        .then(setPreparedBlob)
+        .catch(() => setImagePreparationFailed(true));
+      return;
+    }
+    void download();
   };
 
   return (
@@ -180,7 +196,7 @@ const CompatibilityResults: React.FC<CompatibilityResultsProps> = ({ hostScores,
 
           <div className="mt-6 grid gap-3 sm:grid-cols-3">
             <button onClick={() => void shareResult()} className="primary-action inline-flex items-center justify-center gap-2" style={{ background: theme.accent, borderColor: theme.accent }}><Share2 size={17} />{copy.share}</button>
-            <button onClick={() => void download()} className="secondary-action inline-flex items-center justify-center gap-2"><Download size={17} />{copy.save}</button>
+            <button onClick={saveOrRetry} disabled={appleMobile && !preparedBlob && !imagePreparationFailed} className="secondary-action inline-flex items-center justify-center gap-2"><Download size={17} />{appleMobile && !preparedBlob ? (imagePreparationFailed ? (language === 'ko' ? '이미지 다시 준비' : 'Retry image') : (language === 'ko' ? '이미지 준비 중' : 'Preparing image')) : copy.save}</button>
             <button onClick={() => void copyLink()} className="secondary-action inline-flex items-center justify-center gap-2"><Link2 size={17} />{copy.copy}</button>
           </div>
           <div className="mt-3 min-h-6 text-center text-xs text-white/45" aria-live="polite">{feedback && <span className="inline-flex items-center gap-1.5"><Check size={13} />{feedback}</span>}</div>

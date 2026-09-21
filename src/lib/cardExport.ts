@@ -12,13 +12,17 @@ export async function captureCardBlob(element: HTMLElement) {
   return blob;
 }
 
-export async function saveCardImage(element: HTMLElement, filename: string, title: string) {
-  const blob = await captureCardBlob(element);
-  const file = new File([blob], filename, { type: 'image/png' });
-  const isAppleMobile = /iPad|iPhone|iPod/.test(navigator.userAgent)
+export function isAppleMobileBrowser() {
+  if (typeof navigator === 'undefined') return false;
+  return /iPad|iPhone|iPod/.test(navigator.userAgent)
     || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+}
 
-  if (isAppleMobile && navigator.share && navigator.canShare?.({ files: [file] })) {
+export async function saveCardImage(element: HTMLElement, filename: string, title: string, preparedBlob?: Blob) {
+  const blob = preparedBlob ?? await captureCardBlob(element);
+  const file = new File([blob], filename, { type: 'image/png' });
+
+  if (isAppleMobileBrowser() && navigator.share && navigator.canShare?.({ files: [file] })) {
     await navigator.share({ title, files: [file] });
     return 'share-sheet' as const;
   }

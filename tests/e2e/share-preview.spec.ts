@@ -14,6 +14,22 @@ test('the Cloudflare share route exposes dynamic social metadata', async ({ requ
   expect(html).toContain(`/#compare=${hostToken}&amp;guest=${guestToken}`);
 });
 
+test('English match shares preserve English metadata and the app language', async ({ request, page }) => {
+  const response = await request.get(`/share?host=${hostToken}&guest=${guestToken}&lang=en`);
+  expect(response.ok()).toBeTruthy();
+  const html = await response.text();
+  expect(html).toContain('<html lang="en">');
+  expect(html).toContain('Our music match is 89%');
+  expect(html).toContain(`/api/og?host=${hostToken}&amp;guest=${guestToken}&amp;lang=en`);
+  expect(html).toContain(`/?lang=en#compare=${hostToken}&amp;guest=${guestToken}`);
+
+  await page.goto(`/share?host=${hostToken}&guest=${guestToken}&lang=en`);
+  await expect(page).toHaveURL(/\?lang=en#compare=/);
+  await expect(page.getByRole('heading', { level: 1, name: 'Almost the same playlist' })).toBeVisible();
+  await page.reload();
+  await expect(page.getByRole('heading', { level: 1, name: 'Almost the same playlist' })).toBeVisible();
+});
+
 test('the dynamic Open Graph endpoint returns a 1200x630 PNG', async ({ request }) => {
   const response = await request.get(`/api/og?host=${hostToken}&guest=${guestToken}`);
   expect(response.ok()).toBeTruthy();
@@ -74,6 +90,8 @@ test('the personal result Open Graph endpoint returns a 1200x630 PNG', async ({ 
   expect(image.readUInt32BE(16)).toBe(1200);
   expect(image.readUInt32BE(20)).toBe(630);
   expect(image.length).toBeGreaterThan(700_000);
+  const englishImage = Buffer.from(await (await request.get(`/api/og?score=${guestToken}&sv=2&lang=en`)).body());
+  expect(image.equals(englishImage)).toBe(false);
 });
 
 test('a visitor opening a personal share URL lands on the restored result', async ({ page }) => {

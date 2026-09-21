@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { genreTranslations } from '../../src/lib/genreTranslations.ts';
+import { KOREAN_GLYPHS } from '../../cloudflare/koreanGlyphs.ts';
 
 const genres = JSON.parse(readFileSync(new URL('../../src/data/genres.json', import.meta.url), 'utf8'));
 const questions = JSON.parse(readFileSync(new URL('../../src/data/questions.json', import.meta.url), 'utf8'));
@@ -38,5 +39,15 @@ test('the survey preserves eight valid questions per MUSIC dimension', () => {
   for (const question of questions) {
     assert.ok(question.text?.trim() && question.textEn?.trim(), question.id);
     assert.ok(Number.isFinite(question.weight) && question.weight > 0, question.id);
+  }
+});
+
+test('every Korean result title and genre has an Open Graph bitmap glyph', () => {
+  for (const genre of genres) {
+    for (const label of [genre.nameKo, genre.personalityAnalysis?.typeTitle]) {
+      for (const character of label.match(/[가-힣]/g) || []) {
+        assert.equal(KOREAN_GLYPHS[character]?.length, 256, `${genre.id}: missing ${character}`);
+      }
+    }
   }
 });

@@ -1,6 +1,7 @@
 'use client';
 
 import { MUSICPersonality } from '@/types';
+import { readBrowserStorage, removeBrowserStorage, writeBrowserStorage } from '@/lib/browserStorage';
 
 export interface AnalyticsEvent {
   event: string;
@@ -51,18 +52,18 @@ class AnalyticsService {
         installPromptAccepted: false
     };
     try {
-      const stored = localStorage.getItem('musicPersonalityAnalytics');
+      const stored = readBrowserStorage('local', 'musicPersonalityAnalytics');
       if (stored) {
         const parsed = JSON.parse(stored) as UserAnalytics;
         if (Array.isArray(parsed.personalityHistory) && parsed.genreInteractions && typeof parsed.genreInteractions === 'object') {
           parsed.personalityHistory = parsed.personalityHistory.slice(-3);
-          localStorage.setItem('musicPersonalityAnalytics', JSON.stringify(parsed));
+          writeBrowserStorage('local', 'musicPersonalityAnalytics', JSON.stringify(parsed));
           return;
         }
       }
-      localStorage.setItem('musicPersonalityAnalytics', JSON.stringify(initialAnalytics));
+      writeBrowserStorage('local', 'musicPersonalityAnalytics', JSON.stringify(initialAnalytics));
     } catch {
-      try { localStorage.setItem('musicPersonalityAnalytics', JSON.stringify(initialAnalytics)); } catch { /* Storage may be unavailable. */ }
+      writeBrowserStorage('local', 'musicPersonalityAnalytics', JSON.stringify(initialAnalytics));
     }
   }
 
@@ -85,7 +86,7 @@ class AnalyticsService {
       events.splice(0, events.length - 100);
     }
     
-    try { localStorage.setItem('analyticsEvents', JSON.stringify(events)); } catch { /* Keep the interaction working without analytics. */ }
+    writeBrowserStorage('local', 'analyticsEvents', JSON.stringify(events));
 
     // Update user analytics
     this.updateUserAnalytics(event, properties);
@@ -95,7 +96,7 @@ class AnalyticsService {
   private getStoredEvents(): AnalyticsEvent[] {
     if (typeof window === 'undefined') return [];
     try {
-      const stored = localStorage.getItem('analyticsEvents');
+      const stored = readBrowserStorage('local', 'analyticsEvents');
       const parsed: unknown = stored ? JSON.parse(stored) : [];
       return Array.isArray(parsed) ? parsed.slice(-100) : [];
     } catch {
@@ -106,12 +107,13 @@ class AnalyticsService {
   private updateUserAnalytics(event: string, properties?: Record<string, unknown>): void {
     if (typeof window === 'undefined') return;
     
-    const stored = localStorage.getItem('musicPersonalityAnalytics');
+    const stored = readBrowserStorage('local', 'musicPersonalityAnalytics');
     if (!stored) return;
     
     let analytics: UserAnalytics;
     try {
       analytics = JSON.parse(stored) as UserAnalytics;
+      if (!Array.isArray(analytics.personalityHistory) || !analytics.genreInteractions || typeof analytics.genreInteractions !== 'object') return;
     } catch {
       return;
     }
@@ -153,13 +155,19 @@ class AnalyticsService {
         break;
     }
     
-    try { localStorage.setItem('musicPersonalityAnalytics', JSON.stringify(analytics)); } catch { /* Keep the interaction working without analytics. */ }
+    writeBrowserStorage('local', 'musicPersonalityAnalytics', JSON.stringify(analytics));
   }
 
   public getAnalytics(): UserAnalytics | null {
     if (typeof window === 'undefined') return null;
-    const stored = localStorage.getItem('musicPersonalityAnalytics');
-    return stored ? JSON.parse(stored) : null;
+    const stored = readBrowserStorage('local', 'musicPersonalityAnalytics');
+    if (!stored) return null;
+    try {
+      const parsed = JSON.parse(stored) as UserAnalytics;
+      return Array.isArray(parsed.personalityHistory) && parsed.genreInteractions && typeof parsed.genreInteractions === 'object' ? parsed : null;
+    } catch {
+      return null;
+    }
   }
 
   public getPopularGenres(): Array<{ genre: string; views: number }> {
@@ -197,21 +205,21 @@ class AnalyticsService {
 
   public clearData(): void {
     if (typeof window === 'undefined') return;
-    localStorage.removeItem('musicPersonalityAnalytics');
-    localStorage.removeItem('analyticsEvents');
+    removeBrowserStorage('local', 'musicPersonalityAnalytics');
+    removeBrowserStorage('local', 'analyticsEvents');
     console.log('Analytics data cleared');
   }
 
   public setEnabled(enabled: boolean): void {
     this.isEnabled = enabled;
     if (typeof window !== 'undefined') {
-      localStorage.setItem('analyticsEnabled', enabled.toString());
+      writeBrowserStorage('local', 'analyticsEnabled', enabled.toString());
     }
   }
 
   public isAnalyticsEnabled(): boolean {
     if (typeof window === 'undefined') return false;
-    const stored = localStorage.getItem('analyticsEnabled');
+    const stored = readBrowserStorage('local', 'analyticsEnabled');
     return stored === null ? true : stored === 'true';
   }
 

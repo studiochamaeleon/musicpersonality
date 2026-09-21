@@ -14,6 +14,7 @@ import DotMatrixBackground from '@/components/ui/DotMatrixBackground';
 import { createComparisonHash, parseComparisonHash } from '@/lib/compatibility';
 import { loadRecentResults, RecentMusicResult, saveRecentResult } from '@/lib/recentResults';
 import { getGenreName } from '@/lib/genreTranslations';
+import { removeBrowserStorage } from '@/lib/browserStorage';
 
 const Survey = lazy(() => import('@/components/Survey'));
 const PersonalityResults = lazy(() => import('@/components/PersonalityResults'));
@@ -40,6 +41,7 @@ const MusicPersonalityApp: React.FC = () => {
   const [comparisonHostScores, setComparisonHostScores] = useState<MUSICPersonality | null>(null);
   const [comparisonGuestScores, setComparisonGuestScores] = useState<MUSICPersonality | null>(null);
   const [recentResults, setRecentResults] = useState<RecentMusicResult[]>([]);
+  const languagePath = language === 'en' ? '/?lang=en' : '/';
 
   useEffect(() => {
     const loadData = async () => {
@@ -124,7 +126,7 @@ const MusicPersonalityApp: React.FC = () => {
         guestScores: scores,
       });
       if (typeof window !== 'undefined') {
-        window.history.replaceState({}, '', `/#${createComparisonHash(comparisonHostScores, scores)}`);
+        window.history.replaceState({}, '', `${languagePath}#${createComparisonHash(comparisonHostScores, scores)}`);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
       setAppState('comparison-results');
@@ -132,7 +134,7 @@ const MusicPersonalityApp: React.FC = () => {
     }
 
     if (typeof window !== 'undefined') {
-      window.history.replaceState({}, '', `/?${createResultSearchParams(scores).toString()}`);
+      window.history.replaceState({}, '', `/?${createResultSearchParams(scores, language).toString()}`);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     setAppState('results');
@@ -146,22 +148,22 @@ const MusicPersonalityApp: React.FC = () => {
     setComparisonHostScores(null);
     setComparisonGuestScores(null);
     if (typeof window !== 'undefined') {
-      window.sessionStorage.removeItem('music-personality-survey');
-      window.history.replaceState({}, '', '/');
+      removeBrowserStorage('session', 'music-personality-survey');
+      window.history.replaceState({}, '', languagePath);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const handleOpenGenreExplorer = () => {
     setAppState('genre-explorer');
-    if (typeof window !== 'undefined') window.history.replaceState({}, '', '/?view=genre-explorer');
+    if (typeof window !== 'undefined') window.history.replaceState({}, '', `/?view=genre-explorer${language === 'en' ? '&lang=en' : ''}`);
   };
 
   const handleBackToIntro = () => {
     setAppState('intro');
     setComparisonHostScores(null);
     setComparisonGuestScores(null);
-    if (typeof window !== 'undefined') window.history.replaceState({}, '', '/');
+    if (typeof window !== 'undefined') window.history.replaceState({}, '', languagePath);
   };
 
   const handleCreateInvite = (scores: MUSICPersonality) => {
@@ -169,12 +171,12 @@ const MusicPersonalityApp: React.FC = () => {
     setComparisonGuestScores(null);
     setAppState('compare-invite');
     analytics.track('compatibility_invite_created', { hostScores: scores });
-    if (typeof window !== 'undefined') window.history.replaceState({}, '', `/#${createComparisonHash(scores)}`);
+    if (typeof window !== 'undefined') window.history.replaceState({}, '', `${languagePath}#${createComparisonHash(scores)}`);
   };
 
   const handleStartComparisonSurvey = () => {
     setComparisonGuestScores(null);
-    if (typeof window !== 'undefined') window.sessionStorage.removeItem('music-personality-survey');
+    removeBrowserStorage('session', 'music-personality-survey');
     setAppState('survey');
   };
 
@@ -184,7 +186,7 @@ const MusicPersonalityApp: React.FC = () => {
     setPersonalityScores(result.scores);
     setAppState('comparison-results');
     analytics.track('compatibility_completed', { source: 'recent-result' });
-    if (typeof window !== 'undefined') window.history.replaceState({}, '', `/#${createComparisonHash(comparisonHostScores, result.scores)}`);
+    if (typeof window !== 'undefined') window.history.replaceState({}, '', `${languagePath}#${createComparisonHash(comparisonHostScores, result.scores)}`);
   };
 
   const handleViewGuestResult = () => {
@@ -194,7 +196,7 @@ const MusicPersonalityApp: React.FC = () => {
     setComparisonHostScores(null);
     setComparisonGuestScores(null);
     setAppState('results');
-    if (typeof window !== 'undefined') window.history.replaceState({}, '', `/?${createResultSearchParams(comparisonGuestScores).toString()}`);
+    if (typeof window !== 'undefined') window.history.replaceState({}, '', `/?${createResultSearchParams(comparisonGuestScores, language).toString()}`);
   };
 
   const handleInviteAnotherFriend = () => {
@@ -210,7 +212,7 @@ const MusicPersonalityApp: React.FC = () => {
       setComparisonGuestScores(null);
       buildRecommendations(personalityScores, genres);
       setAppState('results');
-      if (typeof window !== 'undefined') window.history.replaceState({}, '', `/?${createResultSearchParams(personalityScores).toString()}`);
+      if (typeof window !== 'undefined') window.history.replaceState({}, '', `/?${createResultSearchParams(personalityScores, language).toString()}`);
       return;
     }
     handleBackToIntro();
@@ -221,7 +223,7 @@ const MusicPersonalityApp: React.FC = () => {
     buildRecommendations(result.scores, genres);
     setAppState('results');
     analytics.track('recent_result_opened', { topGenreId: result.topGenreId });
-    if (typeof window !== 'undefined') window.history.replaceState({}, '', `/?${createResultSearchParams(result.scores).toString()}`);
+    if (typeof window !== 'undefined') window.history.replaceState({}, '', `/?${createResultSearchParams(result.scores, language).toString()}`);
   };
 
   if (dataLoadError) return <main className="app-canvas flex min-h-screen flex-col items-center justify-center px-5 text-center text-white"><h1 className="text-2xl font-bold">{language === 'ko' ? '데이터를 불러오지 못했어요.' : 'We could not load the test.'}</h1><p className="mt-3 max-w-sm text-sm leading-6 text-white/65">{language === 'ko' ? '연결을 확인한 뒤 다시 시도해 주세요.' : 'Please check your connection and try again.'}</p><button onClick={() => setLoadAttempt(attempt => attempt + 1)} className="primary-action mt-7">{language === 'ko' ? '다시 시도하기' : 'Try again'}</button></main>;

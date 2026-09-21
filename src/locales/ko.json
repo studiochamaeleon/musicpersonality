@@ -117,7 +117,7 @@
     "clickToListen": "클릭하여 듣기",
     "retakeTest": "다시 검사하기",
     "exploreGenres": "장르 탐험하기",
-    "musicModelNote": "MUSIC 모델 기반 • musicpersonalitytest.pages.dev",
+    "musicModelNote": "MUSIC 모델 기반 • Music Personality Test",
     "fallbackAnalysisNote": "당신의 음악적 선호도를 바탕으로 한 분석",
     "uniqueTaste": "독특한 취향",
     "distinctive": "개성적인",
@@ -246,7 +246,7 @@
     "myMusicalPersonality": "나의 음악적 성격",
     "myMusicalTraits": "나의 음악적 특성", 
     "match": "일치",
-    "basedOnMusicModel": "MUSIC 모델 기반 성격 분석 • musicpersonalitytest.pages.dev"
+    "basedOnMusicModel": "MUSIC 모델 기반 성격 분석 • Music Personality Test"
   },
   "analysisReport": {
     "coreTraits": "핵심 특성",
@@ -406,7 +406,7 @@
         "title": "문의하기",
         "content": "이 개인정보 보호정책이나 저희의 데이터 관행에 대해 궁금한 점이 있으시면 다음으로 연락해 주세요:",
         "email": "이메일: studiochamaeleon@gmail.com",
-        "website": "웹사이트: https://musicpersonalitytest.pages.dev"
+        "website": "웹사이트:"
       }
     }
   },
@@ -485,7 +485,7 @@
         "title": "연락처 정보",
         "content": "이 이용약관에 대해 궁금한 점이 있으시면 다음으로 연락해 주세요:",
         "email": "이메일: studiochamaeleon@gmail.com",
-        "website": "웹사이트: https://musicpersonalitytest.pages.dev"
+        "website": "웹사이트:"
       }
     }
   }

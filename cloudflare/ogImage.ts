@@ -1,3 +1,5 @@
+import { KOREAN_GLYPHS } from './koreanGlyphs';
+
 const WIDTH = 1200;
 const HEIGHT = 630;
 
@@ -14,6 +16,8 @@ const ACCENTS: RGB[] = [
 const FONT: Record<string, number[]> = {
   ' ': [0, 0, 0, 0, 0, 0, 0],
   '%': [17, 2, 4, 8, 17, 0, 0],
+  '&': [12, 18, 20, 8, 21, 18, 13],
+  '?': [14, 17, 2, 4, 4, 0, 4],
   '-': [0, 0, 0, 31, 0, 0, 0],
   '0': [14, 17, 19, 21, 25, 17, 14],
   '1': [4, 12, 4, 4, 4, 4, 14],
@@ -103,6 +107,30 @@ function drawText(raw: Uint8Array, value: string, centerX: number, y: number, sc
   }
 }
 
+function koreanTextWidth(value: string, scale: number) {
+  return [...value].reduce((width, character) => width + (character === ' ' ? 15 : KOREAN_GLYPHS[character] ? 32 : 22) * scale, 0);
+}
+
+function drawKoreanText(raw: Uint8Array, value: string, centerX: number, y: number, scale: number, paletteIndex: number) {
+  let cursorX = Math.round(centerX - koreanTextWidth(value, scale) / 2);
+  for (const character of value) {
+    const bitmap = KOREAN_GLYPHS[character];
+    if (bitmap) {
+      for (let row = 0; row < 32; row += 1) {
+        const rowBits = Number.parseInt(bitmap.slice(row * 8, row * 8 + 8), 16) >>> 0;
+        for (let column = 0; column < 32; column += 1) {
+          if (rowBits & (0x80000000 >>> column)) {
+            fillRect(raw, cursorX + column * scale, y + row * scale, scale, scale, paletteIndex);
+          }
+        }
+      }
+    } else if (character !== ' ') {
+      drawText(raw, character, cursorX + 10 * scale, y + 4 * scale, Math.max(1, scale * 3), paletteIndex);
+    }
+    cursorX += (character === ' ' ? 15 : bitmap ? 32 : 22) * scale;
+  }
+}
+
 function concat(parts: Uint8Array[]) {
   const output = new Uint8Array(parts.reduce((sum, part) => sum + part.length, 0));
   let offset = 0;
@@ -162,7 +190,7 @@ interface PersonalOgResult {
   compatibility: number;
 }
 
-export function createOgPng(hostScores: number[], matchScore?: number | null, personalResult?: PersonalOgResult) {
+export function createOgPng(hostScores: number[], matchScore?: number | null, personalResult?: PersonalOgResult, language: 'ko' | 'en' = 'ko') {
   const accent = dominantAccent(hostScores);
   const palette: RGB[] = [
     [6, 7, 9],
@@ -194,21 +222,39 @@ export function createOgPng(hostScores: number[], matchScore?: number | null, pe
   drawText(raw, personalResult ? 'MY MUSIC TYPE' : matchScore === null || matchScore === undefined ? 'FRIEND INVITE' : 'OUR MUSIC MATCH', 930, 84, 3, 3);
 
   if (personalResult) {
-    const titleScale = Math.min(10, Math.max(4, Math.floor(1030 / Math.max(1, personalResult.typeTitle.length * 6))));
-    const genreScale = Math.min(7, Math.max(4, Math.floor(880 / Math.max(1, personalResult.genreName.length * 6))));
-    drawText(raw, 'MY MUSIC PERSONALITY', WIDTH / 2, 174, 4, 3);
-    drawText(raw, personalResult.typeTitle, WIDTH / 2, 238, titleScale, 5);
-    drawText(raw, personalResult.genreName, WIDTH / 2, 342, genreScale, 3);
-    drawText(raw, `${personalResult.compatibility}% GENRE MATCH`, WIDTH / 2, 422, 6, 4);
-    drawText(raw, 'WHAT IS YOUR MUSIC TYPE', WIDTH / 2, 502, 4, 3);
+    if (language === 'ko') {
+      const titleScale = Math.min(3, Math.max(1, Math.floor(1030 / Math.max(1, koreanTextWidth(personalResult.typeTitle, 1)))));
+      const genreScale = Math.min(2, Math.max(1, Math.floor(880 / Math.max(1, koreanTextWidth(personalResult.genreName, 1)))));
+      drawKoreanText(raw, '나의 음악 성격', WIDTH / 2, 170, 2, 3);
+      drawKoreanText(raw, personalResult.typeTitle, WIDTH / 2, 236, titleScale, 5);
+      drawKoreanText(raw, personalResult.genreName, WIDTH / 2, 340, genreScale, 3);
+      drawText(raw, `${personalResult.compatibility}%`, 476, 426, 8, 4);
+      drawKoreanText(raw, '장르 유사도', 710, 420, 2, 4);
+      drawKoreanText(raw, '너는 어떤 음악 타입?', WIDTH / 2, 496, 1, 3);
+    } else {
+      const titleScale = Math.min(10, Math.max(4, Math.floor(1030 / Math.max(1, personalResult.typeTitle.length * 6))));
+      const genreScale = Math.min(7, Math.max(4, Math.floor(880 / Math.max(1, personalResult.genreName.length * 6))));
+      drawText(raw, 'MY MUSIC PERSONALITY', WIDTH / 2, 174, 4, 3);
+      drawText(raw, personalResult.typeTitle, WIDTH / 2, 238, titleScale, 5);
+      drawText(raw, personalResult.genreName, WIDTH / 2, 342, genreScale, 3);
+      drawText(raw, `${personalResult.compatibility}% GENRE MATCH`, WIDTH / 2, 422, 6, 4);
+      drawText(raw, 'WHAT IS YOUR MUSIC TYPE', WIDTH / 2, 502, 4, 3);
+    }
   } else if (matchScore === null || matchScore === undefined) {
-    drawText(raw, 'A FRIEND INVITED YOU', WIDTH / 2, 226, 5, 3);
+    if (language === 'ko') drawKoreanText(raw, '친구가 초대했어요', WIDTH / 2, 214, 2, 3);
+    else drawText(raw, 'A FRIEND INVITED YOU', WIDTH / 2, 226, 5, 3);
     drawText(raw, 'JOIN', WIDTH / 2, 302, 19, 5);
-    drawText(raw, 'COMPARE YOUR MUSIC TASTE', WIDTH / 2, 478, 4, 4);
+    if (language === 'ko') drawKoreanText(raw, '음악 취향 비교', WIDTH / 2, 466, 2, 4);
+    else drawText(raw, 'COMPARE YOUR MUSIC TASTE', WIDTH / 2, 478, 4, 4);
   } else {
-    drawText(raw, 'TASTE COMPATIBILITY', WIDTH / 2, 196, 4, 3);
+    if (language === 'ko') drawKoreanText(raw, '우리 음악 궁합', WIDTH / 2, 188, 2, 3);
+    else drawText(raw, 'TASTE COMPATIBILITY', WIDTH / 2, 196, 4, 3);
     drawText(raw, `${matchScore}%`, WIDTH / 2, 264, 20, 5);
-    drawText(raw, matchScore >= 88 ? 'ALMOST THE SAME PLAYLIST' : matchScore >= 74 ? 'BETTER TOGETHER' : matchScore >= 60 ? 'FAMILIAR AND NEW' : 'DISCOVER NEW TASTES', WIDTH / 2, 455, 4, 4);
+    if (language === 'ko') {
+      drawKoreanText(raw, matchScore >= 88 ? '거의 같은 플레이리스트' : matchScore >= 74 ? '같이 들을수록 좋은 사이' : matchScore >= 60 ? '닮음과 새로움의 균형' : '서로 다른 취향의 발견', WIDTH / 2, 450, 2, 4);
+    } else {
+      drawText(raw, matchScore >= 88 ? 'ALMOST THE SAME PLAYLIST' : matchScore >= 74 ? 'BETTER TOGETHER' : matchScore >= 60 ? 'FAMILIAR AND NEW' : 'DISCOVER NEW TASTES', WIDTH / 2, 455, 4, 4);
+    }
   }
   drawText(raw, 'BY CHAMELEONS', 942, 548, 3, 3);
 

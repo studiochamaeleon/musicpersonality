@@ -1,13 +1,13 @@
 'use client';
 
-import React, { CSSProperties, useRef, useState } from 'react';
+import React, { CSSProperties, useEffect, useRef, useState } from 'react';
 import { Check, Download, Link2, Share2 } from 'lucide-react';
 import { MUSICPersonality, GenreSchema } from '@/types';
 import { analytics } from '@/lib/analytics';
 import { useTranslation } from '@/hooks/useTranslation';
 import { getGenreName, getGenreCharacteristics, getPersonalityAnalysis } from '@/lib/genreTranslations';
 import { getGenreTheme, getResultUrl } from '@/lib/resultTheme';
-import { captureCardBlob, saveCardImage } from '@/lib/cardExport';
+import { captureCardBlob, isAppleMobileBrowser, saveCardImage } from '@/lib/cardExport';
 
 interface ShareableCardProps {
   personalityScores: MUSICPersonality;
@@ -20,6 +20,9 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
   const { t, language } = useTranslation();
   const cardRef = useRef<HTMLDivElement>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [appleMobile, setAppleMobile] = useState(false);
+  const [preparedBlob, setPreparedBlob] = useState<Blob | null>(null);
+  const [imagePreparationFailed, setImagePreparationFailed] = useState(false);
   const theme = getGenreTheme(topGenre);
   const topTraits = Object.entries(personalityScores).sort(([, a], [, b]) => b - a).slice(0, 3);
   const personalityAnalysis = topGenre.personalityAnalysis
@@ -32,10 +35,18 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
     ? t(`intro.musicModelTraits.${trait}.description`)
     : t(`intro.musicModelTraits.${trait}.name`);
 
-  const createBlob = async () => {
-    if (!cardRef.current) throw new Error('Card is not ready');
-    return captureCardBlob(cardRef.current);
-  };
+  useEffect(() => {
+    const apple = isAppleMobileBrowser();
+    setAppleMobile(apple);
+    if (!apple || !cardRef.current) return;
+    let active = true;
+    setPreparedBlob(null);
+    setImagePreparationFailed(false);
+    void captureCardBlob(cardRef.current)
+      .then(blob => { if (active) setPreparedBlob(blob); })
+      .catch(() => { if (active) setImagePreparationFailed(true); });
+    return () => { active = false; };
+  }, [language, topGenre.id, topGenreScore]);
 
   const notify = (message: string) => {
     setFeedback(message);
@@ -46,32 +57,17 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
     const url = getResultUrl(personalityScores, language);
     const title = language === 'ko' ? `내 음악 성격은 ${typeTitle}` : `My music personality is ${typeTitle}`;
     const text = language === 'ko' ? `나는 ${getGenreName(topGenre, language)}와 닮은 ${typeTitle} 타입! 너는 어떤 음악 성격일까?` : `I'm a ${typeTitle} with a ${getGenreName(topGenre, language)} sound. What's your music type?`;
-    analytics.track('result_shared', { shareType: 'unified', topGenre: topGenre.name, personalityScores });
-    try {
-      const blob = await createBlob();
-      const file = new File([blob], 'music-personality-result.png', { type: 'image/png' });
-      const data: ShareData = {
-        title,
-        text,
-        url,
-        files: [file],
-      };
-      if (navigator.share && navigator.canShare?.(data)) {
-        await navigator.share(data);
-        return;
-      }
-    } catch (error) {
-      if (error instanceof DOMException && error.name === 'AbortError') return;
-    }
-
     try {
       if (navigator.share) {
         await navigator.share({ title, text, url });
+        analytics.track('result_shared', { shareType: 'native-link', topGenre: topGenre.name, personalityScores });
         return;
       }
       await navigator.clipboard.writeText(url);
+      analytics.track('result_shared', { shareType: 'copy', topGenre: topGenre.name, personalityScores });
       notify(language === 'ko' ? '결과 링크를 복사했어요.' : 'Result link copied.');
-    } catch {
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') return;
       notify(language === 'ko' ? '공유하지 못했어요. 다시 시도해 주세요.' : 'Could not share. Please try again.');
     }
   };
@@ -79,10 +75,12 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
   const download = async () => {
     try {
       if (!cardRef.current) throw new Error('Card is not ready');
+      if (appleMobile && !preparedBlob) throw new Error('Image is still being prepared');
       await saveCardImage(
         cardRef.current,
         'music-personality-result.png',
         language === 'ko' ? '내 음악 성격 결과' : 'My music personality result',
+        preparedBlob ?? undefined,
       );
       analytics.track('result_shared', { shareType: 'download', topGenre: topGenre.name, personalityScores });
       notify(language === 'ko' ? '결과 이미지를 준비했어요.' : 'Result image is ready.');
@@ -90,6 +88,17 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
       if (error instanceof DOMException && error.name === 'AbortError') return;
       notify(language === 'ko' ? '이미지를 만들지 못했어요.' : 'Could not create the image.');
     }
+  };
+
+  const saveOrRetry = () => {
+    if (appleMobile && !preparedBlob && cardRef.current) {
+      setImagePreparationFailed(false);
+      void captureCardBlob(cardRef.current)
+        .then(setPreparedBlob)
+        .catch(() => setImagePreparationFailed(true));
+      return;
+    }
+    void download();
   };
 
   const copyLink = async () => {
@@ -143,7 +152,7 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
 
       <div className="mt-6 grid gap-3 sm:grid-cols-3">
         <button onClick={() => void share()} className="primary-action inline-flex items-center justify-center gap-2" style={{ background: theme.accent, borderColor: theme.accent }}><Share2 size={17} />{language === 'ko' ? '공유하기' : 'Share'}</button>
-        <button onClick={() => void download()} className="secondary-action inline-flex items-center justify-center gap-2"><Download size={17} />{language === 'ko' ? '이미지 저장' : 'Save image'}</button>
+        <button onClick={saveOrRetry} disabled={appleMobile && !preparedBlob && !imagePreparationFailed} className="secondary-action inline-flex items-center justify-center gap-2"><Download size={17} />{appleMobile && !preparedBlob ? (imagePreparationFailed ? (language === 'ko' ? '이미지 다시 준비' : 'Retry image') : (language === 'ko' ? '이미지 준비 중' : 'Preparing image')) : (language === 'ko' ? '이미지 저장' : 'Save image')}</button>
         <button onClick={() => void copyLink()} className="secondary-action inline-flex items-center justify-center gap-2"><Link2 size={17} />{language === 'ko' ? '링크 복사' : 'Copy link'}</button>
       </div>
       <div className="mt-3 min-h-6 text-center text-xs text-white/45" role="status" aria-live="polite">{feedback && <span className="inline-flex items-center gap-1.5"><Check size={13} />{feedback}</span>}</div>

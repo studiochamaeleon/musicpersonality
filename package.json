@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "validate:catalog": "node scripts/validate-music-catalog.mjs",
+    "generate:og-glyphs": "node scripts/generate-og-glyphs.mjs",
     "test:unit": "node --experimental-strip-types --test tests/unit/*.test.mjs",
     "preview:e2e": "npm run build && wrangler pages dev out --port 4173 --ip 127.0.0.1 --compatibility-date=2026-09-18",
     "test:e2e": "playwright test"
@@ -21,6 +22,9 @@
     "react-dom": "19.1.0",
     "recharts": "^3.2.1"
   },
+  "overrides": {
+    "postcss": "8.5.28"
+  },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@playwright/test": "^1.63.0",
@@ -30,6 +34,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.5.25",
+    "sharp": "^0.35.4",
     "tailwindcss": "^4.3.3",
     "typescript": "^5",
     "wrangler": "^4.135.0"

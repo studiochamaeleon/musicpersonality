@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Language } from '@/types/i18n';
+import { readBrowserStorage, writeBrowserStorage } from '@/lib/browserStorage';
 
 interface LanguageContextType {
   language: Language;
@@ -23,8 +24,8 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const queryLanguage = new URLSearchParams(window.location.search).get('lang') as Language;
-      const savedLanguage = localStorage.getItem('music-personality-language') as Language;
-      const hasSelectedLanguage = localStorage.getItem('music-personality-language-selected');
+      const savedLanguage = readBrowserStorage('local', 'music-personality-language') as Language;
+      const hasSelectedLanguage = readBrowserStorage('local', 'music-personality-language-selected');
       
       if (queryLanguage === 'ko' || queryLanguage === 'en') {
         setLanguageState(queryLanguage);
@@ -43,8 +44,12 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     setIsLanguageSelected(true);
     
     if (typeof window !== 'undefined') {
-      localStorage.setItem('music-personality-language', lang);
-      localStorage.setItem('music-personality-language-selected', 'true');
+      writeBrowserStorage('local', 'music-personality-language', lang);
+      writeBrowserStorage('local', 'music-personality-language-selected', 'true');
+      const url = new URL(window.location.href);
+      if (lang === 'en') url.searchParams.set('lang', 'en');
+      else url.searchParams.delete('lang');
+      window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
     }
   };
 

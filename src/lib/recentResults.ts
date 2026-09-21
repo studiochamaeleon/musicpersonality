@@ -1,5 +1,6 @@
 import { MUSICPersonality } from '@/types';
 import { MUSIC_TRAITS } from '@/lib/compatibility';
+import { readBrowserStorage, writeBrowserStorage } from '@/lib/browserStorage';
 
 const STORAGE_KEY = 'music-personality-recent-results-v1';
 const MAX_RESULTS = 3;
@@ -29,7 +30,7 @@ function isRecentResult(value: unknown): value is RecentMusicResult {
 export function loadRecentResults(): RecentMusicResult[] {
   if (typeof window === 'undefined') return [];
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
+    const raw = readBrowserStorage('local', STORAGE_KEY);
     const parsed: unknown = raw ? JSON.parse(raw) : [];
     return Array.isArray(parsed) ? parsed.filter(isRecentResult).slice(0, MAX_RESULTS) : [];
   } catch {
@@ -48,10 +49,6 @@ export function saveRecentResult(scores: MUSICPersonality, topGenreId: string) {
   };
   const deduplicated = loadRecentResults().filter(result => MUSIC_TRAITS.some(key => Math.round(result.scores[key]) !== Math.round(scores[key])));
   const results = [next, ...deduplicated].slice(0, MAX_RESULTS);
-  try {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(results));
-  } catch {
-    return loadRecentResults();
-  }
+  if (!writeBrowserStorage('local', STORAGE_KEY, JSON.stringify(results))) return loadRecentResults();
   return results;
 }
