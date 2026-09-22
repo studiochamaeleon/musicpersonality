@@ -1,3 +1,5 @@
+import type { Language } from '../src/types/i18n';
+
 export const SCORE_TOKEN_PATTERN = /^v1(?:\.(?:100|[0-9]{1,2})){5}$/;
 
 export function decodeScoreToken(token: string | null) {
@@ -11,8 +13,8 @@ export function calculateMatchScore(host: number[], guest: number[]) {
   return Math.round(totalSimilarity / host.length);
 }
 
-export function createAppHash(host: string, guest?: string | null, language: 'ko' | 'en' = 'ko') {
+export function createAppHash(host: string, guest?: string | null, language: Language = 'ko') {
   const params = new URLSearchParams({ compare: host });
   if (guest) params.set('guest', guest);
-  return `${language === 'en' ? '/?lang=en' : '/'}#${params.toString()}`;
+  return `${language === 'ko' ? '/' : `/?lang=${language}`}#${params.toString()}`;
 }

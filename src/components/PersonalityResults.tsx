@@ -61,13 +61,19 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
   const compatibleTypes = getCompatiblePersonalityTypes(personalityScores, genres, language);
   const resultCopy = language === 'ko'
     ? { eyebrow: '당신의 음악 성격', lead: '당신과 가장 닮은 장르', match: '장르 유사도', spectrum: '나의 취향 스펙트럼', spectrumBody: '다섯 개의 축이 당신의 음악 취향을 어떻게 구성하는지 보여줍니다.', next: '함께 들으면 좋은 장르', artists: '당신을 위한 아티스트와 앨범', detail: '성격 해석 더 보기', invite: '친구와 음악 궁합 보기', share: '결과 공유하기', again: '다시 검사하기', genreProfile: '아래 성격 해석은 가장 닮은 장르의 대표 프로필을 바탕으로 한 재미있는 읽을거리예요.', metricNote: '이 수치는 내 검사 점수가 아닌 추천 장르의 사운드 프로필입니다.', traitScore: '장르 특성 점수', relationship: '관계에서의 모습', preferences: '어울리는 음악', activities: '해볼 만한 활동', compatible: '함께 탐색할 장르', exploreNote: '관계 궁합이 아니라, 다른 음악 취향을 발견하기 위한 아이디어예요.', contexts: '이럴 때 들어보세요', growth: '새롭게 탐험할 지점', genreMatch: '장르 유사도', card: '결과 카드', nextTag: '다음에 들을 음악', artistTag: '아티스트 추천', deepTag: '더 깊이 보기', shareTag: '결과 보여주기', nearTie: '같은 표시 점수의 장르도 있어요', shortNote: '자기보고 취향 비교 · 성격 진단 아님' }
-    : { eyebrow: 'YOUR MUSIC PERSONALITY', lead: 'The genre most like you', match: 'genre similarity', spectrum: 'Your taste spectrum', spectrumBody: 'Five dimensions show how your music taste is put together.', next: 'Genres to try next', artists: 'Artists and albums for your taste', detail: 'Read the full personality note', invite: 'Compare with a friend', share: 'Share my result', again: 'Take it again', genreProfile: 'The personality note below is a playful interpretation of your closest genre profile.', metricNote: 'These are the recommended genre’s sound attributes, not your survey scores.', traitScore: 'Genre profile score', relationship: 'Relationships', preferences: 'Music to try', activities: 'Activities to try', compatible: 'Other genres to explore', exploreNote: 'These are discovery ideas, not predictions of relationship compatibility.', contexts: 'Good moments to listen', growth: 'A different sound to discover', genreMatch: 'Genre similarity', card: 'RESULT CARD', nextTag: 'NEXT LISTEN', artistTag: 'ARTIST PICKS', deepTag: 'DEEP DIVE', shareTag: 'SHOW YOUR RESULT', nearTie: 'Another genre shares this displayed score', shortNote: 'Self-reported taste match · not a diagnosis' };
+    : language === 'ja'
+      ? { eyebrow: 'あなたの音楽性格', lead: 'あなたに最も似たジャンル', match: 'ジャンル一致度', spectrum: 'あなたの好みスペクトル', spectrumBody: '五つの軸から、音楽の好みの組み合わせが見えてきます。', next: '次に試したいジャンル', artists: 'あなたへのアーティストとアルバム', detail: '性格メモの全文を読む', invite: '友達と音楽相性を見る', share: '結果をシェア', again: 'もう一度テスト', genreProfile: '以下の性格メモは、最も近いジャンルプロファイルをもとにした気軽な読み物です。', metricNote: 'これらはおすすめジャンルのサウンド特性で、あなたの回答スコアではありません。', traitScore: 'ジャンル特性スコア', relationship: '人間関係での傾向', preferences: 'おすすめの音', activities: '試してみたいこと', compatible: '一緒に探したいジャンル', exploreNote: '人間関係の予測ではなく、新しい音楽に出会うためのヒントです。', contexts: 'こんな時に聴いてみて', growth: '新しく探索するポイント', genreMatch: 'ジャンル一致度', card: '結果カード', nextTag: '次に聴く音楽', artistTag: 'アーティスト提案', deepTag: 'もっと深く', shareTag: '結果を見せる', nearTie: '同じ表示スコアのジャンルもあります', shortNote: '自己申告の好み比較 · 性格診断ではありません' }
+      : { eyebrow: 'YOUR MUSIC PERSONALITY', lead: 'The genre most like you', match: 'genre similarity', spectrum: 'Your taste spectrum', spectrumBody: 'Five dimensions show how your music taste is put together.', next: 'Genres to try next', artists: 'Artists and albums for your taste', detail: 'Read the full personality note', invite: 'Compare with a friend', share: 'Share my result', again: 'Take it again', genreProfile: 'The personality note below is a playful interpretation of your closest genre profile.', metricNote: 'These are the recommended genre’s sound attributes, not your survey scores.', traitScore: 'Genre profile score', relationship: 'Relationships', preferences: 'Music to try', activities: 'Activities to try', compatible: 'Other genres to explore', exploreNote: 'These are discovery ideas, not predictions of relationship compatibility.', contexts: 'Good moments to listen', growth: 'A different sound to discover', genreMatch: 'Genre similarity', card: 'RESULT CARD', nextTag: 'NEXT LISTEN', artistTag: 'ARTIST PICKS', deepTag: 'DEEP DIVE', shareTag: 'SHOW YOUR RESULT', nearTie: 'Another genre shares this displayed score', shortNote: 'Self-reported taste match · not a diagnosis' };
   const albumCopy = language === 'ko'
     ? { anchor: '장르의 기준점', discovery: '새롭게 발견할 앨범', listen: 'Spotify에서 앨범 듣기' }
-    : { anchor: 'Genre cornerstone', discovery: 'Your next discovery', listen: 'Listen to the album on Spotify' };
+    : language === 'ja'
+      ? { anchor: 'ジャンルの基準点', discovery: '次に出会うアルバム', listen: 'Spotifyでアルバムを聴く' }
+      : { anchor: 'Genre cornerstone', discovery: 'Your next discovery', listen: 'Listen to the album on Spotify' };
   const insightCopy = language === 'ko'
     ? { eyebrow: '성격 해석', title: '취향에서 읽은 당신의 모습', core: '핵심 특성', lifestyle: '라이프스타일 통찰', music: '추천 장르의 사운드', popularity: '인기도', energy: '에너지', valence: '긍정성', acousticness: '어쿠스틱' }
-    : { eyebrow: 'PERSONALITY NOTES', title: 'What your taste says about you', core: 'Core traits', lifestyle: 'Lifestyle insights', music: 'Recommended genre sound', popularity: 'Popularity', energy: 'Energy', valence: 'Positivity', acousticness: 'Acoustic' };
+    : language === 'ja'
+      ? { eyebrow: '性格メモ', title: '好みから見えるあなた', core: '核心的な特徴', lifestyle: 'ライフスタイルのヒント', music: 'おすすめジャンルのサウンド', popularity: '人気度', energy: 'エネルギー', valence: 'ポジティブ度', acousticness: 'アコースティック' }
+      : { eyebrow: 'PERSONALITY NOTES', title: 'What your taste says about you', core: 'Core traits', lifestyle: 'Lifestyle insights', music: 'Recommended genre sound', popularity: 'Popularity', energy: 'Energy', valence: 'Positivity', acousticness: 'Acoustic' };
   const musicMetrics = [
     { label: insightCopy.popularity, value: topGenre.popularity },
     { label: insightCopy.energy, value: topGenre.energy },
@@ -82,10 +88,10 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
 
   const shareResultLink = async () => {
     const url = getResultUrl(personalityScores, language);
-    const title = language === 'ko' ? `내 음악 성격은 ${typeTitle}` : `My music personality is ${typeTitle}`;
+    const title = language === 'ko' ? `내 음악 성격은 ${typeTitle}` : language === 'ja' ? `私の音楽性格は「${typeTitle}」` : `My music personality is ${typeTitle}`;
     const text = language === 'ko'
       ? `나는 ${getGenreName(topGenre, language)}와 닮은 ${typeTitle} 타입! 너는 어떤 음악 성격일까?`
-      : `I'm a ${typeTitle} with a ${getGenreName(topGenre, language)} sound. What's your music type?`;
+      : language === 'ja' ? `私は${getGenreName(topGenre, language)}に似た「${typeTitle}」タイプ。あなたの音楽性格は？` : `I'm a ${typeTitle} with a ${getGenreName(topGenre, language)} sound. What's your music type?`;
     try {
       if (navigator.share) {
         await navigator.share({ title, text, url });
@@ -94,10 +100,10 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
       }
       await navigator.clipboard.writeText(url);
       analytics.track('result_shared', { shareType: 'sticky-copy', topGenre: topGenre.name, personalityScores });
-      notifyShare(language === 'ko' ? '결과 링크를 복사했어요.' : 'Result link copied.');
+      notifyShare(language === 'ko' ? '결과 링크를 복사했어요.' : language === 'ja' ? '結果リンクをコピーしました。' : 'Result link copied.');
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') return;
-      notifyShare(language === 'ko' ? '공유하지 못했어요.' : 'Could not share the result.');
+      notifyShare(language === 'ko' ? '공유하지 못했어요.' : language === 'ja' ? '結果をシェアできませんでした。' : 'Could not share the result.');
     }
   };
 

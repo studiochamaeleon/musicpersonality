@@ -114,6 +114,27 @@ test('English results expose the complete interpretation', async ({ page }) => {
   await expect(page.getByText('The personality note below is a playful interpretation', { exact: false })).toBeVisible();
 });
 
+test('Japanese covers the intro, survey, full result, and genre explorer', async ({ page }) => {
+  await page.goto('/?lang=ja');
+  await expect(page.getByRole('heading', { level: 1, name: /好きな音を辿れば、\s*あなたが見える。/ })).toBeVisible();
+  await page.getByRole('button', { name: '私の音楽性格を見つける' }).click();
+  await expect(page.getByRole('heading', { level: 1, name: '静かで穏やかな音楽が好きだ' })).toBeVisible();
+  await expect(page.getByRole('radio', { name: '3: どちらともいえない' })).toBeVisible();
+
+  await page.goto('/?v=2&m=80&u=50&s=85&i=30&c=75&lang=ja');
+  await expect(page.getByRole('heading', { level: 1, name: '瞑想する完璧主義者' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'おすすめジャンルのサウンド' })).toBeVisible();
+  await page.getByText('性格メモの全文を読む').click();
+  await expect(page.getByRole('heading', { name: '人間関係での傾向' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'おすすめの音' })).toBeVisible();
+
+  await page.goto('/?view=genre-explorer&lang=ja');
+  await expect(page.getByRole('heading', { level: 1, name: 'ジャンルにも、性格がある。' })).toBeVisible();
+  await page.getByRole('button', { name: /ミニマリズム/ }).first().click();
+  await expect(page.getByRole('dialog', { name: 'ミニマリズム' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '核心的な特徴' })).toBeVisible();
+});
+
 test.describe('desktop layout', () => {
   test.use({ viewport: { width: 1440, height: 900 } });
 

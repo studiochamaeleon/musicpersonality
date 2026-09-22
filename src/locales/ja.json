@@ -1,0 +1,101 @@
+{
+  "common": {
+    "buttons": { "start": "テストを始める", "next": "次へ", "prev": "前へ", "complete": "完了", "restart": "もう一度", "close": "閉じる", "backToHome": "ホームへ戻る", "exploreGenres": "ジャンルを探す" },
+    "loading": { "initializing": "準備しています…", "preparingSurvey": "質問を準備しています…", "analyzingResults": "結果を分析しています…", "loadingGenres": "ジャンルを読み込んでいます…", "default": "読み込み中…" },
+    "labels": { "required": "回答が必要です", "completed": "完了", "progress": "進み具合", "question": "質問", "of": "/" }
+  },
+  "languageSelector": { "label": "言語" },
+  "intro": {
+    "title": "音楽性格テスト",
+    "description": "音楽の好みから自分らしさを知り、\nあなたに似たジャンルとアルバムを見つけよう",
+    "testInfo": "📝 40問 | ⏱️ 約5分 | 🎵 32ジャンル",
+    "subtitle": "音楽の好みから自分らしさを知り、\nあなたに似たジャンルとアルバムを見つけよう",
+    "musicModelTitle": "MUSICモデルに着想を得たテスト",
+    "startTest": "テストを始める",
+    "exploreGenres": "ジャンルを探す",
+    "musicModelTraits": {
+      "mellow": { "name": "Mellow", "description": "穏やかさ", "abbrev": "MEL" },
+      "unpretentious": { "name": "Unpretentious", "description": "親しみやすさ", "abbrev": "UNP" },
+      "sophisticated": { "name": "Sophisticated", "description": "探究心", "abbrev": "SOP" },
+      "intense": { "name": "Intense", "description": "力強さ", "abbrev": "INT" },
+      "contemporary": { "name": "Contemporary", "description": "今っぽさ", "abbrev": "CON" }
+    },
+    "stats": "📝 40問 | ⏱️ 約5分 | 🎵 32ジャンル",
+    "musicTraitDescriptions": {
+      "mellow": "穏やかでリラックスできる音楽への好み",
+      "unpretentious": "飾らず親しみやすい音楽への好み",
+      "sophisticated": "複雑で知的な音楽への好み",
+      "intense": "力強く刺激的な音楽への好み",
+      "contemporary": "現代的でトレンド感のある音楽への好み"
+    }
+  },
+  "survey": {
+    "completed": "回答が完了しました！", "cannotLoad": "質問を読み込めませんでした。", "analyzing": "結果を分析しています…", "errorLoadingQuestion": "質問を読み込めませんでした。", "previous": "前へ", "next": "次へ", "complete": "結果を見る", "answerComplete": "回答済み", "answerNeeded": "回答が必要です", "questionProgress": "質問", "percentComplete": "完了", "scales": { "stronglyDisagree": "まったく当てはまらない", "disagree": "あまり当てはまらない", "neutral": "どちらともいえない", "agree": "当てはまる", "stronglyAgree": "とても当てはまる" }, "scoreLabel": "スコア"
+  },
+  "results": {
+    "title": "あなたの結果", "yourPersonality": "あなたの音楽性格", "musicPersonalityType": "音楽性格タイプ", "personalityTraits": "性格の特徴", "recommendedGenres": "おすすめジャンル", "recommendedArtists": "おすすめアーティスト", "shareResults": "結果をシェア", "shareDescription": "あなたの音楽性格を友達にも見せてみよう！", "exploreMore": "もっとジャンルを探す", "showSimpleResults": "結果をシンプルに見る", "showDetailedAnalysis": "詳しい分析を見る", "fallbackTitle": "あなただけの音楽性格", "fallbackDescription": "個性的な音楽の好みに、あなたらしさが表れています。", "musicProfileTitle": "あなたのMUSICプロフィール", "unknownGenre": "不明なジャンル", "cannotLoadGenre": "ジャンル情報を読み込めません。", "recommendationReason": "この結果になった理由", "keyTracks": "入口になるアルバム", "clickToListen": "聴いてみる", "retakeTest": "もう一度テストする", "exploreGenres": "ジャンルを探す", "musicModelNote": "MUSICモデルを参考にしたエンタメ診断", "fallbackAnalysisNote": "音楽の好みから読み解いたライトな分析です", "uniqueTaste": "個性的な好み", "distinctive": "個性的", "points": "点", "selected": "選択中",
+    "personalityAnalysis": { "coreTraits": "中心となる特徴", "lifestyleInsights": "ライフスタイル", "strengths": "強み", "growthAreas": "気をつけたい点" },
+    "fallbackTraits": { "musicalOpenness": "音楽への開放性", "emotionalExpression": "感情表現", "creativeThinking": "創造的な思考" },
+    "fallbackDescriptions": { "musicalOpennessDesc": "さまざまな音楽を楽しめる柔軟さがあります", "musicalOpennessImpact": "未知のジャンルにも自然に踏み出せます", "emotionalExpressionDesc": "音楽を通して感情を表現することが好きです", "emotionalExpressionImpact": "音楽が大切な感情のコミュニケーションになります", "creativeThinkingDesc": "音楽の好みに独創性が表れています", "creativeThinkingImpact": "芸術的な感覚と発想力に優れています" },
+    "fallbackLifestyle": { "stressRelief": "音楽で日々のストレスをほどきます", "personalTime": "音楽を聴く自分だけの時間を大切にします", "lifestyleImpact": "音楽の好みが暮らし方にも影響しています" },
+    "fallbackStrengths": { "uniqueTaste": "自分らしい音楽の好み", "artisticSense": "芸術的な感性と発想力", "emotionalRegulation": "音楽で気持ちを整える力" },
+    "fallbackChallenges": { "isolation": "好みが周囲と違うと孤独を感じること", "perfectionism": "音楽に理想を求めすぎること", "exploration": "新しいジャンルを試す前に迷うこと" },
+    "fallbackActivities": { "concerts": "ライブやフェスへ行く", "community": "音楽コミュニティに参加する", "curation": "新しいアーティストを見つけて選曲する", "creation": "演奏や音楽制作に挑戦する" },
+    "fallbackMusic": { "captivated": "このジャンルならではの魅力に強く惹かれます", "valueElements": "こんな音楽要素を大切にします", "elementTemplate": "{element}という音楽要素を大切にします" },
+    "fallbackTitles": { "enthusiast": "音楽好き", "uniqueTaste": "この音楽に自分らしい好みがあります。", "uniqueDescription": "あなたらしさを映す、個性的な好みです。" },
+    "templates": { "typeDescription": "{genreName}に自分らしい魅力を感じるタイプです。{description}", "lifestyleTemplate": "{genreName}を通して{message}", "musicPreferenceTemplate": "{genreName}ならではの魅力に強く惹かれます。", "activitiesTemplate": "{genreName}に合う{activity}" },
+    "yourGenreType": "あなたは{category}の{genre}タイプ！", "genreLabel": "{genre}ジャンル"
+  },
+  "genreExplorer": {
+    "title": "音楽ジャンル図鑑", "subtitle": "さまざまなジャンルを眺めながら、新しい好みを見つけよう", "searchPlaceholder": "ジャンルを検索…", "categories": { "all": "すべて" }, "sortBy": { "name": "名前", "popularity": "人気度", "energy": "エネルギー", "era": "年代" }, "viewModes": { "grid": "グリッド", "list": "リスト" },
+    "genreModal": { "description": "ジャンル紹介", "personalityProfile": "MUSICプロフィール", "personalityAnalysis": "性格タイプ分析", "coreTraits": "中心となる特徴", "lifestyleInsights": "ライフスタイル", "strengths": "強み", "challenges": "気をつけたい点", "musicalCharacteristics": "音楽的な特徴", "representativeArtists": "代表的なアーティストとアルバム", "subGenres": "サブジャンル", "recommendedTracks": "代表曲", "clickToListen": "Spotifyでアルバムを聴く", "moreTracksPrefix": "ほか", "moreTracksSuffix": "曲" },
+    "metrics": { "popularity": "人気度", "energy": "エネルギー", "valence": "ポジティブさ", "acousticness": "アコースティック度", "characteristics": "特徴" }, "resultsCount": "{count}ジャンル", "noResults": { "title": "見つかりませんでした", "subtitle": "別のキーワードやフィルターを試してください" }
+  },
+  "chart": { "interpretationGuide": "各軸は0〜100で表示され、", "interpretationGuide2": "数値が高いほどその傾向が強いことを示します。", "musicPersonality": "MUSICプロフィール" },
+  "pwa": { "installTitle": "アプリとして追加", "installDescription": "ホーム画面に追加すると、いつでもすぐに開けます。", "installButton": "追加する", "laterButton": "あとで" },
+  "sharing": { "download": "保存", "share": "シェア", "shareNative": "シェア" },
+  "shareableCard": { "myMusicalPersonality": "私の音楽性格", "myMusicalTraits": "私の音楽傾向", "match": "一致", "basedOnMusicModel": "MUSICモデルを参考にしたエンタメ診断" },
+  "analysisReport": {
+    "coreTraits": "中心となる特徴", "lifestyleInsights": "ライフスタイル", "strengths": "強み", "challenges": "気をつけたい点", "compatibleTypes": "相性のよい音楽タイプ", "compatibilityTitle": "音楽の相性", "compatibilityDescription": "💡 友達と比べると、共通点や新しい音楽の入口が見つかります。", "musicPreferences": "好みやすい音楽", "socialSharing": { "title": "音楽性格の結果をシェア", "description": "🎵 友達との音楽相性もチェック！", "subtitle": "似ているところと違うところから、一緒に聴きたい音楽を見つけよう。", "instructions": "友達もテストを終えると音楽相性を比較できます", "resultText": "🎵 音楽性格テストの結果\n\n{typeTitle}\n{description}\n\nあなたも試してみて：{url}", "shareTitle": "私の音楽性格テスト結果" }, "relationshipCompatibility": "人間関係での傾向", "bestMatch": "ベストマッチ", "compatibilityReason": "相性の理由：", "recommendedActivities": "おすすめの過ごし方", "shareButton": "📲 結果をシェア", "resultsCopied": "結果をコピーしました！",
+    "relationshipDynamics": { "complementary": "違いを補いながら音楽の世界を広げる関係です。{genreName}を通して新しい感情に出会えます。", "similarEnhanced": "似た好みを土台に、{genreName}を一緒に深く楽しめる関係です。", "balanced": "互いの好みを尊重し、{genreName}を中心にバランスよく音楽を交換できます。" },
+    "musicalSynergy": { "complementary": "{genreName}の特徴が二人の音楽体験を広げ、より豊かな時間をつくります。", "similarEnhanced": "{genreName}への共通の関心から、音楽の話や新しいアーティスト探しを一緒に楽しめます。", "balanced": "{genreName}を通して互いの視点を共有し、バランスのよいプレイリストを作れます。" }
+  },
+  "error": { "occurred": "エラーが発生しました。", "tryAgain": "もう一度お試しください。" },
+  "seo": {
+    "website": { "title": "音楽性格テスト｜自分に似たジャンルを発見", "description": "40問の音楽の好みに答えて、自分に似たジャンルやアルバムを見つけるライトな性格テストです。", "siteName": "音楽性格テスト", "keywords": ["音楽性格テスト", "音楽の好み", "MUSICモデル", "ジャンル診断", "音楽おすすめ", "性格テスト", "音楽発見"], "author": "CHAMELEONS", "creator": "音楽性格テスト", "publisher": "CHAMELEONS", "ogTitle": "音楽性格テスト｜自分に似たジャンルを発見", "ogDescription": "音楽の好みから、あなたに似たジャンルとアルバムを見つけよう。", "ogImageAlt": "音楽性格テストの結果", "twitterTitle": "音楽性格テスト｜自分に似たジャンルを発見", "twitterDescription": "音楽の好みから、あなたに似たジャンルとアルバムを見つけよう。", "twitterCreator": "@musicpersonality" },
+    "structuredData": { "website": { "name": "音楽性格テスト", "description": "MUSICモデルを参考にしたライトな音楽の好み診断", "organizationName": "CHAMELEONS" }, "quiz": { "educationalLevel": "一般", "learningResourceType": "性格テスト", "aboutName": "音楽心理", "aboutDescription": "MUSICモデルを参考にした音楽性格テスト", "questionName": "音楽の好みに関する質問", "questionText": "音楽の好みや聴き方についての質問" }, "article": { "headline": "あなたの音楽性格を知る", "authorName": "CHAMELEONS" } }
+  },
+  "privacy": {
+    "title": "プライバシーポリシー", "lastUpdated": "最終更新：",
+    "sections": {
+      "introduction": { "title": "はじめに", "content": "このテストはアカウントなしで利用できます。回答と結果の計算はブラウザ内で行われます。結果や友達との相性リンクをシェアすると、URLに含まれるMUSICスコアが受信者やSNSプレビューを生成するホスティングサービスへ送られる場合があります。広告スクリプトには別のデータ処理方針が適用されます。" },
+      "dataCollection": { "title": "収集する情報", "noCollectionTitle": "アカウントと回答内容", "noCollectionContent": "本サービスはログインを求めず、氏名・メールアドレス・電話番号・回答原文を保存する独自データベースを運用していません。スコアを含む共有リンクと通常のWebリクエストは、ブラウザ内処理の例外です。", "localStorageTitle": "ブラウザ保存と共有リンク", "localStorageItems": ["回答途中の内容はブラウザのセッションストレージに保存されます", "言語設定、直近3件までの結果、最大100件の利用イベントはローカルストレージに保存されます", "アプリ内の友達比較はURLフラグメント（#）から復元されます", "SNSプレビュー付きの個人・友達共有リンクでは、スコアがURLクエリに含まれCloudflare Pages Functionへ送信されます", "共有リンクを受け取った人やプラットフォームは、リンク内のスコアを確認できます", "テストでは氏名・メールアドレス・電話番号を尋ねません"], "thirdPartyTitle": "第三者によるデータ処理", "thirdPartyItems": ["Google AdSenseは広告配信のためCookie、Webビーコン、IPアドレスなどを処理する場合があります", "Cloudflareはサイト配信や共有プレビュー生成時にリクエストURLを処理する場合があります", "Spotifyのアルバムリンクを開いた後はSpotifyのデータ方針が適用されます"] },
+      "dataUsage": { "title": "情報の利用目的", "noUsageContent": "本サービスはアカウントや結果データベースを運用していません。ブラウザに保存された情報は端末内での復元や機能提供に使われます。", "browserProcessingContent": "ブラウザ内で行われること：", "browserProcessingItems": ["回答を端末内で処理し、性格結果を生成します", "友達との相性と共同おすすめジャンルは、二人のスコアからブラウザ内で計算されます", "利便性のため言語設定を記憶します", "共有リンクではプレビュー生成と結果復元のためURL内のスコアが送信されます"] },
+      "thirdPartyServices": { "title": "第三者サービス", "googleAdsenseTitle": "Google AdSense", "googleAdsenseContent": "広告表示にGoogle AdSenseを利用する場合があります。Googleはパーソナライズ広告のため、本サイトや他サイトへの訪問情報をCookieやWebビーコンで収集する場合があります。Googleの広告設定からパーソナライズ広告を無効にできます。", "noAnalyticsTitle": "独自の分析サーバーはありません", "noAnalyticsContent": "サービス独自の操作イベントはブラウザのローカルストレージにのみ記録され、別の分析サーバーには送信されません。ホスティングリクエストとGoogle AdSenseには別のデータ方針があります。" },
+      "cookies": { "title": "Cookieとローカルストレージ", "ourStorageTitle": "ブラウザ保存の利用", "ourStorageContent": "本サービスはセッションストレージとローカルストレージを次の目的で使います：", "ourStorageItems": ["回答途中の状態と直近の結果を端末に保存する", "言語設定を記憶する", "最大100件の利用イベントと3件の結果を端末内履歴として保持する"], "thirdPartyCookiesTitle": "第三者Cookie", "thirdPartyCookiesContent": "Google AdSenseは広告のためCookieを使用する場合があります。ブラウザ設定またはGoogleの広告設定から管理できます。Cookieを無効にしても、テストの基本機能は利用できます。" },
+      "dataSecurity": { "title": "データの安全性", "content": "回答原文はブラウザ内で処理されます。共有リンクを作成または開くとスコアがURLで送信されるため、結果を見せたくない相手には送らないでください。ブラウザ保存を削除すると、その端末に保存された進行状況と最近の結果が消去されます。" },
+      "userRights": { "title": "データの管理", "content": "端末に保存された情報はブラウザから管理できます：", "controlItems": ["セッションストレージとローカルストレージを消去し、保存された進行状況と結果履歴を削除できます", "すでに他者やプラットフォームへ共有したリンクは、それぞれの受信者やサービスが管理します", "アカウント登録なしでいつでも再テストできます"], "noTraditionalRights": "共有リンク、広告、ホスティングのデータ処理については下記へお問い合わせください。" },
+      "childrenPrivacy": { "title": "子どものプライバシー", "content": "本サービスは年齢を尋ねません。子どもが結果を共有したり、外部の音楽・広告リンクを開いたりする場合は、保護者の見守りをおすすめします。" },
+      "policyChanges": { "title": "ポリシーの変更", "content": "このプライバシーポリシーを更新することがあります。変更時はこのページに新しい内容を掲載し、上部の最終更新日を変更します。" },
+      "contact": { "title": "お問い合わせ", "content": "このポリシーやデータの取り扱いに関するご質問は、以下へご連絡ください：", "email": "メール：studiochamaeleon@gmail.com", "website": "Webサイト：" }
+    }
+  },
+  "terms": {
+    "title": "利用規約", "lastUpdated": "最終更新：",
+    "sections": {
+      "acceptance": { "title": "規約への同意", "content": "音楽性格テスト（以下「本サービス」）へアクセスし利用することで、本規約に同意したものとみなされます。同意できない場合は本サービスを利用しないでください。" },
+      "serviceDescription": { "title": "サービス内容", "content": "音楽性格テストは無料のエンターテインメントWebサイトです。回答から5つの音楽嗜好スコアを計算し、編集されたジャンルプロフィールと比較して音楽とライトな性格解釈を提案します。結果は検証済みの心理診断でも、ジャンルを好きになる確率でもありません。" },
+      "userResponsibilities": { "title": "利用者の責任", "content": "本サービスの利用にあたり、次の事項に同意するものとします：", "responsibilities": ["できる範囲で正直に回答する", "個人的かつ非営利の目的で利用する", "サービスの操作・侵入・妨害を試みない", "違法または許可されていない目的で利用しない", "サービスの知的財産権を尊重する"] },
+      "privacyData": { "title": "プライバシーとデータ", "content": "プライバシーは重要です。本サービス利用時の個人情報の取り扱いについて、プライバシーポリシーもご確認ください。" },
+      "intellectualProperty": { "title": "知的財産", "content": "本サービスの独自コンテンツ、機能、仕様は音楽性格テストに帰属し、著作権、商標その他の知的財産法により保護されます。" },
+      "warranties": { "title": "保証の否認", "content": "本サービスは「現状有姿」かつ「提供可能な範囲」で提供されます。明示・黙示を問わず、次を含むその他の保証を行いません：", "disclaimers": ["商品性に関する黙示の保証または条件", "特定目的への適合性", "知的財産権を侵害しないこと", "診断結果の正確性、信頼性、完全性"] },
+      "liability": { "title": "責任の制限", "content": "本サービスの利用により生じた利益、データ、利用機会、信用その他の無形損失を含む、間接的・偶発的・特別・結果的・懲罰的損害について、運営者および関係者は責任を負いません。" },
+      "assessmentDisclaimer": { "title": "診断結果に関する注意", "content": "以下をご理解ください：", "disclaimers": ["結果はエンターテインメントおよび参考情報として提供されます", "重要な人生の判断には使用しないでください", "専門家による心理評価の代わりにはなりません", "気分や状況などにより結果が変わる場合があります"] },
+      "advertising": { "title": "広告", "content": "本サービスには広告やプロモーションが表示される場合があります。第三者広告の内容や、そこで紹介される商品・サービスについて責任を負いません。" },
+      "termination": { "title": "利用停止", "content": "規約違反を含む理由により、予告や責任なく本サービスへのアクセスを停止する場合があります。" },
+      "changes": { "title": "規約の変更", "content": "本規約を変更または更新する場合があります。重要な変更については、新しい規約が発効する少なくとも30日前までの告知に努めます。" },
+      "governingLaw": { "title": "準拠法", "content": "本規約は、法の抵触に関する原則にかかわらず、本サービスが運営される法域の法律に従って解釈されます。" },
+      "contact": { "title": "お問い合わせ", "content": "利用規約に関するご質問は、以下へご連絡ください：", "email": "メール：studiochamaeleon@gmail.com", "website": "Webサイト：" }
+    }
+  }
+}

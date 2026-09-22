@@ -24,6 +24,7 @@ interface CompatibilityInviteProps {
 const TRAIT_LABELS = {
   ko: ['감성', '편안함', '탐구성', '강렬함', '트렌드'],
   en: ['Mellow', 'Easygoing', 'Sophisticated', 'Intense', 'Contemporary'],
+  ja: ['穏やかさ', '親しみやすさ', '探究心', '力強さ', '今っぽさ'],
 };
 
 const CompatibilityInvite: React.FC<CompatibilityInviteProps> = ({ hostScores, genres, recentResults, onStartSurvey, onUseRecent, onBack }) => {
@@ -41,6 +42,10 @@ const CompatibilityInvite: React.FC<CompatibilityInviteProps> = ({ hostScores, g
     back: '돌아가기', eyebrow: 'MUSIC MATCH', title: '친구가 음악 궁합을\n기다리고 있어요.', body: '간단한 음악 취향 검사를 마치면 두 사람의 닮은 점, 다른 점, 함께 들으면 좋은 장르를 바로 확인할 수 있어요.',
     host: '친구의 음악 성격', match: '장르 유사도', start: '내 음악 성격 검사하기', recent: '최근 결과로 바로 궁합 보기', share: '초대 링크 보내기', copy: '링크 복사',
     privacy: '로그인 없이 진행되며, 점수는 이 링크와 내 브라우저에만 저장돼요.', time: '약 5분', questions: '40문항', fun: '가볍게 즐기는 테스트',
+  } : language === 'ja' ? {
+    back: '戻る', eyebrow: 'MUSIC MATCH', title: '友達が音楽相性を\n待っています。', body: 'かんたんな音楽の好みテストを終えると、二人の共通点や違い、一緒に聴きたいジャンルがわかります。',
+    host: '友達の音楽性格', match: 'ジャンル一致度', start: '自分の音楽性格を調べる', recent: '最近の結果ですぐ比較', share: '招待リンクを送る', copy: 'リンクをコピー',
+    privacy: 'ログインは不要です。スコアはこのリンクとブラウザにだけ保存されます。', time: '約5分', questions: '40問', fun: '気軽に楽しむテスト',
   } : {
     back: 'Back', eyebrow: 'MUSIC MATCH', title: 'A friend is waiting\nto compare tastes.', body: 'Finish a quick music taste test to see where you align, where you differ, and what you should listen to together.',
     host: "Friend's music personality", match: 'genre similarity', start: 'Take my music test', recent: 'Use my recent result', share: 'Send invite link', copy: 'Copy link',
@@ -56,9 +61,9 @@ const CompatibilityInvite: React.FC<CompatibilityInviteProps> = ({ hostScores, g
     try {
       await navigator.clipboard.writeText(getComparisonUrl(hostScores, null, language));
       analytics.track('compatibility_invite_shared', { shareType: 'copy' });
-      notify(language === 'ko' ? '초대 링크를 복사했어요.' : 'Invite link copied.');
+      notify(language === 'ko' ? '초대 링크를 복사했어요.' : language === 'ja' ? '招待リンクをコピーしました。' : 'Invite link copied.');
     } catch {
-      notify(language === 'ko' ? '링크를 복사하지 못했어요.' : 'Could not copy the link.');
+      notify(language === 'ko' ? '링크를 복사하지 못했어요.' : language === 'ja' ? 'リンクをコピーできませんでした。' : 'Could not copy the link.');
     }
   };
 
@@ -67,8 +72,8 @@ const CompatibilityInvite: React.FC<CompatibilityInviteProps> = ({ hostScores, g
     try {
       if (navigator.share) {
         await navigator.share({
-          title: language === 'ko' ? '우리 음악 궁합은 몇 퍼센트?' : 'How compatible are our music tastes?',
-          text: language === 'ko' ? '내 음악 취향과 얼마나 닮았는지 확인해봐!' : 'Take the test and compare your music taste with mine.',
+          title: language === 'ko' ? '우리 음악 궁합은 몇 퍼센트?' : language === 'ja' ? '私たちの音楽相性は何％？' : 'How compatible are our music tastes?',
+          text: language === 'ko' ? '내 음악 취향과 얼마나 닮았는지 확인해봐!' : language === 'ja' ? 'テストで私との音楽の好みを比べてみて！' : 'Take the test and compare your music taste with mine.',
           url,
         });
         analytics.track('compatibility_invite_shared', { shareType: 'native' });
@@ -77,7 +82,7 @@ const CompatibilityInvite: React.FC<CompatibilityInviteProps> = ({ hostScores, g
       await copyLink();
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') return;
-      notify(language === 'ko' ? '공유하지 못했어요. 다시 시도해 주세요.' : 'Could not share. Please try again.');
+      notify(language === 'ko' ? '공유하지 못했어요. 다시 시도해 주세요.' : language === 'ja' ? 'シェアできませんでした。もう一度お試しください。' : 'Could not share. Please try again.');
     }
   };
 

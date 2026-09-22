@@ -26,7 +26,9 @@ export default function ResultMatchStory({ scores, genre, accent }: ResultMatchS
   const label = (key: MusicScoreKey) => t(`intro.musicModelTraits.${key}.description`);
   const copy = language === 'ko'
     ? { eyebrow: '선택된 이유', title: '이 장르가 나온 이유', intro: '다섯 취향 축 중 가장 닮은 두 지점이에요.', yours: '나', genre: '장르', selected: '선택한 취향 축', compare: '다섯 축 직접 비교하기', about: '40개 자기보고 답변으로 만든 취향 점수와 미리 작성한 장르 프로필을 비교했습니다. 방향 유사도 60%, 점수 거리 40%를 합쳐 15~95 범위로 표시해요. 음악을 좋아할 확률이나 검증된 성격 진단 결과는 아닙니다.', gap: '점 차이' }
-    : { eyebrow: 'WHY IT FITS', title: 'Why this genre?', intro: 'These two taste dimensions are your closest matches.', yours: 'You', genre: 'Genre', selected: 'Selected taste dimension', compare: 'Explore all five dimensions', about: 'We compare your self-reported answers to an editorial genre profile: 60% pattern similarity and 40% score distance, displayed on a 15–95 scale. This is not a probability or validated personality diagnosis.', gap: 'point gap' };
+    : language === 'ja'
+      ? { eyebrow: '選ばれた理由', title: 'なぜこのジャンル？', intro: '五つの好み軸のうち、特に近い二つです。', yours: 'あなた', genre: 'ジャンル', selected: '選択した好み軸', compare: '五つの軸を比較する', about: '40問の自己申告から作ったスコアと、編集したジャンルプロファイルを比較しています。パターンの似ている度60％とスコア距離40％を合わせ、15〜95の範囲で表示します。好きになる確率や検証済みの性格診断ではありません。', gap: '点差' }
+      : { eyebrow: 'WHY IT FITS', title: 'Why this genre?', intro: 'These two taste dimensions are your closest matches.', yours: 'You', genre: 'Genre', selected: 'Selected taste dimension', compare: 'Explore all five dimensions', about: 'We compare your self-reported answers to an editorial genre profile: 60% pattern similarity and 40% score distance, displayed on a 15–95 scale. This is not a probability or validated personality diagnosis.', gap: 'point gap' };
 
   return (
     <div className="mt-10 border-t border-white/10 pt-8">

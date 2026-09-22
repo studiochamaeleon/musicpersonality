@@ -7,14 +7,15 @@ export default function DynamicMetadata() {
   const { language } = useLanguage();
 
   useEffect(() => {
-    const getLocalizedText = (enText: string, koText: string) => {
-      return language === 'ko' ? koText : enText;
+    const getLocalizedText = (enText: string, koText: string, jaText: string) => {
+      return language === 'ko' ? koText : language === 'ja' ? jaText : enText;
     };
 
     // Update document title
     document.title = getLocalizedText(
       'Music Personality Test - Discover Your Musical Identity',
-      '음악 성격 테스트 | 나와 닮은 장르 찾기'
+      '음악 성격 테스트 | 나와 닮은 장르 찾기',
+      '音楽性格テスト｜自分に似たジャンルを発見'
     );
 
     // Update meta description
@@ -22,7 +23,8 @@ export default function DynamicMetadata() {
     if (metaDescription) {
       metaDescription.setAttribute('content', getLocalizedText(
         'A lighthearted music taste test inspired by the MUSIC model. Discover a genre, artists and albums that sound like you.',
-        '음악 취향에 답하고 나와 닮은 장르와 앨범을 발견해보세요. MUSIC 모델에서 영감을 받은 가벼운 테스트입니다.'
+        '음악 취향에 답하고 나와 닮은 장르와 앨범을 발견해보세요. MUSIC 모델에서 영감을 받은 가벼운 테스트입니다.',
+        '音楽の好みに答えて、自分に似たジャンルとアルバムを見つけるライトな性格テストです。'
       ));
     }
 
@@ -31,7 +33,8 @@ export default function DynamicMetadata() {
     if (ogTitle) {
       ogTitle.setAttribute('content', getLocalizedText(
         'Music Personality Test - Discover Your Musical Identity',
-        '음악 성격 테스트 | 나와 닮은 장르 찾기'
+        '음악 성격 테스트 | 나와 닮은 장르 찾기',
+        '音楽性格テスト｜自分に似たジャンルを発見'
       ));
     }
 
@@ -40,7 +43,8 @@ export default function DynamicMetadata() {
     if (ogDescription) {
       ogDescription.setAttribute('content', getLocalizedText(
         'Take a lighthearted music taste test and discover genres and albums that sound like you.',
-        '음악 취향에 답하고 나와 닮은 장르와 앨범을 발견해보세요.'
+        '음악 취향에 답하고 나와 닮은 장르와 앨범을 발견해보세요.',
+        '音楽の好みから、あなたに似たジャンルとアルバムを見つけよう。'
       ));
     }
 
@@ -49,7 +53,8 @@ export default function DynamicMetadata() {
     if (ogSiteName) {
       ogSiteName.setAttribute('content', getLocalizedText(
         'Music Personality Test',
-        '음악 성격 테스트'
+        '음악 성격 테스트',
+        '音楽性格テスト'
       ));
     }
 
@@ -58,7 +63,8 @@ export default function DynamicMetadata() {
     if (twitterTitle) {
       twitterTitle.setAttribute('content', getLocalizedText(
         'Music Personality Test - Discover Your Musical Identity',
-        '음악 성격 테스트 | 나와 닮은 장르 찾기'
+        '음악 성격 테스트 | 나와 닮은 장르 찾기',
+        '音楽性格テスト｜自分に似たジャンルを発見'
       ));
     }
 
@@ -67,14 +73,15 @@ export default function DynamicMetadata() {
     if (twitterDescription) {
       twitterDescription.setAttribute('content', getLocalizedText(
         'Take a lighthearted music taste test and discover genres and albums that sound like you.',
-        '음악 취향에 답하고 나와 닮은 장르와 앨범을 발견해보세요.'
+        '음악 취향에 답하고 나와 닮은 장르와 앨범을 발견해보세요.',
+        '音楽の好みから、あなたに似たジャンルとアルバムを見つけよう。'
       ));
     }
 
     // Update Open Graph locale
     const ogLocale = document.querySelector('meta[property="og:locale"]');
     if (ogLocale) {
-      ogLocale.setAttribute('content', language === 'ko' ? 'ko_KR' : 'en_US');
+      ogLocale.setAttribute('content', language === 'ko' ? 'ko_KR' : language === 'ja' ? 'ja_JP' : 'en_US');
     }
 
   }, [language]);

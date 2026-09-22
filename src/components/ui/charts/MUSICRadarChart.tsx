@@ -56,7 +56,7 @@ const CustomTooltip = ({ active, payload }: TooltipProps) => {
     return (
       <div className="rounded-xl border border-white/15 bg-[#111116]/95 p-3 text-white shadow-2xl backdrop-blur-xl">
          <p className="font-semibold text-white">
-           {language === 'ko' 
+           {language !== 'en'
              ? t(`intro.musicModelTraits.${data.trait}.description`)
              : t(`intro.musicModelTraits.${data.trait}.name`)}
          </p>
@@ -82,7 +82,7 @@ const MUSICRadarChart: React.FC<RadarChartProps> = ({
   
   // Helper function to get trait name based on language
   const getTraitName = (traitKey: string) => {
-    return language === 'ko' 
+    return language !== 'en'
       ? t(`intro.musicModelTraits.${traitKey}.description`)
       : t(`intro.musicModelTraits.${traitKey}.name`);
   };

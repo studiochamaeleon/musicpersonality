@@ -13,20 +13,22 @@ export async function onRequest(context: PagesFunctionContext) {
   const requestUrl = new URL(context.request.url);
   const scoreToken = requestUrl.searchParams.get('score');
   const scores = decodeScoreToken(scoreToken);
-  const language = requestUrl.searchParams.get('lang') === 'en' ? 'en' : 'ko';
+  const language = requestUrl.searchParams.get('lang') === 'ja' ? 'ja' : requestUrl.searchParams.get('lang') === 'en' ? 'en' : 'ko';
 
   if (!scoreToken || !scores) return new Response('Invalid music result link', { status: 400 });
 
   const result = getPersonalResultSummary(scores);
   const title = language === 'ko'
     ? `내 음악 성격은 ${result.typeTitleKo} · ${result.genreNameKo}`
-    : `My music personality is ${result.typeTitleEn} · ${result.genreName}`;
+    : language === 'ja' ? `私の音楽性格は「${result.typeTitleJa}」 · ${result.genreNameJa}`
+      : `My music personality is ${result.typeTitleEn} · ${result.genreName}`;
   const description = language === 'ko'
     ? `장르 유사도 ${result.compatibility}% · ${result.characteristics.join(', ')}. 당신의 음악 성격도 확인해보세요.`
-    : `${result.compatibility}% genre similarity. Discover your music personality and compare it with a friend.`;
+    : language === 'ja' ? `ジャンル一致度${result.compatibility}％。あなたの音楽性格も見つけて、友達と比べてみよう。`
+      : `${result.compatibility}% genre similarity. Discover your music personality and compare it with a friend.`;
   const imageParams = new URLSearchParams({ score: scoreToken });
   if (requestUrl.searchParams.get('sv') === '2') imageParams.set('sv', '2');
-  if (language === 'en') imageParams.set('lang', 'en');
+  if (language !== 'ko') imageParams.set('lang', language);
   const imageUrl = `${requestUrl.origin}/api/og?${imageParams.toString()}`;
   const destination = createResultAppPath(scores, language);
 
@@ -39,7 +41,7 @@ export async function onRequest(context: PagesFunctionContext) {
   <meta name="description" content="${escapeHtml(description)}" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Music Personality" />
-  <meta property="og:locale" content="${language === 'ko' ? 'ko_KR' : 'en_US'}" />
+  <meta property="og:locale" content="${language === 'ko' ? 'ko_KR' : language === 'ja' ? 'ja_JP' : 'en_US'}" />
   <meta property="og:title" content="${escapeHtml(title)}" />
   <meta property="og:description" content="${escapeHtml(description)}" />
   <meta property="og:image" content="${escapeHtml(imageUrl)}" />
@@ -55,7 +57,7 @@ export async function onRequest(context: PagesFunctionContext) {
   <style>html{background:#07080a;color:#fff;font-family:system-ui,sans-serif}body{min-height:100vh;display:grid;place-items:center;margin:0}a{color:#c8ff3d}</style>
 </head>
 <body>
-  <p>${language === 'ko' ? '음악 성격 결과를 여는 중입니다.' : 'Opening your music personality result.'} <a href="${escapeHtml(destination)}">${language === 'ko' ? '바로 열기' : 'Open now'}</a></p>
+  <p>${language === 'ko' ? '음악 성격 결과를 여는 중입니다.' : language === 'ja' ? '音楽性格の結果を開いています。' : 'Opening your music personality result.'} <a href="${escapeHtml(destination)}">${language === 'ko' ? '바로 열기' : language === 'ja' ? '今すぐ開く' : 'Open now'}</a></p>
   <script>window.location.replace(${JSON.stringify(destination)});</script>
 </body>
 </html>`;

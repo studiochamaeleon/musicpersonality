@@ -10,7 +10,7 @@ const ProgressIndicator: React.FC<{ currentStep: number; totalSteps: number }> =
     <div className="mx-auto w-full max-w-2xl pt-3" aria-label={`${percentage}%`}>
       <div className="mb-3 flex items-center justify-between text-xs font-semibold">
         <span className="score-tabular text-white/75">{String(currentStep).padStart(2, '0')} <span className="text-white/65">/ {totalSteps}</span></span>
-        <span className="text-white/65">{percentage}% {language === 'ko' ? '진행' : 'complete'}</span>
+        <span className="text-white/65">{percentage}% {language === 'ko' ? '진행' : language === 'ja' ? '完了' : 'complete'}</span>
       </div>
       <div className="h-[3px] overflow-hidden rounded-full bg-white/10">
         <div className="h-full rounded-full bg-[linear-gradient(90deg,#c8ff3d,#43f5ff)] transition-[width] duration-300 ease-out" style={{ width: `${percentage}%` }} />

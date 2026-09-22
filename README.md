@@ -1,6 +1,6 @@
 # Music Personality
 
-음악 취향 40문항을 통해 MUSIC 5요인 점수를 계산하고, 닮은 장르·아티스트·입문 앨범·성격 해석을 보여주는 가벼운 바이럴 웹 테스트입니다. 한국어와 영어를 지원하며 별도 계정이나 백엔드 없이 정적 사이트로 동작합니다.
+음악 취향 40문항을 통해 MUSIC 5요인 점수를 계산하고, 닮은 장르·아티스트·입문 앨범·성격 해석을 보여주는 가벼운 바이럴 웹 테스트입니다. 한국어·영어·일본어를 지원하며 별도 계정이나 백엔드 없이 정적 사이트로 동작합니다.
 
 ## 주요 흐름
 
@@ -64,7 +64,7 @@ npm run test:e2e
 
 `npm run validate:catalog`는 모든 장르에 `anchor`와 `discovery` 앨범이 있는지, Spotify 앨범 URL 형식과 중복 여부가 올바른지 확인합니다. 카탈로그는 `src/data/musicCatalog.json`에서 관리하며 Spotify Web API나 사용자 로그인을 사용하지 않습니다.
 
-`npm run test:unit`는 역채점·가중 평균·점수 범위·동점 정렬과 32개 장르의 한영 결과 콘텐츠 완전성을 검증합니다.
+`npm run test:unit`는 역채점·가중 평균·점수 범위·동점 정렬과 32개 장르의 한·영·일 결과 콘텐츠, 40개 일본어 문항, 공유 이미지 글리프의 완전성을 검증합니다.
 
 `npm run test:e2e`는 정적 빌드와 Cloudflare Pages Functions를 함께 실행해 다음 흐름을 모바일 Chromium에서 검증합니다.
 
@@ -72,7 +72,7 @@ npm run test:e2e
 - 궁합 결과 링크 및 개인 결과 복원
 - 개인·궁합 결과 카드의 PNG 저장
 - 동적 Open Graph 메타데이터와 1200×630 이미지
-- 한국어·영어 공유 미리보기 및 링크 진입 언어 유지
+- 한국어·영어·일본어 공유 미리보기 및 링크 진입 언어 유지
 - 브라우저 저장소 접근이 차단된 환경에서의 검사 완료·결과 복원
 - 설문 자동 진행·답변 수정, 결과 본문 완전성, 장르 상세의 키보드 조작
 
@@ -87,7 +87,7 @@ Pull Request와 `main` 브랜치 push에서도 같은 E2E 검증이 GitHub Actio
 - `NEXT_PUBLIC_SITE_URL`: 최종 공개 도메인(예: `https://quiz.example.com`). Cloudflare Pages의 빌드 환경 변수에 설정하면 canonical URL, 구조화 데이터, robots.txt, sitemap.xml, 정책 페이지의 사이트 주소가 함께 바뀝니다. 설정하지 않으면 `https://musicpersonalitytest.pages.dev`를 사용합니다. 도메인 연결 후에는 이 환경 변수로 다시 빌드하고 `/robots.txt`, `/sitemap.xml`을 확인하세요.
 - `NEXT_PUBLIC_ADSENSE_ENABLED=false`: AdSense 스크립트를 빌드에서 제외합니다. 설정하지 않으면 기존처럼 로드됩니다. 인증 CMP 설정 전 광고를 잠시 끄고 배포할 때 사용할 수 있습니다.
 
-나머지 앱과 정적 자산은 Pages에서 그대로 제공되므로 데이터베이스나 별도 이미지 렌더링 서비스가 필요하지 않습니다. 한국어 공유 이미지는 [Pretendard Bold](https://github.com/orioncactus/pretendard)의 비트맵 글리프(OFL-1.1)를 커밋해 사용합니다. 장르명·유형명을 추가한 경우 `npm run generate:og-glyphs -- /path/to/Pretendard-Bold.otf`로 글리프를 다시 생성하고 `npm run test:unit`으로 누락 여부를 확인하세요.
+나머지 앱과 정적 자산은 Pages에서 그대로 제공되므로 데이터베이스나 별도 이미지 렌더링 서비스가 필요하지 않습니다. 한국어·일본어 공유 이미지는 미리 생성한 비트맵 글리프를 커밋해 Cloudflare Workers의 폰트 엔진 없이 렌더링합니다. 한국어는 [Pretendard](https://github.com/orioncactus/pretendard), 일본어는 [Noto Sans JP](https://github.com/notofonts/noto-cjk)의 OFL 폰트로 생성했습니다. 장르명·유형명을 추가한 경우 한국어는 `npm run generate:og-glyphs -- /path/to/Pretendard-Bold.otf`, 일본어는 `npm run generate:ja-og-glyphs -- /path/to/NotoSansJP-VF.ttf`로 다시 생성한 뒤 `npm run test:unit`으로 누락 여부를 확인하세요.
 
 ## 데이터와 개인정보
 

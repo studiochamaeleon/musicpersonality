@@ -30,6 +30,23 @@ test('English match shares preserve English metadata and the app language', asyn
   await expect(page.getByRole('heading', { level: 1, name: 'Almost the same playlist' })).toBeVisible();
 });
 
+test('Japanese match shares preserve Japanese metadata and the app language', async ({ request, page }) => {
+  const response = await request.get(`/share?host=${hostToken}&guest=${guestToken}&lang=ja`);
+  expect(response.ok()).toBeTruthy();
+  const html = await response.text();
+  expect(html).toContain('<html lang="ja">');
+  expect(html).toContain('二人の音楽相性は89％');
+  expect(html).toContain('property="og:locale" content="ja_JP"');
+  expect(html).toContain(`/api/og?host=${hostToken}&amp;guest=${guestToken}&amp;lang=ja`);
+  expect(html).toContain(`/?lang=ja#compare=${hostToken}&amp;guest=${guestToken}`);
+
+  await page.goto(`/share?host=${hostToken}&guest=${guestToken}&lang=ja`);
+  await expect(page).toHaveURL(/\?lang=ja#compare=/);
+  await expect(page.getByRole('heading', { level: 1, name: 'ほぼ同じプレイリスト' })).toBeVisible();
+  await page.reload();
+  await expect(page.getByRole('heading', { level: 1, name: 'ほぼ同じプレイリスト' })).toBeVisible();
+});
+
 test('the dynamic Open Graph endpoint returns a 1200x630 PNG', async ({ request }) => {
   const response = await request.get(`/api/og?host=${hostToken}&guest=${guestToken}`);
   expect(response.ok()).toBeTruthy();
@@ -78,6 +95,26 @@ test('English personal shares use the same translated type as the app', async ({
   expect(html).toContain('My music personality is Creative Independent · Indie Pop');
   await page.goto(`/result?score=${guestToken}&sv=2&lang=en`);
   await expect(page.getByRole('heading', { level: 1, name: 'Creative Independent' })).toBeVisible();
+});
+
+test('Japanese personal shares use the same translated type and Japanese Open Graph image', async ({ request, page }) => {
+  const response = await request.get(`/result?score=${guestToken}&sv=2&lang=ja`);
+  expect(response.ok()).toBeTruthy();
+  const html = await response.text();
+  expect(html).toContain('私の音楽性格は「感性豊かな夢想家」 · インディー・ポップ');
+  expect(html).toContain('property="og:locale" content="ja_JP"');
+  expect(html).toContain(`/?v=2&amp;m=70&amp;u=61&amp;s=79&amp;i=48&amp;c=75&amp;lang=ja`);
+  await page.goto(`/result?score=${guestToken}&sv=2&lang=ja`);
+  await expect(page.getByRole('heading', { level: 1, name: '感性豊かな夢想家' })).toBeVisible();
+
+  const imageResponse = await request.get(`/api/og?score=${guestToken}&sv=2&lang=ja`);
+  expect(imageResponse.ok()).toBeTruthy();
+  expect(imageResponse.headers()['content-disposition']).toContain('music-personality-result-ja.png');
+  const image = Buffer.from(await imageResponse.body());
+  expect(image.readUInt32BE(16)).toBe(1200);
+  expect(image.readUInt32BE(20)).toBe(630);
+  const englishImage = Buffer.from(await (await request.get(`/api/og?score=${guestToken}&sv=2&lang=en`)).body());
+  expect(image.equals(englishImage)).toBe(false);
 });
 
 test('the personal result Open Graph endpoint returns a 1200x630 PNG', async ({ request }) => {

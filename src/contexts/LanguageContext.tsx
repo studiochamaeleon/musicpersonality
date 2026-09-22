@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Language } from '@/types/i18n';
+import { isLanguage, Language } from '@/types/i18n';
 import { readBrowserStorage, writeBrowserStorage } from '@/lib/browserStorage';
 
 interface LanguageContextType {
@@ -27,9 +27,9 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       const savedLanguage = readBrowserStorage('local', 'music-personality-language') as Language;
       const hasSelectedLanguage = readBrowserStorage('local', 'music-personality-language-selected');
       
-      if (queryLanguage === 'ko' || queryLanguage === 'en') {
+      if (isLanguage(queryLanguage)) {
         setLanguageState(queryLanguage);
-      } else if (savedLanguage && (savedLanguage === 'ko' || savedLanguage === 'en')) {
+      } else if (isLanguage(savedLanguage)) {
         setLanguageState(savedLanguage);
       }
       
@@ -47,8 +47,8 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       writeBrowserStorage('local', 'music-personality-language', lang);
       writeBrowserStorage('local', 'music-personality-language-selected', 'true');
       const url = new URL(window.location.href);
-      if (lang === 'en') url.searchParams.set('lang', 'en');
-      else url.searchParams.delete('lang');
+      if (lang === 'ko') url.searchParams.delete('lang');
+      else url.searchParams.set('lang', lang);
       window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
     }
   };

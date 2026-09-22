@@ -1,6 +1,8 @@
 import genresData from '../src/data/genres.json';
 import { getGenreTranslation } from '../src/lib/genreTranslations';
+import { genreTranslationsJa } from '../src/lib/genreTranslationsJa';
 import { rankGenres, MUSIC_SCORE_KEYS, type MusicScoreProfile } from '../src/lib/genreScore';
+import type { Language } from '../src/types/i18n';
 
 interface GenreResultData {
   id: string;
@@ -17,6 +19,8 @@ export interface PersonalResultSummary {
   genreNameKo: string;
   typeTitleKo: string;
   typeTitleEn: string;
+  genreNameJa: string;
+  typeTitleJa: string;
   compatibility: number;
   characteristics: string[];
 }
@@ -34,12 +38,14 @@ export function getPersonalResultSummary(scores: number[]): PersonalResultSummar
     genreNameKo: top.genre.nameKo,
     typeTitleKo: top.genre.personalityAnalysis?.typeTitle || top.genre.nameKo,
     typeTitleEn: getGenreTranslation(top.genre.id)?.personalityAnalysis?.typeTitle || top.genre.name,
+    genreNameJa: genreTranslationsJa[top.genre.id]?.name || top.genre.name,
+    typeTitleJa: genreTranslationsJa[top.genre.id]?.typeTitle || top.genre.name,
     compatibility: top.match.compatibility,
     characteristics: top.genre.characteristics.slice(0, 3),
   };
 }
 
-export function createResultAppPath(scores: number[], language: 'ko' | 'en' = 'ko') {
+export function createResultAppPath(scores: number[], language: Language = 'ko') {
   const params = new URLSearchParams({
     v: '2',
     m: String(scores[0]),

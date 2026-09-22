@@ -4,6 +4,7 @@ import React, { CSSProperties, useEffect, useMemo, useRef, useState } from 'reac
 import { createPortal } from 'react-dom';
 import { ExternalLink, Search, SlidersHorizontal, X } from 'lucide-react';
 import { ArtistReference, GenreSchema, MusicCatalog } from '@/types';
+import type { Language } from '@/types/i18n';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { analytics } from '@/lib/analytics';
 import {
@@ -23,12 +24,12 @@ interface GenreExplorerProps {
   onGenreSelect?: (genre: GenreSchema) => void;
 }
 
-const CATEGORY_LABELS: Record<GenreSchema['category'], { ko: string; en: string }> = {
-  JAZZ: { ko: '재즈', en: 'Jazz' }, ROCK: { ko: '록', en: 'Rock' }, ELECTRONIC: { ko: '일렉트로닉', en: 'Electronic' }, CLASSICAL: { ko: '클래식', en: 'Classical' },
-  POP: { ko: '팝', en: 'Pop' }, HIP_HOP: { ko: '힙합', en: 'Hip-Hop' }, RNB: { ko: 'R&B', en: 'R&B' }, WORLD: { ko: '월드', en: 'World' },
+const CATEGORY_LABELS: Record<GenreSchema['category'], Record<Language, string>> = {
+  JAZZ: { ko: '재즈', en: 'Jazz', ja: 'ジャズ' }, ROCK: { ko: '록', en: 'Rock', ja: 'ロック' }, ELECTRONIC: { ko: '일렉트로닉', en: 'Electronic', ja: 'エレクトロニック' }, CLASSICAL: { ko: '클래식', en: 'Classical', ja: 'クラシック' },
+  POP: { ko: '팝', en: 'Pop', ja: 'ポップ' }, HIP_HOP: { ko: '힙합', en: 'Hip-Hop', ja: 'ヒップホップ' }, RNB: { ko: 'R&B', en: 'R&B', ja: 'R&B' }, WORLD: { ko: '월드', en: 'World', ja: 'ワールド' },
 };
 
-function categoryLabel(category: GenreSchema['category'], language: 'ko' | 'en') {
+function categoryLabel(category: GenreSchema['category'], language: Language) {
   return CATEGORY_LABELS[category][language];
 }
 
@@ -44,6 +45,11 @@ const GenreExplorer: React.FC<GenreExplorerProps> = ({ genres, musicCatalog, onG
     search: '장르, 분위기, 특성 검색', all: '전체 장르', popularity: '인기도 순', name: '이름 순', energy: '에너지 순', era: '시대 순',
     results: '개의 장르', noResults: '조건에 맞는 장르가 없습니다.', profile: 'MUSIC 성향', core: '핵심 특성', lifestyle: '라이프스타일 통찰',
     metrics: '음악적 특성', artists: '대표 아티스트와 입문 앨범', anchor: '장르의 기준점', discovery: '새롭게 발견할 앨범', listen: 'Spotify에서 앨범 듣기', popularityLabel: '인기도', energyLabel: '에너지', valenceLabel: '긍정성', acousticLabel: '어쿠스틱', profileNote: 'MUSIC 수치와 아래 설명은 이 장르의 대표 프로필이며, 개인 검사 결과가 아닙니다.', traitScore: '장르 특성 점수', more: '장르 성격 해석 더 보기', strengths: '강점', challenges: '도전 과제', relationship: '관계에서의 모습', preferences: '어울리는 음악', activities: '해볼 만한 활동',
+  } : language === 'ja' ? {
+    eyebrow: 'ジャンルの性格', title: 'ジャンルにも、性格がある。', subtitle: '32ジャンルの音楽的な個性と代表アーティストを見てみましょう。',
+    search: 'ジャンル・雰囲気・特徴を検索', all: 'すべて', popularity: '人気順', name: '名前順', energy: 'エネルギー順', era: '年代順',
+    results: 'ジャンル', noResults: '条件に合うジャンルがありません。', profile: 'MUSICプロファイル', core: '核心的な特徴', lifestyle: 'ライフスタイルのヒント',
+    metrics: '音楽的特性', artists: '代表アーティストと入門アルバム', anchor: 'ジャンルの基準点', discovery: '次に出会うアルバム', listen: 'Spotifyでアルバムを聴く', popularityLabel: '人気度', energyLabel: 'エネルギー', valenceLabel: 'ポジティブ度', acousticLabel: 'アコースティック', profileNote: 'このMUSICスコアと説明はジャンルの編集的プロファイルであり、個人の診断結果ではありません。', traitScore: 'ジャンル特性スコア', more: 'ジャンル性格の全文を読む', strengths: '強み', challenges: '気をつけたいこと', relationship: '人間関係での傾向', preferences: 'おすすめの音', activities: '試してみたいこと',
   } : {
     eyebrow: 'GENRE PERSONALITIES', title: 'Every genre has a personality.', subtitle: 'Explore the traits and defining artists of 32 genres.',
     search: 'Search genres, moods, and traits', all: 'All genres', popularity: 'Popularity', name: 'Name', energy: 'Energy', era: 'Era',
@@ -102,7 +108,7 @@ const GenreExplorer: React.FC<GenreExplorerProps> = ({ genres, musicCatalog, onG
               {categories.map(category => <option key={category} value={category}>{category === 'all' ? copy.all : categoryLabel(category as GenreSchema['category'], language)}</option>)}
             </select>
           </label>
-          <select value={sortBy} onChange={event => setSortBy(event.target.value as typeof sortBy)} aria-label={language === 'ko' ? '장르 정렬' : 'Sort genres'} className="min-h-12 rounded-2xl border border-white/10 bg-[#111216] px-4 text-sm text-white/80 outline-none focus:border-[var(--signal)] sm:w-40">
+          <select value={sortBy} onChange={event => setSortBy(event.target.value as typeof sortBy)} aria-label={language === 'ko' ? '장르 정렬' : language === 'ja' ? 'ジャンルの並び替え' : 'Sort genres'} className="min-h-12 rounded-2xl border border-white/10 bg-[#111216] px-4 text-sm text-white/80 outline-none focus:border-[var(--signal)] sm:w-40">
             <option value="popularity">{copy.popularity}</option><option value="name">{copy.name}</option><option value="energy">{copy.energy}</option><option value="era">{copy.era}</option>
           </select>
         </div>
@@ -144,7 +150,7 @@ interface DetailCopy {
   relationship: string; preferences: string; activities: string;
 }
 
-const GenreDetailModal = ({ genre, artists, copy, language, onClose }: { genre: GenreSchema; artists: ArtistReference[]; copy: DetailCopy; language: 'ko' | 'en'; onClose: () => void }) => {
+const GenreDetailModal = ({ genre, artists, copy, language, onClose }: { genre: GenreSchema; artists: ArtistReference[]; copy: DetailCopy; language: Language; onClose: () => void }) => {
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const onCloseRef = useRef(onClose);
@@ -186,7 +192,7 @@ const GenreDetailModal = ({ genre, artists, copy, language, onClose }: { genre: 
       <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="genre-detail-title" style={style} onClick={event => event.stopPropagation()} className="result-surface max-h-[94dvh] w-full max-w-5xl overflow-y-auto rounded-t-[28px] border border-white/10 shadow-2xl sm:rounded-[28px]">
         <header className="sticky top-0 z-10 flex items-start justify-between gap-5 border-b border-white/10 bg-[#090a0d]/90 px-5 py-5 backdrop-blur-xl sm:px-8">
           <div><p className="text-[10px] font-bold tracking-[0.16em] text-white/65">{categoryLabel(genre.category, language)} · {genre.era}</p><h2 id="genre-detail-title" className="mt-2 text-3xl font-extrabold tracking-[-0.045em] sm:text-4xl">{getGenreName(genre, language)}</h2></div>
-          <button ref={closeRef} onClick={onClose} aria-label={language === 'ko' ? '닫기' : 'Close'} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 text-white/70 transition-colors hover:bg-white/10 hover:text-white"><X size={19} /></button>
+          <button ref={closeRef} onClick={onClose} aria-label={language === 'ko' ? '닫기' : language === 'ja' ? '閉じる' : 'Close'} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 text-white/70 transition-colors hover:bg-white/10 hover:text-white"><X size={19} /></button>
         </header>
 
         <div className="space-y-10 px-5 py-7 sm:px-8 sm:py-10">

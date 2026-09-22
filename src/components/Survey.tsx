@@ -82,11 +82,11 @@ const Survey: React.FC<SurveyProps> = ({ questions, onComplete, onGoHome }) => {
           <QuestionCard question={currentQuestion} answer={surveyState.answers[currentQuestion.id]} onAnswer={(value) => answerAndAdvance(currentQuestion.id, value)} />
         </div>
 
-        <nav className="mx-auto flex w-full max-w-2xl items-center justify-between gap-3 border-t border-white/10 pt-5" aria-label={language === 'ko' ? '설문 이동' : 'Survey navigation'}>
+        <nav className="mx-auto flex w-full max-w-2xl items-center justify-between gap-3 border-t border-white/10 pt-5" aria-label={language === 'ko' ? '설문 이동' : language === 'ja' ? '質問の移動' : 'Survey navigation'}>
           <button onClick={() => { cancelAdvance(); previousQuestion(); }} disabled={!canGoPrevious} aria-label={t('survey.previous')} className="secondary-action !min-h-12 !w-auto inline-flex items-center gap-2 !px-5">
             <ArrowLeft size={17} /><span className="hidden sm:inline">{t('survey.previous')}</span>
           </button>
-          <p className="hidden text-xs text-white/60 sm:block">{language === 'ko' ? '답을 고르면 자동으로 넘어가요 · 숫자 키 1–5' : 'Choose an answer to advance · keys 1–5'}</p>
+          <p className="hidden text-xs text-white/60 sm:block">{language === 'ko' ? '답을 고르면 자동으로 넘어가요 · 숫자 키 1–5' : language === 'ja' ? '答えを選ぶと次へ進みます · 数字キー 1–5' : 'Choose an answer to advance · keys 1–5'}</p>
           <button onClick={() => { cancelAdvance(); nextQuestion(); }} disabled={!canGoNext} className="primary-action !min-h-12 !w-auto inline-flex items-center gap-2 !px-5">
             {progress.current >= progress.total ? t('survey.complete') : t('survey.next')}<ArrowRight size={17} />
           </button>

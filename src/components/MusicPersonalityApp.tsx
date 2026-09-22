@@ -41,7 +41,7 @@ const MusicPersonalityApp: React.FC = () => {
   const [comparisonHostScores, setComparisonHostScores] = useState<MUSICPersonality | null>(null);
   const [comparisonGuestScores, setComparisonGuestScores] = useState<MUSICPersonality | null>(null);
   const [recentResults, setRecentResults] = useState<RecentMusicResult[]>([]);
-  const languagePath = language === 'en' ? '/?lang=en' : '/';
+  const languagePath = language === 'ko' ? '/' : `/?lang=${language}`;
 
   useEffect(() => {
     const loadData = async () => {
@@ -156,7 +156,7 @@ const MusicPersonalityApp: React.FC = () => {
 
   const handleOpenGenreExplorer = () => {
     setAppState('genre-explorer');
-    if (typeof window !== 'undefined') window.history.replaceState({}, '', `/?view=genre-explorer${language === 'en' ? '&lang=en' : ''}`);
+    if (typeof window !== 'undefined') window.history.replaceState({}, '', `/?view=genre-explorer${language === 'ko' ? '' : `&lang=${language}`}`);
   };
 
   const handleBackToIntro = () => {
@@ -226,7 +226,7 @@ const MusicPersonalityApp: React.FC = () => {
     if (typeof window !== 'undefined') window.history.replaceState({}, '', `/?${createResultSearchParams(result.scores, language).toString()}`);
   };
 
-  if (dataLoadError) return <main className="app-canvas flex min-h-screen flex-col items-center justify-center px-5 text-center text-white"><h1 className="text-2xl font-bold">{language === 'ko' ? '데이터를 불러오지 못했어요.' : 'We could not load the test.'}</h1><p className="mt-3 max-w-sm text-sm leading-6 text-white/65">{language === 'ko' ? '연결을 확인한 뒤 다시 시도해 주세요.' : 'Please check your connection and try again.'}</p><button onClick={() => setLoadAttempt(attempt => attempt + 1)} className="primary-action mt-7">{language === 'ko' ? '다시 시도하기' : 'Try again'}</button></main>;
+  if (dataLoadError) return <main className="app-canvas flex min-h-screen flex-col items-center justify-center px-5 text-center text-white"><h1 className="text-2xl font-bold">{language === 'ko' ? '데이터를 불러오지 못했어요.' : language === 'ja' ? 'テストを読み込めませんでした。' : 'We could not load the test.'}</h1><p className="mt-3 max-w-sm text-sm leading-6 text-white/65">{language === 'ko' ? '연결을 확인한 뒤 다시 시도해 주세요.' : language === 'ja' ? '接続を確認して、もう一度お試しください。' : 'Please check your connection and try again.'}</p><button onClick={() => setLoadAttempt(attempt => attempt + 1)} className="primary-action mt-7">{language === 'ko' ? '다시 시도하기' : language === 'ja' ? 'もう一度' : 'Try again'}</button></main>;
   if (!dataLoaded) return <LoadingSpinner message={t('common.loading.initializing')} />;
 
   if (appState === 'intro') {
@@ -238,6 +238,14 @@ const MusicPersonalityApp: React.FC = () => {
       explore: '장르별 성향 먼저 보기',
       note: '재미로 즐기는 음악 취향 테스트예요.',
       recent: '최근 결과',
+    } : language === 'ja' ? {
+      eyebrow: 'MUSIC PERSONALITY TEST',
+      headline: '好きな音を辿れば、\nあなたが見える。',
+      body: '40の質問に答えて、あなたに似たジャンルと音楽性格を見つけましょう。',
+      cta: '私の音楽性格を見つける',
+      explore: 'ジャンルの性格を見る',
+      note: '音楽心理学に着想を得た、気軽に楽しむテストです。',
+      recent: '最近の結果',
     } : {
       eyebrow: 'MUSIC PERSONALITY TEST',
       headline: 'Your taste says\nmore than words.',
@@ -264,7 +272,7 @@ const MusicPersonalityApp: React.FC = () => {
         <section className="relative z-10 mx-auto flex min-h-[100dvh] max-w-6xl items-center justify-center px-5 pb-12 pt-28 text-center sm:px-8">
           <div className="mx-auto max-w-5xl fade-in">
             <p className="eyebrow mb-5">{copy.eyebrow}</p>
-            <h1 className={`${language === 'ko' ? 'text-[clamp(3.15rem,7.2vw,6.6rem)] font-extrabold leading-[0.92] tracking-[-0.07em]' : 'display-title'} whitespace-pre-line text-balance drop-shadow-[0_18px_60px_rgba(0,0,0,.65)]`}>
+            <h1 className={`${language !== 'en' ? 'text-[clamp(3.15rem,7.2vw,6.6rem)] font-extrabold leading-[0.92] tracking-[-0.07em]' : 'display-title'} whitespace-pre-line text-balance drop-shadow-[0_18px_60px_rgba(0,0,0,.65)]`}>
               {copy.headline.split('\n').map((line, index) => (
                 <React.Fragment key={line}>
                   {index === 1 ? <span className="text-gradient">{line}</span> : line}
@@ -286,9 +294,9 @@ const MusicPersonalityApp: React.FC = () => {
             </div>
 
             <div className="mt-7 flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs text-white/65">
-              <span className="inline-flex items-center gap-2"><Layers3 size={14} />40 {language === 'ko' ? '문항' : 'questions'}</span>
-              <span className="inline-flex items-center gap-2"><Clock3 size={14} />{language === 'ko' ? '약 5분' : 'about 5 min'}</span>
-              <span className="inline-flex items-center gap-2"><Sparkles size={14} />32 {language === 'ko' ? '개 장르' : 'genres'}</span>
+              <span className="inline-flex items-center gap-2"><Layers3 size={14} />40 {language === 'ko' ? '문항' : language === 'ja' ? '問' : 'questions'}</span>
+              <span className="inline-flex items-center gap-2"><Clock3 size={14} />{language === 'ko' ? '약 5분' : language === 'ja' ? '約5分' : 'about 5 min'}</span>
+              <span className="inline-flex items-center gap-2"><Sparkles size={14} />32 {language === 'ko' ? '개 장르' : language === 'ja' ? 'ジャンル' : 'genres'}</span>
             </div>
             <p className="mt-3 text-[11px] text-white/65">{copy.note}</p>
             {recentResults.length > 0 && (
@@ -299,7 +307,7 @@ const MusicPersonalityApp: React.FC = () => {
                     const genre = genres.find(item => item.id === result.topGenreId);
                     return (
                       <button key={result.id} onClick={() => handleRestoreRecentResult(result)} className="flex min-h-12 w-full items-center justify-between rounded-xl px-3 text-left text-xs text-white/55 transition-colors hover:bg-white/8 hover:text-white">
-                        <span>{genre ? getGenreName(genre, language) : (language === 'ko' ? '음악 성격 결과' : 'Music personality result')}</span>
+                        <span>{genre ? getGenreName(genre, language) : (language === 'ko' ? '음악 성격 결과' : language === 'ja' ? '音楽性格の結果' : 'Music personality result')}</span>
                         <span className="score-tabular text-[10px] text-white/25">#{index + 1}</span>
                       </button>
                     );

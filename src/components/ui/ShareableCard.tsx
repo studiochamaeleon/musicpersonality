@@ -30,8 +30,15 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
     : null;
   const typeTitle = personalityAnalysis?.typeTitle || getGenreName(topGenre, language);
   const cardStyle = { '--card-accent': theme.accent, '--card-secondary': theme.secondary } as CSSProperties;
+  const copy = language === 'ko' ? {
+    result: '결과 / 01', closest: '나와 가장 닮은 장르', match: '장르 유사도', question: '너는 어떤 음악 타입?', disclaimer: '재미로 보는 음악 취향 · 진단 아님', share: '공유하기', save: '이미지 저장', copy: '링크 복사', retry: '이미지 다시 준비', preparing: '이미지 준비 중', imageTitle: '내 음악 성격 결과', copied: '결과 링크를 복사했어요.', copyFailed: '링크를 복사하지 못했어요.', shareFailed: '공유하지 못했어요. 다시 시도해 주세요.', imageReady: '결과 이미지를 준비했어요.', imageFailed: '이미지를 만들지 못했어요.',
+  } : language === 'ja' ? {
+    result: '結果 / 01', closest: '私に最も似たジャンル', match: 'ジャンル一致度', question: 'あなたの音楽タイプは？', disclaimer: '気軽に楽しむ音楽の好み · 診断ではありません', share: 'シェア', save: '画像を保存', copy: 'リンクをコピー', retry: '画像をもう一度準備', preparing: '画像を準備中', imageTitle: '私の音楽性格の結果', copied: '結果リンクをコピーしました。', copyFailed: 'リンクをコピーできませんでした。', shareFailed: 'シェアできませんでした。もう一度お試しください。', imageReady: '結果画像を準備しました。', imageFailed: '画像を作成できませんでした。',
+  } : {
+    result: 'RESULT / 01', closest: 'THE SOUND MOST LIKE ME', match: 'genre similarity', question: 'WHAT IS YOUR MUSIC TYPE?', disclaimer: 'FOR FUN · NOT A DIAGNOSIS', share: 'Share', save: 'Save image', copy: 'Copy link', retry: 'Retry image', preparing: 'Preparing image', imageTitle: 'My music personality result', copied: 'Result link copied.', copyFailed: 'Could not copy the link.', shareFailed: 'Could not share. Please try again.', imageReady: 'Result image is ready.', imageFailed: 'Could not create the image.',
+  };
 
-  const getTraitName = (trait: string) => language === 'ko'
+  const getTraitName = (trait: string) => language !== 'en'
     ? t(`intro.musicModelTraits.${trait}.description`)
     : t(`intro.musicModelTraits.${trait}.name`);
 
@@ -55,8 +62,8 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
 
   const share = async () => {
     const url = getResultUrl(personalityScores, language);
-    const title = language === 'ko' ? `내 음악 성격은 ${typeTitle}` : `My music personality is ${typeTitle}`;
-    const text = language === 'ko' ? `나는 ${getGenreName(topGenre, language)}와 닮은 ${typeTitle} 타입! 너는 어떤 음악 성격일까?` : `I'm a ${typeTitle} with a ${getGenreName(topGenre, language)} sound. What's your music type?`;
+    const title = language === 'ko' ? `내 음악 성격은 ${typeTitle}` : language === 'ja' ? `私の音楽性格は「${typeTitle}」` : `My music personality is ${typeTitle}`;
+    const text = language === 'ko' ? `나는 ${getGenreName(topGenre, language)}와 닮은 ${typeTitle} 타입! 너는 어떤 음악 성격일까?` : language === 'ja' ? `私は${getGenreName(topGenre, language)}に似た「${typeTitle}」タイプ。あなたの音楽性格は？` : `I'm a ${typeTitle} with a ${getGenreName(topGenre, language)} sound. What's your music type?`;
     try {
       if (navigator.share) {
         await navigator.share({ title, text, url });
@@ -65,10 +72,10 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
       }
       await navigator.clipboard.writeText(url);
       analytics.track('result_shared', { shareType: 'copy', topGenre: topGenre.name, personalityScores });
-      notify(language === 'ko' ? '결과 링크를 복사했어요.' : 'Result link copied.');
+      notify(copy.copied);
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') return;
-      notify(language === 'ko' ? '공유하지 못했어요. 다시 시도해 주세요.' : 'Could not share. Please try again.');
+      notify(copy.shareFailed);
     }
   };
 
@@ -79,14 +86,14 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
       await saveCardImage(
         cardRef.current,
         'music-personality-result.png',
-        language === 'ko' ? '내 음악 성격 결과' : 'My music personality result',
+        copy.imageTitle,
         preparedBlob ?? undefined,
       );
       analytics.track('result_shared', { shareType: 'download', topGenre: topGenre.name, personalityScores });
-      notify(language === 'ko' ? '결과 이미지를 준비했어요.' : 'Result image is ready.');
+      notify(copy.imageReady);
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') return;
-      notify(language === 'ko' ? '이미지를 만들지 못했어요.' : 'Could not create the image.');
+      notify(copy.imageFailed);
     }
   };
 
@@ -104,9 +111,9 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
   const copyLink = async () => {
     try {
       await navigator.clipboard.writeText(getResultUrl(personalityScores, language));
-      notify(language === 'ko' ? '결과 링크를 복사했어요.' : 'Result link copied.');
+      notify(copy.copied);
     } catch {
-      notify(language === 'ko' ? '링크를 복사하지 못했어요.' : 'Could not copy the link.');
+      notify(copy.copyFailed);
     }
   };
 
@@ -124,14 +131,14 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
         <div className="relative z-10 flex h-full flex-col">
           <header className="flex items-start justify-between gap-4 border-b border-white/15 pb-5">
             <div><p className="text-sm font-extrabold tracking-[-0.03em]">MUSIC PERSONALITY</p><p className="mt-1 text-[9px] font-semibold tracking-[0.18em] text-white/40">BY CHAMELEONS</p></div>
-            <p className="text-[10px] font-bold tracking-[0.14em] text-white/65">{language === 'ko' ? '결과 / 01' : 'RESULT / 01'}</p>
+            <p className="text-[10px] font-bold tracking-[0.14em] text-white/65">{copy.result}</p>
           </header>
 
           <div className="flex flex-1 flex-col justify-center py-6 sm:py-8">
-            <p className="text-[10px] font-bold tracking-[0.18em]" style={{ color: theme.accent }}>{language === 'ko' ? `나와 가장 닮은 장르 · ${getGenreName(topGenre, language)}` : `THE SOUND MOST LIKE ME · ${getGenreName(topGenre, language)}`}</p>
+            <p className="text-[10px] font-bold tracking-[0.18em]" style={{ color: theme.accent }}>{copy.closest} · {getGenreName(topGenre, language)}</p>
             <h3 className="mt-3 max-w-[10ch] text-5xl font-extrabold leading-[0.92] tracking-[-0.065em] sm:text-7xl">{typeTitle}</h3>
             <p className="score-tabular mt-6 text-6xl font-extrabold tracking-[-0.07em] sm:text-8xl" style={{ color: theme.accent }}>{topGenreScore}<span className="text-2xl">%</span></p>
-            <p className="mt-1 text-[10px] font-bold tracking-[0.15em] text-white/60 uppercase">{language === 'ko' ? '장르 유사도' : 'genre similarity'}</p>
+            <p className="mt-1 text-[10px] font-bold tracking-[0.15em] text-white/60 uppercase">{copy.match}</p>
 
             <div className="mt-7 space-y-3 sm:mt-10">
               {topTraits.map(([trait, score]) => (
@@ -145,15 +152,15 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
 
           <footer className="border-t border-white/15 pt-5">
             <p className="line-clamp-1 text-[10px] text-white/48">{getGenreCharacteristics(topGenre.id, topGenre.characteristics, language).slice(0, 3).join('  ·  ')}</p>
-            <div className="mt-3 flex items-end justify-between gap-4"><p className="text-[10px] leading-4 text-white/70">{language === 'ko' ? '너는 어떤 음악 타입?' : 'WHAT IS YOUR MUSIC TYPE?'}<br />{language === 'ko' ? '재미로 보는 음악 취향 · 진단 아님' : 'FOR FUN · NOT A DIAGNOSIS'}</p><p className="text-[9px] font-bold tracking-[0.1em] text-white/65">BY CHAMELEONS</p></div>
+            <div className="mt-3 flex items-end justify-between gap-4"><p className="text-[10px] leading-4 text-white/70">{copy.question}<br />{copy.disclaimer}</p><p className="text-[9px] font-bold tracking-[0.1em] text-white/65">BY CHAMELEONS</p></div>
           </footer>
         </div>
       </div>
 
       <div className="mt-6 grid gap-3 sm:grid-cols-3">
-        <button onClick={() => void share()} className="primary-action inline-flex items-center justify-center gap-2" style={{ background: theme.accent, borderColor: theme.accent }}><Share2 size={17} />{language === 'ko' ? '공유하기' : 'Share'}</button>
-        <button onClick={saveOrRetry} disabled={appleMobile && !preparedBlob && !imagePreparationFailed} className="secondary-action inline-flex items-center justify-center gap-2"><Download size={17} />{appleMobile && !preparedBlob ? (imagePreparationFailed ? (language === 'ko' ? '이미지 다시 준비' : 'Retry image') : (language === 'ko' ? '이미지 준비 중' : 'Preparing image')) : (language === 'ko' ? '이미지 저장' : 'Save image')}</button>
-        <button onClick={() => void copyLink()} className="secondary-action inline-flex items-center justify-center gap-2"><Link2 size={17} />{language === 'ko' ? '링크 복사' : 'Copy link'}</button>
+        <button onClick={() => void share()} className="primary-action inline-flex items-center justify-center gap-2" style={{ background: theme.accent, borderColor: theme.accent }}><Share2 size={17} />{copy.share}</button>
+        <button onClick={saveOrRetry} disabled={appleMobile && !preparedBlob && !imagePreparationFailed} className="secondary-action inline-flex items-center justify-center gap-2"><Download size={17} />{appleMobile && !preparedBlob ? (imagePreparationFailed ? copy.retry : copy.preparing) : copy.save}</button>
+        <button onClick={() => void copyLink()} className="secondary-action inline-flex items-center justify-center gap-2"><Link2 size={17} />{copy.copy}</button>
       </div>
       <div className="mt-3 min-h-6 text-center text-xs text-white/45" role="status" aria-live="polite">{feedback && <span className="inline-flex items-center gap-1.5"><Check size={13} />{feedback}</span>}</div>
     </div>

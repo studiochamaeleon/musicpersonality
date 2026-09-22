@@ -13,6 +13,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className = '' }) =
   const languages: { code: Language; name: string }[] = [
     { code: 'ko', name: 'KO' },
     { code: 'en', name: 'EN' },
+    { code: 'ja', name: 'JA' },
   ];
 
   return (
@@ -22,7 +23,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className = '' }) =
           key={code}
           onClick={() => setLanguage(code)}
           aria-pressed={language === code}
-          aria-label={code === 'ko' ? '한국어로 보기' : 'View in English'}
+          aria-label={code === 'ko' ? '한국어로 보기' : code === 'ja' ? '日本語で表示' : 'View in English'}
           className={`min-h-9 min-w-10 rounded-full px-3 text-[11px] font-bold tracking-[0.14em] transition-colors ${
             language === code ? 'bg-white text-black' : 'text-white/55 hover:text-white'
           }`}

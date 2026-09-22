@@ -11,14 +11,14 @@ export default function Footer() {
         <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-sm font-extrabold tracking-[-0.02em]">MUSIC PERSONALITY</p>
-            <p className="mt-1 text-xs text-white/65">{language === 'ko' ? 'MUSIC 모델에서 영감을 받은 가벼운 음악 취향 테스트' : 'A lighthearted test inspired by the MUSIC model.'}</p>
+            <p className="mt-1 text-xs text-white/65">{language === 'ko' ? 'MUSIC 모델에서 영감을 받은 가벼운 음악 취향 테스트' : language === 'ja' ? 'MUSICモデルに着想を得た気軽な音楽の好みテスト' : 'A lighthearted test inspired by the MUSIC model.'}</p>
           </div>
           <div className="flex items-center gap-5">
             <Link href="/privacy" className="text-xs text-white/65 transition-colors hover:text-white">
-              {language === 'ko' ? '개인정보 처리방침' : 'Privacy'}
+              {language === 'ko' ? '개인정보 처리방침' : language === 'ja' ? 'プライバシー' : 'Privacy'}
             </Link>
             <Link href="/terms" className="text-xs text-white/65 transition-colors hover:text-white">
-              {language === 'ko' ? '이용약관' : 'Terms'}
+              {language === 'ko' ? '이용약관' : language === 'ja' ? '利用規約' : 'Terms'}
             </Link>
           </div>
         </div>

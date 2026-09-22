@@ -53,6 +53,10 @@ const CompatibilityResults: React.FC<CompatibilityResultsProps> = ({ hostScores,
     back: '처음으로', eyebrow: '우리의 음악 궁합', score: '두 사람의 취향 유사도', similar: '가장 닮은 취향', different: '가장 다른 취향', compare: '취향을 나란히 보기', friend: '친구', me: '나',
     together: '함께 들으면 좋은 장르', shareTitle: '이 궁합을 친구에게 보여주세요', shareBody: '결과 이미지를 저장하거나 링크로 공유하면 같은 화면을 다시 볼 수 있어요.', share: '결과 공유', save: '이미지 저장', copy: '링크 복사',
     myResult: '내 개인 결과 보기', another: '다른 친구와 비교하기', private: '두 점수는 링크 안에만 담기며 서버에 저장되지 않아요.', scoreNote: '다섯 음악 취향 점수의 평균 유사도예요. 관계의 성공 가능성을 뜻하지는 않습니다.', gap: '점 차이', match: '유사도', togetherTag: '함께 들을 음악', shareTag: '우리 결과 공유', cardTag: '우리의 음악 궁합', cardScore: '음악 취향 유사도', disclaimer: '재미로 보는 취향 비교 · 진단 아님',
+  } : language === 'ja' ? {
+    back: 'ホーム', eyebrow: '二人の音楽相性', score: '二人の好みの似ている度', similar: '最も似ている好み', different: '最も違う好み', compare: '好みを並べて見る', friend: '友達', me: '私',
+    together: '一緒に聴きたいジャンル', shareTitle: 'この相性を友達に見せよう', shareBody: '結果カードを保存するか、リンクをシェアすると同じ画面を開き直せます。', share: '結果をシェア', save: '画像を保存', copy: 'リンクをコピー',
+    myResult: '自分の結果を見る', another: '別の友達と比べる', private: '二人のスコアはリンクにだけ含まれ、サーバーには保存されません。', scoreNote: '五つの音楽の好みスコアの平均似合度です。人間関係の成功を予測するものではありません。', gap: '点差', match: '似合度', togetherTag: '一緒に聴く音楽', shareTag: '二人の結果をシェア', cardTag: '二人の音楽相性', cardScore: '音楽の好み似合度', disclaimer: '気軽に楽しむ好み比較 · 診断ではありません',
   } : {
     back: 'Home', eyebrow: 'OUR MUSIC MATCH', score: 'Your music compatibility', similar: 'Closest match', different: 'Biggest contrast', compare: 'Taste, side by side', friend: 'Friend', me: 'Me',
     together: 'Genres to hear together', shareTitle: 'Share this match with your friend', shareBody: 'Save the card or share the link to reopen the same result.', share: 'Share result', save: 'Save image', copy: 'Copy link',
@@ -68,16 +72,16 @@ const CompatibilityResults: React.FC<CompatibilityResultsProps> = ({ hostScores,
     try {
       await navigator.clipboard.writeText(getComparisonUrl(hostScores, guestScores, language));
       analytics.track('compatibility_result_shared', { shareType: 'copy', score: compatibility.score });
-      notify(language === 'ko' ? '궁합 링크를 복사했어요.' : 'Match link copied.');
+      notify(language === 'ko' ? '궁합 링크를 복사했어요.' : language === 'ja' ? '相性リンクをコピーしました。' : 'Match link copied.');
     } catch {
-      notify(language === 'ko' ? '링크를 복사하지 못했어요.' : 'Could not copy the link.');
+      notify(language === 'ko' ? '링크를 복사하지 못했어요.' : language === 'ja' ? 'リンクをコピーできませんでした。' : 'Could not copy the link.');
     }
   };
 
   const shareResult = async () => {
     const url = getComparisonUrl(hostScores, guestScores, language);
     try {
-      const title = language === 'ko' ? `우리 음악 궁합은 ${compatibility.score}%` : `Our music match is ${compatibility.score}%`;
+      const title = language === 'ko' ? `우리 음악 궁합은 ${compatibility.score}%` : language === 'ja' ? `二人の音楽相性は${compatibility.score}％` : `Our music match is ${compatibility.score}%`;
       if (navigator.share) {
         await navigator.share({ title, text: compatibility.title, url });
         analytics.track('compatibility_result_shared', { shareType: 'native-link', score: compatibility.score });
@@ -86,7 +90,7 @@ const CompatibilityResults: React.FC<CompatibilityResultsProps> = ({ hostScores,
       await copyLink();
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') return;
-      notify(language === 'ko' ? '공유하지 못했어요. 다시 시도해 주세요.' : 'Could not share. Please try again.');
+      notify(language === 'ko' ? '공유하지 못했어요. 다시 시도해 주세요.' : language === 'ja' ? 'シェアできませんでした。もう一度お試しください。' : 'Could not share. Please try again.');
     }
   };
 
@@ -97,14 +101,14 @@ const CompatibilityResults: React.FC<CompatibilityResultsProps> = ({ hostScores,
       await saveCardImage(
         cardRef.current,
         'our-music-match.png',
-        language === 'ko' ? `우리 음악 궁합 ${compatibility.score}%` : `Our music match ${compatibility.score}%`,
+        language === 'ko' ? `우리 음악 궁합 ${compatibility.score}%` : language === 'ja' ? `二人の音楽相性 ${compatibility.score}％` : `Our music match ${compatibility.score}%`,
         preparedBlob ?? undefined,
       );
       analytics.track('compatibility_result_shared', { shareType: 'download', score: compatibility.score });
-      notify(language === 'ko' ? '궁합 이미지를 준비했어요.' : 'Match image is ready.');
+      notify(language === 'ko' ? '궁합 이미지를 준비했어요.' : language === 'ja' ? '相性画像を準備しました。' : 'Match image is ready.');
     } catch (error) {
       if (error instanceof DOMException && error.name === 'AbortError') return;
-      notify(language === 'ko' ? '이미지를 만들지 못했어요.' : 'Could not create the image.');
+      notify(language === 'ko' ? '이미지를 만들지 못했어요.' : language === 'ja' ? '画像を作成できませんでした。' : 'Could not create the image.');
     }
   };
 
@@ -196,7 +200,7 @@ const CompatibilityResults: React.FC<CompatibilityResultsProps> = ({ hostScores,
 
           <div className="mt-6 grid gap-3 sm:grid-cols-3">
             <button onClick={() => void shareResult()} className="primary-action inline-flex items-center justify-center gap-2" style={{ background: theme.accent, borderColor: theme.accent }}><Share2 size={17} />{copy.share}</button>
-            <button onClick={saveOrRetry} disabled={appleMobile && !preparedBlob && !imagePreparationFailed} className="secondary-action inline-flex items-center justify-center gap-2"><Download size={17} />{appleMobile && !preparedBlob ? (imagePreparationFailed ? (language === 'ko' ? '이미지 다시 준비' : 'Retry image') : (language === 'ko' ? '이미지 준비 중' : 'Preparing image')) : copy.save}</button>
+            <button onClick={saveOrRetry} disabled={appleMobile && !preparedBlob && !imagePreparationFailed} className="secondary-action inline-flex items-center justify-center gap-2"><Download size={17} />{appleMobile && !preparedBlob ? (imagePreparationFailed ? (language === 'ko' ? '이미지 다시 준비' : language === 'ja' ? '画像をもう一度準備' : 'Retry image') : (language === 'ko' ? '이미지 준비 중' : language === 'ja' ? '画像を準備中' : 'Preparing image')) : copy.save}</button>
             <button onClick={() => void copyLink()} className="secondary-action inline-flex items-center justify-center gap-2"><Link2 size={17} />{copy.copy}</button>
           </div>
           <div className="mt-3 min-h-6 text-center text-xs text-white/45" aria-live="polite">{feedback && <span className="inline-flex items-center gap-1.5"><Check size={13} />{feedback}</span>}</div>

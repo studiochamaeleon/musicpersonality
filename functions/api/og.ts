@@ -11,10 +11,10 @@ export async function onRequest(context: PagesFunctionContext) {
   const resultScores = decodeScoreToken(requestUrl.searchParams.get('score'));
   if (resultScores) {
     const result = getPersonalResultSummary(resultScores);
-    const language = requestUrl.searchParams.get('lang') === 'en' ? 'en' : 'ko';
+    const language = requestUrl.searchParams.get('lang') === 'ja' ? 'ja' : requestUrl.searchParams.get('lang') === 'en' ? 'en' : 'ko';
     const image = createOgPng(resultScores, null, {
-      genreName: language === 'ko' ? result.genreNameKo : result.genreName,
-      typeTitle: language === 'ko' ? result.typeTitleKo : result.typeTitleEn,
+      genreName: language === 'ko' ? result.genreNameKo : language === 'ja' ? result.genreNameJa : result.genreName,
+      typeTitle: language === 'ko' ? result.typeTitleKo : language === 'ja' ? result.typeTitleJa : result.typeTitleEn,
       compatibility: result.compatibility,
     }, language);
     return pngResponse(image, `music-personality-result-${language}.png`, 'public, max-age=86400');
@@ -29,7 +29,7 @@ export async function onRequest(context: PagesFunctionContext) {
   }
 
   const matchScore = guestScores ? calculateMatchScore(hostScores, guestScores) : null;
-  const language = requestUrl.searchParams.get('lang') === 'en' ? 'en' : 'ko';
+  const language = requestUrl.searchParams.get('lang') === 'ja' ? 'ja' : requestUrl.searchParams.get('lang') === 'en' ? 'en' : 'ko';
   const image = createOgPng(hostScores, matchScore, undefined, language);
   return pngResponse(image, 'music-match.png');
 }

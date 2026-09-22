@@ -1,5 +1,6 @@
 import { GenreSchema, MUSICPersonality } from '@/types';
 import { encodeScores } from './compatibility';
+import type { Language } from '@/types/i18n';
 
 const CATEGORY_THEMES: Record<GenreSchema['category'], { accent: string; secondary: string }> = {
   JAZZ: { accent: '#BCA7FF', secondary: '#43F5FF' },
@@ -16,7 +17,7 @@ export function getGenreTheme(genre?: GenreSchema | null) {
   return genre ? CATEGORY_THEMES[genre.category] : { accent: '#C8FF3D', secondary: '#43F5FF' };
 }
 
-export function createResultSearchParams(scores: MUSICPersonality, language: 'ko' | 'en' = 'ko') {
+export function createResultSearchParams(scores: MUSICPersonality, language: Language = 'ko') {
   const params = new URLSearchParams({
     v: '2',
     m: String(Math.round(scores.mellow)),
@@ -25,7 +26,7 @@ export function createResultSearchParams(scores: MUSICPersonality, language: 'ko
     i: String(Math.round(scores.intense)),
     c: String(Math.round(scores.contemporary)),
   });
-  if (language === 'en') params.set('lang', 'en');
+  if (language !== 'ko') params.set('lang', language);
   return params;
 }
 
@@ -57,7 +58,7 @@ export function parseResultSearchParams(params: URLSearchParams): MUSICPersonali
   };
 }
 
-export function getResultUrl(scores: MUSICPersonality, language: 'ko' | 'en' = 'ko') {
+export function getResultUrl(scores: MUSICPersonality, language: Language = 'ko') {
   if (typeof window === 'undefined') return '';
   const params = new URLSearchParams({ score: encodeScores(scores), sv: '2', lang: language });
   return `${window.location.origin}/result?${params.toString()}`;

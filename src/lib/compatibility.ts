@@ -1,4 +1,5 @@
 import { MUSICPersonality } from '@/types';
+import type { Language } from '@/types/i18n';
 
 export const MUSIC_TRAITS = ['mellow', 'unpretentious', 'sophisticated', 'intense', 'contemporary'] as const;
 export type MusicTrait = typeof MUSIC_TRAITS[number];
@@ -21,7 +22,7 @@ export interface PairCompatibility {
   biggestDifference: TraitCompatibility;
 }
 
-const TRAIT_LABELS: Record<'ko' | 'en', Record<MusicTrait, string>> = {
+const TRAIT_LABELS: Record<Language, Record<MusicTrait, string>> = {
   ko: {
     mellow: '감성',
     unpretentious: '편안함',
@@ -35,6 +36,13 @@ const TRAIT_LABELS: Record<'ko' | 'en', Record<MusicTrait, string>> = {
     sophisticated: 'Sophisticated',
     intense: 'Intense',
     contemporary: 'Contemporary',
+  },
+  ja: {
+    mellow: '穏やかさ',
+    unpretentious: '親しみやすさ',
+    sophisticated: '探究心',
+    intense: '力強さ',
+    contemporary: '今っぽさ',
   },
 };
 
@@ -73,11 +81,11 @@ export function parseComparisonHash(hash: string) {
   return { hostScores, guestScores: decodeScores(params.get('guest')) };
 }
 
-export function getComparisonUrl(hostScores: MUSICPersonality, guestScores?: MUSICPersonality | null, language: 'ko' | 'en' = 'ko') {
+export function getComparisonUrl(hostScores: MUSICPersonality, guestScores?: MUSICPersonality | null, language: Language = 'ko') {
   if (typeof window === 'undefined') return '';
   const params = new URLSearchParams({ host: encodeScores(hostScores) });
   if (guestScores) params.set('guest', encodeScores(guestScores));
-  if (language === 'en') params.set('lang', 'en');
+  if (language !== 'ko') params.set('lang', language);
   return `${window.location.origin}/share?${params.toString()}`;
 }
 
@@ -91,7 +99,7 @@ export function averageScores(first: MUSICPersonality, second: MUSICPersonality)
 export function calculatePairCompatibility(
   hostScores: MUSICPersonality,
   guestScores: MUSICPersonality,
-  language: 'ko' | 'en',
+  language: Language,
 ): PairCompatibility {
   const traits = MUSIC_TRAITS.map(key => {
     const difference = Math.abs(hostScores[key] - guestScores[key]);
@@ -113,6 +121,13 @@ export function calculatePairCompatibility(
     if (score >= 74) return { score, traits, strongest, biggestDifference, title: '같이 들을수록 좋은 사이', description: `${strongest.label}에서 가장 잘 통하고, ${biggestDifference.label}의 차이는 서로의 플레이리스트를 넓혀줘요.` };
     if (score >= 60) return { score, traits, strongest, biggestDifference, title: '닮음과 새로움의 균형', description: `${strongest.label}은 편안하게 통하고, ${biggestDifference.label}은 서로에게 새로운 음악을 건넬 포인트예요.` };
     return { score, traits, strongest, biggestDifference, title: '서로 다른 취향의 발견', description: `차이가 큰 만큼 함께 들으면 새로운 장르를 발견할 가능성이 커요. ${strongest.label}이 두 취향을 잇는 접점입니다.` };
+  }
+
+  if (language === 'ja') {
+    if (score >= 88) return { score, traits, strongest, biggestDifference, title: 'ほぼ同じプレイリスト', description: `${strongest.label}の好みが特に似ています。言葉より先に音楽で通じ合えそうな組み合わせです。` };
+    if (score >= 74) return { score, traits, strongest, biggestDifference, title: '一緒に聴くほど相性のよい二人', description: `${strongest.label}がいちばんの共通点。${biggestDifference.label}の違いが、二人のプレイリストを広げます。` };
+    if (score >= 60) return { score, traits, strongest, biggestDifference, title: '似ているところと新しさのバランス', description: `${strongest.label}は自然に通じ合い、${biggestDifference.label}は新しい音楽を交換するきっかけになります。` };
+    return { score, traits, strongest, biggestDifference, title: '違う好みから始まる発見', description: `違いが大きいぶん、一緒に新しいジャンルを見つけられそうです。${strongest.label}が二人をつなぐ接点です。` };
   }
 
   if (score >= 88) return { score, traits, strongest, biggestDifference, title: 'Almost the same playlist', description: `You especially align on ${strongest.label}. Music is likely to click before words do.` };
