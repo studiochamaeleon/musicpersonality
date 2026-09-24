@@ -8,10 +8,10 @@ import Footer from "@/components/Footer";
 import { SITE_URL } from "@/lib/siteUrl";
 
 export const metadata: Metadata = {
-  title: "음악 성격 테스트 | 나와 닮은 장르 찾기",
+  title: "MUTI | 나와 닮은 음악 찾기",
   description: "음악 취향에 답하고 나와 닮은 장르와 앨범을 발견해보세요. MUSIC 모델에서 영감을 받은 가벼운 테스트입니다.",
   keywords: [
-    "music personality test", "music taste quiz", "MUSIC model", "genre discovery", "music recommendations",
+    "MUTI", "Music Taste Identity", "music personality test", "music taste quiz", "MUSIC model", "genre discovery", "music recommendations",
     "음악 성격 테스트", "음악 취향 테스트", "음악 성향", "장르 추천", "친구 음악 궁합"
   ],
   authors: [{ name: "CHAMELEONS" }],
@@ -24,16 +24,16 @@ export const metadata: Metadata = {
   },
   metadataBase: new URL(SITE_URL),
   openGraph: {
-    title: "음악 성격 테스트 | 나와 닮은 장르 찾기",
+    title: "MUTI | 나와 닮은 음악 찾기",
     description: "음악 취향에 답하고 나와 닮은 장르와 앨범을 발견해보세요.",
     url: SITE_URL,
-    siteName: 'Music Personality Test',
+    siteName: 'MUTI',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: '음악 성격 테스트 — 나와 닮은 장르 찾기',
+        alt: 'MUTI — Music Taste Identity',
       },
     ],
     locale: 'ko_KR',
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "음악 성격 테스트 | 나와 닮은 장르 찾기",
+    title: "MUTI | 나와 닮은 음악 찾기",
     description: "음악 취향에 답하고 나와 닮은 장르와 앨범을 발견해보세요.",
     images: ['/og-image.png'],
   },

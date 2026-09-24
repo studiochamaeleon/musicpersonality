@@ -4,8 +4,8 @@ export const dynamic = 'force-static'
  
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Music Personality Test',
-    short_name: 'MusicPersonality',
+    name: 'MUTI — Music Taste Identity',
+    short_name: 'MUTI',
     description: 'A lighthearted music taste test with genre and album discovery',
     start_url: '/',
     display: 'standalone',

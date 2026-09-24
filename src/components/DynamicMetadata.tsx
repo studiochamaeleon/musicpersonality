@@ -13,9 +13,9 @@ export default function DynamicMetadata() {
 
     // Update document title
     document.title = getLocalizedText(
-      'Music Personality Test - Discover Your Musical Identity',
-      '음악 성격 테스트 | 나와 닮은 장르 찾기',
-      '音楽性格テスト｜自分に似たジャンルを発見'
+      'MUTI | Music Taste Identity',
+      'MUTI | 나와 닮은 음악 찾기',
+      'MUTI | 自分に似た音楽を見つけよう'
     );
 
     // Update meta description
@@ -32,9 +32,9 @@ export default function DynamicMetadata() {
     const ogTitle = document.querySelector('meta[property="og:title"]');
     if (ogTitle) {
       ogTitle.setAttribute('content', getLocalizedText(
-        'Music Personality Test - Discover Your Musical Identity',
-        '음악 성격 테스트 | 나와 닮은 장르 찾기',
-        '音楽性格テスト｜自分に似たジャンルを発見'
+        'MUTI | Music Taste Identity',
+        'MUTI | 나와 닮은 음악 찾기',
+        'MUTI | 自分に似た音楽を見つけよう'
       ));
     }
 
@@ -51,20 +51,16 @@ export default function DynamicMetadata() {
     // Update Open Graph site name
     const ogSiteName = document.querySelector('meta[property="og:site_name"]');
     if (ogSiteName) {
-      ogSiteName.setAttribute('content', getLocalizedText(
-        'Music Personality Test',
-        '음악 성격 테스트',
-        '音楽性格テスト'
-      ));
+      ogSiteName.setAttribute('content', 'MUTI');
     }
 
     // Update Twitter title
     const twitterTitle = document.querySelector('meta[name="twitter:title"]');
     if (twitterTitle) {
       twitterTitle.setAttribute('content', getLocalizedText(
-        'Music Personality Test - Discover Your Musical Identity',
-        '음악 성격 테스트 | 나와 닮은 장르 찾기',
-        '音楽性格テスト｜自分に似たジャンルを発見'
+        'MUTI | Music Taste Identity',
+        'MUTI | 나와 닮은 음악 찾기',
+        'MUTI | 自分に似た音楽を見つけよう'
       ));
     }
 

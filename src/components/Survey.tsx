@@ -66,7 +66,7 @@ const Survey: React.FC<SurveyProps> = ({ questions, onComplete, onGoHome }) => {
     <main className="app-canvas flex min-h-screen flex-col text-white">
       <header className="mx-auto flex w-full max-w-4xl items-center justify-between px-5 py-5 sm:px-8">
         <div>
-          <p className="text-sm font-extrabold tracking-[-0.03em]">MUSIC PERSONALITY</p>
+          <p className="text-sm font-extrabold tracking-[-0.03em]">MUTI</p>
           <p className="mt-0.5 text-[10px] tracking-[0.16em] text-white/30">LISTEN TO YOUR TASTE</p>
         </div>
         {onGoHome && (

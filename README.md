@@ -1,4 +1,4 @@
-# Music Personality
+# MUTI — Music Taste Identity
 
 음악 취향 40문항을 통해 MUSIC 5요인 점수를 계산하고, 닮은 장르·아티스트·입문 앨범·성격 해석을 보여주는 가벼운 바이럴 웹 테스트입니다. 한국어·영어·일본어를 지원하며 별도 계정이나 백엔드 없이 정적 사이트로 동작합니다.
 
@@ -84,7 +84,8 @@ Pull Request와 `main` 브랜치 push에서도 같은 E2E 검증이 GitHub Actio
 - Build output directory: `out`
 - Functions: 저장소의 `functions/` 디렉터리에서 자동 배포
 - Function routes: `/share`, `/result`, `/api/og`만 `public/_routes.json`에 포함
-- `NEXT_PUBLIC_SITE_URL`: 최종 공개 도메인(예: `https://quiz.example.com`). Cloudflare Pages의 빌드 환경 변수에 설정하면 canonical URL, 구조화 데이터, robots.txt, sitemap.xml, 정책 페이지의 사이트 주소가 함께 바뀝니다. 설정하지 않으면 `https://musicpersonalitytest.pages.dev`를 사용합니다. 도메인 연결 후에는 이 환경 변수로 다시 빌드하고 `/robots.txt`, `/sitemap.xml`을 확인하세요.
+- 공개 도메인: `https://muti.chameleonstudio.xyz`. Squarespace DNS의 `muti` CNAME은 `musicpersonalitytest.pages.dev`를 가리키고, Cloudflare Pages의 Custom domains에도 같은 주소를 등록해야 HTTPS 인증서가 발급됩니다.
+- `NEXT_PUBLIC_SITE_URL`: canonical URL, 구조화 데이터, robots.txt, sitemap.xml, 정책 페이지의 사이트 주소를 정합니다. 설정하지 않으면 `https://muti.chameleonstudio.xyz`를 사용합니다. Cloudflare Pages에 예전 주소가 설정돼 있다면 이 값도 새 주소로 갱신하고 다시 빌드하세요.
 - `NEXT_PUBLIC_ADSENSE_ENABLED=false`: AdSense 스크립트를 빌드에서 제외합니다. 설정하지 않으면 기존처럼 로드됩니다. 인증 CMP 설정 전 광고를 잠시 끄고 배포할 때 사용할 수 있습니다.
 
 나머지 앱과 정적 자산은 Pages에서 그대로 제공되므로 데이터베이스나 별도 이미지 렌더링 서비스가 필요하지 않습니다. 한국어·일본어 공유 이미지는 미리 생성한 비트맵 글리프를 커밋해 Cloudflare Workers의 폰트 엔진 없이 렌더링합니다. 한국어는 [Pretendard](https://github.com/orioncactus/pretendard), 일본어는 [Noto Sans JP](https://github.com/notofonts/noto-cjk)의 OFL 폰트로 생성했습니다. 장르명·유형명을 추가한 경우 한국어는 `npm run generate:og-glyphs -- /path/to/Pretendard-Bold.otf`, 일본어는 `npm run generate:ja-og-glyphs -- /path/to/NotoSansJP-VF.ttf`로 다시 생성한 뒤 `npm run test:unit`으로 누락 여부를 확인하세요.

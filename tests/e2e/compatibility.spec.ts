@@ -50,7 +50,7 @@ test('the personal result card downloads as a non-empty PNG', async ({ page }) =
   const downloadPromise = page.waitForEvent('download');
   await page.getByRole('button', { name: '이미지 저장' }).click();
   const download = await downloadPromise;
-  expect(download.suggestedFilename()).toBe('music-personality-result.png');
+  expect(download.suggestedFilename()).toBe('muti-result.png');
   const stream = await download.createReadStream();
   const chunks: Buffer[] = [];
   for await (const chunk of stream) chunks.push(Buffer.from(chunk));

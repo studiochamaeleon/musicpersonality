@@ -183,7 +183,7 @@ const CompatibilityResults: React.FC<CompatibilityResultsProps> = ({ hostScores,
             <div className="absolute -bottom-[15%] -left-[18%] h-[50%] w-[70%] rounded-full opacity-25 blur-[90px]" style={{ background: theme.secondary }} />
             <div className="absolute inset-0 opacity-[.08]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '22px 22px' }} />
             <div className="relative z-10 flex h-full flex-col">
-              <header className="flex items-start justify-between border-b border-white/15 pb-5"><div><p className="text-sm font-extrabold tracking-[-.03em]">MUSIC PERSONALITY</p><p className="mt-1 text-[10px] font-semibold tracking-[.18em] text-white/65">{copy.cardTag}</p></div><Users size={18} className="text-white/65" /></header>
+              <header className="flex items-start justify-between border-b border-white/15 pb-5"><div><p className="text-sm font-extrabold tracking-[-.03em]">MUTI</p><p className="mt-1 text-[10px] font-semibold tracking-[.18em] text-white/65">{copy.cardTag}</p></div><Users size={18} className="text-white/65" /></header>
               <div className="flex flex-1 flex-col justify-center py-6 text-center">
                 <p className="text-[10px] font-bold tracking-[.18em]" style={{ color: theme.accent }}>{copy.cardScore}</p>
                 <p className="score-tabular mt-4 text-[clamp(5rem,20vw,9rem)] font-extrabold leading-none tracking-[-.08em]" style={{ color: theme.accent }}>{compatibility.score}<span className="text-[.25em]">%</span></p>

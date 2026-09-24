@@ -17,7 +17,7 @@ export async function onRequest(context: PagesFunctionContext) {
       typeTitle: language === 'ko' ? result.typeTitleKo : language === 'ja' ? result.typeTitleJa : result.typeTitleEn,
       compatibility: result.compatibility,
     }, language);
-    return pngResponse(image, `music-personality-result-${language}.png`, 'public, max-age=86400');
+    return pngResponse(image, `muti-result-${language}.png`, 'public, max-age=86400');
   }
 
   const hostScores = decodeScoreToken(requestUrl.searchParams.get('host'));

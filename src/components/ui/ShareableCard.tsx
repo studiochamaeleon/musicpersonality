@@ -85,7 +85,7 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
       if (appleMobile && !preparedBlob) throw new Error('Image is still being prepared');
       await saveCardImage(
         cardRef.current,
-        'music-personality-result.png',
+        'muti-result.png',
         copy.imageTitle,
         preparedBlob ?? undefined,
       );
@@ -130,7 +130,7 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
 
         <div className="relative z-10 flex h-full flex-col">
           <header className="flex items-start justify-between gap-4 border-b border-white/15 pb-5">
-            <div><p className="text-sm font-extrabold tracking-[-0.03em]">MUSIC PERSONALITY</p><p className="mt-1 text-[9px] font-semibold tracking-[0.18em] text-white/40">BY CHAMELEONS</p></div>
+            <div><p className="text-sm font-extrabold tracking-[-0.03em]">MUTI</p><p className="mt-1 text-[9px] font-semibold tracking-[0.18em] text-white/40">MUSIC TASTE IDENTITY</p></div>
             <p className="text-[10px] font-bold tracking-[0.14em] text-white/65">{copy.result}</p>
           </header>
 

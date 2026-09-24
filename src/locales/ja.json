@@ -6,7 +6,7 @@
   },
   "languageSelector": { "label": "言語" },
   "intro": {
-    "title": "音楽性格テスト",
+    "title": "MUTI — Music Taste Identity",
     "description": "音楽の好みから自分らしさを知り、\nあなたに似たジャンルとアルバムを見つけよう",
     "testInfo": "📝 40問 | ⏱️ 約5分 | 🎵 32ジャンル",
     "subtitle": "音楽の好みから自分らしさを知り、\nあなたに似たジャンルとアルバムを見つけよう",
@@ -56,14 +56,14 @@
   "sharing": { "download": "保存", "share": "シェア", "shareNative": "シェア" },
   "shareableCard": { "myMusicalPersonality": "私の音楽性格", "myMusicalTraits": "私の音楽傾向", "match": "一致", "basedOnMusicModel": "MUSICモデルを参考にしたエンタメ診断" },
   "analysisReport": {
-    "coreTraits": "中心となる特徴", "lifestyleInsights": "ライフスタイル", "strengths": "強み", "challenges": "気をつけたい点", "compatibleTypes": "相性のよい音楽タイプ", "compatibilityTitle": "音楽の相性", "compatibilityDescription": "💡 友達と比べると、共通点や新しい音楽の入口が見つかります。", "musicPreferences": "好みやすい音楽", "socialSharing": { "title": "音楽性格の結果をシェア", "description": "🎵 友達との音楽相性もチェック！", "subtitle": "似ているところと違うところから、一緒に聴きたい音楽を見つけよう。", "instructions": "友達もテストを終えると音楽相性を比較できます", "resultText": "🎵 音楽性格テストの結果\n\n{typeTitle}\n{description}\n\nあなたも試してみて：{url}", "shareTitle": "私の音楽性格テスト結果" }, "relationshipCompatibility": "人間関係での傾向", "bestMatch": "ベストマッチ", "compatibilityReason": "相性の理由：", "recommendedActivities": "おすすめの過ごし方", "shareButton": "📲 結果をシェア", "resultsCopied": "結果をコピーしました！",
+    "coreTraits": "中心となる特徴", "lifestyleInsights": "ライフスタイル", "strengths": "強み", "challenges": "気をつけたい点", "compatibleTypes": "相性のよい音楽タイプ", "compatibilityTitle": "音楽の相性", "compatibilityDescription": "💡 友達と比べると、共通点や新しい音楽の入口が見つかります。", "musicPreferences": "好みやすい音楽", "socialSharing": { "title": "音楽性格の結果をシェア", "description": "🎵 友達との音楽相性もチェック！", "subtitle": "似ているところと違うところから、一緒に聴きたい音楽を見つけよう。", "instructions": "友達もテストを終えると音楽相性を比較できます", "resultText": "🎵 MUTIの結果\n\n{typeTitle}\n{description}\n\nあなたも試してみて：{url}", "shareTitle": "私のMUTI結果" }, "relationshipCompatibility": "人間関係での傾向", "bestMatch": "ベストマッチ", "compatibilityReason": "相性の理由：", "recommendedActivities": "おすすめの過ごし方", "shareButton": "📲 結果をシェア", "resultsCopied": "結果をコピーしました！",
     "relationshipDynamics": { "complementary": "違いを補いながら音楽の世界を広げる関係です。{genreName}を通して新しい感情に出会えます。", "similarEnhanced": "似た好みを土台に、{genreName}を一緒に深く楽しめる関係です。", "balanced": "互いの好みを尊重し、{genreName}を中心にバランスよく音楽を交換できます。" },
     "musicalSynergy": { "complementary": "{genreName}の特徴が二人の音楽体験を広げ、より豊かな時間をつくります。", "similarEnhanced": "{genreName}への共通の関心から、音楽の話や新しいアーティスト探しを一緒に楽しめます。", "balanced": "{genreName}を通して互いの視点を共有し、バランスのよいプレイリストを作れます。" }
   },
   "error": { "occurred": "エラーが発生しました。", "tryAgain": "もう一度お試しください。" },
   "seo": {
-    "website": { "title": "音楽性格テスト｜自分に似たジャンルを発見", "description": "40問の音楽の好みに答えて、自分に似たジャンルやアルバムを見つけるライトな性格テストです。", "siteName": "音楽性格テスト", "keywords": ["音楽性格テスト", "音楽の好み", "MUSICモデル", "ジャンル診断", "音楽おすすめ", "性格テスト", "音楽発見"], "author": "CHAMELEONS", "creator": "音楽性格テスト", "publisher": "CHAMELEONS", "ogTitle": "音楽性格テスト｜自分に似たジャンルを発見", "ogDescription": "音楽の好みから、あなたに似たジャンルとアルバムを見つけよう。", "ogImageAlt": "音楽性格テストの結果", "twitterTitle": "音楽性格テスト｜自分に似たジャンルを発見", "twitterDescription": "音楽の好みから、あなたに似たジャンルとアルバムを見つけよう。", "twitterCreator": "@musicpersonality" },
-    "structuredData": { "website": { "name": "音楽性格テスト", "description": "MUSICモデルを参考にしたライトな音楽の好み診断", "organizationName": "CHAMELEONS" }, "quiz": { "educationalLevel": "一般", "learningResourceType": "性格テスト", "aboutName": "音楽心理", "aboutDescription": "MUSICモデルを参考にした音楽性格テスト", "questionName": "音楽の好みに関する質問", "questionText": "音楽の好みや聴き方についての質問" }, "article": { "headline": "あなたの音楽性格を知る", "authorName": "CHAMELEONS" } }
+    "website": { "title": "MUTI｜自分に似たジャンルを発見", "description": "40問の音楽の好みに答えて、自分に似たジャンルやアルバムを見つけるライトな性格テストです。", "siteName": "MUTI", "keywords": ["MUTI", "音楽の好み", "MUSICモデル", "ジャンル診断", "音楽おすすめ", "性格テスト", "音楽発見"], "author": "CHAMELEONS", "creator": "MUTI", "publisher": "CHAMELEONS", "ogTitle": "MUTI｜自分に似たジャンルを発見", "ogDescription": "音楽の好みから、あなたに似たジャンルとアルバムを見つけよう。", "ogImageAlt": "MUTIの結果", "twitterTitle": "MUTI｜自分に似たジャンルを発見", "twitterDescription": "音楽の好みから、あなたに似たジャンルとアルバムを見つけよう。", "twitterCreator": "" },
+    "structuredData": { "website": { "name": "MUTI", "description": "MUSICモデルを参考にしたライトな音楽の好み診断", "organizationName": "CHAMELEONS" }, "quiz": { "educationalLevel": "一般", "learningResourceType": "性格テスト", "aboutName": "音楽心理", "aboutDescription": "MUSICモデルを参考にしたMUTI", "questionName": "音楽の好みに関する質問", "questionText": "音楽の好みや聴き方についての質問" }, "article": { "headline": "あなたの音楽性格を知る", "authorName": "CHAMELEONS" } }
   },
   "privacy": {
     "title": "プライバシーポリシー", "lastUpdated": "最終更新：",
@@ -83,11 +83,11 @@
   "terms": {
     "title": "利用規約", "lastUpdated": "最終更新：",
     "sections": {
-      "acceptance": { "title": "規約への同意", "content": "音楽性格テスト（以下「本サービス」）へアクセスし利用することで、本規約に同意したものとみなされます。同意できない場合は本サービスを利用しないでください。" },
-      "serviceDescription": { "title": "サービス内容", "content": "音楽性格テストは無料のエンターテインメントWebサイトです。回答から5つの音楽嗜好スコアを計算し、編集されたジャンルプロフィールと比較して音楽とライトな性格解釈を提案します。結果は検証済みの心理診断でも、ジャンルを好きになる確率でもありません。" },
+      "acceptance": { "title": "規約への同意", "content": "MUTI（以下「本サービス」）へアクセスし利用することで、本規約に同意したものとみなされます。同意できない場合は本サービスを利用しないでください。" },
+      "serviceDescription": { "title": "サービス内容", "content": "MUTIは無料のエンターテインメントWebサイトです。回答から5つの音楽嗜好スコアを計算し、編集されたジャンルプロフィールと比較して音楽とライトな性格解釈を提案します。結果は検証済みの心理診断でも、ジャンルを好きになる確率でもありません。" },
       "userResponsibilities": { "title": "利用者の責任", "content": "本サービスの利用にあたり、次の事項に同意するものとします：", "responsibilities": ["できる範囲で正直に回答する", "個人的かつ非営利の目的で利用する", "サービスの操作・侵入・妨害を試みない", "違法または許可されていない目的で利用しない", "サービスの知的財産権を尊重する"] },
       "privacyData": { "title": "プライバシーとデータ", "content": "プライバシーは重要です。本サービス利用時の個人情報の取り扱いについて、プライバシーポリシーもご確認ください。" },
-      "intellectualProperty": { "title": "知的財産", "content": "本サービスの独自コンテンツ、機能、仕様は音楽性格テストに帰属し、著作権、商標その他の知的財産法により保護されます。" },
+      "intellectualProperty": { "title": "知的財産", "content": "本サービスの独自コンテンツ、機能、仕様はMUTIに帰属し、著作権、商標その他の知的財産法により保護されます。" },
       "warranties": { "title": "保証の否認", "content": "本サービスは「現状有姿」かつ「提供可能な範囲」で提供されます。明示・黙示を問わず、次を含むその他の保証を行いません：", "disclaimers": ["商品性に関する黙示の保証または条件", "特定目的への適合性", "知的財産権を侵害しないこと", "診断結果の正確性、信頼性、完全性"] },
       "liability": { "title": "責任の制限", "content": "本サービスの利用により生じた利益、データ、利用機会、信用その他の無形損失を含む、間接的・偶発的・特別・結果的・懲罰的損害について、運営者および関係者は責任を負いません。" },
       "assessmentDisclaimer": { "title": "診断結果に関する注意", "content": "以下をご理解ください：", "disclaimers": ["結果はエンターテインメントおよび参考情報として提供されます", "重要な人生の判断には使用しないでください", "専門家による心理評価の代わりにはなりません", "気分や状況などにより結果が変わる場合があります"] },

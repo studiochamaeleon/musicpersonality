@@ -228,7 +228,8 @@ export function createOgPng(hostScores: number[], matchScore?: number | null, pe
   fillRect(raw, 40, 40, 2, HEIGHT - 80, 2);
   fillRect(raw, WIDTH - 42, 40, 2, HEIGHT - 80, 2);
 
-  drawText(raw, 'MUSIC PERSONALITY', 265, 82, 4, 4);
+  drawText(raw, 'MUTI', 140, 82, 7, 7);
+  drawText(raw, 'MUSIC TASTE IDENTITY', 350, 86, 2, 2);
   drawText(raw, personalResult ? 'MY MUSIC TYPE' : matchScore === null || matchScore === undefined ? 'FRIEND INVITE' : 'OUR MUSIC MATCH', 930, 84, 3, 3);
 
   if (personalResult) {

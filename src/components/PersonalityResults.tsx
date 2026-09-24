@@ -113,7 +113,7 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
         <AnimatedSection direction="fade" duration={0.45}>
           <div className="mb-12 flex items-center justify-between">
             <div>
-              <p className="text-sm font-extrabold tracking-[-0.03em]">MUSIC PERSONALITY</p>
+              <p className="text-sm font-extrabold tracking-[-0.03em]">MUTI</p>
               <p className="mt-0.5 text-[10px] font-semibold tracking-[0.18em] text-white/60">{resultCopy.card}</p>
             </div>
             {onRestart && <button onClick={onRestart} className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 text-xs font-semibold text-white/60 transition-colors hover:bg-white/10 hover:text-white"><RotateCcw size={15} />{resultCopy.again}</button>}

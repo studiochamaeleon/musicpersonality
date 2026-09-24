@@ -4,6 +4,20 @@ const hostToken = 'v1.82.46.74.31.68';
 const guestToken = 'v1.70.61.79.48.75';
 const personalDestination = '/?v=2&m=70&u=61&s=79&i=48&c=75&lang=ko';
 
+test('MUTI branding and canonical domain stay consistent across public metadata', async ({ request, page }) => {
+  const homepage = await request.get('/');
+  const html = await homepage.text();
+  expect(html).toContain('<title>MUTI | 나와 닮은 음악 찾기</title>');
+  expect(html).toContain('property="og:site_name" content="MUTI"');
+  expect(html).toContain('https://muti.chameleonstudio.xyz/og-image.png');
+  expect(await (await request.get('/robots.txt')).text()).toContain('https://muti.chameleonstudio.xyz/sitemap.xml');
+  expect(await (await request.get('/manifest.webmanifest')).json()).toMatchObject({ name: 'MUTI — Music Taste Identity', short_name: 'MUTI' });
+
+  await page.goto('/');
+  await expect(page).toHaveTitle('MUTI | 나와 닮은 음악 찾기');
+  await expect(page.locator('header').first().getByText('MUTI', { exact: true })).toBeVisible();
+});
+
 test('the Cloudflare share route exposes dynamic social metadata', async ({ request }) => {
   const response = await request.get(`/share?host=${hostToken}&guest=${guestToken}`);
   expect(response.ok()).toBeTruthy();
@@ -109,7 +123,7 @@ test('Japanese personal shares use the same translated type and Japanese Open Gr
 
   const imageResponse = await request.get(`/api/og?score=${guestToken}&sv=2&lang=ja`);
   expect(imageResponse.ok()).toBeTruthy();
-  expect(imageResponse.headers()['content-disposition']).toContain('music-personality-result-ja.png');
+  expect(imageResponse.headers()['content-disposition']).toContain('muti-result-ja.png');
   const image = Buffer.from(await imageResponse.body());
   expect(image.readUInt32BE(16)).toBe(1200);
   expect(image.readUInt32BE(20)).toBe(630);
@@ -121,7 +135,7 @@ test('the personal result Open Graph endpoint returns a 1200x630 PNG', async ({ 
   const response = await request.get(`/api/og?score=${guestToken}&sv=2&lang=ko`);
   expect(response.ok()).toBeTruthy();
   expect(response.headers()['content-type']).toBe('image/png');
-  expect(response.headers()['content-disposition']).toContain('music-personality-result-ko.png');
+  expect(response.headers()['content-disposition']).toContain('muti-result-ko.png');
   const image = Buffer.from(await response.body());
   expect(image.subarray(0, 8)).toEqual(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
   expect(image.readUInt32BE(16)).toBe(1200);

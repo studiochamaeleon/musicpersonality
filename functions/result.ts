@@ -37,10 +37,10 @@ export async function onRequest(context: PagesFunctionContext) {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>${escapeHtml(title)} | Music Personality</title>
+  <title>${escapeHtml(title)} | MUTI</title>
   <meta name="description" content="${escapeHtml(description)}" />
   <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Music Personality" />
+  <meta property="og:site_name" content="MUTI" />
   <meta property="og:locale" content="${language === 'ko' ? 'ko_KR' : language === 'ja' ? 'ja_JP' : 'en_US'}" />
   <meta property="og:title" content="${escapeHtml(title)}" />
   <meta property="og:description" content="${escapeHtml(description)}" />

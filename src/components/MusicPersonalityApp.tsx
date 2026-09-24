@@ -231,7 +231,7 @@ const MusicPersonalityApp: React.FC = () => {
 
   if (appState === 'intro') {
     const copy = language === 'ko' ? {
-      eyebrow: 'MUSIC PERSONALITY TEST',
+      eyebrow: 'MUTI · MUSIC TASTE IDENTITY',
       headline: '취향을 들으면,\n당신이 보입니다.',
       body: '좋아하는 음악에 답하고 나와 닮은 장르와 음악 성격을 발견해보세요.',
       cta: '내 음악 성격 찾기',
@@ -239,7 +239,7 @@ const MusicPersonalityApp: React.FC = () => {
       note: '재미로 즐기는 음악 취향 테스트예요.',
       recent: '최근 결과',
     } : language === 'ja' ? {
-      eyebrow: 'MUSIC PERSONALITY TEST',
+      eyebrow: 'MUTI · MUSIC TASTE IDENTITY',
       headline: '好きな音を辿れば、\nあなたが見える。',
       body: '40の質問に答えて、あなたに似たジャンルと音楽性格を見つけましょう。',
       cta: '私の音楽性格を見つける',
@@ -247,7 +247,7 @@ const MusicPersonalityApp: React.FC = () => {
       note: '音楽心理学に着想を得た、気軽に楽しむテストです。',
       recent: '最近の結果',
     } : {
-      eyebrow: 'MUSIC PERSONALITY TEST',
+      eyebrow: 'MUTI · MUSIC TASTE IDENTITY',
       headline: 'Your taste says\nmore than words.',
       body: 'Answer 40 quick questions and discover the genres that sound most like you.',
       cta: 'Find my music type',
@@ -263,8 +263,8 @@ const MusicPersonalityApp: React.FC = () => {
 
         <header className="absolute inset-x-0 top-0 z-20 mx-auto flex max-w-6xl items-center justify-between px-5 py-5 sm:px-8">
           <div>
-            <p className="text-sm font-extrabold tracking-[-0.03em]">MUSIC PERSONALITY</p>
-            <p className="mt-0.5 text-[10px] font-semibold tracking-[0.18em] text-white/35">BY CHAMELEONS</p>
+            <p className="text-sm font-extrabold tracking-[-0.03em]">MUTI</p>
+            <p className="mt-0.5 text-[10px] font-semibold tracking-[0.18em] text-white/35">MUSIC TASTE IDENTITY · BY CHAMELEONS</p>
           </div>
           <LanguageSelector />
         </header>
