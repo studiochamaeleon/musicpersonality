@@ -16,23 +16,31 @@ interface LanguageProviderProps {
   children: ReactNode;
 }
 
+function browserLanguage(): Language {
+  const locale = navigator.languages?.[0] || navigator.language;
+  const primary = locale?.toLowerCase().split(/[-_]/)[0];
+  return isLanguage(primary) ? primary : 'ko';
+}
+
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>('ko');
   const [isLanguageSelected, setIsLanguageSelected] = useState(false);
 
-  // 컴포넌트 마운트 시 저장된 언어 설정 불러오기
+  // Shared links take precedence, followed by an explicit choice, then the browser locale.
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const queryLanguage = new URLSearchParams(window.location.search).get('lang') as Language;
-      const savedLanguage = readBrowserStorage('local', 'music-personality-language') as Language;
+      const queryLanguage = new URLSearchParams(window.location.search).get('lang');
+      const savedLanguage = readBrowserStorage('local', 'music-personality-language');
       const hasSelectedLanguage = readBrowserStorage('local', 'music-personality-language-selected');
-      
+
       if (isLanguage(queryLanguage)) {
         setLanguageState(queryLanguage);
       } else if (isLanguage(savedLanguage)) {
         setLanguageState(savedLanguage);
+      } else {
+        setLanguageState(browserLanguage());
       }
-      
+
       if (hasSelectedLanguage === 'true') {
         setIsLanguageSelected(true);
       }

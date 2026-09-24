@@ -272,7 +272,7 @@ const MusicPersonalityApp: React.FC = () => {
         <section className="relative z-10 mx-auto flex min-h-[100dvh] max-w-6xl items-center justify-center px-5 pb-12 pt-28 text-center sm:px-8">
           <div className="mx-auto max-w-5xl fade-in">
             <p className="eyebrow mb-5">{copy.eyebrow}</p>
-            <h1 className={`${language !== 'en' ? 'text-[clamp(3.15rem,7.2vw,6.6rem)] font-extrabold leading-[0.92] tracking-[-0.07em]' : 'display-title'} whitespace-pre-line text-balance drop-shadow-[0_18px_60px_rgba(0,0,0,.65)]`}>
+            <h1 className={`${language === 'ja' ? 'text-[clamp(2rem,8.8vw,5.8rem)] font-extrabold leading-[1.08] tracking-[-0.055em]' : language === 'ko' ? 'text-[clamp(3.15rem,7.2vw,6.6rem)] font-extrabold leading-[0.92] tracking-[-0.07em]' : 'display-title'} whitespace-pre-line text-balance drop-shadow-[0_18px_60px_rgba(0,0,0,.65)]`}>
               {copy.headline.split('\n').map((line, index) => (
                 <React.Fragment key={line}>
                   {index === 1 ? <span className="text-gradient">{line}</span> : line}

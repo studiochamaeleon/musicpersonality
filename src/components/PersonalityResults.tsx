@@ -119,11 +119,11 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
             {onRestart && <button onClick={onRestart} className="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 text-xs font-semibold text-white/60 transition-colors hover:bg-white/10 hover:text-white"><RotateCcw size={15} />{resultCopy.again}</button>}
           </div>
 
-          <div className="grid items-end gap-8 lg:grid-cols-[1fr_auto]">
-            <div>
+          <div className="grid min-w-0 items-end gap-8 lg:grid-cols-[1fr_auto]">
+            <div className="min-w-0">
               <p className="eyebrow mb-5" style={{ color: theme.accent }}>{resultCopy.eyebrow}</p>
               <p className="mb-3 text-sm font-semibold text-white/70">{resultCopy.lead} · <span style={{ color: theme.accent }}>{getGenreName(topGenre, language)}</span></p>
-              <h1 className="max-w-[13ch] text-5xl font-extrabold leading-[0.94] tracking-[-0.065em] text-balance sm:text-7xl lg:text-8xl">
+              <h1 className={`${language === 'ja' ? 'text-[clamp(2.4rem,10vw,5.5rem)] leading-[1.08]' : 'text-5xl leading-[0.94] sm:text-7xl lg:text-8xl'} max-w-[13ch] font-extrabold tracking-[-0.065em] text-balance`}>
                 {typeTitle}
               </h1>
             </div>

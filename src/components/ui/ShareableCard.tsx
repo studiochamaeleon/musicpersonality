@@ -122,13 +122,13 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
       <div
         ref={cardRef}
         style={cardStyle}
-        className="relative mx-auto aspect-[3/4] w-full max-w-[600px] overflow-hidden rounded-[32px] border border-white/20 bg-[#050507] p-7 text-white shadow-2xl sm:p-10"
+        className="relative mx-auto min-h-[620px] w-full max-w-[600px] overflow-hidden rounded-[32px] border border-white/20 bg-[#050507] p-7 text-white shadow-2xl sm:aspect-[3/4] sm:min-h-0 sm:p-10"
       >
         <div className="absolute -right-[18%] -top-[8%] h-[58%] w-[72%] rounded-full opacity-45 blur-[80px]" style={{ background: theme.accent }} />
         <div className="absolute -bottom-[18%] -left-[18%] h-[55%] w-[70%] rounded-full opacity-28 blur-[90px]" style={{ background: theme.secondary }} />
         <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '22px 22px' }} />
 
-        <div className="relative z-10 flex h-full flex-col">
+        <div className="relative z-10 flex flex-col sm:h-full">
           <header className="flex items-start justify-between gap-4 border-b border-white/15 pb-5">
             <div><p className="text-sm font-extrabold tracking-[-0.03em]">MUTI</p><p className="mt-1 text-[9px] font-semibold tracking-[0.18em] text-white/40">MUSIC TASTE IDENTITY</p></div>
             <p className="text-[10px] font-bold tracking-[0.14em] text-white/65">{copy.result}</p>

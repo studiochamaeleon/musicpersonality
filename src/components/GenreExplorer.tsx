@@ -91,8 +91,8 @@ const GenreExplorer: React.FC<GenreExplorerProps> = ({ genres, musicCatalog, onG
       <section className="mx-auto max-w-6xl px-5 pb-10 pt-14 sm:px-8 sm:pt-20">
         <AnimatedSection direction="fade">
           <p className="eyebrow mb-4">{copy.eyebrow}</p>
-          <div className="grid gap-5 lg:grid-cols-[1fr_.7fr] lg:items-end">
-            <h1 className="max-w-3xl text-4xl font-extrabold leading-[1.02] tracking-[-0.055em] sm:text-6xl">{copy.title}</h1>
+          <div className="grid min-w-0 gap-5 lg:grid-cols-[1fr_.7fr] lg:items-end">
+            <h1 className="min-w-0 max-w-3xl text-4xl font-extrabold leading-[1.08] tracking-[-0.055em] sm:text-6xl">{copy.title}</h1>
             <p className="max-w-lg text-sm leading-7 text-white/75 lg:justify-self-end">{copy.subtitle}</p>
           </div>
         </AnimatedSection>
@@ -117,13 +117,13 @@ const GenreExplorer: React.FC<GenreExplorerProps> = ({ genres, musicCatalog, onG
 
       <section className="mx-auto max-w-6xl px-5 sm:px-8">
         {filteredGenres.length > 0 ? (
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {filteredGenres.map((genre, index) => {
               const theme = getGenreTheme(genre);
               const traits = getGenreCharacteristics(genre.id, genre.characteristics, language);
               return (
                 <AnimatedSection key={genre.id} delay={Math.min(index * 0.025, 0.25)}>
-                  <button onClick={() => openGenre(genre)} className="result-card group h-full w-full p-5 text-left transition duration-300 hover:-translate-y-1 hover:border-white/20">
+                  <button onClick={() => openGenre(genre)} className="result-card group h-full min-w-0 w-full p-5 text-left transition duration-300 hover:-translate-y-1 hover:border-white/20">
                     <div className="flex items-start justify-between gap-5"><span className="rounded-full border border-white/10 px-2.5 py-1 text-[10px] font-bold text-white/65">{categoryLabel(genre.category, language)}</span><span className="score-tabular text-right text-sm font-bold" style={{ color: theme.accent }}>{genre.popularity}%<small className="block text-[10px] font-medium text-white/65">{copy.popularityLabel}</small></span></div>
                     <h2 className="mt-8 text-2xl font-bold tracking-[-0.035em]">{getGenreName(genre, language)}</h2>
                     <p className="mt-3 line-clamp-3 text-sm leading-6 text-white/70">{getGenreDescription(genre.id, genre.description, language)}</p>

@@ -178,11 +178,11 @@ const CompatibilityResults: React.FC<CompatibilityResultsProps> = ({ hostScores,
       <section className="border-t border-white/10 bg-black/20">
         <div className="mx-auto max-w-4xl px-5 py-16 sm:px-8 lg:py-24">
           <div className="mb-8 text-center"><p className="eyebrow mb-3">{copy.shareTag}</p><h2 className="text-3xl font-bold tracking-[-.04em] sm:text-5xl">{copy.shareTitle}</h2><p className="mt-4 text-sm text-white/70">{copy.shareBody}</p></div>
-          <div ref={cardRef} className="relative mx-auto aspect-[3/4] w-full max-w-[600px] overflow-hidden rounded-[32px] border border-white/20 bg-[#050507] p-7 shadow-2xl sm:p-10">
+          <div ref={cardRef} className="relative mx-auto min-h-[620px] w-full max-w-[600px] overflow-hidden rounded-[32px] border border-white/20 bg-[#050507] p-7 shadow-2xl sm:aspect-[3/4] sm:min-h-0 sm:p-10">
             <div className="absolute -right-[20%] -top-[8%] h-[60%] w-[75%] rounded-full opacity-40 blur-[85px]" style={{ background: theme.accent }} />
             <div className="absolute -bottom-[15%] -left-[18%] h-[50%] w-[70%] rounded-full opacity-25 blur-[90px]" style={{ background: theme.secondary }} />
             <div className="absolute inset-0 opacity-[.08]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '22px 22px' }} />
-            <div className="relative z-10 flex h-full flex-col">
+            <div className="relative z-10 flex flex-col sm:h-full">
               <header className="flex items-start justify-between border-b border-white/15 pb-5"><div><p className="text-sm font-extrabold tracking-[-.03em]">MUTI</p><p className="mt-1 text-[10px] font-semibold tracking-[.18em] text-white/65">{copy.cardTag}</p></div><Users size={18} className="text-white/65" /></header>
               <div className="flex flex-1 flex-col justify-center py-6 text-center">
                 <p className="text-[10px] font-bold tracking-[.18em]" style={{ color: theme.accent }}>{copy.cardScore}</p>

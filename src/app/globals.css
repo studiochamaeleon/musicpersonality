@@ -45,6 +45,13 @@ body {
   word-break: keep-all;
 }
 
+/* Japanese needs line breaks between glyphs; keep-all makes narrow cards grow past the viewport. */
+html:lang(ja) body {
+  word-break: normal;
+  overflow-wrap: anywhere;
+  line-break: strict;
+}
+
 button, input, select, textarea { font: inherit; }
 button { -webkit-tap-highlight-color: transparent; }
 
