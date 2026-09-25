@@ -259,10 +259,13 @@ const MusicPersonalityApp: React.FC = () => {
         <DotMatrixBackground />
         <div className="intro-matrix-fade pointer-events-none absolute inset-0" aria-hidden="true" />
 
-        <header className="absolute inset-x-0 top-0 z-20 mx-auto flex max-w-6xl items-center justify-between px-5 py-5 sm:px-8">
-          <div>
+        <header className="absolute inset-x-0 top-0 z-20 mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-5 sm:px-8">
+          <div className="min-w-0">
             <p className="text-sm font-extrabold tracking-[-0.03em]">MUTI</p>
-            <p className="mt-0.5 text-[10px] font-semibold tracking-[0.18em] text-white/35">MUSIC TASTE IDENTITY · BY CHAMELEONS</p>
+            <p className="mt-0.5 text-[9px] font-semibold leading-[1.5] tracking-[0.16em] text-white/35 min-[360px]:text-[10px] min-[360px]:tracking-[0.18em]">
+              <span className="block whitespace-nowrap">MUSIC TASTE IDENTITY</span>
+              <span className="block">BY CHAMELEONS</span>
+            </p>
           </div>
           <LanguageSelector />
         </header>

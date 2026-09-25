@@ -49,6 +49,40 @@ test('URL language overrides browser locale, while a manual choice persists', as
   await context.close();
 });
 
+test('intro language buttons stay horizontal and the brand byline stays on its own line', async ({ page }) => {
+  for (const width of [320, 375, 412]) {
+    await page.setViewportSize({ width, height: 812 });
+    await page.goto('/');
+    for (const [name, language] of [['한국어로 보기', 'ko'], ['View in English', 'en'], ['日本語で表示', 'ja']] as const) {
+      const button = page.getByRole('button', { name });
+      await button.click();
+      await expect(page.locator('html')).toHaveAttribute('lang', language);
+      const layout = await page.locator('header').evaluate(header => {
+        const byline = header.querySelector('p:nth-child(2)');
+        const lines = byline?.querySelectorAll('span');
+        const buttons = [...header.querySelectorAll('button')];
+        return {
+          overflow: document.documentElement.scrollWidth - innerWidth,
+          brandOverflow: byline ? byline.scrollWidth - byline.clientWidth : Infinity,
+          separateLines: lines?.length === 2 && lines[1].getBoundingClientRect().top > lines[0].getBoundingClientRect().top,
+          firstLineHeight: lines?.[0].getBoundingClientRect().height ?? Infinity,
+          lineHeight: lines?.[0] ? Number.parseFloat(getComputedStyle(lines[0]).lineHeight) : 0,
+          buttonSizes: buttons.map(item => ({ width: item.getBoundingClientRect().width, height: item.getBoundingClientRect().height })),
+        };
+      });
+      expect(layout.overflow).toBeLessThanOrEqual(1);
+      expect(layout.brandOverflow).toBeLessThanOrEqual(1);
+      expect(layout.separateLines).toBe(true);
+      expect(layout.firstLineHeight).toBeLessThanOrEqual(layout.lineHeight + 1);
+      expect(layout.buttonSizes).toHaveLength(3);
+      for (const size of layout.buttonSizes) {
+        expect(size.width).toBeGreaterThanOrEqual(40);
+        expect(size.height).toBeLessThanOrEqual(44);
+      }
+    }
+  }
+});
+
 test('Japanese intro, result, and genre explorer fit narrow mobile viewports', async ({ page }) => {
   for (const width of [320, 375, 412]) {
     await page.setViewportSize({ width, height: 812 });
