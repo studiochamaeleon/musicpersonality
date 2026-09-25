@@ -140,7 +140,7 @@ test('the genre explorer reuses the fixed dot matrix background', async ({ page 
 
 test('the personal result keeps viral actions within reach on mobile', async ({ page }) => {
   await page.goto('/?v=1&m=70&u=61&s=79&i=48&c=75');
-  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await expect(page.locator('.shareable-card-container > div').first()).toBeVisible();
   await page.evaluate(() => window.scrollTo(0, 700));
 
   const stickyActions = page.getByTestId('mobile-result-actions');

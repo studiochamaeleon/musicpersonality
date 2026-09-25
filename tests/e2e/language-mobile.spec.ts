@@ -125,6 +125,7 @@ test('long genre identities and share cards remain readable in all languages', a
       for (const profile of profiles) {
         await page.goto(`/?v=2&${profile}&lang=${language}`);
         await expect(page.locator('main h1')).toBeVisible();
+        await expect(page.locator('.shareable-card-container > div').first()).toBeVisible();
         const overflow = await page.evaluate(() => {
           const heading = document.querySelector('main h1');
           const card = document.querySelector('.shareable-card-container > div');
