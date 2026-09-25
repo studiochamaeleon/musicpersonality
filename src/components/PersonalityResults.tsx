@@ -9,6 +9,7 @@ import { getGenreDescription, getGenreCharacteristics, getPersonalityAnalysis, g
 import { analytics } from '@/lib/analytics';
 import { getGenreTheme, getResultUrl } from '@/lib/resultTheme';
 import { getCompatiblePersonalityTypes } from '@/lib/musicCalculations';
+import { getGenreSound, getResultIdentityCopy } from '@/lib/resultIdentity';
 import AnimatedSection from './ui/AnimatedSection';
 import ShareableCard from './ui/ShareableCard';
 import ResultMatchStory from './ResultMatchStory';
@@ -58,12 +59,14 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
 
   const traits = getGenreCharacteristics(topGenre.id, topGenre.characteristics, language).slice(0, 4);
   const typeTitle = personalityAnalysis?.typeTitle || getGenreName(topGenre, language);
+  const identityCopy = getResultIdentityCopy(language);
+  const genreSound = getGenreSound(topGenre.id, language);
   const compatibleTypes = getCompatiblePersonalityTypes(personalityScores, genres, language);
   const resultCopy = language === 'ko'
-    ? { eyebrow: '당신의 음악 성격', lead: '당신과 가장 닮은 장르', match: '장르 유사도', spectrum: '나의 취향 스펙트럼', spectrumBody: '다섯 개의 축이 당신의 음악 취향을 어떻게 구성하는지 보여줍니다.', next: '함께 들으면 좋은 장르', artists: '당신을 위한 아티스트와 앨범', detail: '성격 해석 더 보기', invite: '친구와 음악 궁합 보기', share: '결과 공유하기', again: '다시 검사하기', genreProfile: '아래 성격 해석은 가장 닮은 장르의 대표 프로필을 바탕으로 한 재미있는 읽을거리예요.', metricNote: '이 수치는 내 검사 점수가 아닌 추천 장르의 사운드 프로필입니다.', traitScore: '장르 특성 점수', relationship: '관계에서의 모습', preferences: '어울리는 음악', activities: '해볼 만한 활동', compatible: '함께 탐색할 장르', exploreNote: '관계 궁합이 아니라, 다른 음악 취향을 발견하기 위한 아이디어예요.', contexts: '이럴 때 들어보세요', growth: '새롭게 탐험할 지점', genreMatch: '장르 유사도', card: '결과 카드', nextTag: '다음에 들을 음악', artistTag: '아티스트 추천', deepTag: '더 깊이 보기', shareTag: '결과 보여주기', nearTie: '같은 표시 점수의 장르도 있어요', shortNote: '자기보고 취향 비교 · 성격 진단 아님' }
+    ? { eyebrow: '당신의 음악 성격', lead: '당신과 가장 닮은 장르', match: '장르 유사도', spectrum: '나의 취향 스펙트럼', spectrumBody: '다섯 개의 축이 당신의 음악 취향을 어떻게 구성하는지 보여줍니다.', next: '함께 들으면 좋은 장르', artists: '당신을 위한 아티스트와 앨범', detail: '성격 해석', invite: '친구와 음악 궁합 보기', share: '결과 공유하기', again: '다시 검사하기', genreProfile: '아래 성격 해석은 가장 닮은 장르의 대표 프로필을 바탕으로 한 재미있는 읽을거리예요.', metricNote: '이 수치는 내 검사 점수가 아닌 추천 장르의 사운드 프로필입니다.', traitScore: '장르 특성 점수', relationship: '관계에서의 모습', preferences: '어울리는 음악', activities: '해볼 만한 활동', compatible: '함께 탐색할 장르', exploreNote: '관계 궁합이 아니라, 다른 음악 취향을 발견하기 위한 아이디어예요.', contexts: '이럴 때 들어보세요', growth: '새롭게 탐험할 지점', genreMatch: '장르 유사도', card: '결과 카드', nextTag: '다음에 들을 음악', artistTag: '아티스트 추천', deepTag: '더 깊이 보기', shareTag: '결과 보여주기', nearTie: '같은 표시 점수의 장르도 있어요', shortNote: '자기보고 취향 비교 · 성격 진단 아님' }
     : language === 'ja'
-      ? { eyebrow: 'あなたの音楽性格', lead: 'あなたに最も似たジャンル', match: 'ジャンル一致度', spectrum: 'あなたの好みスペクトル', spectrumBody: '五つの軸から、音楽の好みの組み合わせが見えてきます。', next: '次に試したいジャンル', artists: 'あなたへのアーティストとアルバム', detail: '性格メモの全文を読む', invite: '友達と音楽相性を見る', share: '結果をシェア', again: 'もう一度テスト', genreProfile: '以下の性格メモは、最も近いジャンルプロファイルをもとにした気軽な読み物です。', metricNote: 'これらはおすすめジャンルのサウンド特性で、あなたの回答スコアではありません。', traitScore: 'ジャンル特性スコア', relationship: '人間関係での傾向', preferences: 'おすすめの音', activities: '試してみたいこと', compatible: '一緒に探したいジャンル', exploreNote: '人間関係の予測ではなく、新しい音楽に出会うためのヒントです。', contexts: 'こんな時に聴いてみて', growth: '新しく探索するポイント', genreMatch: 'ジャンル一致度', card: '結果カード', nextTag: '次に聴く音楽', artistTag: 'アーティスト提案', deepTag: 'もっと深く', shareTag: '結果を見せる', nearTie: '同じ表示スコアのジャンルもあります', shortNote: '自己申告の好み比較 · 性格診断ではありません' }
-      : { eyebrow: 'YOUR MUSIC PERSONALITY', lead: 'The genre most like you', match: 'genre similarity', spectrum: 'Your taste spectrum', spectrumBody: 'Five dimensions show how your music taste is put together.', next: 'Genres to try next', artists: 'Artists and albums for your taste', detail: 'Read the full personality note', invite: 'Compare with a friend', share: 'Share my result', again: 'Take it again', genreProfile: 'The personality note below is a playful interpretation of your closest genre profile.', metricNote: 'These are the recommended genre’s sound attributes, not your survey scores.', traitScore: 'Genre profile score', relationship: 'Relationships', preferences: 'Music to try', activities: 'Activities to try', compatible: 'Other genres to explore', exploreNote: 'These are discovery ideas, not predictions of relationship compatibility.', contexts: 'Good moments to listen', growth: 'A different sound to discover', genreMatch: 'Genre similarity', card: 'RESULT CARD', nextTag: 'NEXT LISTEN', artistTag: 'ARTIST PICKS', deepTag: 'DEEP DIVE', shareTag: 'SHOW YOUR RESULT', nearTie: 'Another genre shares this displayed score', shortNote: 'Self-reported taste match · not a diagnosis' };
+      ? { eyebrow: 'あなたの音楽性格', lead: 'あなたに最も似たジャンル', match: 'ジャンル一致度', spectrum: 'あなたの好みスペクトル', spectrumBody: '五つの軸から、音楽の好みの組み合わせが見えてきます。', next: '次に試したいジャンル', artists: 'あなたへのアーティストとアルバム', detail: '性格メモ', invite: '友達と音楽相性を見る', share: '結果をシェア', again: 'もう一度テスト', genreProfile: '以下の性格メモは、最も近いジャンルプロファイルをもとにした気軽な読み物です。', metricNote: 'これらはおすすめジャンルのサウンド特性で、あなたの回答スコアではありません。', traitScore: 'ジャンル特性スコア', relationship: '人間関係での傾向', preferences: 'おすすめの音', activities: '試してみたいこと', compatible: '一緒に探したいジャンル', exploreNote: '人間関係の予測ではなく、新しい音楽に出会うためのヒントです。', contexts: 'こんな時に聴いてみて', growth: '新しく探索するポイント', genreMatch: 'ジャンル一致度', card: '結果カード', nextTag: '次に聴く音楽', artistTag: 'アーティスト提案', deepTag: 'もっと深く', shareTag: '結果を見せる', nearTie: '同じ表示スコアのジャンルもあります', shortNote: '自己申告の好み比較 · 性格診断ではありません' }
+      : { eyebrow: 'YOUR MUSIC PERSONALITY', lead: 'The genre most like you', match: 'genre similarity', spectrum: 'Your taste spectrum', spectrumBody: 'Five dimensions show how your music taste is put together.', next: 'Genres to try next', artists: 'Artists and albums for your taste', detail: 'Personality notes', invite: 'Compare with a friend', share: 'Share my result', again: 'Take it again', genreProfile: 'The personality note below is a playful interpretation of your closest genre profile.', metricNote: 'These are the recommended genre’s sound attributes, not your survey scores.', traitScore: 'Genre profile score', relationship: 'Relationships', preferences: 'Music to try', activities: 'Activities to try', compatible: 'Other genres to explore', exploreNote: 'These are discovery ideas, not predictions of relationship compatibility.', contexts: 'Good moments to listen', growth: 'A different sound to discover', genreMatch: 'Genre similarity', card: 'RESULT CARD', nextTag: 'NEXT LISTEN', artistTag: 'ARTIST PICKS', deepTag: 'DEEP DIVE', shareTag: 'SHOW YOUR RESULT', nearTie: 'Another genre shares this displayed score', shortNote: 'Self-reported taste match · not a diagnosis' };
   const albumCopy = language === 'ko'
     ? { anchor: '장르의 기준점', discovery: '새롭게 발견할 앨범', listen: 'Spotify에서 앨범 듣기' }
     : language === 'ja'
@@ -122,10 +125,16 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
           <div className="grid min-w-0 items-end gap-8 lg:grid-cols-[1fr_auto]">
             <div className="min-w-0">
               <p className="eyebrow mb-5" style={{ color: theme.accent }}>{resultCopy.eyebrow}</p>
-              <p className="mb-3 text-sm font-semibold text-white/70">{resultCopy.lead} · <span style={{ color: theme.accent }}>{getGenreName(topGenre, language)}</span></p>
-              <h1 className={`${language === 'ja' ? 'text-[clamp(2.4rem,10vw,5.5rem)] leading-[1.08]' : 'text-5xl leading-[0.94] sm:text-7xl lg:text-8xl'} max-w-[13ch] font-extrabold tracking-[-0.065em] text-balance`}>
-                {typeTitle}
+              <h1 className="max-w-4xl min-w-0 font-extrabold tracking-[-0.06em]">
+                <span className="block text-sm font-semibold tracking-[-0.02em] text-white/65 sm:text-base">{identityCopy.opening}</span>
+                <span className="mt-3 block text-[clamp(2.55rem,10vw,6.6rem)] leading-[1.05] [overflow-wrap:anywhere]">
+                  <span style={{ color: theme.accent }}>{identityCopy.quoteOpen}{getGenreName(topGenre, language)}{identityCopy.quoteClose}</span><span className="ml-1 text-[0.43em] align-baseline tracking-[-0.04em] text-white">{identityCopy.ending}</span>
+                </span>
               </h1>
+              <p className="mt-6 max-w-2xl leading-tight">
+                <span className="block text-base font-medium leading-7 text-white/70 sm:text-lg">{language === 'en' ? `${identityCopy.affinity} ${genreSound},` : `${genreSound}${identityCopy.affinity}`}</span>
+                <strong className="mt-1 block text-[clamp(1.6rem,5.8vw,2.8rem)] font-extrabold leading-[1.18] tracking-[-0.04em] [overflow-wrap:anywhere]">{typeTitle}</strong>
+              </p>
             </div>
             <div className="lg:pb-2 lg:text-right">
               <p className="score-tabular text-7xl font-extrabold tracking-[-0.07em] sm:text-8xl" style={{ color: theme.accent }}>{topRecommendation.compatibility}<span className="text-2xl">%</span></p>
@@ -284,7 +293,7 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
 
       {personalityAnalysis && (
         <section className="mx-auto max-w-4xl px-5 py-16 sm:px-8 lg:py-24">
-          <details className="result-card group overflow-hidden">
+          <details open data-testid="personality-deep-dive" className="result-card group overflow-hidden">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-5 p-6 sm:p-8">
               <div><p className="eyebrow mb-2">{resultCopy.deepTag}</p><h2 className="text-2xl font-bold tracking-[-0.03em]">{resultCopy.detail}</h2></div>
               <span className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 text-white/55 transition-transform group-open:rotate-180"><ArrowDown size={18} /></span>

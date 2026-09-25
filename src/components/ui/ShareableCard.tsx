@@ -8,6 +8,7 @@ import { useTranslation } from '@/hooks/useTranslation';
 import { getGenreName, getGenreCharacteristics, getPersonalityAnalysis } from '@/lib/genreTranslations';
 import { getGenreTheme, getResultUrl } from '@/lib/resultTheme';
 import { captureCardBlob, isAppleMobileBrowser, saveCardImage } from '@/lib/cardExport';
+import { getGenreSound, getResultIdentityCopy } from '@/lib/resultIdentity';
 
 interface ShareableCardProps {
   personalityScores: MUSICPersonality;
@@ -29,6 +30,8 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
     ? getPersonalityAnalysis(topGenre.id, topGenre.personalityAnalysis, language)
     : null;
   const typeTitle = personalityAnalysis?.typeTitle || getGenreName(topGenre, language);
+  const identityCopy = getResultIdentityCopy(language);
+  const genreSound = getGenreSound(topGenre.id, language);
   const cardStyle = { '--card-accent': theme.accent, '--card-secondary': theme.secondary } as CSSProperties;
   const copy = language === 'ko' ? {
     result: '결과 / 01', closest: '나와 가장 닮은 장르', match: '장르 유사도', question: '너는 어떤 음악 타입?', disclaimer: '재미로 보는 음악 취향 · 진단 아님', share: '공유하기', save: '이미지 저장', copy: '링크 복사', retry: '이미지 다시 준비', preparing: '이미지 준비 중', imageTitle: '내 음악 성격 결과', copied: '결과 링크를 복사했어요.', copyFailed: '링크를 복사하지 못했어요.', shareFailed: '공유하지 못했어요. 다시 시도해 주세요.', imageReady: '결과 이미지를 준비했어요.', imageFailed: '이미지를 만들지 못했어요.',
@@ -135,9 +138,13 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
           </header>
 
           <div className="flex flex-1 flex-col justify-center py-6 sm:py-8">
-            <p className="text-[10px] font-bold tracking-[0.18em]" style={{ color: theme.accent }}>{copy.closest} · {getGenreName(topGenre, language)}</p>
-            <h3 className="mt-3 max-w-[10ch] text-5xl font-extrabold leading-[0.92] tracking-[-0.065em] sm:text-7xl">{typeTitle}</h3>
-            <p className="score-tabular mt-6 text-6xl font-extrabold tracking-[-0.07em] sm:text-8xl" style={{ color: theme.accent }}>{topGenreScore}<span className="text-2xl">%</span></p>
+            <p className="text-[10px] font-bold tracking-[0.14em] text-white/60">{identityCopy.opening}</p>
+            <h3 className="mt-2 font-extrabold leading-[1.06] tracking-[-0.06em] [overflow-wrap:anywhere]">
+              <span className="text-[clamp(1.85rem,8vw,4.3rem)]" style={{ color: theme.accent }}>{identityCopy.quoteOpen}{getGenreName(topGenre, language)}{identityCopy.quoteClose}</span><span className="ml-1 text-[clamp(1rem,3vw,1.75rem)] text-white">{identityCopy.ending}</span>
+            </h3>
+            <p className="mt-4 text-[11px] leading-5 text-white/70 sm:text-sm">{language === 'en' ? `${identityCopy.affinity} ${genreSound},` : `${genreSound}${identityCopy.affinity}`}</p>
+            <p className="mt-1 text-[clamp(1.25rem,4.5vw,2.25rem)] font-extrabold leading-[1.12] tracking-[-0.04em] [overflow-wrap:anywhere]">{typeTitle}</p>
+            <p className="score-tabular mt-5 text-6xl font-extrabold tracking-[-0.07em] sm:text-8xl" style={{ color: theme.accent }}>{topGenreScore}<span className="text-2xl">%</span></p>
             <p className="mt-1 text-[10px] font-bold tracking-[0.15em] text-white/60 uppercase">{copy.match}</p>
 
             <div className="mt-7 space-y-3 sm:mt-10">

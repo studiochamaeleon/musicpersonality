@@ -12,9 +12,9 @@ async function expectWithinViewport(page: import('@playwright/test').Page, selec
 }
 
 for (const [locale, heading, startButton, question, result] of [
-  ['ko-KR', /취향을 들으면/, '내 음악 성격 찾기', '나는 조용하고 차분한 음악을 선호한다', '명상하는 완벽주의자'],
-  ['en-US', /Your taste says/, 'Find my music type', 'I prefer quiet and calm music', 'Essential Minimalist'],
-  ['ja-JP', /好きな音を辿れば/, '私の音楽性格を見つける', '静かで穏やかな音楽が好きだ', '瞑想する完璧主義者'],
+  ['ko-KR', /취향을 들으면/, '내 음악 성격 찾기', '나는 조용하고 차분한 음악을 선호한다', /미니멀리즘/],
+  ['en-US', /Your taste says/, 'Find my music type', 'I prefer quiet and calm music', /Minimalism/],
+  ['ja-JP', /好きな音を辿れば/, '私の音楽性格を見つける', '静かで穏やかな音楽が好きだ', /ミニマリズム/],
 ] as const) {
   test(`first visit follows browser locale ${locale} across pages`, async ({ browser }) => {
     const context = await browser.newContext({ baseURL: 'http://127.0.0.1:4173', locale, viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true });
@@ -59,7 +59,7 @@ test('Japanese intro, result, and genre explorer fit narrow mobile viewports', a
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
 
     await page.goto(japaneseResult);
-    await expect(page.getByRole('heading', { level: 1, name: '瞑想する完璧主義者' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: /ミニマリズム/ })).toBeVisible();
     await expectWithinViewport(page, 'h1');
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
     await expect.poll(() => page.locator('.shareable-card-container > div').first().evaluate(card => {
@@ -75,5 +75,38 @@ test('Japanese intro, result, and genre explorer fit narrow mobile viewports', a
     await expect(page.getByRole('dialog', { name: 'ミニマリズム' })).toBeVisible();
     await expectWithinViewport(page, '[role="dialog"]');
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+  }
+});
+
+test('long genre identities and share cards remain readable in all languages', async ({ page }) => {
+  const profiles = [
+    'm=80&u=95&s=70&i=40&c=20', // World traditional
+    'm=55&u=20&s=95&i=60&c=85', // Contemporary classical
+    'm=40&u=25&s=95&i=65&c=45', // Progressive rock
+  ];
+  for (const width of [320, 412, 768]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const language of ['ko', 'en', 'ja']) {
+      for (const profile of profiles) {
+        await page.goto(`/?v=2&${profile}&lang=${language}`);
+        await expect(page.locator('main h1')).toBeVisible();
+        const overflow = await page.evaluate(() => {
+          const heading = document.querySelector('main h1');
+          const card = document.querySelector('.shareable-card-container > div');
+          const cardHeading = card?.querySelector('h3');
+          const cardFooter = card?.querySelector('footer');
+          return {
+            page: document.documentElement.scrollWidth - innerWidth,
+            heading: heading ? heading.scrollWidth - heading.clientWidth : Infinity,
+            cardHeading: cardHeading ? cardHeading.scrollWidth - cardHeading.clientWidth : Infinity,
+            cardFooter: card && cardFooter ? cardFooter.getBoundingClientRect().bottom - card.getBoundingClientRect().bottom : Infinity,
+          };
+        });
+        expect(overflow.page).toBeLessThanOrEqual(1);
+        expect(overflow.heading).toBeLessThanOrEqual(1);
+        expect(overflow.cardHeading).toBeLessThanOrEqual(1);
+        expect(overflow.cardFooter).toBeLessThanOrEqual(1);
+      }
+    }
   }
 });

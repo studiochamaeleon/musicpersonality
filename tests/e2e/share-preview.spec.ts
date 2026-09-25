@@ -108,7 +108,7 @@ test('English personal shares use the same translated type as the app', async ({
   const html = await response.text();
   expect(html).toContain('My music personality is Creative Independent · Indie Pop');
   await page.goto(`/result?score=${guestToken}&sv=2&lang=en`);
-  await expect(page.getByRole('heading', { level: 1, name: 'Creative Independent' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: /Indie Pop/ })).toBeVisible();
 });
 
 test('Japanese personal shares use the same translated type and Japanese Open Graph image', async ({ request, page }) => {
@@ -119,7 +119,7 @@ test('Japanese personal shares use the same translated type and Japanese Open Gr
   expect(html).toContain('property="og:locale" content="ja_JP"');
   expect(html).toContain(`/?v=2&amp;m=70&amp;u=61&amp;s=79&amp;i=48&amp;c=75&amp;lang=ja`);
   await page.goto(`/result?score=${guestToken}&sv=2&lang=ja`);
-  await expect(page.getByRole('heading', { level: 1, name: '感性豊かな夢想家' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: /インディー・ポップ/ })).toBeVisible();
 
   const imageResponse = await request.get(`/api/og?score=${guestToken}&sv=2&lang=ja`);
   expect(imageResponse.ok()).toBeTruthy();
@@ -148,6 +148,6 @@ test('the personal result Open Graph endpoint returns a 1200x630 PNG', async ({ 
 test('a visitor opening a personal share URL lands on the restored result', async ({ page }) => {
   await page.goto(`/result?score=${guestToken}&sv=2&lang=ko`);
   await expect(page).toHaveURL(new RegExp(`${personalDestination.replace(/[?&]/g, character => `\\${character}`)}$`));
-  await expect(page.getByRole('heading', { level: 1, name: '감성적 몽상가' })).toBeVisible();
-  await expect(page.getByText('당신과 가장 닮은 장르', { exact: false })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: /인디 팝/ })).toBeVisible();
+  await expect(page.getByText('일상의 감정을 반짝이게 하는 음악을 사랑하는').first()).toBeVisible();
 });

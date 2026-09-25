@@ -4,7 +4,9 @@ const resultUrl = '/?v=2&m=80&u=50&s=85&i=30&c=75&lang=ko';
 
 test('an exact genre profile scores 95 and explains the similarity', async ({ page }) => {
   await page.goto(resultUrl);
-  await expect(page.getByRole('heading', { level: 1, name: '명상하는 완벽주의자' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: /미니멀리즘/ })).toBeVisible();
+  await expect(page.getByText('명상하는 완벽주의자', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('섬세한 반복 속에서 평온을 찾는 음악을 사랑하는').first()).toBeVisible();
   await expect(page.getByText('95%', { exact: true }).first()).toBeVisible();
   await expect(page.getByRole('heading', { name: '이 장르가 나온 이유' })).toBeVisible();
   await expect(page.getByText('음악을 좋아할 확률이나 검증된 성격 진단 결과는 아닙니다.', { exact: false })).toBeVisible();
@@ -21,7 +23,8 @@ test('the full result includes every previously hidden analysis field', async ({
   await page.goto(resultUrl);
   await expect(page.getByRole('heading', { name: '추천 장르의 사운드' })).toBeVisible();
   await expect(page.getByText('내 검사 점수가 아닌 추천 장르의 사운드 프로필입니다.', { exact: false })).toBeVisible();
-  await page.getByText('성격 해석 더 보기').click();
+  const deepDive = page.getByTestId('personality-deep-dive');
+  await expect(deepDive).toHaveAttribute('open', '');
 
   await expect(page.getByRole('heading', { name: '강점' })).toBeVisible();
   await expect(page.getByRole('heading', { name: '도전 과제' })).toBeVisible();
@@ -32,6 +35,10 @@ test('the full result includes every previously hidden analysis field', async ({
   await expect(page.getByRole('heading', { name: '해볼 만한 활동' })).toBeVisible();
   await expect(page.getByText('클래식 음악회나 현대음악 페스티벌 참석')).toBeVisible();
   await expect(page.getByRole('heading', { name: '이럴 때 들어보세요' })).toBeVisible();
+  await deepDive.locator('summary').click();
+  await expect(deepDive).not.toHaveAttribute('open', '');
+  await deepDive.locator('summary').click();
+  await expect(deepDive).toHaveAttribute('open', '');
 });
 
 test('the genre detail is keyboard-modal and restores focus on close', async ({ page }) => {
@@ -105,9 +112,10 @@ test('a damaged saved survey cannot finish with unanswered dimensions', async ({
 
 test('English results expose the complete interpretation', async ({ page }) => {
   await page.goto('/?v=2&m=80&u=50&s=85&i=30&c=75&lang=en');
-  await expect(page.getByRole('heading', { level: 1, name: 'Essential Minimalist' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: /Minimalism/ })).toBeVisible();
+  await expect(page.getByText('Essential Minimalist', { exact: true }).first()).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Recommended genre sound' })).toBeVisible();
-  await page.getByText('Read the full personality note').click();
+  await expect(page.getByTestId('personality-deep-dive')).toHaveAttribute('open', '');
   await expect(page.getByRole('heading', { name: 'Relationships' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Music to try' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Activities to try' })).toBeVisible();
@@ -122,9 +130,10 @@ test('Japanese covers the intro, survey, full result, and genre explorer', async
   await expect(page.getByRole('radio', { name: '3: どちらともいえない' })).toBeVisible();
 
   await page.goto('/?v=2&m=80&u=50&s=85&i=30&c=75&lang=ja');
-  await expect(page.getByRole('heading', { level: 1, name: '瞑想する完璧主義者' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: /ミニマリズム/ })).toBeVisible();
+  await expect(page.getByText('瞑想する完璧主義者', { exact: true }).first()).toBeVisible();
   await expect(page.getByRole('heading', { name: 'おすすめジャンルのサウンド' })).toBeVisible();
-  await page.getByText('性格メモの全文を読む').click();
+  await expect(page.getByTestId('personality-deep-dive')).toHaveAttribute('open', '');
   await expect(page.getByRole('heading', { name: '人間関係での傾向' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'おすすめの音' })).toBeVisible();
 
@@ -140,7 +149,7 @@ test.describe('desktop layout', () => {
 
   test('result and genre explorer fit the viewport without horizontal scroll', async ({ page }) => {
     await page.goto(resultUrl);
-    await expect(page.getByRole('heading', { level: 1, name: '명상하는 완벽주의자' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: /미니멀리즘/ })).toBeVisible();
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
     await page.goto('/?view=genre-explorer');
     await expect(page.getByRole('heading', { level: 1, name: '장르에도 성격이 있습니다.' })).toBeVisible();
