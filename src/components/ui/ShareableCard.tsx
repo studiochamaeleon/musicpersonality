@@ -140,7 +140,7 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
           <div className="flex flex-1 flex-col justify-center py-6 sm:py-8">
             <p className="text-[10px] font-bold tracking-[0.14em] text-white/60">{identityCopy.opening}</p>
             <h3 className="mt-2 font-extrabold leading-[1.06] tracking-[-0.06em] [overflow-wrap:anywhere]">
-              <span className="text-[clamp(1.85rem,8vw,4.3rem)]" style={{ color: theme.accent }}>{identityCopy.quoteOpen}{getGenreName(topGenre, language)}{identityCopy.quoteClose}</span><span className="ml-1 text-[clamp(1rem,3vw,1.75rem)] text-white">{identityCopy.ending}</span>
+              <span className="text-[clamp(1.85rem,8vw,4.3rem)]" style={{ color: theme.accent }}>{identityCopy.quoteOpen}{getGenreName(topGenre, language)}{identityCopy.quoteClose}</span>{identityCopy.ending && <span className={`${language === 'ko' ? 'ml-1' : ''} text-[clamp(1rem,3vw,1.75rem)] text-white`}>{identityCopy.ending}</span>}
             </h3>
             <p className="mt-4 text-[11px] leading-5 text-white/70 sm:text-sm">{language === 'en' ? `${identityCopy.affinity} ${genreSound},` : `${genreSound}${identityCopy.affinity}`}</p>
             <p className="mt-1 text-[clamp(1.25rem,4.5vw,2.25rem)] font-extrabold leading-[1.12] tracking-[-0.04em] [overflow-wrap:anywhere]">{typeTitle}</p>

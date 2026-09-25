@@ -128,7 +128,7 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
               <h1 className="max-w-4xl min-w-0 font-extrabold tracking-[-0.06em]">
                 <span className="block text-sm font-semibold tracking-[-0.02em] text-white/65 sm:text-base">{identityCopy.opening}</span>
                 <span className="mt-3 block text-[clamp(2.55rem,10vw,6.6rem)] leading-[1.05] [overflow-wrap:anywhere]">
-                  <span style={{ color: theme.accent }}>{identityCopy.quoteOpen}{getGenreName(topGenre, language)}{identityCopy.quoteClose}</span><span className="ml-1 text-[0.43em] align-baseline tracking-[-0.04em] text-white">{identityCopy.ending}</span>
+                  <span style={{ color: theme.accent }}>{identityCopy.quoteOpen}{getGenreName(topGenre, language)}{identityCopy.quoteClose}</span>{identityCopy.ending && <span className={`${language === 'ko' ? 'ml-1' : ''} text-[0.43em] align-baseline tracking-[-0.04em] text-white`}>{identityCopy.ending}</span>}
                 </span>
               </h1>
               <p className="mt-6 max-w-2xl leading-tight">

@@ -44,5 +44,5 @@ export function getGenreSound(genreId: string, language: Language): string {
 export function getResultIdentityCopy(language: Language) {
   if (language === 'ko') return { opening: '당신은', quoteOpen: '“', quoteClose: '”', ending: '입니다.', affinity: '을 사랑하는' };
   if (language === 'ja') return { opening: 'あなたは', quoteOpen: '「', quoteClose: '」', ending: 'です。', affinity: 'を愛する' };
-  return { opening: 'Your sound is', quoteOpen: '“', quoteClose: '”', ending: '.', affinity: 'Drawn to' };
+  return { opening: 'Your sound is', quoteOpen: '“', quoteClose: '”', ending: '', affinity: 'Drawn to' };
 }
