@@ -11,10 +11,10 @@ async function expectWithinViewport(page: import('@playwright/test').Page, selec
   expect(bounds.right).toBeLessThanOrEqual(bounds.viewport + 1);
 }
 
-for (const [locale, heading, startButton, question, result] of [
-  ['ko-KR', /취향을 들으면/, '내 음악 성격 찾기', '나는 조용하고 차분한 음악을 선호한다', /미니멀리즘/],
-  ['en-US', /Your taste says/, 'Find my music type', 'I prefer quiet and calm music', /Minimalism/],
-  ['ja-JP', /好きな音を辿れば/, '私の音楽性格を見つける', '静かで穏やかな音楽が好きだ', /ミニマリズム/],
+for (const [locale, heading, startButton, question, result, storyHint] of [
+  ['ko-KR', /취향을 들으면/, '내 음악 성격 찾기', '나는 조용하고 차분한 음악을 선호한다', /미니멀리즘/, /공유 메뉴에서 Instagram 스토리를 선택하세요/],
+  ['en-US', /Your taste says/, 'Find my music type', 'I prefer quiet and calm music', /Minimalism/, /Choose Instagram Stories in the share menu/],
+  ['ja-JP', /好きな音を辿れば/, '私の音楽性格を見つける', '静かで穏やかな音楽が好きだ', /ミニマリズム/, /共有メニューからInstagramストーリーズを選んでください/],
 ] as const) {
   test(`first visit follows browser locale ${locale} across pages`, async ({ browser }) => {
     const context = await browser.newContext({ baseURL: 'http://127.0.0.1:4173', locale, viewport: { width: 375, height: 812 }, isMobile: true, hasTouch: true });
@@ -26,6 +26,7 @@ for (const [locale, heading, startButton, question, result] of [
     await expect(page.getByRole('heading', { level: 1, name: question })).toBeVisible();
     await page.goto('/?v=2&m=80&u=50&s=85&i=30&c=75');
     await expect(page.getByRole('heading', { level: 1, name: result })).toBeVisible();
+    await expect(page.getByText(storyHint)).toBeVisible();
     await page.goto('/?view=genre-explorer');
     await expect(page.locator('html')).toHaveAttribute('lang', locale.slice(0, 2));
     await page.goto('/privacy');

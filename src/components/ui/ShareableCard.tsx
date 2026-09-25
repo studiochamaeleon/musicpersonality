@@ -1,13 +1,13 @@
 'use client';
 
 import React, { CSSProperties, useEffect, useRef, useState } from 'react';
-import { Check, Download, Link2, Share2 } from 'lucide-react';
+import { Check, Download, Instagram, Link2, Share2 } from 'lucide-react';
 import { MUSICPersonality, GenreSchema } from '@/types';
 import { analytics } from '@/lib/analytics';
 import { useTranslation } from '@/hooks/useTranslation';
 import { getGenreName, getGenreCharacteristics, getPersonalityAnalysis } from '@/lib/genreTranslations';
 import { getGenreTheme, getResultUrl } from '@/lib/resultTheme';
-import { captureCardBlob, isAppleMobileBrowser, saveCardImage } from '@/lib/cardExport';
+import { captureCardBlob, createStoryImageBlob, downloadImageBlob, isAppleMobileBrowser, isMobileBrowser, saveCardImage } from '@/lib/cardExport';
 import { getGenreSound, getResultIdentityCopy } from '@/lib/resultIdentity';
 
 interface ShareableCardProps {
@@ -22,8 +22,11 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
   const cardRef = useRef<HTMLDivElement>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
   const [appleMobile, setAppleMobile] = useState(false);
+  const [mobileBrowser, setMobileBrowser] = useState(false);
   const [preparedBlob, setPreparedBlob] = useState<Blob | null>(null);
+  const [storyBlob, setStoryBlob] = useState<Blob | null>(null);
   const [imagePreparationFailed, setImagePreparationFailed] = useState(false);
+  const [storyPreparationFailed, setStoryPreparationFailed] = useState(false);
   const theme = getGenreTheme(topGenre);
   const topTraits = Object.entries(personalityScores).sort(([, a], [, b]) => b - a).slice(0, 3);
   const personalityAnalysis = topGenre.personalityAnalysis
@@ -34,11 +37,11 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
   const genreSound = getGenreSound(topGenre.id, language);
   const cardStyle = { '--card-accent': theme.accent, '--card-secondary': theme.secondary } as CSSProperties;
   const copy = language === 'ko' ? {
-    result: '결과 / 01', closest: '나와 가장 닮은 장르', match: '장르 유사도', question: '너는 어떤 음악 타입?', disclaimer: '재미로 보는 음악 취향 · 진단 아님', share: '공유하기', save: '이미지 저장', copy: '링크 복사', retry: '이미지 다시 준비', preparing: '이미지 준비 중', imageTitle: '내 음악 성격 결과', copied: '결과 링크를 복사했어요.', copyFailed: '링크를 복사하지 못했어요.', shareFailed: '공유하지 못했어요. 다시 시도해 주세요.', imageReady: '결과 이미지를 준비했어요.', imageFailed: '이미지를 만들지 못했어요.',
+    result: '결과 / 01', closest: '나와 가장 닮은 장르', match: '장르 유사도', question: '너는 어떤 음악 타입?', disclaimer: '재미로 보는 음악 취향 · 진단 아님', share: '공유하기', story: '스토리용 카드 공유', storyRetry: '스토리 카드 다시 준비', storyPreparing: '스토리 카드 준비 중', storyHint: '공유 메뉴에서 Instagram 스토리를 선택하세요. 링크 스티커를 넣으려면 아래 링크 복사를 이용해 주세요.', storySaved: '스토리용 이미지를 저장했어요. Instagram에서 직접 올려주세요.', save: '이미지 저장', copy: '링크 복사', retry: '이미지 다시 준비', preparing: '이미지 준비 중', imageTitle: '내 음악 성격 결과', copied: '결과 링크를 복사했어요.', copyFailed: '링크를 복사하지 못했어요.', shareFailed: '공유하지 못했어요. 다시 시도해 주세요.', imageReady: '결과 이미지를 준비했어요.', imageFailed: '이미지를 만들지 못했어요.',
   } : language === 'ja' ? {
-    result: '結果 / 01', closest: '私に最も似たジャンル', match: 'ジャンル一致度', question: 'あなたの音楽タイプは？', disclaimer: '気軽に楽しむ音楽の好み · 診断ではありません', share: 'シェア', save: '画像を保存', copy: 'リンクをコピー', retry: '画像をもう一度準備', preparing: '画像を準備中', imageTitle: '私の音楽性格の結果', copied: '結果リンクをコピーしました。', copyFailed: 'リンクをコピーできませんでした。', shareFailed: 'シェアできませんでした。もう一度お試しください。', imageReady: '結果画像を準備しました。', imageFailed: '画像を作成できませんでした。',
+    result: '結果 / 01', closest: '私に最も似たジャンル', match: 'ジャンル一致度', question: 'あなたの音楽タイプは？', disclaimer: '気軽に楽しむ音楽の好み · 診断ではありません', share: 'シェア', story: 'ストーリー用カードをシェア', storyRetry: 'ストーリー画像を再作成', storyPreparing: 'ストーリー画像を準備中', storyHint: '共有メニューからInstagramストーリーズを選んでください。リンクスタンプには下のリンクをコピーしてご利用ください。', storySaved: 'ストーリー画像を保存しました。Instagramから投稿してください。', save: '画像を保存', copy: 'リンクをコピー', retry: '画像をもう一度準備', preparing: '画像を準備中', imageTitle: '私の音楽性格の結果', copied: '結果リンクをコピーしました。', copyFailed: 'リンクをコピーできませんでした。', shareFailed: 'シェアできませんでした。もう一度お試しください。', imageReady: '結果画像を準備しました。', imageFailed: '画像を作成できませんでした。',
   } : {
-    result: 'RESULT / 01', closest: 'THE SOUND MOST LIKE ME', match: 'genre similarity', question: 'WHAT IS YOUR MUSIC TYPE?', disclaimer: 'FOR FUN · NOT A DIAGNOSIS', share: 'Share', save: 'Save image', copy: 'Copy link', retry: 'Retry image', preparing: 'Preparing image', imageTitle: 'My music personality result', copied: 'Result link copied.', copyFailed: 'Could not copy the link.', shareFailed: 'Could not share. Please try again.', imageReady: 'Result image is ready.', imageFailed: 'Could not create the image.',
+    result: 'RESULT / 01', closest: 'THE SOUND MOST LIKE ME', match: 'genre similarity', question: 'WHAT IS YOUR MUSIC TYPE?', disclaimer: 'FOR FUN · NOT A DIAGNOSIS', share: 'Share', story: 'Share story card', storyRetry: 'Retry story card', storyPreparing: 'Preparing story card', storyHint: 'Choose Instagram Stories in the share menu. To add a link sticker, copy the result link below.', storySaved: 'Story image saved. Post it from Instagram.', save: 'Save image', copy: 'Copy link', retry: 'Retry image', preparing: 'Preparing image', imageTitle: 'My music personality result', copied: 'Result link copied.', copyFailed: 'Could not copy the link.', shareFailed: 'Could not share. Please try again.', imageReady: 'Result image is ready.', imageFailed: 'Could not create the image.',
   };
 
   const getTraitName = (trait: string) => language !== 'en'
@@ -47,16 +50,34 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
 
   useEffect(() => {
     const apple = isAppleMobileBrowser();
+    const mobile = isMobileBrowser();
     setAppleMobile(apple);
-    if (!apple || !cardRef.current) return;
+    setMobileBrowser(mobile);
+    if (!mobile || !cardRef.current) return;
     let active = true;
     setPreparedBlob(null);
+    setStoryBlob(null);
     setImagePreparationFailed(false);
+    setStoryPreparationFailed(false);
     void captureCardBlob(cardRef.current)
-      .then(blob => { if (active) setPreparedBlob(blob); })
-      .catch(() => { if (active) setImagePreparationFailed(true); });
+      .then(async blob => {
+        if (!active) return;
+        setPreparedBlob(blob);
+        try {
+          const image = await createStoryImageBlob(blob, theme.accent, theme.secondary);
+          if (active) setStoryBlob(image);
+        } catch {
+          if (active) setStoryPreparationFailed(true);
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setImagePreparationFailed(true);
+          setStoryPreparationFailed(true);
+        }
+      });
     return () => { active = false; };
-  }, [language, topGenre.id, topGenreScore]);
+  }, [language, topGenre.id, topGenreScore, theme.accent, theme.secondary]);
 
   const notify = (message: string) => {
     setFeedback(message);
@@ -109,6 +130,37 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
       return;
     }
     void download();
+  };
+
+  const shareStory = async () => {
+    try {
+      if (!storyBlob && mobileBrowser && !storyPreparationFailed) return;
+      if (!storyBlob && mobileBrowser && storyPreparationFailed) {
+        if (!cardRef.current) throw new Error('Card is not ready');
+        setStoryPreparationFailed(false);
+        const cardImage = preparedBlob ?? await captureCardBlob(cardRef.current);
+        if (appleMobile && !preparedBlob) setPreparedBlob(cardImage);
+        setStoryBlob(await createStoryImageBlob(cardImage, theme.accent, theme.secondary));
+        return;
+      }
+
+      if (!storyBlob && !cardRef.current) throw new Error('Card is not ready');
+      const image = storyBlob ?? await createStoryImageBlob(await captureCardBlob(cardRef.current!), theme.accent, theme.secondary);
+      const file = new File([image], 'muti-story.png', { type: 'image/png' });
+      // A newly captured image takes an async turn; only a prebuilt image can keep tap activation.
+      if (storyBlob && navigator.share && navigator.canShare?.({ files: [file] })) {
+        await navigator.share({ title: copy.imageTitle, files: [file] });
+        analytics.track('result_shared', { shareType: 'story-native-file', topGenre: topGenre.name, personalityScores });
+        return;
+      }
+      downloadImageBlob(image, file.name);
+      analytics.track('result_shared', { shareType: 'story-download', topGenre: topGenre.name, personalityScores });
+      notify(copy.storySaved);
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') return;
+      setStoryPreparationFailed(true);
+      notify(copy.imageFailed);
+    }
   };
 
   const copyLink = async () => {
@@ -164,11 +216,13 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
         </div>
       </div>
 
-      <div className="mt-6 grid gap-3 sm:grid-cols-3">
+      <div className="mt-6 grid gap-3 sm:grid-cols-2">
         <button onClick={() => void share()} className="primary-action inline-flex items-center justify-center gap-2" style={{ background: theme.accent, borderColor: theme.accent }}><Share2 size={17} />{copy.share}</button>
+        <button onClick={() => void shareStory()} disabled={mobileBrowser && !storyBlob && !storyPreparationFailed} className="secondary-action inline-flex items-center justify-center gap-2"><Instagram size={17} />{mobileBrowser && !storyBlob ? (storyPreparationFailed ? copy.storyRetry : copy.storyPreparing) : copy.story}</button>
         <button onClick={saveOrRetry} disabled={appleMobile && !preparedBlob && !imagePreparationFailed} className="secondary-action inline-flex items-center justify-center gap-2"><Download size={17} />{appleMobile && !preparedBlob ? (imagePreparationFailed ? copy.retry : copy.preparing) : copy.save}</button>
         <button onClick={() => void copyLink()} className="secondary-action inline-flex items-center justify-center gap-2"><Link2 size={17} />{copy.copy}</button>
       </div>
+      <p className="mx-auto mt-3 max-w-lg text-center text-xs leading-5 text-white/50">{copy.storyHint}</p>
       <div className="mt-3 min-h-6 text-center text-xs text-white/45" role="status" aria-live="polite">{feedback && <span className="inline-flex items-center gap-1.5"><Check size={13} />{feedback}</span>}</div>
     </div>
   );

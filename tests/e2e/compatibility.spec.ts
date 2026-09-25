@@ -59,6 +59,24 @@ test('the personal result card downloads as a non-empty PNG', async ({ page }) =
   expect(image.length).toBeGreaterThan(20_000);
 });
 
+test('the story card downloads as a 9:16 PNG when file sharing is unavailable', async ({ page }) => {
+  await page.goto('/?v=2&m=70&u=61&s=79&i=48&c=75');
+  const storyButton = page.getByRole('button', { name: '스토리용 카드 공유' });
+  await expect(storyButton).toBeEnabled({ timeout: 30_000 });
+  const downloadPromise = page.waitForEvent('download');
+  await storyButton.click();
+  const download = await downloadPromise;
+  expect(download.suggestedFilename()).toBe('muti-story.png');
+  const stream = await download.createReadStream();
+  const chunks: Buffer[] = [];
+  for await (const chunk of stream) chunks.push(Buffer.from(chunk));
+  const image = Buffer.concat(chunks);
+  expect(image.subarray(0, 8)).toEqual(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
+  expect(image.readUInt32BE(16)).toBe(1080);
+  expect(image.readUInt32BE(20)).toBe(1920);
+  expect(image.length).toBeGreaterThan(30_000);
+});
+
 test('the prepared image reaches the Apple share sheet during the tap gesture', async ({ page }) => {
   await page.addInitScript(() => {
     Object.defineProperty(navigator, 'userAgent', { configurable: true, get: () => 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)' });
@@ -78,6 +96,27 @@ test('the prepared image reaches the Apple share sheet during the tap gesture', 
   await expect(save).toBeEnabled({ timeout: 30_000 });
   await save.click();
   await expect.poll(() => page.evaluate(() => (window as Window & { __capturedShare?: { active: boolean; files: number } }).__capturedShare)).toEqual({ active: true, files: 1 });
+});
+
+test('the prepared story image reaches the mobile share sheet during the tap gesture', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'userAgent', { configurable: true, get: () => 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X)' });
+    Object.defineProperty(navigator, 'canShare', { configurable: true, value: () => true });
+    Object.defineProperty(navigator, 'share', {
+      configurable: true,
+      value: async (payload: ShareData) => {
+        Object.defineProperty(window, '__capturedStoryShare', {
+          configurable: true,
+          value: { active: navigator.userActivation?.isActive, files: payload.files?.length ?? 0, name: payload.files?.[0]?.name },
+        });
+      },
+    });
+  });
+  await page.goto('/?v=2&m=70&u=61&s=79&i=48&c=75');
+  const storyButton = page.getByRole('button', { name: '스토리용 카드 공유' });
+  await expect(storyButton).toBeEnabled({ timeout: 30_000 });
+  await storyButton.click();
+  await expect.poll(() => page.evaluate(() => (window as Window & { __capturedStoryShare?: { active: boolean; files: number; name: string } }).__capturedStoryShare)).toEqual({ active: true, files: 1, name: 'muti-story.png' });
 });
 
 test('the personal result offers curated direct Spotify album links', async ({ page }) => {
