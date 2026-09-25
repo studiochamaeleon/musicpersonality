@@ -6,27 +6,38 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "validate:catalog": "node scripts/validate-music-catalog.mjs",
+    "generate:og-glyphs": "node scripts/generate-og-glyphs.mjs",
+    "generate:ja-og-glyphs": "node scripts/generate-ja-og-glyphs.mjs",
+    "test:unit": "node --experimental-strip-types --test tests/unit/*.test.mjs",
+    "preview:e2e": "npm run build && wrangler pages dev out --port 4173 --ip 127.0.0.1 --compatibility-date=2026-09-18",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "framer-motion": "^12.23.22",
-    "html2canvas": "^1.4.1",
+    "html-to-image": "^1.11.13",
     "lucide-react": "^0.544.0",
-    "next": "15.5.4",
+    "next": "15.5.25",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "recharts": "^3.2.1"
   },
+  "overrides": {
+    "postcss": "8.5.28"
+  },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4",
-    "@types/html2canvas": "^0.5.35",
+    "@playwright/test": "^1.63.0",
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.5.4",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "eslint-config-next": "15.5.25",
+    "sharp": "^0.35.4",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5",
+    "wrangler": "^4.135.0"
   }
 }

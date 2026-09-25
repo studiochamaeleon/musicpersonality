@@ -29,11 +29,11 @@
     "label": "언어"
   },
   "intro": {
-    "title": "음악적 성격 유형 검사",
-    "description": "당신의 음악 취향을 통해 성격을 분석하고\n맞춤형 음악 장르를 추천해드립니다",
+    "title": "MUTI — Music Taste Identity",
+    "description": "음악 취향에 답하고 나와 닮은 장르와 앨범을 발견해보세요",
     "testInfo": "📝 총 40문항 | ⏱️ 약 5-10분 소요 | 🎵 32개 장르 탐험",
-    "subtitle": "당신의 음악 취향을 통해 성격을 분석하고\n맞춤형 음악 장르를 추천해드립니다",
-    "musicModelTitle": "MUSIC 모델 기반 검사",
+    "subtitle": "음악 취향에 답하고 나와 닮은 장르와 앨범을 발견해보세요",
+    "musicModelTitle": "MUSIC 모델에서 영감을 받은 테스트",
     "startTest": "검사 시작하기",
     "exploreGenres": "장르 탐험하기",
     "musicModelTraits": {
@@ -113,11 +113,11 @@
     "unknownGenre": "알 수 없는 장르",
     "cannotLoadGenre": "장르 정보를 불러올 수 없습니다.",
     "recommendationReason": "추천 이유",
-    "keyTracks": "대표곡",
+    "keyTracks": "입문 앨범",
     "clickToListen": "클릭하여 듣기",
     "retakeTest": "다시 검사하기",
     "exploreGenres": "장르 탐험하기",
-    "musicModelNote": "MUSIC 모델 기반 • musicpersonalitytest.pages.dev",
+    "musicModelNote": "MUSIC 모델 참고 · MUTI",
     "fallbackAnalysisNote": "당신의 음악적 선호도를 바탕으로 한 분석",
     "uniqueTaste": "독특한 취향",
     "distinctive": "개성적인",
@@ -206,10 +206,10 @@
       "strengths": "강점",
       "challenges": "성장 과제",
       "musicalCharacteristics": "음악적 특성",
-      "representativeArtists": "대표 아티스트",
+      "representativeArtists": "대표 아티스트와 앨범",
       "subGenres": "하위 장르",
       "recommendedTracks": "대표곡",
-      "clickToListen": "YouTube에서 들어보기",
+      "clickToListen": "Spotify에서 앨범 듣기",
       "moreTracksPrefix": "외",
       "moreTracksSuffix": "곡"
     },
@@ -233,7 +233,7 @@
   },
   "pwa": {
     "installTitle": "앱 설치",
-    "installDescription": "홈 화면에 음악 성격 테스트를 추가하여 빠르게 접근하세요!",
+    "installDescription": "홈 화면에 MUTI를 추가하여 빠르게 접근하세요!",
     "installButton": "설치",
     "laterButton": "나중에"
   },
@@ -246,7 +246,7 @@
     "myMusicalPersonality": "나의 음악적 성격",
     "myMusicalTraits": "나의 음악적 특성", 
     "match": "일치",
-    "basedOnMusicModel": "MUSIC 모델 기반 성격 분석 • musicpersonalitytest.pages.dev"
+    "basedOnMusicModel": "MUSIC 모델 참고 · MUTI"
   },
   "analysisReport": {
     "coreTraits": "핵심 특성",
@@ -258,12 +258,12 @@
     "compatibilityDescription": "💡 **친구들과 비교해보세요!** 위 성향을 가진 친구들과 함께 음악을 들으면 더욱 즐거운 경험을 할 수 있습니다.",
     "musicPreferences": "음악 선호도",
     "socialSharing": {
-      "title": "음악 성격 테스트 결과 공유하기",
+      "title": "MUTI 결과 공유하기",
       "description": "🎵 친구들과 음악적 호환성을 확인해보세요!",
       "subtitle": "당신과 비슷한 음악적 취향을 가진 친구들을 찾아보고, 함께 즐길 수 있는 장르를 발견해보세요.",
       "instructions": "친구들이 테스트를 완료하면 서로의 음악적 호환성을 비교할 수 있습니다",
-      "resultText": "🎵 음악 성격 테스트 결과\n\n{typeTitle}\n{description}\n\n나도 테스트해보기: {url}",
-      "shareTitle": "내 음악 성격 테스트 결과"
+      "resultText": "🎵 MUTI 음악 취향 테스트 결과\n\n{typeTitle}\n{description}\n\n나도 테스트해보기: {url}",
+      "shareTitle": "내 MUTI 결과"
     },
     "relationshipCompatibility": "관계 호환성",
     "bestMatch": "최고 궁합",
@@ -288,25 +288,25 @@
   },
   "seo": {
     "website": {
-      "title": "음악 성격 테스트 - 나만의 음악적 정체성 발견하기",
-      "description": "MUSIC 모델을 기반으로 한 포괄적인 음악 성격 평가를 받아보세요. 고유한 음악적 선호도를 발견하고, 개인 맞춤형 장르 추천과 성격에 맞는 새로운 아티스트를 탐색해보세요.",
-      "siteName": "음악 성격 테스트",
+      "title": "MUTI | 나와 닮은 음악 찾기",
+      "description": "MUSIC 모델에서 영감을 받은 가벼운 취향 테스트. 나와 닮은 장르, 아티스트와 앨범을 발견해보세요.",
+      "siteName": "MUTI",
       "keywords": ["음악 성격 테스트", "MUSIC 모델", "음악 심리학", "장르 추천", "성격 평가", "음악적 선호도", "음악 발견"],
-      "author": "음악 성격 연구소",
-      "creator": "음악 성격 테스트",
-      "publisher": "음악 성격 테스트",
-      "ogTitle": "음악 성격 테스트 - 나만의 음악적 정체성 발견하기",
-      "ogDescription": "포괄적인 음악 성격 평가를 통해 고유한 음악적 선호도를 발견하고 개인 맞춤형 추천을 받아보세요.",
-      "ogImageAlt": "음악 성격 테스트 - 나만의 음악적 정체성 발견하기",
-      "twitterTitle": "음악 성격 테스트 - 나만의 음악적 정체성 발견하기",
-      "twitterDescription": "포괄적인 음악 성격 평가를 통해 고유한 음악적 선호도를 발견하고 개인 맞춤형 추천을 받아보세요.",
-      "twitterCreator": "@musicpersonality"
+      "author": "CHAMELEONS",
+      "creator": "MUTI",
+      "publisher": "CHAMELEONS",
+      "ogTitle": "MUTI | 나와 닮은 음악 찾기",
+      "ogDescription": "음악 취향에 답하고 나와 닮은 장르와 앨범을 발견해보세요.",
+      "ogImageAlt": "MUTI — Music Taste Identity",
+      "twitterTitle": "MUTI | 나와 닮은 음악 찾기",
+      "twitterDescription": "음악 취향에 답하고 나와 닮은 장르와 앨범을 발견해보세요.",
+      "twitterCreator": ""
     },
     "structuredData": {
       "website": {
-        "name": "음악 성격 테스트",
-        "description": "MUSIC 모델 기반 포괄적인 음악 성격 평가",
-        "organizationName": "음악 성격 연구소"
+        "name": "MUTI",
+        "description": "MUSIC 모델에서 영감을 받은 가벼운 음악 취향 테스트",
+        "organizationName": "CHAMELEONS"
       },
       "quiz": {
         "educationalLevel": "일반",
@@ -318,7 +318,7 @@
       },
       "article": {
         "headline": "당신의 음악 성격 이해하기",
-        "authorName": "음악 성격 연구소"
+        "authorName": "CHAMELEONS"
       }
     }
   },
@@ -328,71 +328,75 @@
     "sections": {
       "introduction": {
         "title": "소개",
-        "content": "음악 성격 테스트에 오신 것을 환영합니다. 저희는 귀하의 개인정보 보호를 위해 최선을 다하고 있습니다. 본 정책은 저희의 개인정보 보호 중심 접근 방식을 설명합니다: 저희는 귀하의 개인정보를 수집하거나 저장하지 않습니다. 모든 설문 응답과 결과는 귀하의 브라우저에서 비공개로 유지됩니다."
+        "content": "이 테스트는 계정 없이 사용할 수 있고, 설문 응답과 결과 계산은 브라우저에서 이뤄집니다. 결과나 친구 궁합을 링크로 공유하면 MUSIC 점수가 URL에 포함되어 링크를 받은 사람과 공유 미리보기를 생성하는 호스팅 서비스에 전달될 수 있습니다. 광고 스크립트에는 별도의 데이터 처리 방식이 적용됩니다."
       },
       "dataCollection": {
         "title": "수집하는 정보",
-        "noCollectionTitle": "수집하지 않는 정보",
-        "noCollectionContent": "저희는 귀하의 개인정보 보호를 위해 최선을 다하고 있습니다. 저희 음악 성격 테스트는 전적으로 귀하의 브라우저에서 작동하며 개인정보를 수집하거나 서버에 저장하지 않습니다.",
-        "localStorageTitle": "브라우저 로컬 저장만 사용",
+        "noCollectionTitle": "계정과 설문 원문",
+        "noCollectionContent": "서비스는 계정·로그인을 요구하지 않으며 이름, 이메일, 전화번호와 설문 응답 원문을 저장하는 별도 데이터베이스를 운영하지 않습니다. 공유 링크의 점수와 일반 웹 요청은 이 설명의 예외입니다.",
+        "localStorageTitle": "브라우저 저장과 공유 링크",
         "localStorageItems": [
-          "설문 응답은 귀하의 브라우저 로컬 저장소에만 저장됩니다",
-          "언어 설정은 귀하의 브라우저에 로컬로 저장됩니다",
-          "테스트 결과는 귀하의 기기에 남아 있으며 저희에게 전송되지 않습니다",
-          "개인 식별자(이름, 이메일, 전화번호)는 수집하지 않습니다"
+          "진행 중인 설문 응답은 브라우저 세션 저장소에 보관됩니다",
+          "언어 설정, 최근 결과 최대 3개, 자체 사용 기록 최대 100건은 브라우저 로컬 저장소에 보관됩니다",
+          "앱 안의 친구 궁합 화면은 점수를 URL 조각(#)으로 복원합니다",
+          "SNS 미리보기가 있는 개인·친구 공유 링크는 점수를 URL 쿼리에 담아 Cloudflare Pages Function으로 전달합니다",
+          "공유 링크를 받은 사람과 공유 플랫폼은 링크에 포함된 점수를 볼 수 있습니다",
+          "점수 외에 이름, 이메일, 전화번호 입력을 요구하지 않습니다"
         ],
         "thirdPartyTitle": "제3자 데이터 수집",
         "thirdPartyItems": [
-          "Google AdSense는 광고 목적으로 쿠키와 사용 데이터를 수집할 수 있습니다",
-          "저희는 제3자 데이터 수집에 대한 접근 권한이나 통제권이 없습니다"
+          "Google AdSense는 광고를 위해 쿠키, 웹 비콘, IP 주소 등의 정보를 처리할 수 있습니다",
+          "Cloudflare는 사이트 제공과 공유 미리보기 생성 과정에서 요청 URL을 처리할 수 있습니다",
+          "Spotify 앨범 링크를 열면 Spotify의 데이터 처리 정책이 적용됩니다"
         ]
       },
       "dataUsage": {
         "title": "정보 사용 방법",
-        "noUsageContent": "저희는 개인정보를 수집하지 않기 때문에 개인정보를 사용하지 않습니다.",
+        "noUsageContent": "서비스는 계정·결과 데이터베이스를 운영하지 않습니다. 브라우저에 저장한 기록은 화면 복원과 로컬 기능에 사용합니다.",
         "browserProcessingContent": "귀하의 브라우저에서 일어나는 일:",
         "browserProcessingItems": [
           "설문 응답은 로컬에서 처리되어 성격 결과를 생성합니다",
+          "친구 궁합과 함께 들을 장르 추천은 두 점수를 이용해 브라우저에서 계산됩니다",
           "언어 설정은 편의를 위해 기억됩니다",
-          "모든 처리는 귀하의 기기에서 이루어지며 저희 서버로 전송되지 않습니다"
+          "공유 링크를 사용하면 결과 점수가 미리보기 생성과 결과 복원을 위해 URL로 전달됩니다"
         ]
       },
       "thirdPartyServices": {
         "title": "제3자 서비스",
         "googleAdsenseTitle": "Google AdSense",
         "googleAdsenseContent": "저희는 Google AdSense를 사용하여 광고를 표시합니다. Google은 타겟 광고 제공을 위해 이 사이트와 다른 웹사이트 방문에 대한 정보를 수집하기 위해 쿠키와 웹 비콘을 사용할 수 있습니다. Google의 광고 설정에서 개인 맞춤 광고를 거부할 수 있습니다.",
-        "noAnalyticsTitle": "분석 서비스 없음",
-        "noAnalyticsContent": "저희는 귀하의 행동을 모니터링하기 위한 분석 서비스나 추적 도구를 사용하지 않습니다. 저희 웹사이트 사용은 완전히 비공개입니다."
+        "noAnalyticsTitle": "별도 분석 서버 없음",
+        "noAnalyticsContent": "서비스 자체 이벤트는 브라우저 로컬 저장소에만 기록하며 별도 분석 서버로 보내지 않습니다. 다만 호스팅 요청과 Google AdSense에는 각각의 데이터 처리가 적용됩니다."
       },
       "cookies": {
         "title": "쿠키 및 로컬 저장소",
-        "ourStorageTitle": "로컬 저장소 사용",
-        "ourStorageContent": "저희는 오직 브라우저 로컬 저장소만을 사용하여:",
+        "ourStorageTitle": "브라우저 저장소 사용",
+        "ourStorageContent": "서비스는 브라우저 세션·로컬 저장소를 사용하여:",
         "ourStorageItems": [
-          "설문 진행상황과 결과를 귀하의 기기에 로컬로 저장합니다",
+          "설문 진행상황과 최근 결과를 기기에 저장합니다",
           "언어 설정을 기억합니다",
-          "저희는 추적이나 분석 쿠키를 사용하지 않습니다"
+          "최근 사용 이벤트 최대 100건과 결과 이력 최대 3건을 기기에 저장합니다"
         ],
         "thirdPartyCookiesTitle": "제3자 쿠키",
         "thirdPartyCookiesContent": "Google AdSense는 광고 목적으로 쿠키를 사용할 수 있습니다. 브라우저 설정이나 Google의 광고 설정을 통해 이를 제어할 수 있습니다. 쿠키를 비활성화해도 저희 성격 테스트의 핵심 기능에는 영향을 주지 않습니다."
       },
       "dataSecurity": {
         "title": "데이터 보안",
-        "content": "귀하의 데이터는 기기를 벗어나지 않기 때문에 안전합니다. 모든 설문 응답과 결과는 귀하의 브라우저에서 로컬로 처리되고 저장됩니다. 저희는 귀하의 개인정보를 서버로 수집하거나 전송하지 않으므로 데이터 침해나 설문 응답에 대한 무단 접근의 위험이 없습니다."
+        "content": "설문 응답 원문은 브라우저에서 처리됩니다. 공유 링크를 만들거나 열면 점수가 URL에 담겨 전달되므로, 원치 않는 상대에게 링크를 보내지 마세요. 브라우저 저장소를 지우면 기기에 보관된 진행 상태와 최근 결과를 삭제할 수 있습니다."
       },
       "userRights": {
         "title": "데이터 제어권",
-        "content": "데이터가 브라우저에 로컬로 저장되기 때문에 귀하가 완전한 제어권을 가지고 있습니다:",
+        "content": "기기에 저장된 데이터는 브라우저에서 직접 관리할 수 있습니다:",
         "controlItems": [
-          "브라우저의 로컬 저장소를 지워서 모든 설문 데이터를 삭제할 수 있습니다",
-          "귀하의 데이터는 기기를 벗어나지 않으므로 저희가 접근하거나 삭제할 것이 없습니다",
+          "브라우저의 세션 저장소와 로컬 저장소를 지워서 기기에 남은 설문 진행 상태와 결과 이력을 삭제할 수 있습니다",
+          "이미 다른 사람이나 플랫폼에 공유한 링크는 받는 사람과 해당 서비스에서 별도로 관리합니다",
           "계정이나 등록 없이 언제든지 테스트를 다시 받을 수 있습니다"
         ],
-        "noTraditionalRights": "저희는 개인정보를 수집하지 않으므로 전통적인 데이터 권리(접근, 수정, 삭제 요청)는 저희 서비스에 적용되지 않습니다."
+        "noTraditionalRights": "공유 링크나 광고·호스팅 서비스의 데이터 처리에 관해 궁금한 점은 아래 연락처로 문의해 주세요."
       },
       "childrenPrivacy": {
         "title": "아동의 개인정보 보호",
-        "content": "저희는 모든 연령대의 사용자로부터 개인정보를 수집하지 않으므로 아동이 사용하기에 안전한 서비스입니다. 모든 데이터는 사용자의 기기에 남아 있습니다. 하지만 13세 미만의 아동이 온라인 서비스를 사용할 때는 부모님의 지도를 권장합니다."
+        "content": "서비스는 나이를 입력받지 않습니다. 어린이가 결과를 공유하거나 외부 음악·광고 링크를 열 때에는 보호자의 지도를 권장합니다."
       },
       "policyChanges": {
         "title": "정책 변경사항",
@@ -402,7 +406,7 @@
         "title": "문의하기",
         "content": "이 개인정보 보호정책이나 저희의 데이터 관행에 대해 궁금한 점이 있으시면 다음으로 연락해 주세요:",
         "email": "이메일: studiochamaeleon@gmail.com",
-        "website": "웹사이트: https://musicpersonalitytest.pages.dev"
+        "website": "웹사이트:"
       }
     }
   },
@@ -412,11 +416,11 @@
     "sections": {
       "acceptance": {
         "title": "약관 동의",
-        "content": "음악 성격 테스트(\"서비스\")에 접근하고 사용함으로써 귀하는 이 약관과 조건에 구속되는 것에 동의하고 받아들입니다. 위 내용에 동의하지 않으시면 이 서비스를 사용하지 마십시오."
+        "content": "MUTI(\"서비스\")에 접근하고 사용함으로써 귀하는 이 약관과 조건에 구속되는 것에 동의하고 받아들입니다. 위 내용에 동의하지 않으시면 이 서비스를 사용하지 마십시오."
       },
       "serviceDescription": {
         "title": "서비스 설명",
-        "content": "음악 성격 테스트는 과학적 연구를 기반으로 음악 성격 평가를 제공하는 무료 온라인 서비스입니다. 이 서비스는 귀하의 응답을 분석하여 음악적 선호도와 성격 특성에 대한 개인 맞춤형 통찰을 제공합니다."
+        "content": "MUTI는 무료 오락용 웹서비스입니다. 설문 응답으로 다섯 가지 음악 취향 점수를 계산하고, 미리 작성된 장르 프로필과 비교해 탐색할 음악과 가벼운 성격 해석을 보여줍니다. 결과는 검증된 심리 진단이나 음악 선호 확률이 아닙니다."
       },
       "userResponsibilities": {
         "title": "사용자 책임",
@@ -435,7 +439,7 @@
       },
       "intellectualProperty": {
         "title": "지적재산권",
-        "content": "서비스와 그 원본 콘텐츠, 기능 및 기능성은 음악 성격 테스트가 소유하며 국제 저작권, 상표, 특허, 영업비밀 및 기타 지적재산권법에 의해 보호됩니다."
+        "content": "서비스와 그 원본 콘텐츠, 기능 및 기능성은 CHAMELEONS가 소유하며 관련 지적재산권법에 의해 보호됩니다."
       },
       "warranties": {
         "title": "보증의 면책",
@@ -449,7 +453,7 @@
       },
       "liability": {
         "title": "책임의 제한",
-        "content": "어떠한 경우에도 음악 성격 테스트, 그 이사, 직원, 파트너, 대리인, 공급업체 또는 계열사는 귀하의 서비스 사용으로 인한 이익, 데이터, 사용, 영업권 또는 기타 무형 손실의 손실을 포함하되 이에 제한되지 않는 간접적, 부수적, 특별, 결과적 또는 징벌적 손해에 대해 책임지지 않습니다."
+        "content": "어떠한 경우에도 MUTI 운영자와 관계자는 귀하의 서비스 사용으로 인한 이익, 데이터, 사용, 영업권 또는 기타 무형 손실의 손실을 포함하되 이에 제한되지 않는 간접적, 부수적, 특별, 결과적 또는 징벌적 손해에 대해 책임지지 않습니다."
       },
       "assessmentDisclaimer": {
         "title": "평가 결과 면책사항",
@@ -481,7 +485,7 @@
         "title": "연락처 정보",
         "content": "이 이용약관에 대해 궁금한 점이 있으시면 다음으로 연락해 주세요:",
         "email": "이메일: studiochamaeleon@gmail.com",
-        "website": "웹사이트: https://musicpersonalitytest.pages.dev"
+        "website": "웹사이트:"
       }
     }
   }

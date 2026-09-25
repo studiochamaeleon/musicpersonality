@@ -2,32 +2,28 @@
 
 import { useTranslation } from '@/hooks/useTranslation';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import { SITE_URL } from '@/lib/siteUrl';
 
 export default function PrivacyPolicy() {
-  const { t, isLoading } = useTranslation();
-
-  const getArrayFromTranslation = (key: string): string[] => {
-    const value = t(key);
-    return Array.isArray(value) ? value : [];
-  };
+  const { t, getArray, isLoading } = useTranslation();
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center">
+      <div className="legal-page min-h-screen flex items-center justify-center">
         <LoadingSpinner />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 py-12 px-4">
+    <div className="legal-page min-h-screen py-12 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-8">{t('privacy.title')}</h1>
           
           <div className="prose prose-lg max-w-none">
             <p className="text-gray-600 mb-6">
-              <strong>{t('privacy.lastUpdated')}</strong> {new Date().toLocaleDateString()}
+              <strong>{t('privacy.lastUpdated')}</strong> 2026-09-21
             </p>
 
             <section className="mb-8">
@@ -45,14 +41,14 @@ export default function PrivacyPolicy() {
                 
                 <h3 className="text-xl font-medium mb-2">{t('privacy.sections.dataCollection.localStorageTitle')}</h3>
                 <ul className="list-disc ml-6 mb-4">
-                  {getArrayFromTranslation('privacy.sections.dataCollection.localStorageItems').map((item, index) => (
+                  {getArray('privacy.sections.dataCollection.localStorageItems').map((item, index) => (
                     <li key={index}>{item}</li>
                   ))}
                 </ul>
 
                 <h3 className="text-xl font-medium mb-2">{t('privacy.sections.dataCollection.thirdPartyTitle')}</h3>
                 <ul className="list-disc ml-6">
-                  {getArrayFromTranslation('privacy.sections.dataCollection.thirdPartyItems').map((item, index) => (
+                  {getArray('privacy.sections.dataCollection.thirdPartyItems').map((item, index) => (
                     <li key={index}>{item}</li>
                   ))}
                 </ul>
@@ -64,7 +60,7 @@ export default function PrivacyPolicy() {
               <p className="text-gray-700 leading-relaxed mb-4">{t('privacy.sections.dataUsage.noUsageContent')}</p>
               <p className="text-gray-700 leading-relaxed mb-2">{t('privacy.sections.dataUsage.browserProcessingContent')}</p>
               <ul className="list-disc ml-6 text-gray-700 leading-relaxed">
-                {getArrayFromTranslation('privacy.sections.dataUsage.browserProcessingItems').map((item, index) => (
+                {getArray('privacy.sections.dataUsage.browserProcessingItems').map((item, index) => (
                   <li key={index}>{item}</li>
                 ))}
               </ul>
@@ -91,7 +87,7 @@ export default function PrivacyPolicy() {
                 <h3 className="text-xl font-medium mb-2">{t('privacy.sections.cookies.ourStorageTitle')}</h3>
                 <p className="mb-2">{t('privacy.sections.cookies.ourStorageContent')}</p>
                 <ul className="list-disc ml-6 mb-4">
-                  {getArrayFromTranslation('privacy.sections.cookies.ourStorageItems').map((item, index) => (
+                  {getArray('privacy.sections.cookies.ourStorageItems').map((item, index) => (
                     <li key={index}>{item}</li>
                   ))}
                 </ul>
@@ -115,7 +111,7 @@ export default function PrivacyPolicy() {
               <div className="text-gray-700 leading-relaxed">
                 <p className="mb-4">{t('privacy.sections.userRights.content')}</p>
                 <ul className="list-disc ml-6 mb-4">
-                  {getArrayFromTranslation('privacy.sections.userRights.controlItems').map((item, index) => (
+                  {getArray('privacy.sections.userRights.controlItems').map((item, index) => (
                     <li key={index}>{item}</li>
                   ))}
                 </ul>
@@ -147,7 +143,7 @@ export default function PrivacyPolicy() {
               <div className="bg-gray-50 p-4 rounded-lg mt-4">
                 <p className="text-gray-700">
                   {t('privacy.sections.contact.email')}<br />
-                  {t('privacy.sections.contact.website')}
+                  {t('privacy.sections.contact.website')} {SITE_URL}
                 </p>
               </div>
             </section>
@@ -156,4 +152,4 @@ export default function PrivacyPolicy() {
       </div>
     </div>
   );
-} 
+}

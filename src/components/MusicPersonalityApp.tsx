@@ -1,80 +1,142 @@
 'use client';
 
-import React, { useState, lazy, Suspense } from 'react';
-import { Question, GenreSchema, MUSICPersonality, EnhancedRecommendationScore, RecommendedArtist } from '@/types';
+import React, { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import { ArrowRight, Clock3, Compass, Layers3, Sparkles } from 'lucide-react';
+import { Question, GenreSchema, MUSICPersonality, EnhancedRecommendationScore, RecommendedArtist, MusicCatalog } from '@/types';
 import { calculateMUSICScores, recommendGenres, recommendArtists } from '@/lib/musicCalculations';
+import { createResultSearchParams, parseResultSearchParams } from '@/lib/resultTheme';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
-import PWAInstallPrompt from '@/components/PWAInstallPrompt';
 import LanguageSelector from '@/components/LanguageSelector';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { analytics } from '@/lib/analytics';
+import DotMatrixBackground from '@/components/ui/DotMatrixBackground';
+import { createComparisonHash, parseComparisonHash } from '@/lib/compatibility';
+import { loadRecentResults, RecentMusicResult, saveRecentResult } from '@/lib/recentResults';
+import { getGenreName } from '@/lib/genreTranslations';
+import { removeBrowserStorage } from '@/lib/browserStorage';
 
-// Lazy load heavy components
 const Survey = lazy(() => import('@/components/Survey'));
 const PersonalityResults = lazy(() => import('@/components/PersonalityResults'));
 const GenreExplorer = lazy(() => import('@/components/GenreExplorer'));
+const CompatibilityInvite = lazy(() => import('@/components/CompatibilityInvite'));
+const CompatibilityResults = lazy(() => import('@/components/CompatibilityResults'));
 
-// 데이터는 동적으로 로드
-
-type AppState = 'intro' | 'survey' | 'results' | 'genre-explorer';
+type AppState = 'intro' | 'survey' | 'results' | 'genre-explorer' | 'compare-invite' | 'comparison-results';
 
 const MusicPersonalityApp: React.FC = () => {
   const { t } = useTranslation();
   const { language } = useLanguage();
+  const initializedFromUrl = useRef(false);
   const [appState, setAppState] = useState<AppState>('intro');
   const [personalityScores, setPersonalityScores] = useState<MUSICPersonality | null>(null);
   const [recommendedGenres, setRecommendedGenres] = useState<EnhancedRecommendationScore[]>([]);
   const [recommendedArtistsList, setRecommendedArtistsList] = useState<RecommendedArtist[]>([]);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [genres, setGenres] = useState<GenreSchema[]>([]);
+  const [musicCatalog, setMusicCatalog] = useState<MusicCatalog>({ version: 1, reviewedAt: '', genres: {} });
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [dataLoadError, setDataLoadError] = useState(false);
+  const [loadAttempt, setLoadAttempt] = useState(0);
+  const [comparisonHostScores, setComparisonHostScores] = useState<MUSICPersonality | null>(null);
+  const [comparisonGuestScores, setComparisonGuestScores] = useState<MUSICPersonality | null>(null);
+  const [recentResults, setRecentResults] = useState<RecentMusicResult[]>([]);
+  const languagePath = language === 'ko' ? '/' : `/?lang=${language}`;
 
-  // 데이터 로딩
-  React.useEffect(() => {
+  useEffect(() => {
     const loadData = async () => {
       try {
-        const [questionsModule, genresModule] = await Promise.all([
+        setDataLoadError(false);
+        const [questionsModule, genresModule, catalogModule] = await Promise.all([
           import('@/data/questions.json'),
-          import('@/data/genres.json')
+          import('@/data/genres.json'),
+          import('@/data/musicCatalog.json'),
         ]);
-        
         setQuestions(questionsModule.default as Question[]);
         setGenres(genresModule.default as GenreSchema[]);
+        setMusicCatalog(catalogModule.default as MusicCatalog);
         setDataLoaded(true);
       } catch (error) {
         console.error('Failed to load data:', error);
+        setDataLoadError(true);
       }
     };
-    
-    loadData();
+    void loadData();
+  }, [loadAttempt]);
+
+  useEffect(() => {
+    setRecentResults(loadRecentResults());
   }, []);
 
+  const buildRecommendations = useCallback((scores: MUSICPersonality, nextGenres: GenreSchema[]) => {
+    const recommendations = recommendGenres(scores, nextGenres, language);
+    setRecommendedGenres(recommendations);
+    setRecommendedArtistsList(recommendArtists(recommendations, nextGenres, musicCatalog, 6, language));
+    return recommendations;
+  }, [language, musicCatalog]);
+
+  useEffect(() => {
+    if (!dataLoaded || initializedFromUrl.current || typeof window === 'undefined') return;
+    initializedFromUrl.current = true;
+    const comparison = parseComparisonHash(window.location.hash);
+    if (comparison) {
+      setComparisonHostScores(comparison.hostScores);
+      setComparisonGuestScores(comparison.guestScores);
+      setAppState(comparison.guestScores ? 'comparison-results' : 'compare-invite');
+      return;
+    }
+    const params = new URLSearchParams(window.location.search);
+    const restoredScores = parseResultSearchParams(params);
+
+    if (restoredScores) {
+      setPersonalityScores(restoredScores);
+      buildRecommendations(restoredScores, genres);
+      setAppState('results');
+    } else if (params.get('view') === 'genre-explorer') {
+      setAppState('genre-explorer');
+    }
+  }, [buildRecommendations, dataLoaded, genres]);
+
+  useEffect(() => {
+    if (personalityScores && genres.length > 0) buildRecommendations(personalityScores, genres);
+  }, [buildRecommendations, genres, personalityScores]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'auto' });
+  }, [appState]);
+
   const handleSurveyComplete = (answers: Record<string, number>) => {
-    // MUSIC 점수 계산
     const scores = calculateMUSICScores(questions, answers);
     setPersonalityScores(scores);
+    const recommendations = buildRecommendations(scores, genres);
+    const topGenre = genres.find(genre => genre.id === recommendations[0]?.genreId);
+    setRecentResults(saveRecentResult(scores, topGenre?.id || recommendations[0]?.genreId || 'unknown'));
 
-    // 장르 추천
-    const recommendations = recommendGenres(scores, genres);
-    setRecommendedGenres(recommendations);
-
-    // 아티스트 추천
-    const artists = recommendArtists(recommendations, genres, 6, language);
-    setRecommendedArtistsList(artists);
-
-    // 분석 추적
-    const topGenreId = recommendations[0]?.genreId;
-    const topGenre = topGenreId ? genres.find(g => g.id === topGenreId) : null;
-    
     analytics.track('survey_completed', {
       personalityScores: scores,
       topGenre: topGenre?.name || 'Unknown',
       recommendedGenresCount: recommendations.length,
-      completionTime: Date.now()
+      completionTime: Date.now(),
     });
 
-    // 결과 화면으로 이동
+    if (comparisonHostScores) {
+      setComparisonGuestScores(scores);
+      analytics.track('compatibility_completed', {
+        hostScores: comparisonHostScores,
+        guestScores: scores,
+      });
+      if (typeof window !== 'undefined') {
+        window.history.replaceState({}, '', `${languagePath}#${createComparisonHash(comparisonHostScores, scores)}`);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      setAppState('comparison-results');
+      return;
+    }
+
+    if (typeof window !== 'undefined') {
+      window.history.replaceState({}, '', `/?${createResultSearchParams(scores, language).toString()}`);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     setAppState('results');
   };
 
@@ -83,100 +145,193 @@ const MusicPersonalityApp: React.FC = () => {
     setPersonalityScores(null);
     setRecommendedGenres([]);
     setRecommendedArtistsList([]);
+    setComparisonHostScores(null);
+    setComparisonGuestScores(null);
+    if (typeof window !== 'undefined') {
+      removeBrowserStorage('session', 'music-personality-survey');
+      window.history.replaceState({}, '', languagePath);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
-  // 데이터 로딩 중
-  if (!dataLoaded) {
-    return <LoadingSpinner message={t('common.loading.initializing')} />;
-  }
+  const handleOpenGenreExplorer = () => {
+    setAppState('genre-explorer');
+    if (typeof window !== 'undefined') window.history.replaceState({}, '', `/?view=genre-explorer${language === 'ko' ? '' : `&lang=${language}`}`);
+  };
 
-  // 인트로 화면
+  const handleBackToIntro = () => {
+    setAppState('intro');
+    setComparisonHostScores(null);
+    setComparisonGuestScores(null);
+    if (typeof window !== 'undefined') window.history.replaceState({}, '', languagePath);
+  };
+
+  const handleCreateInvite = (scores: MUSICPersonality) => {
+    setComparisonHostScores(scores);
+    setComparisonGuestScores(null);
+    setAppState('compare-invite');
+    analytics.track('compatibility_invite_created', { hostScores: scores });
+    if (typeof window !== 'undefined') window.history.replaceState({}, '', `${languagePath}#${createComparisonHash(scores)}`);
+  };
+
+  const handleStartComparisonSurvey = () => {
+    setComparisonGuestScores(null);
+    removeBrowserStorage('session', 'music-personality-survey');
+    setAppState('survey');
+  };
+
+  const handleUseRecentForComparison = (result: RecentMusicResult) => {
+    if (!comparisonHostScores) return;
+    setComparisonGuestScores(result.scores);
+    setPersonalityScores(result.scores);
+    setAppState('comparison-results');
+    analytics.track('compatibility_completed', { source: 'recent-result' });
+    if (typeof window !== 'undefined') window.history.replaceState({}, '', `${languagePath}#${createComparisonHash(comparisonHostScores, result.scores)}`);
+  };
+
+  const handleViewGuestResult = () => {
+    if (!comparisonGuestScores) return;
+    setPersonalityScores(comparisonGuestScores);
+    buildRecommendations(comparisonGuestScores, genres);
+    setComparisonHostScores(null);
+    setComparisonGuestScores(null);
+    setAppState('results');
+    if (typeof window !== 'undefined') window.history.replaceState({}, '', `/?${createResultSearchParams(comparisonGuestScores, language).toString()}`);
+  };
+
+  const handleInviteAnotherFriend = () => {
+    if (!comparisonGuestScores) return;
+    setPersonalityScores(comparisonGuestScores);
+    buildRecommendations(comparisonGuestScores, genres);
+    handleCreateInvite(comparisonGuestScores);
+  };
+
+  const handleBackFromInvite = () => {
+    if (personalityScores) {
+      setComparisonHostScores(null);
+      setComparisonGuestScores(null);
+      buildRecommendations(personalityScores, genres);
+      setAppState('results');
+      if (typeof window !== 'undefined') window.history.replaceState({}, '', `/?${createResultSearchParams(personalityScores, language).toString()}`);
+      return;
+    }
+    handleBackToIntro();
+  };
+
+  const handleRestoreRecentResult = (result: RecentMusicResult) => {
+    setPersonalityScores(result.scores);
+    buildRecommendations(result.scores, genres);
+    setAppState('results');
+    analytics.track('recent_result_opened', { topGenreId: result.topGenreId });
+    if (typeof window !== 'undefined') window.history.replaceState({}, '', `/?${createResultSearchParams(result.scores, language).toString()}`);
+  };
+
+  if (dataLoadError) return <main className="app-canvas flex min-h-screen flex-col items-center justify-center px-5 text-center text-white"><h1 className="text-2xl font-bold">{language === 'ko' ? '데이터를 불러오지 못했어요.' : language === 'ja' ? 'テストを読み込めませんでした。' : 'We could not load the test.'}</h1><p className="mt-3 max-w-sm text-sm leading-6 text-white/65">{language === 'ko' ? '연결을 확인한 뒤 다시 시도해 주세요.' : language === 'ja' ? '接続を確認して、もう一度お試しください。' : 'Please check your connection and try again.'}</p><button onClick={() => setLoadAttempt(attempt => attempt + 1)} className="primary-action mt-7">{language === 'ko' ? '다시 시도하기' : language === 'ja' ? 'もう一度' : 'Try again'}</button></main>;
   if (appState === 'intro') {
+    const copy = language === 'ko' ? {
+      eyebrow: 'MUTI · MUSIC TASTE IDENTITY',
+      headline: '취향을 들으면,\n당신이 보입니다.',
+      body: '좋아하는 음악에 답하고 나와 닮은 장르와 음악 성격을 발견해보세요.',
+      cta: '내 음악 성격 찾기',
+      explore: '장르별 성향 먼저 보기',
+      note: '재미로 즐기는 음악 취향 테스트예요.',
+      recent: '최근 결과',
+    } : language === 'ja' ? {
+      eyebrow: 'MUTI · MUSIC TASTE IDENTITY',
+      headline: '好きな音を辿れば、\nあなたが見える。',
+      body: '40の質問に答えて、あなたに似たジャンルと音楽性格を見つけましょう。',
+      cta: '私の音楽性格を見つける',
+      explore: 'ジャンルの性格を見る',
+      note: '音楽心理学に着想を得た、気軽に楽しむテストです。',
+      recent: '最近の結果',
+    } : {
+      eyebrow: 'MUTI · MUSIC TASTE IDENTITY',
+      headline: 'Your taste says\nmore than words.',
+      body: 'Answer 40 quick questions and discover the genres that sound most like you.',
+      cta: 'Find my music type',
+      explore: 'Browse genre personalities',
+      note: 'A lighthearted test inspired by music psychology.',
+      recent: 'Recent results',
+    };
+
     return (
-      <div className="intro-screen min-h-screen bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 flex items-center justify-center relative py-8">
-        {/* Language Selector - responsive positioning */}
-        <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-10">
+      <main className="app-canvas text-white">
+        <DotMatrixBackground />
+        <div className="intro-matrix-fade pointer-events-none absolute inset-0" aria-hidden="true" />
+
+        <header className="absolute inset-x-0 top-0 z-20 mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 py-5 sm:px-8">
+          <div className="min-w-0">
+            <p className="text-sm font-extrabold tracking-[-0.03em]">MUTI</p>
+            <p className="mt-0.5 text-[9px] font-semibold leading-[1.5] tracking-[0.16em] text-white/35 min-[360px]:text-[10px] min-[360px]:tracking-[0.18em]">
+              <span className="block whitespace-nowrap">MUSIC TASTE IDENTITY</span>
+              <span className="block">BY CHAMELEONS</span>
+            </p>
+          </div>
           <LanguageSelector />
-        </div>
-        
-        <div className="text-center text-white max-w-2xl mx-auto px-4 py-8">
-          <div className="text-8xl mb-12 mt-8">🎵</div>
-          
-          <h1 className="text-5xl font-bold mb-6">
-            {t('intro.title')}
-          </h1>
-          
-          <p className="text-xl mb-8 opacity-90">
-            {t('intro.description')}
-          </p>
+        </header>
 
-          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8">
-            <h3 className="text-lg font-semibold mb-4">{t('intro.musicModelTitle')}</h3>
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-4 text-sm">
-              <div className="bg-white/10 rounded-lg p-3">
-                <div className="font-medium">{t('intro.musicModelTraits.mellow.name')}</div>
-                <div className="text-xs opacity-80">{t('intro.musicModelTraits.mellow.description')}</div>
-              </div>
-              <div className="bg-white/10 rounded-lg p-3">
-                <div className="font-medium">{t('intro.musicModelTraits.unpretentious.name')}</div>
-                <div className="text-xs opacity-80">{t('intro.musicModelTraits.unpretentious.description')}</div>
-              </div>
-              <div className="bg-white/10 rounded-lg p-3">
-                <div className="font-medium">{t('intro.musicModelTraits.sophisticated.name')}</div>
-                <div className="text-xs opacity-80">{t('intro.musicModelTraits.sophisticated.description')}</div>
-              </div>
-              <div className="bg-white/10 rounded-lg p-3">
-                <div className="font-medium">{t('intro.musicModelTraits.intense.name')}</div>
-                <div className="text-xs opacity-80">{t('intro.musicModelTraits.intense.description')}</div>
-              </div>
-              <div className="bg-white/10 rounded-lg p-3">
-                <div className="font-medium">{t('intro.musicModelTraits.contemporary.name')}</div>
-                <div className="text-xs opacity-80">{t('intro.musicModelTraits.contemporary.description')}</div>
-              </div>
-            </div>
-          </div>
+        <section className="relative z-10 mx-auto flex min-h-[100dvh] max-w-6xl items-center justify-center px-5 pb-12 pt-28 text-center sm:px-8">
+          <div className="mx-auto max-w-5xl fade-in">
+            <p className="eyebrow mb-5">{copy.eyebrow}</p>
+            <h1 className={`${language === 'ja' ? 'text-[clamp(2rem,8.8vw,5.8rem)] font-extrabold leading-[1.08] tracking-[-0.055em]' : language === 'ko' ? 'text-[clamp(3.15rem,7.2vw,6.6rem)] font-extrabold leading-[0.92] tracking-[-0.07em]' : 'display-title'} whitespace-pre-line text-balance drop-shadow-[0_18px_60px_rgba(0,0,0,.65)]`}>
+              {copy.headline.split('\n').map((line, index) => (
+                <React.Fragment key={line}>
+                  {index === 1 ? <span className="text-gradient">{line}</span> : line}
+                  {index === 0 && <br />}
+                </React.Fragment>
+              ))}
+            </h1>
+            <p className="mx-auto mt-6 max-w-xl text-base leading-7 text-white/65 sm:text-lg">{copy.body}</p>
 
-          <div className="space-y-4">
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={() => setAppState('survey')}
-                className="px-8 py-4 bg-white text-purple-600 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg"
-              >
-                {t('intro.startTest')}
+            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <button onClick={() => setAppState('survey')} disabled={!dataLoaded} className="primary-action group inline-flex items-center justify-center gap-2">
+                {copy.cta}
+                <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
               </button>
-              
-              <button
-                onClick={() => setAppState('genre-explorer')}
-                className="px-8 py-4 bg-white/20 backdrop-blur-sm text-white border-2 border-white/30 rounded-xl font-bold text-lg hover:bg-white/30 transition-all transform hover:scale-105 shadow-lg"
-              >
-                {t('intro.exploreGenres')}
+              <button onClick={handleOpenGenreExplorer} disabled={!dataLoaded} className="secondary-action group inline-flex items-center justify-center gap-2">
+                <Compass size={17} />
+                {copy.explore}
               </button>
             </div>
-            
-            <div className="text-sm opacity-80 mb-8">
-              <p>{t('intro.testInfo')}</p>
+
+            <div className="mt-7 flex flex-wrap justify-center gap-x-6 gap-y-3 text-xs text-white/65">
+              <span className="inline-flex items-center gap-2"><Layers3 size={14} />40 {language === 'ko' ? '문항' : language === 'ja' ? '問' : 'questions'}</span>
+              <span className="inline-flex items-center gap-2"><Clock3 size={14} />{language === 'ko' ? '약 5분' : language === 'ja' ? '約5分' : 'about 5 min'}</span>
+              <span className="inline-flex items-center gap-2"><Sparkles size={14} />32 {language === 'ko' ? '개 장르' : language === 'ja' ? 'ジャンル' : 'genres'}</span>
             </div>
+            <p className="mt-3 text-[11px] text-white/65">{copy.note}</p>
+            {recentResults.length > 0 && (
+              <details className="mx-auto mt-6 max-w-sm text-left">
+                <summary className="cursor-pointer list-none text-center text-xs font-semibold text-white/70 transition-colors hover:text-white">{copy.recent} {recentResults.length} ↓</summary>
+                <div className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-black/30 p-2 backdrop-blur-xl">
+                  {recentResults.map((result, index) => {
+                    const genre = genres.find(item => item.id === result.topGenreId);
+                    return (
+                      <button key={result.id} onClick={() => handleRestoreRecentResult(result)} className="flex min-h-12 w-full items-center justify-between rounded-xl px-3 text-left text-xs text-white/55 transition-colors hover:bg-white/8 hover:text-white">
+                        <span>{genre ? getGenreName(genre, language) : (language === 'ko' ? '음악 성격 결과' : language === 'ja' ? '音楽性格の結果' : 'Music personality result')}</span>
+                        <span className="score-tabular text-[10px] text-white/25">#{index + 1}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </details>
+            )}
           </div>
-        </div>
-        <PWAInstallPrompt />
-      </div>
+        </section>
+      </main>
     );
   }
 
-  // 설문 화면
+  if (!dataLoaded) return <LoadingSpinner message={t('common.loading.initializing')} />;
+
   if (appState === 'survey') {
     return (
       <Suspense fallback={<LoadingSpinner message={t('common.loading.preparingSurvey')} />}>
-        <Survey
-          questions={questions}
-          onComplete={handleSurveyComplete}
-          onGoHome={() => setAppState('intro')}
-        />
+        <Survey questions={questions} onComplete={handleSurveyComplete} onGoHome={handleBackToIntro} />
       </Suspense>
     );
   }
 
-  // 결과 화면
   if (appState === 'results' && personalityScores) {
     return (
       <Suspense fallback={<LoadingSpinner message={t('common.loading.analyzingResults')} />}>
@@ -185,53 +340,62 @@ const MusicPersonalityApp: React.FC = () => {
           recommendedGenres={recommendedGenres}
           genres={genres}
           recommendedArtists={recommendedArtistsList}
+          onRestart={handleRestart}
+          onInviteFriend={() => handleCreateInvite(personalityScores)}
         />
       </Suspense>
     );
   }
 
-  // 장르 탐험 화면
-  if (appState === 'genre-explorer') {
+  if (appState === 'compare-invite' && comparisonHostScores) {
     return (
-      <div>
-        {/* 네비게이션 바 */}
-        <div className="bg-white shadow-sm border-b">
-          <div className="container mx-auto px-4 py-3">
-            <button
-              onClick={() => setAppState('intro')}
-              className="text-blue-600 hover:text-blue-800 font-medium"
-            >
-              ← {t('common.buttons.backToHome')}
-            </button>
-          </div>
-        </div>
-        
-        <Suspense fallback={<LoadingSpinner message={t('common.loading.loadingGenres')} />}>
-          <GenreExplorer
-            genres={genres}
-            onGenreSelect={() => {
-              // Genre selection is now handled by the GenreExplorer modal
-            }}
-          />
-        </Suspense>
-      </div>
+      <Suspense fallback={<LoadingSpinner message={t('common.loading.initializing')} />}>
+        <CompatibilityInvite
+          hostScores={comparisonHostScores}
+          genres={genres}
+          recentResults={recentResults}
+          onStartSurvey={handleStartComparisonSurvey}
+          onUseRecent={handleUseRecentForComparison}
+          onBack={handleBackFromInvite}
+        />
+      </Suspense>
     );
   }
 
-  return (
-    <div className="error-screen min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <p className="text-red-600">{t('common.errorOccurred')}</p>
-        <button
-          onClick={handleRestart}
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          {t('common.restart')}
-        </button>
-      </div>
-      <PWAInstallPrompt />
-    </div>
-  );
+  if (appState === 'comparison-results' && comparisonHostScores && comparisonGuestScores) {
+    return (
+      <Suspense fallback={<LoadingSpinner message={t('common.loading.analyzingResults')} />}>
+        <CompatibilityResults
+          hostScores={comparisonHostScores}
+          guestScores={comparisonGuestScores}
+          genres={genres}
+          onViewMyResult={handleViewGuestResult}
+          onCreateInvite={handleInviteAnotherFriend}
+          onRestart={handleRestart}
+        />
+      </Suspense>
+    );
+  }
+
+  if (appState === 'genre-explorer') {
+    return (
+      <main className="relative isolate min-h-screen overflow-x-hidden bg-[#07080a] text-white">
+        <DotMatrixBackground style={{ position: 'fixed' }} />
+        <div className="intro-matrix-fade pointer-events-none fixed inset-0" aria-hidden="true" />
+        <div className="sticky top-0 z-40 border-b border-white/10 bg-[#07080a]/90 px-5 py-4 backdrop-blur-xl">
+          <div className="mx-auto flex max-w-6xl items-center justify-between">
+            <button onClick={handleBackToIntro} className="text-sm font-semibold text-white/65 transition-colors hover:text-white">← {t('common.buttons.backToHome')}</button>
+            <LanguageSelector />
+          </div>
+        </div>
+        <Suspense fallback={<LoadingSpinner message={t('common.loading.loadingGenres')} />}>
+          <GenreExplorer genres={genres} musicCatalog={musicCatalog} />
+        </Suspense>
+      </main>
+    );
+  }
+
+  return <LoadingSpinner message={t('common.errorOccurred')} />;
 };
 
 export default MusicPersonalityApp;

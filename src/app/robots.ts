@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { SITE_URL } from '@/lib/siteUrl'
 
 export const dynamic = 'force-static'
  
@@ -9,6 +10,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/private/', '/admin/'],
     },
-    sitemap: 'https://musicpersonalitytest.pages.dev/sitemap.xml',
+    sitemap: `${SITE_URL}/sitemap.xml`,
   }
 }

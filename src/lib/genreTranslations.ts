@@ -1,4 +1,6 @@
-import { PersonalityAnalysisReport } from '@/types';
+import type { PersonalityAnalysisReport } from '@/types';
+import type { Language } from '@/types/i18n';
+import { buildJapaneseAnalysis, genreTranslationsJa } from './genreTranslationsJa.ts';
 
 // 장르별 영어 번역 데이터
 export const genreTranslations: Record<string, {
@@ -1786,32 +1788,37 @@ export function getGenreTranslation(genreId: string) {
 }
 
 // 언어에 따라 적절한 텍스트를 반환하는 함수들
-export function getGenreName(genre: { name: string; nameKo: string }, language: 'ko' | 'en'): string {
-  return language === 'ko' ? genre.nameKo : genre.name;
+export function getGenreName(genre: { id?: string; name: string; nameKo: string }, language: Language): string {
+  if (language === 'ko') return genre.nameKo;
+  if (language === 'ja' && genre.id) return genreTranslationsJa[genre.id]?.name || genre.name;
+  return genre.name;
 }
 
-export function getArtistName(artist: { name: string; nameKo?: string }, language: 'ko' | 'en'): string {
+export function getArtistName(artist: { name: string; nameKo?: string }, language: Language): string {
   return language === 'ko' ? (artist.nameKo || artist.name) : artist.name;
 }
 
-export function getArtistSubtitle(artist: { name: string; nameKo: string }, language: 'ko' | 'en'): string {
+export function getArtistSubtitle(artist: { name: string; nameKo?: string }, language: Language): string {
   return language === 'ko' ? artist.name : '';
 }
 
-export function getGenreDescription(genreId: string, originalDescription: string, language: 'ko' | 'en'): string {
+export function getGenreDescription(genreId: string, originalDescription: string, language: Language): string {
   if (language === 'ko') return originalDescription;
+  if (language === 'ja') return genreTranslationsJa[genreId]?.description || originalDescription;
   const translation = getGenreTranslation(genreId);
   return translation?.description || originalDescription;
 }
 
-export function getGenreCharacteristics(genreId: string, originalCharacteristics: string[], language: 'ko' | 'en'): string[] {
+export function getGenreCharacteristics(genreId: string, originalCharacteristics: string[], language: Language): string[] {
   if (language === 'ko') return originalCharacteristics;
+  if (language === 'ja') return genreTranslationsJa[genreId]?.characteristics || originalCharacteristics;
   const translation = getGenreTranslation(genreId);
   return translation?.characteristics || originalCharacteristics;
 }
 
-export function getPersonalityAnalysis(genreId: string, originalAnalysis: PersonalityAnalysisReport, language: 'ko' | 'en'): PersonalityAnalysisReport {
+export function getPersonalityAnalysis(genreId: string, originalAnalysis: PersonalityAnalysisReport, language: Language): PersonalityAnalysisReport {
   if (language === 'ko') return originalAnalysis;
+  if (language === 'ja') return buildJapaneseAnalysis(genreId, originalAnalysis);
   const translation = getGenreTranslation(genreId);
   
   if (translation?.personalityAnalysis) {

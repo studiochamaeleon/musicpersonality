@@ -2,32 +2,28 @@
 
 import { useTranslation } from '@/hooks/useTranslation';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import { SITE_URL } from '@/lib/siteUrl';
 
 export default function TermsOfService() {
-  const { t, isLoading } = useTranslation();
-
-  const getArrayFromTranslation = (key: string): string[] => {
-    const value = t(key);
-    return Array.isArray(value) ? value : [];
-  };
+  const { t, getArray, isLoading } = useTranslation();
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center">
+      <div className="legal-page min-h-screen flex items-center justify-center">
         <LoadingSpinner />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 py-12 px-4">
+    <div className="legal-page min-h-screen py-12 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-8">{t('terms.title')}</h1>
           
           <div className="prose prose-lg max-w-none">
             <p className="text-gray-600 mb-6">
-              <strong>{t('terms.lastUpdated')}</strong> {new Date().toLocaleDateString()}
+              <strong>{t('terms.lastUpdated')}</strong> 2026-09-21
             </p>
 
             <section className="mb-8">
@@ -49,7 +45,7 @@ export default function TermsOfService() {
               <div className="text-gray-700 leading-relaxed">
                 <p className="mb-4">{t('terms.sections.userResponsibilities.content')}</p>
                 <ul className="list-disc ml-6">
-                  {getArrayFromTranslation('terms.sections.userResponsibilities.responsibilities').map((responsibility, index) => (
+                  {getArray('terms.sections.userResponsibilities.responsibilities').map((responsibility, index) => (
                     <li key={index}>{responsibility}</li>
                   ))}
                 </ul>
@@ -75,7 +71,7 @@ export default function TermsOfService() {
               <div className="text-gray-700 leading-relaxed">
                 <p className="mb-4">{t('terms.sections.warranties.content')}</p>
                 <ul className="list-disc ml-6">
-                  {getArrayFromTranslation('terms.sections.warranties.disclaimers').map((disclaimer, index) => (
+                  {getArray('terms.sections.warranties.disclaimers').map((disclaimer, index) => (
                     <li key={index}>{disclaimer}</li>
                   ))}
                 </ul>
@@ -94,7 +90,7 @@ export default function TermsOfService() {
               <div className="text-gray-700 leading-relaxed">
                 <p className="mb-4">{t('terms.sections.assessmentDisclaimer.content')}</p>
                 <ul className="list-disc ml-6">
-                  {getArrayFromTranslation('terms.sections.assessmentDisclaimer.disclaimers').map((disclaimer, index) => (
+                  {getArray('terms.sections.assessmentDisclaimer.disclaimers').map((disclaimer, index) => (
                     <li key={index}>{disclaimer}</li>
                   ))}
                 </ul>
@@ -137,7 +133,7 @@ export default function TermsOfService() {
               <div className="bg-gray-50 p-4 rounded-lg mt-4">
                 <p className="text-gray-700">
                   {t('terms.sections.contact.email')}<br />
-                  {t('terms.sections.contact.website')}
+                  {t('terms.sections.contact.website')} {SITE_URL}
                 </p>
               </div>
             </section>

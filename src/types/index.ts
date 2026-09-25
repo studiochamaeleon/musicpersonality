@@ -24,14 +24,26 @@ export interface GenreSchema {
   valence: number;
   acousticness: number;
   personalityAnalysis?: PersonalityAnalysisReport;
-  representativeArtists?: ArtistReference[];
 }
 
 export interface ArtistReference {
   name: string;
   nameKo?: string;
-  popularity: number;
-  keyTracks: string[];
+  role: 'anchor' | 'discovery';
+  album: AlbumReference;
+}
+
+export interface AlbumReference {
+  title: string;
+  year: number;
+  spotifyUrl: string;
+  credit?: string;
+}
+
+export interface MusicCatalog {
+  version: number;
+  reviewedAt: string;
+  genres: Record<string, ArtistReference[]>;
 }
 
 // 아티스트
@@ -94,7 +106,6 @@ export interface RecommendationScore {
     cosineSimilarity: number;
     weightedScore: number;
   };
-  confidence: number;
   reasoning: string[];
 }
 
@@ -128,12 +139,7 @@ export interface EnhancedRecommendationScore extends RecommendationScore {
 }
 
 export interface RecommendedArtist {
-  artist: {
-    name: string;
-    nameKo: string;
-    popularity: number;
-    keyTracks: string[];
-  };
+  artist: ArtistReference;
   genreName: string;
   genreNameKo: string;
   compatibility: number;
