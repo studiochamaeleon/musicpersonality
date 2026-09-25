@@ -91,7 +91,7 @@ const PersonalityResults: React.FC<PersonalityResultsProps> = ({ personalityScor
 
   const shareResultLink = async () => {
     const url = getResultUrl(personalityScores, language);
-    const title = language === 'ko' ? `내 음악 성격은 ${typeTitle}` : language === 'ja' ? `私の音楽性格は「${typeTitle}」` : `My music personality is ${typeTitle}`;
+    const title = language === 'ko' ? `나의 음악 타입은 ${getGenreName(topGenre, language)} · ${typeTitle}` : language === 'ja' ? `私の音楽タイプは${getGenreName(topGenre, language)} · ${typeTitle}` : `My music type is ${getGenreName(topGenre, language)} · ${typeTitle}`;
     const text = language === 'ko'
       ? `나는 ${getGenreName(topGenre, language)}와 닮은 ${typeTitle} 타입! 너는 어떤 음악 성격일까?`
       : language === 'ja' ? `私は${getGenreName(topGenre, language)}に似た「${typeTitle}」タイプ。あなたの音楽性格は？` : `I'm a ${typeTitle} with a ${getGenreName(topGenre, language)} sound. What's your music type?`;

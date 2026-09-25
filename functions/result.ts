@@ -19,14 +19,14 @@ export async function onRequest(context: PagesFunctionContext) {
 
   const result = getPersonalResultSummary(scores);
   const title = language === 'ko'
-    ? `내 음악 성격은 ${result.typeTitleKo} · ${result.genreNameKo}`
-    : language === 'ja' ? `私の音楽性格は「${result.typeTitleJa}」 · ${result.genreNameJa}`
-      : `My music personality is ${result.typeTitleEn} · ${result.genreName}`;
+    ? `나의 음악 타입은 ${result.genreNameKo} · ${result.typeTitleKo}`
+    : language === 'ja' ? `私は${result.genreNameJa}が好きな「${result.typeTitleJa}」`
+      : `I love ${result.genreName} · ${result.typeTitleEn}`;
   const description = language === 'ko'
-    ? `장르 유사도 ${result.compatibility}% · ${result.characteristics.join(', ')}. 당신의 음악 성격도 확인해보세요.`
-    : language === 'ja' ? `ジャンル一致度${result.compatibility}％。あなたの音楽性格も見つけて、友達と比べてみよう。`
-      : `${result.compatibility}% genre similarity. Discover your music personality and compare it with a friend.`;
-  const imageParams = new URLSearchParams({ score: scoreToken });
+    ? `${result.genreNameKo} · ${result.typeTitleKo} · 장르 유사도 ${result.compatibility}%. 당신의 음악 타입도 확인해보세요.`
+    : language === 'ja' ? `${result.genreNameJa} · ${result.typeTitleJa} · ジャンル一致度${result.compatibility}％。あなたの音楽タイプも見つけよう。`
+      : `${result.genreName} · ${result.typeTitleEn} · ${result.compatibility}% genre similarity. Find your music type.`;
+  const imageParams = new URLSearchParams({ score: scoreToken, ogv: '2' });
   if (requestUrl.searchParams.get('sv') === '2') imageParams.set('sv', '2');
   if (language !== 'ko') imageParams.set('lang', language);
   const imageUrl = `${requestUrl.origin}/api/og?${imageParams.toString()}`;

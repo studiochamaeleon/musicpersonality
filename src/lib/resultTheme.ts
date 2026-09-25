@@ -60,6 +60,6 @@ export function parseResultSearchParams(params: URLSearchParams): MUSICPersonali
 
 export function getResultUrl(scores: MUSICPersonality, language: Language = 'ko') {
   if (typeof window === 'undefined') return '';
-  const params = new URLSearchParams({ score: encodeScores(scores), sv: '2', lang: language });
+  const params = new URLSearchParams({ score: encodeScores(scores), sv: '2', lang: language, pv: '2' });
   return `${window.location.origin}/result?${params.toString()}`;
 }

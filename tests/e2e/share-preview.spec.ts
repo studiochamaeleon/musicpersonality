@@ -82,9 +82,9 @@ test('a personal result share exposes result-specific social metadata', async ({
   const response = await request.get(`/result?score=${guestToken}&sv=2&lang=ko`);
   expect(response.ok()).toBeTruthy();
   const html = await response.text();
-  expect(html).toContain('내 음악 성격은 감성적 몽상가 · 인디 팝');
+  expect(html).toContain('나의 음악 타입은 인디 팝 · 감성적 몽상가');
   expect(html).toContain('장르 유사도 91%');
-  expect(html).toContain(`/api/og?score=${guestToken}&amp;sv=2`);
+  expect(html).toContain(`/api/og?score=${guestToken}&amp;ogv=2&amp;sv=2`);
   expect(html).toContain(personalDestination.replaceAll('&', '&amp;'));
 });
 
@@ -99,14 +99,14 @@ test('the server also scores an identical profile at 95', async ({ request }) =>
   expect(response.ok()).toBeTruthy();
   const html = await response.text();
   expect(html).toContain('장르 유사도 95%');
-  expect(html).toContain('내 음악 성격은 명상하는 완벽주의자 · 미니멀리즘');
+  expect(html).toContain('나의 음악 타입은 미니멀리즘 · 명상하는 완벽주의자');
 });
 
 test('English personal shares use the same translated type as the app', async ({ request, page }) => {
   const response = await request.get(`/result?score=${guestToken}&sv=2&lang=en`);
   expect(response.ok()).toBeTruthy();
   const html = await response.text();
-  expect(html).toContain('My music personality is Creative Independent · Indie Pop');
+  expect(html).toContain('I love Indie Pop · Creative Independent');
   await page.goto(`/result?score=${guestToken}&sv=2&lang=en`);
   await expect(page.getByRole('heading', { level: 1, name: /Indie Pop/ })).toBeVisible();
 });
@@ -115,7 +115,7 @@ test('Japanese personal shares use the same translated type and Japanese Open Gr
   const response = await request.get(`/result?score=${guestToken}&sv=2&lang=ja`);
   expect(response.ok()).toBeTruthy();
   const html = await response.text();
-  expect(html).toContain('私の音楽性格は「感性豊かな夢想家」 · インディー・ポップ');
+  expect(html).toContain('私はインディー・ポップが好きな「感性豊かな夢想家」');
   expect(html).toContain('property="og:locale" content="ja_JP"');
   expect(html).toContain(`/?v=2&amp;m=70&amp;u=61&amp;s=79&amp;i=48&amp;c=75&amp;lang=ja`);
   await page.goto(`/result?score=${guestToken}&sv=2&lang=ja`);

@@ -16,6 +16,7 @@ export async function onRequest(context: PagesFunctionContext) {
       genreName: language === 'ko' ? result.genreNameKo : language === 'ja' ? result.genreNameJa : result.genreName,
       typeTitle: language === 'ko' ? result.typeTitleKo : language === 'ja' ? result.typeTitleJa : result.typeTitleEn,
       compatibility: result.compatibility,
+      genreCategory: result.genreCategory,
     }, language);
     return pngResponse(image, `muti-result-${language}.png`, 'public, max-age=86400');
   }

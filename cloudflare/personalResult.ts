@@ -6,6 +6,7 @@ import type { Language } from '../src/types/i18n';
 
 interface GenreResultData {
   id: string;
+  category: string;
   name: string;
   nameKo: string;
   personalityProfile: MusicScoreProfile;
@@ -15,6 +16,7 @@ interface GenreResultData {
 
 export interface PersonalResultSummary {
   genreId: string;
+  genreCategory: string;
   genreName: string;
   genreNameKo: string;
   typeTitleKo: string;
@@ -34,6 +36,7 @@ export function getPersonalResultSummary(scores: number[]): PersonalResultSummar
 
   return {
     genreId: top.genre.id,
+    genreCategory: top.genre.category,
     genreName: top.genre.name,
     genreNameKo: top.genre.nameKo,
     typeTitleKo: top.genre.personalityAnalysis?.typeTitle || top.genre.nameKo,
