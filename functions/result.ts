@@ -52,7 +52,7 @@ export async function onRequest(context: PagesFunctionContext) {
   <meta name="twitter:title" content="${escapeHtml(title)}" />
   <meta name="twitter:description" content="${escapeHtml(description)}" />
   <meta name="twitter:image" content="${escapeHtml(imageUrl)}" />
-  <link rel="canonical" href="${escapeHtml(requestUrl.toString())}" />
+  <meta name="robots" content="noindex,follow" />
   <meta http-equiv="refresh" content="0;url=${escapeHtml(destination)}" />
   <style>html{background:#07080a;color:#fff;font-family:system-ui,sans-serif}body{min-height:100vh;display:grid;place-items:center;margin:0}a{color:#c8ff3d}</style>
 </head>
@@ -67,6 +67,7 @@ export async function onRequest(context: PagesFunctionContext) {
       'content-type': 'text/html; charset=UTF-8',
       'cache-control': 'public, max-age=300',
       'x-content-type-options': 'nosniff',
+      'x-robots-tag': 'noindex, follow',
     },
   });
 }

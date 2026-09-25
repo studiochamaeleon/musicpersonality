@@ -23,6 +23,7 @@ export const metadata: Metadata = {
     telephone: false,
   },
   metadataBase: new URL(SITE_URL),
+  alternates: { canonical: SITE_URL },
   openGraph: {
     title: "MUTI | 나와 닮은 음악 찾기",
     description: "음악 취향에 답하고 나와 닮은 장르와 앨범을 발견해보세요.",

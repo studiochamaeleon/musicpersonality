@@ -8,9 +8,15 @@ test('MUTI branding and canonical domain stay consistent across public metadata'
   const homepage = await request.get('/');
   const html = await homepage.text();
   expect(html).toContain('<title>MUTI | 나와 닮은 음악 찾기</title>');
+  expect(html).toContain('취향을 들으면,');
+  expect(html).toContain('좋아하는 음악에 답하고');
+  expect(html).toContain('rel="canonical" href="https://muti.chameleonstudio.xyz/"');
   expect(html).toContain('property="og:site_name" content="MUTI"');
   expect(html).toContain('https://muti.chameleonstudio.xyz/og-image.png');
   expect(await (await request.get('/robots.txt')).text()).toContain('https://muti.chameleonstudio.xyz/sitemap.xml');
+  const sitemap = await (await request.get('/sitemap.xml')).text();
+  expect(sitemap).toContain('https://muti.chameleonstudio.xyz/privacy/');
+  expect(sitemap).toContain('https://muti.chameleonstudio.xyz/terms/');
   expect(await (await request.get('/manifest.webmanifest')).json()).toMatchObject({ name: 'MUTI — Music Taste Identity', short_name: 'MUTI' });
 
   await page.goto('/');
@@ -18,10 +24,24 @@ test('MUTI branding and canonical domain stay consistent across public metadata'
   await expect(page.locator('header').first().getByText('MUTI', { exact: true })).toBeVisible();
 });
 
+test('legal pages expose their content and unique canonical metadata before hydration', async ({ request }) => {
+  const privacy = await (await request.get('/privacy/')).text();
+  const terms = await (await request.get('/terms/')).text();
+
+  expect(privacy).toContain('<title>개인정보 보호정책 | MUTI</title>');
+  expect(privacy).toContain('개인정보 보호정책</h1>');
+  expect(privacy).toContain('rel="canonical" href="https://muti.chameleonstudio.xyz/privacy/"');
+  expect(terms).toContain('<title>이용약관 | MUTI</title>');
+  expect(terms).toContain('이용약관</h1>');
+  expect(terms).toContain('rel="canonical" href="https://muti.chameleonstudio.xyz/terms/"');
+});
+
 test('the Cloudflare share route exposes dynamic social metadata', async ({ request }) => {
   const response = await request.get(`/share?host=${hostToken}&guest=${guestToken}`);
   expect(response.ok()).toBeTruthy();
+  expect(response.headers()['x-robots-tag']).toBe('noindex, follow');
   const html = await response.text();
+  expect(html).toContain('<meta name="robots" content="noindex,follow" />');
   expect(html).toContain('우리 음악 궁합은 89%');
   expect(html).toContain('property="og:image"');
   expect(html).toContain(`/api/og?host=${hostToken}&amp;guest=${guestToken}`);
@@ -81,7 +101,9 @@ test('a visitor opening the share URL is redirected into the app result', async 
 test('a personal result share exposes result-specific social metadata', async ({ request }) => {
   const response = await request.get(`/result?score=${guestToken}&sv=2&lang=ko`);
   expect(response.ok()).toBeTruthy();
+  expect(response.headers()['x-robots-tag']).toBe('noindex, follow');
   const html = await response.text();
+  expect(html).toContain('<meta name="robots" content="noindex,follow" />');
   expect(html).toContain('나의 음악 타입은 인디 팝 · 감성적 몽상가');
   expect(html).toContain('장르 유사도 91%');
   expect(html).toContain(`/api/og?score=${guestToken}&amp;ogv=2&amp;sv=2`);

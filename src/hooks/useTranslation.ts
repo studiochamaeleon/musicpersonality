@@ -2,33 +2,39 @@ import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { TranslationKeys } from '@/types/i18n';
 import { loadTranslations, getNestedValue } from '@/locales';
+import koreanTranslations from '@/locales/ko.json';
 
 export const useTranslation = () => {
   const { language } = useLanguage();
-  const [translations, setTranslations] = useState<TranslationKeys | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // Render the default-language copy in the exported HTML, before hydration.
+  const [translations, setTranslations] = useState<TranslationKeys>(koreanTranslations);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    if (language === 'ko') {
+      setTranslations(koreanTranslations);
+      setIsLoading(false);
+      return;
+    }
+
+    let cancelled = false;
     const loadLanguageData = async () => {
       setIsLoading(true);
       try {
         const translationData = await loadTranslations(language);
-        setTranslations(translationData);
+        if (!cancelled) setTranslations(translationData);
       } catch (error) {
         console.error('Failed to load translations:', error);
       } finally {
-        setIsLoading(false);
+        if (!cancelled) setIsLoading(false);
       }
     };
 
-    loadLanguageData();
+    void loadLanguageData();
+    return () => { cancelled = true; };
   }, [language]);
 
   const t = (key: string, params?: Record<string, string | number>, fallback?: string): string => {
-    if (!translations) {
-      return fallback || key;
-    }
-
     const value = getNestedValue(translations, key);
     let result = typeof value === 'string' ? value : (fallback || key);
     

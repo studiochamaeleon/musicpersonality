@@ -227,8 +227,6 @@ const MusicPersonalityApp: React.FC = () => {
   };
 
   if (dataLoadError) return <main className="app-canvas flex min-h-screen flex-col items-center justify-center px-5 text-center text-white"><h1 className="text-2xl font-bold">{language === 'ko' ? '데이터를 불러오지 못했어요.' : language === 'ja' ? 'テストを読み込めませんでした。' : 'We could not load the test.'}</h1><p className="mt-3 max-w-sm text-sm leading-6 text-white/65">{language === 'ko' ? '연결을 확인한 뒤 다시 시도해 주세요.' : language === 'ja' ? '接続を確認して、もう一度お試しください。' : 'Please check your connection and try again.'}</p><button onClick={() => setLoadAttempt(attempt => attempt + 1)} className="primary-action mt-7">{language === 'ko' ? '다시 시도하기' : language === 'ja' ? 'もう一度' : 'Try again'}</button></main>;
-  if (!dataLoaded) return <LoadingSpinner message={t('common.loading.initializing')} />;
-
   if (appState === 'intro') {
     const copy = language === 'ko' ? {
       eyebrow: 'MUTI · MUSIC TASTE IDENTITY',
@@ -283,11 +281,11 @@ const MusicPersonalityApp: React.FC = () => {
             <p className="mx-auto mt-6 max-w-xl text-base leading-7 text-white/65 sm:text-lg">{copy.body}</p>
 
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <button onClick={() => setAppState('survey')} className="primary-action group inline-flex items-center justify-center gap-2">
+              <button onClick={() => setAppState('survey')} disabled={!dataLoaded} className="primary-action group inline-flex items-center justify-center gap-2">
                 {copy.cta}
                 <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
               </button>
-              <button onClick={handleOpenGenreExplorer} className="secondary-action group inline-flex items-center justify-center gap-2">
+              <button onClick={handleOpenGenreExplorer} disabled={!dataLoaded} className="secondary-action group inline-flex items-center justify-center gap-2">
                 <Compass size={17} />
                 {copy.explore}
               </button>
@@ -320,6 +318,8 @@ const MusicPersonalityApp: React.FC = () => {
       </main>
     );
   }
+
+  if (!dataLoaded) return <LoadingSpinner message={t('common.loading.initializing')} />;
 
   if (appState === 'survey') {
     return (
