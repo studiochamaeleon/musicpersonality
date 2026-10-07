@@ -12,11 +12,13 @@ export async function onRequest(context: PagesFunctionContext) {
   const requestUrl = new URL(context.request.url);
   const hostToken = requestUrl.searchParams.get('host');
   const guestToken = requestUrl.searchParams.get('guest');
+  const hostVersion = requestUrl.searchParams.get('hv');
+  const guestVersion = requestUrl.searchParams.get('gv');
   const hostScores = decodeScoreToken(hostToken);
   const guestScores = guestToken ? decodeScoreToken(guestToken) : null;
   const language = requestUrl.searchParams.get('lang') === 'ja' ? 'ja' : requestUrl.searchParams.get('lang') === 'en' ? 'en' : 'ko';
 
-  if (!hostToken || !hostScores || (guestToken && !guestScores)) {
+  if (!hostToken || !hostScores || (guestToken && !guestScores) || [hostVersion, guestVersion].some(value => value !== null && value !== '2' && value !== '3')) {
     return new Response('Invalid music match link', { status: 400 });
   }
 
@@ -33,7 +35,7 @@ export async function onRequest(context: PagesFunctionContext) {
   if (guestToken) imageParams.set('guest', guestToken);
   if (language !== 'ko') imageParams.set('lang', language);
   const imageUrl = `${requestUrl.origin}/api/og?${imageParams.toString()}`;
-  const destination = createAppHash(hostToken, guestToken, language);
+  const destination = createAppHash(hostToken, guestToken, language, hostVersion, guestVersion);
 
   const html = `<!doctype html>
 <html lang="${language}">

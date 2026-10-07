@@ -8,7 +8,7 @@
   "intro": {
     "title": "MUTI — Music Taste Identity",
     "description": "音楽の好みから自分らしさを知り、\nあなたに似たジャンルとアルバムを見つけよう",
-    "testInfo": "📝 40問 | ⏱️ 約5分 | 🎵 32ジャンル",
+    "testInfo": "📝 40問 | ⏱️ 約5分 | 🎵 34ジャンル",
     "subtitle": "音楽の好みから自分らしさを知り、\nあなたに似たジャンルとアルバムを見つけよう",
     "musicModelTitle": "MUSICモデルに着想を得たテスト",
     "startTest": "テストを始める",
@@ -18,15 +18,15 @@
       "unpretentious": { "name": "Unpretentious", "description": "親しみやすさ", "abbrev": "UNP" },
       "sophisticated": { "name": "Sophisticated", "description": "探究心", "abbrev": "SOP" },
       "intense": { "name": "Intense", "description": "力強さ", "abbrev": "INT" },
-      "contemporary": { "name": "Contemporary", "description": "今っぽさ", "abbrev": "CON" }
+      "contemporary": { "name": "Contemporary", "description": "現代的な音", "abbrev": "CON" }
     },
-    "stats": "📝 40問 | ⏱️ 約5分 | 🎵 32ジャンル",
+    "stats": "📝 40問 | ⏱️ 約5分 | 🎵 34ジャンル",
     "musicTraitDescriptions": {
       "mellow": "穏やかでリラックスできる音楽への好み",
       "unpretentious": "飾らず親しみやすい音楽への好み",
       "sophisticated": "複雑で知的な音楽への好み",
       "intense": "力強く刺激的な音楽への好み",
-      "contemporary": "現代的でトレンド感のある音楽への好み"
+      "contemporary": "現代的なリズムや音作りへの好み"
     }
   },
   "survey": {
@@ -69,7 +69,7 @@
     "title": "プライバシーポリシー", "lastUpdated": "最終更新：",
     "sections": {
       "introduction": { "title": "はじめに", "content": "このテストはアカウントなしで利用できます。回答と結果の計算はブラウザ内で行われます。結果や友達との相性リンクをシェアすると、URLに含まれるMUSICスコアが受信者やSNSプレビューを生成するホスティングサービスへ送られる場合があります。広告スクリプトには別のデータ処理方針が適用されます。" },
-      "dataCollection": { "title": "収集する情報", "noCollectionTitle": "アカウントと回答内容", "noCollectionContent": "本サービスはログインを求めず、氏名・メールアドレス・電話番号・回答原文を保存する独自データベースを運用していません。スコアを含む共有リンクと通常のWebリクエストは、ブラウザ内処理の例外です。", "localStorageTitle": "ブラウザ保存と共有リンク", "localStorageItems": ["回答途中の内容はブラウザのセッションストレージに保存されます", "言語設定、直近3件までの結果、最大100件の利用イベントはローカルストレージに保存されます", "アプリ内の友達比較はURLフラグメント（#）から復元されます", "SNSプレビュー付きの個人・友達共有リンクでは、スコアがURLクエリに含まれCloudflare Pages Functionへ送信されます", "共有リンクを受け取った人やプラットフォームは、リンク内のスコアを確認できます", "テストでは氏名・メールアドレス・電話番号を尋ねません"], "thirdPartyTitle": "第三者によるデータ処理", "thirdPartyItems": ["Google AdSenseは広告配信のためCookie、Webビーコン、IPアドレスなどを処理する場合があります", "Cloudflareはサイト配信や共有プレビュー生成時にリクエストURLを処理する場合があります", "Spotifyのアルバムリンクを開いた後はSpotifyのデータ方針が適用されます"] },
+      "dataCollection": { "title": "収集する情報", "noCollectionTitle": "アカウントと回答内容", "noCollectionContent": "本サービスはログインを求めず、氏名・メールアドレス・電話番号・回答原文を保存する独自データベースを運用していません。スコアを含む共有リンクと通常のWebリクエストは、ブラウザ内処理の例外です。", "localStorageTitle": "ブラウザ保存と共有リンク", "localStorageItems": ["途中の回答と比較中の友達の招待スコア・結果バージョンは、テストを再開するためにこのタブのセッションストレージに保存されます", "言語設定、個人結果3件まで、最近の相性3件まで、最大100件の利用イベントはローカルストレージに保存されます", "アプリ内の友達比較はURLフラグメント（#）から復元されます", "SNSプレビュー付きの個人・友達共有リンクでは、スコアがURLクエリに含まれCloudflare Pages Functionへ送信されます", "共有リンクを受け取った人やプラットフォームは、リンク内のスコアを確認できます", "テストでは氏名・メールアドレス・電話番号を尋ねません"], "thirdPartyTitle": "第三者によるデータ処理", "thirdPartyItems": ["Google AdSenseは広告配信のためCookie、Webビーコン、IPアドレスなどを処理する場合があります", "Cloudflareはサイト配信や共有プレビュー生成時にリクエストURLを処理する場合があります", "Spotifyのアルバムリンクを開いた後はSpotifyのデータ方針が適用されます"] },
       "dataUsage": { "title": "情報の利用目的", "noUsageContent": "本サービスはアカウントや結果データベースを運用していません。ブラウザに保存された情報は端末内での復元や機能提供に使われます。", "browserProcessingContent": "ブラウザ内で行われること：", "browserProcessingItems": ["回答を端末内で処理し、性格結果を生成します", "友達との相性と共同おすすめジャンルは、二人のスコアからブラウザ内で計算されます", "利便性のため言語設定を記憶します", "共有リンクではプレビュー生成と結果復元のためURL内のスコアが送信されます"] },
       "thirdPartyServices": { "title": "第三者サービス", "googleAdsenseTitle": "Google AdSense", "googleAdsenseContent": "広告表示にGoogle AdSenseを利用する場合があります。Googleはパーソナライズ広告のため、本サイトや他サイトへの訪問情報をCookieやWebビーコンで収集する場合があります。Googleの広告設定からパーソナライズ広告を無効にできます。", "noAnalyticsTitle": "独自の分析サーバーはありません", "noAnalyticsContent": "サービス独自の操作イベントはブラウザのローカルストレージにのみ記録され、別の分析サーバーには送信されません。ホスティングリクエストとGoogle AdSenseには別のデータ方針があります。" },
       "cookies": { "title": "Cookieとローカルストレージ", "ourStorageTitle": "ブラウザ保存の利用", "ourStorageContent": "本サービスはセッションストレージとローカルストレージを次の目的で使います：", "ourStorageItems": ["回答途中の状態と直近の結果を端末に保存する", "言語設定を記憶する", "最大100件の利用イベントと3件の結果を端末内履歴として保持する"], "thirdPartyCookiesTitle": "第三者Cookie", "thirdPartyCookiesContent": "Google AdSenseは広告のためCookieを使用する場合があります。ブラウザ設定またはGoogleの広告設定から管理できます。Cookieを無効にしても、テストの基本機能は利用できます。" },

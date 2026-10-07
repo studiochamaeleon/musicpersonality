@@ -57,7 +57,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       const url = new URL(window.location.href);
       if (lang === 'ko') url.searchParams.delete('lang');
       else url.searchParams.set('lang', lang);
-      window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
+      window.history.replaceState(window.history.state, '', `${url.pathname}${url.search}${url.hash}`);
     }
   };
 

@@ -29,8 +29,20 @@ export interface GenreSchema {
 export interface ArtistReference {
   name: string;
   nameKo?: string;
-  role: 'anchor' | 'discovery';
+  role: 'anchor' | 'discovery' | 'bridge';
   album: AlbumReference;
+  track: CuratedTrackReference;
+}
+
+export interface CrossoverTrackReference extends ArtistReference {
+  genreIds: string[];
+  scene: 'jpop' | 'kpop' | 'global';
+}
+
+export interface CuratedTrackReference {
+  title: string;
+  year: number;
+  spotifyUrl: string;
 }
 
 export interface AlbumReference {
@@ -44,6 +56,15 @@ export interface MusicCatalog {
   version: number;
   reviewedAt: string;
   genres: Record<string, ArtistReference[]>;
+  crossovers?: CrossoverTrackReference[];
+}
+
+// Album-only editorial references belong to exploration, never result scoring.
+export type GenreExplorerArtist = Omit<ArtistReference, 'track'> & { track?: CuratedTrackReference };
+export interface GenreExplorerAlbumCatalog {
+  version: number;
+  reviewedAt: string;
+  genres: Record<string, GenreExplorerArtist[]>;
 }
 
 // 아티스트
@@ -104,7 +125,8 @@ export interface RecommendationScore {
   compatibility: number;
   matchDetails: {
     cosineSimilarity: number;
-    weightedScore: number;
+    traitSimilarity: number;
+    averageDistance: number;
   };
   reasoning: string[];
 }
@@ -140,10 +162,12 @@ export interface EnhancedRecommendationScore extends RecommendationScore {
 
 export interface RecommendedArtist {
   artist: ArtistReference;
+  genreId?: string;
   genreName: string;
   genreNameKo: string;
   compatibility: number;
   reason: string;
+  alternatives?: RecommendedArtist[];
 }
 
 export type CompatibilityType = 'COMPLEMENTARY' | 'SIMILAR_ENHANCED' | 'BALANCED';

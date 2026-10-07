@@ -1,6 +1,9 @@
 import { MUSICPersonality, GenreSchema, RecommendationScore, EnhancedRecommendationScore, RecommendedArtist, CompatiblePersonalityType, CompatibilityType, MusicCatalog } from '@/types';
 import { getGenreName } from './genreTranslations';
-import { cosineSimilarity, euclideanSimilarity, rankGenres } from './genreScore';
+import { cosineSimilarity, euclideanSimilarity } from './genreScore';
+import { rankResultGenres } from './resultRanking';
+import { CURRENT_RESULT_VERSION, type ResultVersion } from './resultVersion';
+import { planArtistRecommendations, type ArtistPickCandidate } from './artistRecommendations';
 import type { Language } from '@/types/i18n';
 export { calculateMUSICScores } from './surveyScore';
 
@@ -32,9 +35,10 @@ export function calculateEuclideanSimilarity(
 export function calculateGenreRecommendations(
   userPersonality: MUSICPersonality,
   genres: GenreSchema[],
-  language: Language = 'ko'
+  language: Language = 'ko',
+  resultVersion: ResultVersion = CURRENT_RESULT_VERSION,
 ): EnhancedRecommendationScore[] {
-  const recommendations: EnhancedRecommendationScore[] = rankGenres(userPersonality, genres).map(({ genre, match }) => {
+  const recommendations: EnhancedRecommendationScore[] = rankResultGenres(userPersonality, genres, resultVersion).map(({ genre, match }) => {
     
     // 매칭 이유 생성
     const reasoning = generateMatchingReason(userPersonality, genre, language);
@@ -47,7 +51,8 @@ export function calculateGenreRecommendations(
       compatibility: match.compatibility,
       matchDetails: {
         cosineSimilarity: Math.round(match.cosine * 100),
-        weightedScore: Math.round(match.weighted * 100)
+        traitSimilarity: match.compatibility,
+        averageDistance: Math.round(match.distance)
       },
       reasoning,
       personalityAnalysis: genre.personalityAnalysis,
@@ -78,7 +83,7 @@ function generateDetailedMatch(user: MUSICPersonality, genre: GenreSchema, langu
       unpretentious: '자연스럽고 진솔한 감성',
       sophisticated: '세련되고 지적인 취향',
       intense: '강렬하고 역동적인 에너지',
-      contemporary: '현대적이고 트렌디한 스타일'
+      contemporary: '현대적인 리듬과 프로덕션'
     } : language === 'ja' ? {
       mellow: '穏やかで心安らぐ音',
       unpretentious: '自然体で親しみやすい音',
@@ -103,19 +108,19 @@ function generateDetailedMatch(user: MUSICPersonality, genre: GenreSchema, langu
         unpretentious: '더 자연스러운 음악적 표현',
         sophisticated: '더 복잡한 음악적 구조',
         intense: '더 강렬한 감정적 표현',
-        contemporary: '더 현대적인 음악적 탐험'
+        contemporary: '다른 현대적 리듬과 프로덕션의 탐험'
       } : language === 'ja' ? {
         mellow: 'より穏やかな音の体験',
         unpretentious: 'より自然体な音の表現',
         sophisticated: 'より複雑なアレンジ',
         intense: 'より力強い感情表現',
-        contemporary: 'より新しいスタイル'
+        contemporary: '現代的なリズムや音作り'
       } : {
         mellow: 'calmer sounds',
         unpretentious: 'more organic sounds',
         sophisticated: 'more intricate arrangements',
         intense: 'more powerful sounds',
-        contemporary: 'newer styles'
+        contemporary: 'different contemporary rhythms and production'
       };
       potentialGrowthAreas.push(traitNames[conn.trait]);
     }
@@ -149,9 +154,9 @@ function generateDetailedMatch(user: MUSICPersonality, genre: GenreSchema, langu
 
 function generateMatchingReason(user: MUSICPersonality, genre: GenreSchema, language: Language = 'ko'): string[] {
   const labels = language === 'ko'
-    ? { mellow: '감성', unpretentious: '편안함', sophisticated: '탐구성', intense: '강렬함', contemporary: '트렌드' }
+    ? { mellow: '감성', unpretentious: '편안함', sophisticated: '탐구성', intense: '강렬함', contemporary: '현대적 사운드' }
     : language === 'ja'
-      ? { mellow: '穏やかさ', unpretentious: '親しみやすさ', sophisticated: '探究心', intense: '力強さ', contemporary: '今っぽさ' }
+      ? { mellow: '穏やかさ', unpretentious: '親しみやすさ', sophisticated: '探究心', intense: '力強さ', contemporary: '現代的な音' }
       : { mellow: 'mellow', unpretentious: 'easygoing', sophisticated: 'sophisticated', intense: 'intense', contemporary: 'contemporary' };
   const genreName = getGenreName(genre, language);
   return (Object.keys(labels) as Array<keyof MUSICPersonality>)
@@ -186,29 +191,24 @@ export function recommendArtists(
   maxArtists: number = 6,
   language: Language = 'ko'
 ): RecommendedArtist[] {
-  const recommendedArtists: RecommendedArtist[] = [];
-
-  // 상위 장르들에서 아티스트 추출
-  topGenres.slice(0, 3).forEach(genreRec => {
-    const genre = genres.find(g => g.id === genreRec.genreId);
-    const artists = musicCatalog.genres[genreRec.genreId] || [];
-    if (genre) {
-      artists.forEach(artist => {
-        recommendedArtists.push({
-          artist,
-          genreName: genre.name,
-          genreNameKo: getGenreName(genre, 'ko'),
-          compatibility: genreRec.compatibility,
-          reason: translated(language,
-            `${getGenreName(genre, 'ko')} 장르의 대표적인 아티스트로 당신의 음악적 성향과 ${genreRec.compatibility}% 일치합니다`,
-            `Representative artist of ${getGenreName(genre, 'en')} genre, ${genreRec.compatibility}% match with your musical preferences`,
-            `${getGenreName(genre, 'ja')}を代表するアーティスト。あなたの好みと${genreRec.compatibility}%一致します`)
-        });
-      });
-    }
-  });
-
-  return recommendedArtists.slice(0, maxArtists);
+  const knownGenreIds = new Set(genres.map(genre => genre.id));
+  const slots = planArtistRecommendations(topGenres.filter(rank => knownGenreIds.has(rank.genreId)), musicCatalog, maxArtists);
+  const format = ({ artist, genreId, compatibility }: ArtistPickCandidate): RecommendedArtist => {
+    const genre = genres.find(item => item.id === genreId)!;
+    const role = artist.role;
+    return {
+      artist,
+      genreId,
+      genreName: getGenreName(genre, language),
+      genreNameKo: getGenreName(genre, 'ko'),
+      compatibility,
+      reason: translated(language,
+        role === 'anchor' ? `${getGenreName(genre, 'ko')}의 소리를 먼저 알아볼 대표곡이에요.` : role === 'bridge' ? `${getGenreName(genre, 'ko')}에서 이어지는 다른 음악 장면의 한 곡이에요.` : `${getGenreName(genre, 'ko')}에서 새롭게 발견할 한 곡이에요.`,
+        role === 'anchor' ? `A starting point for the sound of ${getGenreName(genre, 'en')}.` : role === 'bridge' ? `A track that bridges ${getGenreName(genre, 'en')} with another music scene.` : `A new way into ${getGenreName(genre, 'en')}.`,
+        role === 'anchor' ? `${getGenreName(genre, 'ja')}の音を知る入口になる一曲です。` : role === 'bridge' ? `${getGenreName(genre, 'ja')}から別の音楽シーンへつながる一曲です。` : `${getGenreName(genre, 'ja')}で新しく出会う一曲です。`),
+    };
+  };
+  return slots.map(slot => ({ ...format(slot), alternatives: slot.alternatives.map(format) }));
 }
 
 /**
@@ -335,14 +335,14 @@ function findComplementaryTypes(
           unpretentious: '소탈함', 
           sophisticated: '세련됨',
           intense: '강렬함',
-          contemporary: '현대성'
+          contemporary: '현대적 사운드'
         };
         const traitNamesEn = {
           mellow: 'calmness',
           unpretentious: 'authenticity',
           sophisticated: 'sophistication',
           intense: 'intensity',
-          contemporary: 'modernity'
+          contemporary: 'contemporary sound'
         };
         const genreName = getGenreName(genre, language);
         complementaryReasons.push(translated(language,

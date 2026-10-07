@@ -1,6 +1,7 @@
 import type { PersonalityAnalysisReport } from '@/types';
 import type { Language } from '@/types/i18n';
 import { buildJapaneseAnalysis, genreTranslationsJa } from './genreTranslationsJa.ts';
+import { buildMusicCharacterAnalysis } from './musicCharacterAnalysis.ts';
 
 // 장르별 영어 번역 데이터
 export const genreTranslations: Record<string, {
@@ -27,7 +28,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Calm", "Sophisticated", "Intellectual", "Restrained"],
     personalityAnalysis: {
       typeTitle: "Elegant Intellectual",
-      description: "You are a refined individual who values deep thinking and restrained emotional expression. The subtle nuances and intricate harmonies of cool jazz perfectly reflect your inner depth and intellectual curiosity.",
+      description: "A music character drawn to restrained melodies and subtle harmony. Your answers are close to cool jazz's quieter side.",
       coreTraits: [
         {
           traitName: "Intellectual Elegance",
@@ -36,7 +37,7 @@ export const genreTranslations: Record<string, {
         },
         {
           traitName: "Emotional Restraint",
-          description: "You excel at controlling emotions and making calm judgments in situations",
+          description: "The restrained phrasing leaves room to notice small shifts in mood and harmony",
           impact: "Maintaining clear judgment even in stressful situations"
         },
         {
@@ -79,7 +80,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Complex", "Intellectual", "Energetic", "Sophisticated"],
     personalityAnalysis: {
       typeTitle: "Brilliant Improviser",
-      description: "You are a highly intelligent and adaptable individual who thrives on complexity and intellectual challenge. The intricate harmonies and spontaneous improvisation of bebop jazz reflect your quick thinking and ability to navigate sophisticated concepts with ease.",
+      description: "A music character following unexpected phrases through fast improvisation. Your answers are close to bebop's intricate rhythms.",
       coreTraits: [
         {
           traitName: "Intellectual Agility",
@@ -138,7 +139,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Timeless", "Raw", "Powerful", "Influential"],
     personalityAnalysis: {
       typeTitle: "Timeless Pioneer",
-      description: "You are someone who values authenticity and foundational strength. The raw power and enduring influence of classic rock perfectly reflects your appreciation for what stands the test of time and your respect for those who paved the way.",
+      description: "A music character following guitar riffs into memorable choruses. Your answers are close to classic rock's powerful playing.",
       coreTraits: [
         {
           traitName: "Authentic Values",
@@ -190,7 +191,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Independent", "Creative", "Rebellious", "Authentic"],
     personalityAnalysis: {
       typeTitle: "Independent Rebel",
-      description: "You are a free-thinking individual who questions conventional wisdom and values authentic self-expression over conformity. The rebellious energy and creative independence of alternative rock mirrors your desire to forge your own path and challenge the status quo.",
+      description: "A music character following unfamiliar guitar sounds beyond a fixed formula. Your answers are close to alternative rock's experimental edge.",
       coreTraits: [
         {
           traitName: "Independent Thinking",
@@ -241,11 +242,11 @@ export const genreTranslations: Record<string, {
     characteristics: ["Atmospheric", "Meditative", "Spacious", "Ethereal"],
     personalityAnalysis: {
       typeTitle: "Contemplative Dreamer",
-      description: "You are a deeply introspective individual who seeks peace and mental clarity. The expansive soundscapes and ethereal textures of ambient electronic music mirror your inner world and desire for transcendent experiences.",
+      description: "A music character noticing space and slow changes in texture. Your answers are close to ambient's wide soundscapes.",
       coreTraits: [
         {
           traitName: "Introspective Depth",
-          description: "You possess a rich inner life and enjoy deep contemplation and self-reflection",
+          description: "Long, spacious sounds invite unhurried listening and reflection",
           impact: "Exceptional ability to process complex emotions and find innovative solutions through reflection"
         },
         {
@@ -292,7 +293,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Rhythmic", "Hypnotic", "Energetic", "Futuristic"],
     personalityAnalysis: {
       typeTitle: "Rhythmic Visionary",
-      description: "You are a high-energy individual with a futuristic mindset and strong sense of rhythm. The driving beats and innovative sounds of techno reflect your dynamic nature and desire to push boundaries.",
+      description: "A music character hearing small shifts inside a repeated pulse. Your answers are close to techno's electronic textures.",
       coreTraits: [
         {
           traitName: "Rhythmic Intelligence",
@@ -343,11 +344,11 @@ export const genreTranslations: Record<string, {
     characteristics: ["Catchy", "Accessible", "Polished", "Commercial"],
     personalityAnalysis: {
       typeTitle: "Social Connector",
-      description: "You are naturally social and enjoy connecting with a wide range of people. The catchy melodies and broad appeal of mainstream pop reflect your ability to find common ground and your appreciation for shared experiences.",
+      description: "A music character enjoying a chorus that lands right away. Your answers are close to mainstream pop's familiar structure.",
       coreTraits: [
         {
           traitName: "Social Adaptability",
-          description: "You excel at connecting with diverse groups and finding common interests",
+          description: "Familiar hooks can be an easy starting point for sharing songs with others",
           impact: "Building wide networks and fostering inclusive environments"
         },
         {
@@ -395,7 +396,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Creative", "Authentic", "Quirky", "Independent"],
     personalityAnalysis: {
       typeTitle: "Creative Independent",
-      description: "You are a uniquely creative individual who values artistic integrity and authentic self-expression. The unconventional melodies and independent spirit of indie pop reflect your desire to create meaningful art while staying true to your personal vision.",
+      description: "A music character finding an unexpected color in a familiar melody. Your answers are close to indie pop's warm sound.",
       coreTraits: [
         {
           traitName: "Artistic Integrity",
@@ -446,7 +447,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Foundational", "Raw", "Street", "Rhythmic"],
     personalityAnalysis: {
       typeTitle: "Authentic Pioneer",
-      description: "You are someone who values authenticity, originality, and staying true to your roots. The raw energy and foundational spirit of old-school hip-hop reflects your respect for tradition and your desire to build something meaningful from the ground up.",
+      description: "A music character listening for stories in the flow and sample. Your answers are close to old-school hip-hop's words and rhythms.",
       coreTraits: [
         {
           traitName: "Authentic Expression",
@@ -589,7 +590,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Elaborate", "Ornate", "Structured", "Grand"],
     personalityAnalysis: {
       typeTitle: "Elegant Perfectionist",
-      description: "You are an artistic craftsman who loves order and beauty, creating everything with precision and perfection. The complex counterpoint and ornamental beauty of baroque music perfectly reflect your refined taste, perfect pursuit of detail, and deep respect for traditional values.",
+      description: "A music character tracing melodies as they weave together. Your answers are close to baroque music's detailed structure.",
       coreTraits: [
         {
           traitName: "Meticulous Perfectionism",
@@ -598,7 +599,7 @@ export const genreTranslations: Record<string, {
         },
         {
           traitName: "Structural Thinking",
-          description: "You excel at logically organizing complex systems and approaching them systematically",
+          description: "Interwoven melodic lines reward attention to how a piece is structured",
           impact: "Efficiently managing complex projects or organizations"
         },
         {
@@ -641,11 +642,11 @@ export const genreTranslations: Record<string, {
     characteristics: ["Experimental", "Intellectual", "Innovative", "Complex"],
     personalityAnalysis: {
       typeTitle: "Progressive Thinker",
-      description: "You are a forward-thinking intellectual who constantly seeks new possibilities and challenges conventional frameworks. Contemporary classical music's experimental spirit and innovative approach perfectly reflect your progressive mindset and creative problem-solving abilities.",
+      description: "A music character curious about unfamiliar techniques and new timbres. Your answers are close to contemporary classical music's experiments.",
       coreTraits: [
         {
           traitName: "Innovative Creativity",
-          description: "You excel at finding new solutions by breaking conventional frameworks",
+          description: "Unfamiliar techniques can make a familiar instrument sound new",
           impact: "Leading innovative changes in various fields"
         },
         {
@@ -693,7 +694,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Simple", "Repetitive", "Meditative", "Pure"],
     personalityAnalysis: {
       typeTitle: "Essential Minimalist",
-      description: "You pursue true beauty and meaning through simplicity and essence. Minimalist music's repetitive patterns and gradual changes perfectly reflect your philosophy of finding depth in simplicity and your ability to concentrate deeply.",
+      description: "A music character waiting for small changes inside repetition. Your answers are close to minimalism's gradual patterns.",
       coreTraits: [
         {
           traitName: "Essential Focus",
@@ -745,7 +746,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Emotional", "Expressive", "Passionate", "Individual"],
     personalityAnalysis: {
       typeTitle: "Passionate Romantic",
-      description: "You are a deeply emotional individual who values authentic expression and personal creativity. Romantic classical music's rich emotional palette and individual expression perfectly reflect your passionate nature and artistic sensitivity.",
+      description: "A music character following sweeping melodies and different interpretations. Your answers are close to romantic classical music's expressive range.",
       coreTraits: [
         {
           traitName: "Emotional Depth",
@@ -797,7 +798,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Relaxed", "Peaceful", "Atmospheric", "Smooth"],
     personalityAnalysis: {
       typeTitle: "Peaceful Harmonizer",
-      description: "You value balance and harmony in life, seeking to create peaceful environments wherever you go. Chillout music's relaxed rhythms and smooth textures perfectly reflect your calm nature and ability to find tranquility in busy modern life.",
+      description: "A music character lingering with unhurried beats and softer textures. Your answers are close to chillout's relaxed pace.",
       coreTraits: [
         {
           traitName: "Calm Presence",
@@ -811,7 +812,7 @@ export const genreTranslations: Record<string, {
         },
         {
           traitName: "Harmonious Integration",
-          description: "You excel at blending different elements to create cohesive wholes",
+          description: "The mix of acoustic and electronic layers offers several ways into a song",
           impact: "Success in collaborative projects and team environments"
         }
       ],
@@ -849,11 +850,11 @@ export const genreTranslations: Record<string, {
     characteristics: ["Fast", "Complex", "Energetic", "Technical"],
     personalityAnalysis: {
       typeTitle: "Dynamic Achiever",
-      description: "You thrive in fast-paced environments and enjoy complex challenges that require quick thinking and precise execution. Drum & bass music's intricate rhythms and high energy perfectly reflect your dynamic approach to life and ability to handle multiple tasks simultaneously.",
+      description: "A music character following chopped breaks over deep bass. Your answers are close to drum and bass's detailed rhythms.",
       coreTraits: [
         {
           traitName: "High-Speed Processing",
-          description: "You excel at quickly analyzing information and making rapid decisions",
+          description: "Fast breaks and bass changes invite close attention to rhythm",
           impact: "Outstanding performance in fast-paced, demanding environments"
         },
         {
@@ -901,11 +902,11 @@ export const genreTranslations: Record<string, {
     characteristics: ["Heavy", "Aggressive", "Intense", "Powerful"],
     personalityAnalysis: {
       typeTitle: "Intense Transformer",
-      description: "You have powerful inner strength and the ability to create dramatic positive changes in challenging situations. Dubstep's heavy bass drops and intense energy perfectly reflect your transformative power and ability to overcome obstacles.",
+      description: "A music character enjoying the space before a heavy bass change. Your answers are close to dubstep's contrasts.",
       coreTraits: [
         {
           traitName: "Transformative Power",
-          description: "You excel at creating significant positive changes in difficult situations",
+          description: "Sharp contrasts in volume and texture can shift a song's mood quickly",
           impact: "Leading breakthrough innovations and organizational transformations"
         },
         {
@@ -953,7 +954,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Rhythmic", "Social", "Uplifting", "Energetic"],
     personalityAnalysis: {
       typeTitle: "Social Energizer",
-      description: "You are a natural social connector who brings people together and creates positive, energetic atmospheres. House music's steady rhythms and uplifting nature perfectly reflect your ability to unite people and create shared experiences of joy and connection.",
+      description: "A music character finding movement in a repeating beat. Your answers are close to house music's steady groove.",
       coreTraits: [
         {
           traitName: "Social Magnetism",
@@ -1005,7 +1006,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Modern", "Heavy", "Urban", "Intense"],
     personalityAnalysis: {
       typeTitle: "Urban Innovator",
-      description: "You are a modern, street-smart individual who understands contemporary culture and isn't afraid to push boundaries. Trap music's heavy beats and urban authenticity perfectly reflect your ability to navigate modern challenges with confidence and create your own path to success.",
+      description: "A music character enjoying low 808 bass against quick hi-hats. Your answers are close to trap hip-hop's forceful beats.",
       coreTraits: [
         {
           traitName: "Street Intelligence",
@@ -1057,11 +1058,11 @@ export const genreTranslations: Record<string, {
     characteristics: ["Sophisticated", "Fusion", "Technical", "Innovative"],
     personalityAnalysis: {
       typeTitle: "Versatile Synthesizer",
-      description: "You excel at combining different elements to create something entirely new and innovative. Jazz fusion's blend of multiple genres perfectly reflects your ability to integrate diverse perspectives and create sophisticated solutions that transcend traditional boundaries.",
+      description: "A music character exploring where jazz improvisation meets other genres. Your answers are close to jazz fusion's layered sound.",
       coreTraits: [
         {
           traitName: "Integrative Thinking",
-          description: "You excel at combining diverse elements to create innovative solutions",
+          description: "Jazz, rock, and funk elements meet within the same arrangement",
           impact: "Leadership in interdisciplinary projects and cross-functional teams"
         },
         {
@@ -1109,11 +1110,11 @@ export const genreTranslations: Record<string, {
     characteristics: ["Smooth", "Melodic", "Accessible", "Relaxing"],
     personalityAnalysis: {
       typeTitle: "Sophisticated Diplomat",
-      description: "You have the ability to make complex things accessible and bring people together through your natural charm and diplomatic skills. Smooth jazz's melodic accessibility perfectly reflects your talent for creating comfortable environments while maintaining sophistication.",
+      description: "A music character looking for fluid melodies and an easygoing rhythm. Your answers are close to smooth jazz's gentle groove.",
       coreTraits: [
         {
           traitName: "Diplomatic Grace",
-          description: "You excel at navigating complex social situations with elegance and tact",
+          description: "Gentle phrasing and a steady groove make this sound easy to settle into",
           impact: "Success in roles requiring negotiation and relationship management"
         },
         {
@@ -1161,7 +1162,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Ethereal", "Atmospheric", "Dreamy", "Introspective"],
     personalityAnalysis: {
       typeTitle: "Imaginative Dreamer",
-      description: "You possess a rich inner world and the ability to see beauty and possibility in everyday life. Dream pop's ethereal soundscapes perfectly reflect your imaginative nature and your talent for creating inspiring visions of what could be.",
+      description: "A music character building scenes from hazy guitars and floating voices. Your answers are close to dream pop's blurred textures.",
       coreTraits: [
         {
           traitName: "Vivid Imagination",
@@ -1213,7 +1214,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Authentic", "Acoustic", "Storytelling", "Heartfelt"],
     personalityAnalysis: {
       typeTitle: "Authentic Storyteller",
-      description: "You value genuine connections and have a gift for sharing meaningful stories that resonate with others. Pop folk's combination of contemporary appeal and traditional authenticity perfectly reflects your ability to bridge past and present while staying true to your values.",
+      description: "A music character enjoying acoustic playing and close-up lyrics. Your answers are close to folk pop's gentle melodies.",
       coreTraits: [
         {
           traitName: "Authentic Expression",
@@ -1265,7 +1266,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Polished", "Global", "Energetic", "Trendy"],
     personalityAnalysis: {
       typeTitle: "Global Trendsetter",
-      description: "You have your finger on the pulse of global trends and excel at creating polished, appealing presentations of yourself and your ideas. K-pop's international success and meticulous attention to detail perfectly reflect your ability to understand and influence contemporary culture.",
+      description: "A music character enjoying sharp hooks and changing layers of sound. Your answers are close to K-pop's production.",
       coreTraits: [
         {
           traitName: "Global Awareness",
@@ -1317,11 +1318,11 @@ export const genreTranslations: Record<string, {
     characteristics: ["Retro-futuristic", "Electronic", "Nostalgic", "Innovative"],
     personalityAnalysis: {
       typeTitle: "Retro-Future Visionary",
-      description: "You have a unique ability to appreciate both past innovations and future possibilities, creating bridges between nostalgia and progress. Synthpop's blend of retro aesthetics and futuristic sounds perfectly reflects your talent for combining classic elements with innovative approaches.",
+      description: "A music character looking for bright synth tones and clear hooks. Your answers are close to synthpop's electronic colors.",
       coreTraits: [
         {
           traitName: "Temporal Integration",
-          description: "You excel at combining lessons from the past with visions for the future",
+          description: "Retro synth tones and newer production choices can sit in the same song",
           impact: "Creating sustainable innovations that honor tradition while embracing progress"
         },
         {
@@ -1369,7 +1370,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Soulful", "Emotional", "Traditional", "Rhythmic"],
     personalityAnalysis: {
       typeTitle: "Soulful Traditionalist",
-      description: "You possess deep emotional wisdom and a strong connection to traditional values and authentic expression. Classic R&B's soulful vocals and emotional depth perfectly reflect your ability to touch people's hearts and your commitment to genuine, meaningful connections.",
+      description: "A music character following the grain of a voice and a deep groove. Your answers are close to classic R&B's soulful sound.",
       coreTraits: [
         {
           traitName: "Emotional Authenticity",
@@ -1421,7 +1422,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Contemporary", "Conscious", "Sophisticated", "Innovative"],
     personalityAnalysis: {
       typeTitle: "Conscious Innovator",
-      description: "You combine respect for traditional wisdom with contemporary awareness and social consciousness. Neo-soul's blend of classic soul with modern elements perfectly reflects your ability to honor the past while addressing current challenges with innovative solutions.",
+      description: "A music character hearing soul warmth alongside jazz and hip-hop textures. Your answers are close to neo-soul's unhurried groove.",
       coreTraits: [
         {
           traitName: "Social Consciousness",
@@ -1473,7 +1474,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Independent", "Authentic", "Creative", "Non-conformist"],
     personalityAnalysis: {
       typeTitle: "Independent Creative",
-      description: "You value artistic integrity and authenticity over popular acceptance, creating your own path based on personal vision rather than external expectations. Indie rock's independent spirit perfectly reflects your commitment to staying true to your creative vision.",
+      description: "A music character enjoying a band's unpolished personality. Your answers are close to indie rock's free-form sound.",
       coreTraits: [
         {
           traitName: "Artistic Integrity",
@@ -1525,7 +1526,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Heavy", "Powerful", "Intense", "Aggressive"],
     personalityAnalysis: {
       typeTitle: "Powerful Warrior",
-      description: "You possess inner strength and the courage to face life's challenges head-on, never backing down from what you believe in. Metal's heavy, intense sound perfectly reflects your powerful spirit and your ability to channel strong emotions into positive action.",
+      description: "A music character enjoying distorted guitars and driving drums. Your answers are close to metal's high-energy sound.",
       coreTraits: [
         {
           traitName: "Inner Strength",
@@ -1577,11 +1578,11 @@ export const genreTranslations: Record<string, {
     characteristics: ["Complex", "Technical", "Intellectual", "Ambitious"],
     personalityAnalysis: {
       typeTitle: "Visionary Architect",
-      description: "You think in complex, long-term patterns and aren't satisfied with simple solutions to complicated problems. Progressive rock's intricate compositions perfectly reflect your ability to create sophisticated, multi-layered approaches to challenges.",
+      description: "A music character following long arcs and structural turns in a song. Your answers are close to progressive rock's elaborate arrangements.",
       coreTraits: [
         {
           traitName: "Systematic Complexity",
-          description: "You excel at understanding and managing complex, interconnected systems",
+          description: "Changing sections reward listening to how motifs return and develop",
           impact: "Success in roles requiring strategic thinking and long-term planning"
         },
         {
@@ -1629,7 +1630,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Raw", "Rebellious", "Energetic", "Direct"],
     personalityAnalysis: {
       typeTitle: "Authentic Rebel",
-      description: "You value authenticity and directness, and you're not afraid to challenge systems or conventions that don't serve genuine human needs. Punk rock's raw energy and rebellious spirit perfectly reflect your commitment to staying true to yourself and speaking out against injustice.",
+      description: "A music character enjoying short songs and direct, fast playing. Your answers are close to punk rock's raw momentum.",
       coreTraits: [
         {
           traitName: "Authentic Expression",
@@ -1681,7 +1682,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Rhythmic", "Passionate", "Cultural", "Vibrant"],
     personalityAnalysis: {
       typeTitle: "Passionate Connector",
-      description: "You bring warmth, rhythm, and passion to everything you do, creating connections that transcend cultural and social boundaries. Latin music's vibrant rhythms and emotional expression perfectly reflect your ability to bring people together through shared joy and cultural appreciation.",
+      description: "A music character moving with layered percussion and dance rhythms. Your answers are close to one lively corner of Latin music.",
       coreTraits: [
         {
           traitName: "Passionate Expression",
@@ -1733,7 +1734,7 @@ export const genreTranslations: Record<string, {
     characteristics: ["Traditional", "Cultural", "Ancestral", "Timeless"],
     personalityAnalysis: {
       typeTitle: "Wisdom Keeper",
-      description: "You understand the deep value of traditional wisdom and cultural heritage, serving as a bridge between ancestral knowledge and contemporary needs. Traditional world music's connection to cultural roots perfectly reflects your role as a keeper and transmitter of valuable traditions.",
+      description: "A music character listening for instruments and melodies shaped by place. Your answers are close to traditional music's varied sounds.",
       coreTraits: [
         {
           traitName: "Cultural Wisdom",
@@ -1779,7 +1780,45 @@ export const genreTranslations: Record<string, {
         "Traveling to experience authentic traditional cultures"
       ]
     }
-  }
+  },
+  hiphop_jazzhop: {
+    description: 'Hip-hop beats meet jazz harmony and sampling, from rap-led tracks to instrumentals.',
+    characteristics: ['Jazz samples', 'Easygoing beats', 'Warm texture', 'Subtle rhythm'],
+    personalityAnalysis: {
+      typeTitle: 'Thoughtful Beat Explorer',
+      description: 'Your answers resemble a taste for unhurried rhythms and layered sounds. Jazz hip-hop lets old recordings and fresh beats meet. This is a playful reading of music taste, not a personality diagnosis.',
+      coreTraits: [
+        { traitName: 'An ear for texture', description: 'You may enjoy the way samples and instruments overlap.', impact: 'A replay can reveal a detail you missed before.' },
+        { traitName: 'An easygoing groove', description: 'A clear beat without a relentless rush may suit you.', impact: 'It can accompany focused or reflective moments.' },
+        { traitName: 'Curiosity across styles', description: 'The bridge between jazz and hip-hop may catch your ear.', impact: 'Familiar sounds can lead you toward new artists.' },
+      ],
+      lifestyleInsights: ['You may enjoy music that keeps a pulse while leaving room to breathe.', 'Tracing a sample back to its source can make a favorite track more rewarding.', 'Two listeners can hear different stories in the same beat.'],
+      strengths: ['Noticing small changes in a recording', 'Enjoying familiar and unfamiliar sounds together', 'Finding a rhythm without losing a sense of calm'],
+      challenges: ['Music taste cannot establish real-life strengths or weaknesses.', 'Only choosing laid-back beats may hide more energetic hip-hop from view.', 'Rap-led and instrumental jazz hip-hop may appeal to you differently.'],
+      relationshipCompatibility: 'Try swapping favorite beats or samples with a friend. Similar music taste does not predict relationship compatibility.',
+      musicPreferences: ['Hip-hop beats built around piano or horn samples', 'A mix of rap-led and instrumental jazz hip-hop', 'Calm grooves worth replaying while you focus'],
+      recommendedActivities: ['Listen to Nujabes followed by Uyama Hiroto', 'Find the original recording behind a favorite sample', 'Exchange one track at a time with a friend'],
+    },
+  },
+  electronic_melodic_dance: {
+    description: 'Dance music with memorable melodies and gradually rising electronic beats, crossing between house and pop.',
+    characteristics: ['Big melodies', 'Rising energy', 'Crisp beats', 'Singalong hooks'],
+    personalityAnalysis: {
+      typeTitle: 'Melody-Led Explorer',
+      description: 'Your answers resemble a taste for clear rhythms and melodies that open up. Melodic dance brings the emotion of a pop song together with the lift of electronic music. This is a playful reading of music taste, not a personality diagnosis.',
+      coreTraits: [
+        { traitName: 'A memory for melody', description: 'A tune you can carry with you may matter as much as the beat.', impact: 'It can make unfamiliar electronic music easier to enter.' },
+        { traitName: 'A taste for lift', description: 'You may enjoy the moment a track builds and releases.', impact: 'It can add energy to movement and travel.' },
+        { traitName: 'A crossover ear', description: 'Pop hooks over electronic beats may be especially appealing.', impact: 'You can explore the space between house and dance-pop.' },
+      ],
+      lifestyleInsights: ['You may enjoy the moment a melody changes the atmosphere.', 'A familiar pop song can be a gateway to house and other electronic styles.', 'Try both solo listening and hearing a track with a crowd.'],
+      strengths: ['Recognizing a memorable melody', 'Welcoming songs that cross style boundaries', 'Enjoying changes in a track’s energy'],
+      challenges: ['Music taste cannot establish real-life strengths or weaknesses.', 'Quieter electronic music can be rewarding without a big chorus.', 'Not every DJ makes the same kind of house music.'],
+      relationshipCompatibility: 'Swap dance tracks with different energy levels with a friend. Similar music taste does not predict relationship compatibility.',
+      musicPreferences: ['Clear melodies over electronic beats', 'Dance tracks that build toward a chorus', 'House-pop crossovers balancing vocals and production'],
+      recommendedActivities: ['Listen to Avicii and ODESZA back to back', 'Notice where the melody grows in a favorite song', 'Try one contrasting style of house music'],
+    },
+  },
 };
 
 // 장르 ID로 영어 번역 데이터를 가져오는 함수
@@ -1816,14 +1855,17 @@ export function getGenreCharacteristics(genreId: string, originalCharacteristics
   return translation?.characteristics || originalCharacteristics;
 }
 
-export function getPersonalityAnalysis(genreId: string, originalAnalysis: PersonalityAnalysisReport, language: Language): PersonalityAnalysisReport {
-  if (language === 'ko') return originalAnalysis;
-  if (language === 'ja') return buildJapaneseAnalysis(genreId, originalAnalysis);
+export function getPersonalityAnalysis(genreId: string, originalAnalysis: PersonalityAnalysisReport, language: Language, characteristics: string[] = []): PersonalityAnalysisReport {
+  const notes = (analysis: PersonalityAnalysisReport) => buildMusicCharacterAnalysis(
+    genreId, analysis, language, getGenreCharacteristics(genreId, characteristics, language),
+  );
+  if (language === 'ko') return notes(originalAnalysis);
+  if (language === 'ja') return notes(buildJapaneseAnalysis(genreId, originalAnalysis));
   const translation = getGenreTranslation(genreId);
   
   if (translation?.personalityAnalysis) {
     const translatedAnalysis = translation.personalityAnalysis;
-    return {
+    return notes({
       typeTitle: translatedAnalysis.typeTitle,
       description: translatedAnalysis.description,
       coreTraits: translatedAnalysis.coreTraits?.map((trait, index) => ({
@@ -1838,8 +1880,8 @@ export function getPersonalityAnalysis(genreId: string, originalAnalysis: Person
       relationshipCompatibility: translatedAnalysis.relationshipCompatibility || originalAnalysis.relationshipCompatibility,
       musicPreferences: translatedAnalysis.musicPreferences || originalAnalysis.musicPreferences,
       recommendedActivities: translatedAnalysis.recommendedActivities || originalAnalysis.recommendedActivities
-    };
+    });
   }
   
-  return originalAnalysis;
+  return notes(originalAnalysis);
 }

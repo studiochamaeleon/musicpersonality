@@ -25,15 +25,19 @@ export function euclideanSimilarity(user: MusicScoreProfile, genre: MusicScorePr
 export function genreMatch(user: MusicScoreProfile, genre: MusicScoreProfile) {
   const cosine = cosineSimilarity(user, genre); // 0–1
   const euclidean = euclideanSimilarity(user, genre) / 100; // 0–1
-  const weighted = cosine * 0.6 + euclidean * 0.4;
+  const gaps = MUSIC_SCORE_KEYS.map(key => Math.abs(user[key] - genre[key]));
+  // Root mean square distance makes a single large mismatch visible instead of
+  // letting four close dimensions completely conceal it.
+  const distance = Math.sqrt(gaps.reduce((sum, gap) => sum + gap ** 2, 0) / gaps.length);
+  const similarity = Math.max(0, Math.min(1, 1 - distance / 100));
 
-  // An editorial similarity index, not the probability that someone likes this genre.
-  const compatibility = Math.round(Math.max(15, Math.min(95, 15 + weighted * 80)));
-  return { cosine, euclidean, weighted, compatibility };
+  // A direct comparison of five editorial profiles, not a liking probability.
+  const compatibility = Math.round(similarity * 100);
+  return { cosine, euclidean, similarity, distance, compatibility };
 }
 
 export function rankGenres<T extends { personalityProfile: MusicScoreProfile }>(user: MusicScoreProfile, genres: T[]) {
   return genres
     .map(genre => ({ genre, match: genreMatch(user, genre.personalityProfile) }))
-    .sort((first, second) => second.match.weighted - first.match.weighted);
+    .sort((first, second) => second.match.similarity - first.match.similarity);
 }

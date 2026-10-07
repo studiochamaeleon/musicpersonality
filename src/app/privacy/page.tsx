@@ -23,7 +23,7 @@ export default function PrivacyPolicy() {
           
           <div className="prose prose-lg max-w-none">
             <p className="text-gray-600 mb-6">
-              <strong>{t('privacy.lastUpdated')}</strong> 2026-09-21
+              <strong>{t('privacy.lastUpdated')}</strong> 2026-10-03
             </p>
 
             <section className="mb-8">

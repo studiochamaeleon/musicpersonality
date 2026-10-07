@@ -31,7 +31,7 @@
   "intro": {
     "title": "MUTI — Music Taste Identity",
     "description": "Answer a few music-taste questions and discover genres and albums that sound like you",
-    "testInfo": "📝 40 Questions | ⏱️ 5-10 Minutes | 🎵 32 Genres to Explore",
+    "testInfo": "📝 40 Questions | ⏱️ 5-10 Minutes | 🎵 34 Genres to Explore",
     "subtitle": "Answer a few music-taste questions and discover genres and albums that sound like you",
     "musicModelTitle": "Inspired by the MUSIC model",
     "startTest": "Start Test",
@@ -63,13 +63,13 @@
         "abbrev": "CON"
       }
     },
-    "stats": "📝 40 Questions | ⏱️ 5-10 Minutes | 🎵 32 Genres to Explore",
+    "stats": "📝 40 Questions | ⏱️ 5-10 Minutes | 🎵 34 Genres to Explore",
     "musicTraitDescriptions": {
       "mellow": "Calm and relaxed music preference",
       "unpretentious": "Genuine and simple music preference", 
       "sophisticated": "Complex and intellectual music preference",
       "intense": "Dynamic and powerful music preference",
-      "contemporary": "Modern trends and contemporary music preference"
+      "contemporary": "Contemporary rhythms and production preference"
     }
   },
   "survey": {
@@ -336,8 +336,8 @@
         "noCollectionContent": "The service does not require a login or operate a separate database for names, email addresses, phone numbers, or raw survey answers. Score-bearing share links and ordinary web requests are exceptions to browser-only processing.",
         "localStorageTitle": "Browser Storage and Share Links",
         "localStorageItems": [
-          "Survey answers in progress are kept in browser session storage",
-          "Language settings, up to three recent results, and up to 100 local usage events are kept in browser local storage",
+          "Unfinished survey answers and the inviter’s scores and result version are kept in this tab’s session storage so the test can be resumed",
+          "Language settings, up to three personal results, up to three recent matches, and up to 100 local usage events are kept in browser local storage",
           "The in-app friend comparison is restored from a URL fragment (#)",
           "Personal and friend share links with social previews put scores in the URL query sent to a Cloudflare Pages Function",
           "People and platforms that receive a shared link can see the scores it contains",

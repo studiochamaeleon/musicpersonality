@@ -1,5 +1,6 @@
 import { GenreSchema, MUSICPersonality } from '@/types';
 import { encodeScores } from './compatibility';
+import { CURRENT_RESULT_VERSION, parseResultVersion, type ResultVersion } from './resultVersion';
 import type { Language } from '@/types/i18n';
 
 const CATEGORY_THEMES: Record<GenreSchema['category'], { accent: string; secondary: string }> = {
@@ -17,9 +18,9 @@ export function getGenreTheme(genre?: GenreSchema | null) {
   return genre ? CATEGORY_THEMES[genre.category] : { accent: '#C8FF3D', secondary: '#43F5FF' };
 }
 
-export function createResultSearchParams(scores: MUSICPersonality, language: Language = 'ko') {
+export function createResultSearchParams(scores: MUSICPersonality, language: Language = 'ko', version: ResultVersion = CURRENT_RESULT_VERSION) {
   const params = new URLSearchParams({
-    v: '2',
+    v: String(version),
     m: String(Math.round(scores.mellow)),
     u: String(Math.round(scores.unpretentious)),
     s: String(Math.round(scores.sophisticated)),
@@ -28,6 +29,10 @@ export function createResultSearchParams(scores: MUSICPersonality, language: Lan
   });
   if (language !== 'ko') params.set('lang', language);
   return params;
+}
+
+export function getResultVersionFromSearchParams(params: URLSearchParams): ResultVersion {
+  return parseResultVersion(params.get('v'));
 }
 
 function readScore(params: URLSearchParams, shortKey: string, legacyKey: keyof MUSICPersonality) {
@@ -58,8 +63,8 @@ export function parseResultSearchParams(params: URLSearchParams): MUSICPersonali
   };
 }
 
-export function getResultUrl(scores: MUSICPersonality, language: Language = 'ko') {
+export function getResultUrl(scores: MUSICPersonality, language: Language = 'ko', version: ResultVersion = CURRENT_RESULT_VERSION) {
   if (typeof window === 'undefined') return '';
-  const params = new URLSearchParams({ score: encodeScores(scores), sv: '2', lang: language, pv: '2' });
+  const params = new URLSearchParams({ score: encodeScores(scores), sv: String(version), lang: language, pv: '3' });
   return `${window.location.origin}/result?${params.toString()}`;
 }

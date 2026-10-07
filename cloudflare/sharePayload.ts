@@ -13,8 +13,10 @@ export function calculateMatchScore(host: number[], guest: number[]) {
   return Math.round(totalSimilarity / host.length);
 }
 
-export function createAppHash(host: string, guest?: string | null, language: Language = 'ko') {
+export function createAppHash(host: string, guest?: string | null, language: Language = 'ko', hostVersion?: string | null, guestVersion?: string | null) {
   const params = new URLSearchParams({ compare: host });
   if (guest) params.set('guest', guest);
+  if (hostVersion === '2') params.set('hv', '2');
+  if (guest && guestVersion === '2') params.set('gv', '2');
   return `${language === 'ko' ? '/' : `/?lang=${language}`}#${params.toString()}`;
 }

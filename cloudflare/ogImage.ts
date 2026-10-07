@@ -1,6 +1,7 @@
 import { KOREAN_GLYPHS } from './koreanGlyphs';
 import { JAPANESE_GLYPHS } from './japaneseGlyphs';
 import type { Language } from '../src/types/i18n';
+import { resultInterpretationCopy, type ResultInterpretationKind } from '../src/lib/resultInterpretation';
 
 const WIDTH = 1200;
 const HEIGHT = 630;
@@ -219,6 +220,7 @@ function storeZlib(data: Uint8Array) {
 }
 
 interface PersonalOgResult {
+  interpretationKind?: ResultInterpretationKind;
   genreName: string;
   typeTitle: string;
   compatibility: number;
@@ -271,31 +273,34 @@ export function createOgPng(hostScores: number[], matchScore?: number | null, pe
   drawText(raw, personalResult ? 'RESULT / 01' : matchScore === null || matchScore === undefined ? 'FRIEND INVITE' : 'OUR MUSIC MATCH', personalResult ? 990 : 930, 84, 3, 3);
 
   if (personalResult) {
+    const kind = personalResult.interpretationKind || 'clear';
+    const interpretation = resultInterpretationCopy(kind, language);
+    const tentative = kind !== 'clear';
     fillRect(raw, 60, 128, WIDTH - 120, 1, 2);
     if (language === 'ko') {
       const genreScale = Math.min(3, Math.max(1, Math.floor(1030 / Math.max(1, bitmapTextWidth(personalResult.genreName, 1, KOREAN_GLYPHS)))));
       const titleScale = Math.min(2, Math.max(1, Math.floor(1030 / Math.max(1, bitmapTextWidth(personalResult.typeTitle, 1, KOREAN_GLYPHS)))));
-      drawKoreanText(raw, '나의 음악 성격', WIDTH / 2, 161, 1, 3);
+      drawKoreanText(raw, interpretation.badge, WIDTH / 2, 161, 1, 3);
       drawKoreanText(raw, personalResult.genreName, WIDTH / 2, 207, genreScale, 5);
       drawKoreanText(raw, personalResult.typeTitle, WIDTH / 2, 341, titleScale, 4);
       drawText(raw, `${personalResult.compatibility}%`, WIDTH / 2, 434, 11, 5);
-      drawKoreanText(raw, '장르 유사도', WIDTH / 2, 520, 1, 3);
+      drawKoreanText(raw, tentative ? '장르 유사도 / 탐색 추천' : '장르 유사도', WIDTH / 2, 520, 1, 3);
     } else if (language === 'ja') {
       const genreScale = Math.min(3, Math.max(1, Math.floor(1030 / Math.max(1, bitmapTextWidth(personalResult.genreName, 1, JAPANESE_GLYPHS)))));
       const titleScale = Math.min(2, Math.max(1, Math.floor(1030 / Math.max(1, bitmapTextWidth(personalResult.typeTitle, 1, JAPANESE_GLYPHS)))));
-      drawJapaneseText(raw, '私の音楽性格', WIDTH / 2, 161, 1, 3);
+      drawJapaneseText(raw, interpretation.badge, WIDTH / 2, 161, 1, 3);
       drawJapaneseText(raw, personalResult.genreName, WIDTH / 2, 207, genreScale, 5);
       drawJapaneseText(raw, personalResult.typeTitle, WIDTH / 2, 341, titleScale, 4);
       drawText(raw, `${personalResult.compatibility}%`, WIDTH / 2, 434, 11, 5);
-      drawJapaneseText(raw, 'ジャンル一致度', WIDTH / 2, 520, 1, 3);
+      drawJapaneseText(raw, tentative ? 'ジャンル一致度 / 探索' : 'ジャンル一致度', WIDTH / 2, 520, 1, 3);
     } else {
       const genreScale = Math.min(12, Math.max(2, Math.floor(1030 / Math.max(1, personalResult.genreName.length * 6))));
       const titleScale = Math.min(8, Math.max(2, Math.floor(1030 / Math.max(1, personalResult.typeTitle.length * 6))));
-      drawText(raw, 'MY MUSIC PERSONALITY', WIDTH / 2, 162, 4, 3);
+      drawText(raw, interpretation.badge.toUpperCase(), WIDTH / 2, 162, 4, 3);
       drawText(raw, personalResult.genreName, WIDTH / 2, 210, genreScale, 5);
       drawText(raw, personalResult.typeTitle, WIDTH / 2, 344, titleScale, 4);
       drawText(raw, `${personalResult.compatibility}%`, WIDTH / 2, 434, 11, 5);
-      drawText(raw, 'GENRE SIMILARITY', WIDTH / 2, 523, 3, 3);
+      drawText(raw, tentative ? 'GENRE SIMILARITY / EXPLORATION' : 'GENRE SIMILARITY', WIDTH / 2, 523, 3, 3);
     }
     fillRect(raw, 60, 565, WIDTH - 120, 1, 2);
   } else if (matchScore === null || matchScore === undefined) {

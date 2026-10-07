@@ -1,0 +1,1162 @@
+{
+  "version": 1,
+  "reviewedAt": "2026-10-05",
+  "genres": {
+    "pop_synthpop": [
+      {"name":"Robyn","nameKo":"로빈","role":"discovery","album":{"title":"Body Talk","year":2010,"spotifyUrl":"https://open.spotify.com/album/0le9TO3kU69m6iWHTjNs9Y"}}
+    ],
+    "jazz_cool": [
+      {
+        "name": "Chet Baker",
+        "nameKo": "쳇 베이커",
+        "role": "discovery",
+        "album": {
+          "title": "Chet Baker Sings",
+          "year": 1954,
+          "spotifyUrl": "https://open.spotify.com/album/5JJ779nrbHx0KB2lBrMMa4"
+        }
+      },
+      {
+        "name": "The Dave Brubeck Quartet",
+        "nameKo": "데이브 브루벡 콰르텟",
+        "role": "discovery",
+        "album": {
+          "title": "Time Out",
+          "year": 1959,
+          "spotifyUrl": "https://open.spotify.com/album/1L5YD0kUfBpmN4EOSoGo7m"
+        }
+      }
+    ],
+    "jazz_bebop": [
+      {
+        "name": "Thelonious Monk",
+        "nameKo": "셀로니어스 몽크",
+        "role": "discovery",
+        "album": {
+          "title": "Brilliant Corners",
+          "year": 1957,
+          "spotifyUrl": "https://open.spotify.com/album/5nNUy7WbnWAK6QNZdHe2iI"
+        }
+      },
+      {
+        "name": "Bud Powell",
+        "nameKo": "버드 파월",
+        "role": "discovery",
+        "album": {
+          "title": "The Amazing Bud Powell",
+          "year": 1951,
+          "spotifyUrl": "https://open.spotify.com/album/04Cfbf3DDnRx06uiNNghCG"
+        }
+      },
+      {
+        "name": "Sonny Rollins",
+        "nameKo": "소니 롤린스",
+        "role": "discovery",
+        "album": {
+          "title": "Saxophone Colossus",
+          "year": 1956,
+          "spotifyUrl": "https://open.spotify.com/album/0yodD8uAkAT5UmrlF2xy97"
+        }
+      },
+      {
+        "name": "Sonny Stitt",
+        "nameKo": "소니 스팃",
+        "role": "discovery",
+        "album": {
+          "title": "The Hard Swing",
+          "year": 1960,
+          "spotifyUrl": "https://open.spotify.com/album/5ppHHedKagWqeeg5O70CIz"
+        }
+      }
+    ],
+    "rock_alternative": [
+      {
+        "name": "Radiohead",
+        "nameKo": "라디오헤드",
+        "role": "discovery",
+        "album": {
+          "title": "In Rainbows",
+          "year": 2007,
+          "spotifyUrl": "https://open.spotify.com/album/5vkqYmiPBYLaalcmjujWxK"
+        }
+      },
+      {
+        "name": "Pearl Jam",
+        "nameKo": "펄 잼",
+        "role": "discovery",
+        "album": {
+          "title": "Ten",
+          "year": 1991,
+          "spotifyUrl": "https://open.spotify.com/album/5B4PYA7wNN4WdEXdIJu58a"
+        }
+      },
+      {
+        "name": "Pixies",
+        "nameKo": "픽시스",
+        "role": "discovery",
+        "album": {
+          "title": "Doolittle",
+          "year": 1989,
+          "spotifyUrl": "https://open.spotify.com/album/6ymZBbRSmzAvoSGmwAFoxm"
+        }
+      },
+      {
+        "name": "Wolf Alice",
+        "nameKo": "울프 앨리스",
+        "role": "discovery",
+        "album": {
+          "title": "Blue Weekend",
+          "year": 2021,
+          "spotifyUrl": "https://open.spotify.com/album/5OxxXTUecFQgCVqztbcynb"
+        }
+      }
+    ],
+    "rock_indie": [
+      {
+        "name": "The Strokes",
+        "nameKo": "더 스트록스",
+        "role": "discovery",
+        "album": {
+          "title": "Is This It",
+          "year": 2001,
+          "spotifyUrl": "https://open.spotify.com/album/2k8KgmDp9oHrmu0MIj4XDE"
+        }
+      },
+      {
+        "name": "Tame Impala",
+        "nameKo": "테임 임팔라",
+        "role": "discovery",
+        "album": {
+          "title": "Currents",
+          "year": 2015,
+          "spotifyUrl": "https://open.spotify.com/album/7qiwZFEiJ0Pxkl1YyBxVeV"
+        }
+      },
+      {
+        "name": "Alvvays",
+        "nameKo": "올웨이즈",
+        "role": "discovery",
+        "album": {
+          "title": "Blue Rev",
+          "year": 2022,
+          "spotifyUrl": "https://open.spotify.com/album/1dShPPoxXfzbjFO1jIHJZz"
+        }
+      },
+      {
+        "name": "Wet Leg",
+        "nameKo": "웻 레그",
+        "role": "discovery",
+        "album": {
+          "title": "Wet Leg",
+          "year": 2022,
+          "spotifyUrl": "https://open.spotify.com/album/0r9awI5WRCZpwk0aVQ4bKO"
+        }
+      }
+    ],
+    "electronic_ambient": [
+      {
+        "name": "Aphex Twin",
+        "nameKo": "에이펙스 트윈",
+        "role": "discovery",
+        "album": {
+          "title": "Selected Ambient Works 85-92",
+          "year": 1992,
+          "spotifyUrl": "https://open.spotify.com/album/7aNclGRxTysfh6z0d8671k"
+        }
+      },
+      {
+        "name": "Stars Of The Lid",
+        "nameKo": "스타스 오브 더 리드",
+        "role": "discovery",
+        "album": {
+          "title": "And Their Refinement of the Decline",
+          "year": 2007,
+          "spotifyUrl": "https://open.spotify.com/album/6cHPEbPryLpH5VX5Eb1Vvo"
+        }
+      },
+      {
+        "name": "Tim Hecker",
+        "nameKo": "팀 헤커",
+        "role": "discovery",
+        "album": {
+          "title": "Ravedeath, 1972",
+          "year": 2011,
+          "spotifyUrl": "https://open.spotify.com/album/6cbCvUzsawFcG0aZVCJyzt"
+        }
+      },
+      {
+        "name": "Hiroshi Yoshimura",
+        "nameKo": "요시무라 히로시",
+        "role": "discovery",
+        "album": {
+          "title": "Green",
+          "year": 1986,
+          "spotifyUrl": "https://open.spotify.com/album/1tA76N9gawQrNcDkhGXx1A"
+        }
+      }
+    ],
+    "electronic_house": [
+      {
+        "name": "Disclosure",
+        "nameKo": "디스클로저",
+        "role": "discovery",
+        "album": {
+          "title": "Alchemy",
+          "year": 2023,
+          "spotifyUrl": "https://open.spotify.com/album/5RMkjbbZvLo9TNdpKrmP71"
+        }
+      },
+      {
+        "name": "Justice",
+        "nameKo": "저스티스",
+        "role": "discovery",
+        "album": {
+          "title": "Hyperdrama",
+          "year": 2024,
+          "spotifyUrl": "https://open.spotify.com/album/6ooBxhsOVedpX4zPTCyL86"
+        }
+      },
+      {
+        "name": "Peggy Gou",
+        "nameKo": "페기 구",
+        "role": "discovery",
+        "album": {
+          "title": "I Hear You",
+          "year": 2024,
+          "spotifyUrl": "https://open.spotify.com/album/5pnr4GOQkBuGuYPeiLw1T6"
+        }
+      }
+    ],
+    "classical_baroque": [
+      {
+        "name": "George Frideric Handel",
+        "nameKo": "게오르크 프리드리히 헨델",
+        "role": "discovery",
+        "album": {
+          "title": "Handel: Water Music",
+          "year": 1988,
+          "spotifyUrl": "https://open.spotify.com/album/5nbDq6SAm4jc0EqgwUKCsW",
+          "credit": "Philharmonia Baroque Orchestra, Nicholas McGegan"
+        }
+      },
+      {
+        "name": "Domenico Scarlatti",
+        "nameKo": "도메니코 스카를라티",
+        "role": "discovery",
+        "album": {
+          "title": "Domenico Scarlatti: Keyboard Sonatas (Expanded Edition)",
+          "year": 1989,
+          "spotifyUrl": "https://open.spotify.com/album/2QKu9xh9OZdy1iCdBW4zN0",
+          "credit": "Vladimir Horowitz"
+        }
+      },
+      {
+        "name": "Georg Philipp Telemann",
+        "nameKo": "게오르크 필리프 텔레만",
+        "role": "discovery",
+        "album": {
+          "title": "Telemann: Complete Tafelmusik",
+          "year": 2010,
+          "spotifyUrl": "https://open.spotify.com/album/5D10EAjaasKfPLtnKV6qAn",
+          "credit": "Freiburger Barockorchester, Gottfried Von Der Goltz, Petra Mullejans"
+        }
+      }
+    ],
+    "classical_minimalism": [
+      {
+        "name": "Terry Riley",
+        "nameKo": "테리 라일리",
+        "role": "discovery",
+        "album": {
+          "title": "Riley: In C",
+          "year": 1968,
+          "spotifyUrl": "https://open.spotify.com/album/1IqXMVlNM4NBTA4otUziOr",
+          "credit": "Buffalo Center of the Creative and Performing Arts Ensemble"
+        }
+      },
+      {
+        "name": "Michael Nyman",
+        "nameKo": "마이클 나이먼",
+        "role": "discovery",
+        "album": {
+          "title": "The Piano Sings",
+          "year": 2007,
+          "spotifyUrl": "https://open.spotify.com/album/07mLLTPJ3dMnmRj5mAhfld"
+        }
+      },
+      {
+        "name": "John Adams",
+        "nameKo": "존 애덤스",
+        "role": "discovery",
+        "album": {
+          "title": "Adams: Shaker Loops",
+          "year": 1986,
+          "spotifyUrl": "https://open.spotify.com/album/6KvZg3yOCB4qz1qqHq6Xoi",
+          "credit": "San Francisco Symphony, Edo de Waart"
+        }
+      }
+    ],
+    "pop_indie": [
+      {
+        "name": "Phoenix",
+        "nameKo": "피닉스",
+        "role": "discovery",
+        "album": {
+          "title": "Wolfgang Amadeus Phoenix",
+          "year": 2009,
+          "spotifyUrl": "https://open.spotify.com/album/7g4qoHjkYvfFkXJEZCjtc1"
+        }
+      },
+      {
+        "name": "Clairo",
+        "nameKo": "클레어로",
+        "role": "discovery",
+        "album": {
+          "title": "Charm",
+          "year": 2024,
+          "spotifyUrl": "https://open.spotify.com/album/1KNUCVXgIxKUGiuEB8eG0i"
+        }
+      },
+      {
+        "name": "Rex Orange County",
+        "nameKo": "렉스 오렌지 카운티",
+        "role": "discovery",
+        "album": {
+          "title": "Apricot Princess",
+          "year": 2017,
+          "spotifyUrl": "https://open.spotify.com/album/57940owvO9Fl8aoos1oIG2"
+        }
+      }
+    ],
+    "pop_dream": [
+      {
+        "name": "Slowdive",
+        "nameKo": "슬로우다이브",
+        "role": "discovery",
+        "album": {
+          "title": "everything is alive",
+          "year": 2023,
+          "spotifyUrl": "https://open.spotify.com/album/2jSmcj39eQiU76EbMGuxS0"
+        }
+      },
+      {
+        "name": "Mazzy Star",
+        "nameKo": "매지 스타",
+        "role": "discovery",
+        "album": {
+          "title": "So Tonight That I Might See",
+          "year": 1993,
+          "spotifyUrl": "https://open.spotify.com/album/5K18gTgac0q6Jma5HkV1vA"
+        }
+      }
+    ],
+    "rock_classic": [
+      {
+        "name": "Led Zeppelin",
+        "nameKo": "레드 제플린",
+        "role": "discovery",
+        "album": {
+          "title": "Led Zeppelin IV",
+          "year": 1971,
+          "spotifyUrl": "https://open.spotify.com/album/4Ib1gx1Yb4kvmcc7eZH0Mi"
+        }
+      },
+      {
+        "name": "Queen",
+        "nameKo": "퀸",
+        "role": "discovery",
+        "album": {
+          "title": "A Night At The Opera",
+          "year": 1975,
+          "spotifyUrl": "https://open.spotify.com/album/7HVoV2lgVsmuiHsjbbUJB4"
+        }
+      },
+      {
+        "name": "David Bowie",
+        "nameKo": "데이비드 보위",
+        "role": "discovery",
+        "album": {
+          "title": "The Rise and Fall of Ziggy Stardust and the Spiders from Mars (2012 Remaster)",
+          "year": 1972,
+          "spotifyUrl": "https://open.spotify.com/album/48D1hRORqJq52qsnUYZX56"
+        }
+      }
+    ],
+    "electronic_techno": [
+      {
+        "name": "Carl Craig",
+        "nameKo": "칼 크레이그",
+        "role": "discovery",
+        "album": {
+          "title": "More Songs About Food and Revolutionary Art",
+          "year": 1997,
+          "spotifyUrl": "https://open.spotify.com/album/4IucsuxCKYYbKFGv4BDRrr"
+        }
+      },
+      {
+        "name": "Paul Kalkbrenner",
+        "nameKo": "파울 칼크브레너",
+        "role": "discovery",
+        "album": {
+          "title": "Berlin Calling (The Soundtrack by Paul Kalkbrenner)",
+          "year": 2008,
+          "spotifyUrl": "https://open.spotify.com/album/1PjYHybPrB6rU3qABrNldm"
+        }
+      },
+      {
+        "name": "Plastikman",
+        "nameKo": "플라스틱맨",
+        "role": "discovery",
+        "album": {
+          "title": "Musik",
+          "year": 1994,
+          "spotifyUrl": "https://open.spotify.com/album/3nywgxTt4m4CwcIJDmHp5k"
+        }
+      },
+      {
+        "name": "Jon Hopkins",
+        "nameKo": "존 홉킨스",
+        "role": "discovery",
+        "album": {
+          "title": "Immunity",
+          "year": 2013,
+          "spotifyUrl": "https://open.spotify.com/album/1rxWlYQcH945S3jpIMYR35"
+        }
+      }
+    ],
+    "jazz_fusion": [
+      {
+        "name": "Weather Report",
+        "nameKo": "웨더 리포트",
+        "role": "discovery",
+        "album": {
+          "title": "Heavy Weather (Expanded Edition)",
+          "year": 1977,
+          "spotifyUrl": "https://open.spotify.com/album/2S2ujEbkeFUblmiNjf1e0f"
+        }
+      },
+      {
+        "name": "Return To Forever",
+        "nameKo": "리턴 투 포에버",
+        "role": "discovery",
+        "album": {
+          "title": "Romantic Warrior",
+          "year": 1976,
+          "spotifyUrl": "https://open.spotify.com/album/2mLtPMLV5nWE0rzjVvcEmt"
+        }
+      },
+      {
+        "name": "Alfa Mist",
+        "nameKo": "알파 미스트",
+        "role": "discovery",
+        "album": {
+          "title": "Antiphon",
+          "year": 2017,
+          "spotifyUrl": "https://open.spotify.com/album/3joOXpEsCgg8oS1Tba7neT"
+        }
+      },
+      {
+        "name": "Yussef Dayes",
+        "nameKo": "유세프 데이즈",
+        "role": "discovery",
+        "album": {
+          "title": "Black Classical Music",
+          "year": 2023,
+          "spotifyUrl": "https://open.spotify.com/album/5uw3ZBsmxonVJGmocj8EET"
+        }
+      }
+    ],
+    "classical_romantic": [
+      {
+        "name": "Franz Liszt",
+        "nameKo": "프란츠 리스트",
+        "role": "discovery",
+        "album": {
+          "title": "Transcendental - Daniil Trifonov Plays Franz Liszt (Etudes S. 139, S. 141, S. 144, S. 145)",
+          "year": 2016,
+          "spotifyUrl": "https://open.spotify.com/album/1U7BErPHxIgtzsq05Wfj5E",
+          "credit": "Daniil Trifonov"
+        }
+      },
+      {
+        "name": "Robert Schumann",
+        "nameKo": "로베르트 슈만",
+        "role": "discovery",
+        "album": {
+          "title": "Schumann with Martha Argerich",
+          "year": 2020,
+          "spotifyUrl": "https://open.spotify.com/album/1KXBGaGyMT5iPp9UM9tTxM",
+          "credit": "Martha Argerich, Thomas Hampson"
+        }
+      },
+      {
+        "name": "Pyotr Ilyich Tchaikovsky",
+        "nameKo": "표트르 일리치 차이콥스키",
+        "role": "discovery",
+        "album": {
+          "title": "Tchaikovsky: Symphony No. 6 \"Pathétique\"",
+          "year": 1960,
+          "spotifyUrl": "https://open.spotify.com/album/5b7ud3gSlr7DmYpYScF7X7",
+          "credit": "Eugene Ormandy, Philadelphia Orchestra"
+        }
+      },
+      {
+        "name": "Franz Schubert",
+        "nameKo": "프란츠 슈베르트",
+        "role": "discovery",
+        "album": {
+          "title": "Radu Lupu Plays Schubert",
+          "year": 2021,
+          "spotifyUrl": "https://open.spotify.com/album/7pqxP8MGkdzoIFXJ2xeBGJ",
+          "credit": "Radu Lupu"
+        }
+      }
+    ],
+    "pop_kpop": [
+      {
+        "name": "Red Velvet",
+        "nameKo": "레드벨벳",
+        "role": "discovery",
+        "album": {
+          "title": "The Perfect Red Velvet - The 2nd Album Repackage",
+          "year": 2018,
+          "spotifyUrl": "https://open.spotify.com/album/0OkJThJls8FO1lutMzMDJ0"
+        }
+      }
+    ],
+    "jazz_smooth": [
+      {
+        "name": "Sade",
+        "nameKo": "샤데이",
+        "role": "discovery",
+        "album": {
+          "title": "Diamond Life",
+          "year": 1984,
+          "spotifyUrl": "https://open.spotify.com/album/5TTXVCaXtdie8SehZ7R4Sa"
+        }
+      },
+      {
+        "name": "Norman Brown",
+        "nameKo": "노먼 브라운",
+        "role": "discovery",
+        "album": {
+          "title": "Just Between Us",
+          "year": 1992,
+          "spotifyUrl": "https://open.spotify.com/album/1nRaXHXH4pT2yfyHAhCsx5"
+        }
+      }
+    ],
+    "rock_progressive": [
+      {
+        "name": "Yes",
+        "nameKo": "예스",
+        "role": "discovery",
+        "album": {
+          "title": "Close to the Edge",
+          "year": 1972,
+          "spotifyUrl": "https://open.spotify.com/album/252LyflX4wUeISSzgL392F"
+        }
+      },
+      {
+        "name": "Genesis",
+        "nameKo": "제네시스",
+        "role": "discovery",
+        "album": {
+          "title": "Selling England By The Pound",
+          "year": 1973,
+          "spotifyUrl": "https://open.spotify.com/album/2tSRe2rkdJvZWMOIZpu6lk"
+        }
+      },
+      {
+        "name": "King Crimson",
+        "nameKo": "킹 크림슨",
+        "role": "discovery",
+        "album": {
+          "title": "In The Court Of The Crimson King (Expanded & Remastered Original Album Mix)",
+          "year": 1969,
+          "spotifyUrl": "https://open.spotify.com/album/5wec5BciMpDMzlEFpYeHse"
+        }
+      },
+      {
+        "name": "Porcupine Tree",
+        "nameKo": "포큐파인 트리",
+        "role": "discovery",
+        "album": {
+          "title": "CLOSURE / CONTINUATION",
+          "year": 2022,
+          "spotifyUrl": "https://open.spotify.com/album/7meXKEI99ccqzh9AtmeeAR"
+        }
+      }
+    ],
+    "electronic_chillout": [
+      {
+        "name": "Massive Attack",
+        "nameKo": "매시브 어택",
+        "role": "discovery",
+        "album": {
+          "title": "Mezzanine",
+          "year": 1998,
+          "spotifyUrl": "https://open.spotify.com/album/49MNmJhZQewjt06rpwp6QR"
+        }
+      },
+      {
+        "name": "Bonobo",
+        "nameKo": "보노보",
+        "role": "discovery",
+        "album": {
+          "title": "Fragments",
+          "year": 2022,
+          "spotifyUrl": "https://open.spotify.com/album/4KjbNbnTnJ97kZgQkOHr6v"
+        }
+      },
+      {
+        "name": "Zero 7",
+        "nameKo": "제로 세븐",
+        "role": "discovery",
+        "album": {
+          "title": "Simple Things",
+          "year": 2001,
+          "spotifyUrl": "https://open.spotify.com/album/291IqGpnrkekWf8hn0xB3x"
+        }
+      },
+      {
+        "name": "Thievery Corporation",
+        "nameKo": "시버리 코퍼레이션",
+        "role": "discovery",
+        "album": {
+          "title": "The Mirror Conspiracy",
+          "year": 2000,
+          "spotifyUrl": "https://open.spotify.com/album/2CPYbHU0udS9tbx8PmBEV2"
+        }
+      }
+    ],
+    "classical_contemporary": [
+      {
+        "name": "Joep Beving",
+        "nameKo": "윱 베빙",
+        "role": "discovery",
+        "album": {
+          "title": "Solipsism",
+          "year": 2015,
+          "spotifyUrl": "https://open.spotify.com/album/2BGvT97OGSAivOsOb5PzMa"
+        }
+      },
+      {
+        "name": "Ludovico Einaudi",
+        "nameKo": "루도비코 에이나우디",
+        "role": "discovery",
+        "album": {
+          "title": "In A Time Lapse",
+          "year": 2013,
+          "spotifyUrl": "https://open.spotify.com/album/3uJ6D2WOPdjwJ0SrsH9EiG"
+        }
+      },
+      {
+        "name": "Nils Frahm",
+        "nameKo": "닐스 프람",
+        "role": "discovery",
+        "album": {
+          "title": "Spaces",
+          "year": 2013,
+          "spotifyUrl": "https://open.spotify.com/album/3v3ywtjzflHlAP00Ndud4s"
+        }
+      }
+    ],
+    "hiphop_oldschool": [
+      {
+        "name": "Public Enemy",
+        "nameKo": "퍼블릭 에너미",
+        "role": "discovery",
+        "album": {
+          "title": "It Takes A Nation Of Millions To Hold Us Back",
+          "year": 1988,
+          "spotifyUrl": "https://open.spotify.com/album/03Mx6yaV7k4bsEmcTH8J49"
+        }
+      },
+      {
+        "name": "De La Soul",
+        "nameKo": "데 라 소울",
+        "role": "discovery",
+        "album": {
+          "title": "3 Feet High and Rising",
+          "year": 1989,
+          "spotifyUrl": "https://open.spotify.com/album/34LxHI9x14qXUOS8AWRrYD"
+        }
+      },
+      {
+        "name": "A Tribe Called Quest",
+        "nameKo": "어 트라이브 콜드 퀘스트",
+        "role": "discovery",
+        "album": {
+          "title": "Midnight Marauders",
+          "year": 1993,
+          "spotifyUrl": "https://open.spotify.com/album/4v5x3Oo3UjQ9YmF3hRAip5"
+        }
+      }
+    ],
+    "hiphop_trap": [
+      {
+        "name": "21 Savage",
+        "nameKo": "21 새비지",
+        "role": "discovery",
+        "album": {
+          "title": "american dream",
+          "year": 2024,
+          "spotifyUrl": "https://open.spotify.com/album/2RRYaYHY7fIIdvFlvgb5vq"
+        }
+      },
+      {
+        "name": "Playboi Carti",
+        "nameKo": "플레이보이 카티",
+        "role": "discovery",
+        "album": {
+          "title": "Die Lit",
+          "year": 2018,
+          "spotifyUrl": "https://open.spotify.com/album/7dAm8ShwJLFm9SaJ6Yc58O"
+        }
+      },
+      {
+        "name": "Lil Uzi Vert",
+        "nameKo": "릴 우지 버트",
+        "role": "discovery",
+        "album": {
+          "title": "Eternal Atake",
+          "year": 2020,
+          "spotifyUrl": "https://open.spotify.com/album/7IyoGB8J31fvQDwGtHAq9m"
+        }
+      },
+      {
+        "name": "Young Thug",
+        "nameKo": "영 서그",
+        "role": "discovery",
+        "album": {
+          "title": "So Much Fun",
+          "year": 2019,
+          "spotifyUrl": "https://open.spotify.com/album/1bnHPO4dKK7IjvgrtVBcQh"
+        }
+      }
+    ],
+    "rnb_classic": [
+      {
+        "name": "Marvin Gaye",
+        "nameKo": "마빈 게이",
+        "role": "discovery",
+        "album": {
+          "title": "What's Going On",
+          "year": 1971,
+          "spotifyUrl": "https://open.spotify.com/album/6qX4eoPWGteMdJMqGOwPTs"
+        }
+      },
+      {
+        "name": "Aretha Franklin",
+        "nameKo": "아레사 프랭클린",
+        "role": "discovery",
+        "album": {
+          "title": "I Never Loved a Man the Way I Love You",
+          "year": 1967,
+          "spotifyUrl": "https://open.spotify.com/album/5WndWfzGwCkHzAbQXVkg2V"
+        }
+      },
+      {
+        "name": "Al Green",
+        "nameKo": "알 그린",
+        "role": "discovery",
+        "album": {
+          "title": "Let's Stay Together",
+          "year": 1972,
+          "spotifyUrl": "https://open.spotify.com/album/5MQx9U0AAIrcbvZ0lL1RCi"
+        }
+      },
+      {
+        "name": "Leon Bridges",
+        "nameKo": "리온 브리지스",
+        "role": "discovery",
+        "album": {
+          "title": "Coming Home",
+          "year": 2015,
+          "spotifyUrl": "https://open.spotify.com/album/4svLfrPPk2npPVuI4kXPYg"
+        }
+      }
+    ],
+    "rnb_neosoul": [
+      {
+        "name": "Erykah Badu",
+        "nameKo": "에리카 바두",
+        "role": "discovery",
+        "album": {
+          "title": "Baduizm",
+          "year": 1997,
+          "spotifyUrl": "https://open.spotify.com/album/3qr4pTBWEU1SVf01j6RAx3"
+        }
+      },
+      {
+        "name": "Jill Scott",
+        "nameKo": "질 스콧",
+        "role": "discovery",
+        "album": {
+          "title": "Who Is Jill Scott? - Words and Sounds, Vol. 1",
+          "year": 2000,
+          "spotifyUrl": "https://open.spotify.com/album/6B0aNuFKoFHHqebmF1m2JF"
+        }
+      },
+      {
+        "name": "Anderson .Paak",
+        "nameKo": "앤더슨 팩",
+        "role": "discovery",
+        "album": {
+          "title": "Malibu",
+          "year": 2016,
+          "spotifyUrl": "https://open.spotify.com/album/6xNFuLOko8gjxi5kUAyGyM"
+        }
+      }
+    ],
+    "world_latin": [
+      {
+        "name": "Buena Vista Social Club",
+        "nameKo": "부에나 비스타 소셜 클럽",
+        "role": "discovery",
+        "album": {
+          "title": "Buena Vista Social Club",
+          "year": 1997,
+          "spotifyUrl": "https://open.spotify.com/album/6DPdEaZ0KDBCCgXyy4q8bi"
+        }
+      },
+      {
+        "name": "Celia Cruz",
+        "nameKo": "셀리아 크루즈",
+        "role": "discovery",
+        "album": {
+          "title": "La Negra Tiene Tumbao",
+          "year": 2001,
+          "spotifyUrl": "https://open.spotify.com/album/0iwS6wwKRVN1h1tf0BgQxC"
+        }
+      },
+      {
+        "name": "Bad Bunny",
+        "nameKo": "배드 버니",
+        "role": "discovery",
+        "album": {
+          "title": "Un Verano Sin Ti",
+          "year": 2022,
+          "spotifyUrl": "https://open.spotify.com/album/3RQQmkQEvNCY4prGKE6oc5"
+        }
+      },
+      {
+        "name": "ROSALÍA",
+        "nameKo": "로살리아",
+        "role": "discovery",
+        "album": {
+          "title": "El Mal Querer",
+          "year": 2018,
+          "spotifyUrl": "https://open.spotify.com/album/355bjCHzRJztCzaG5Za4gq"
+        }
+      }
+    ],
+    "world_traditional": [
+      {
+        "name": "Tinariwen",
+        "nameKo": "티나리웬",
+        "role": "discovery",
+        "album": {
+          "title": "Amatssou (Deluxe)",
+          "year": 2024,
+          "spotifyUrl": "https://open.spotify.com/album/18YMZkvTbuBdrWlE4fS88P"
+        }
+      },
+      {
+        "name": "Youssou N'Dour",
+        "nameKo": "유수 은두르",
+        "role": "discovery",
+        "album": {
+          "title": "The Guide (Wommat)",
+          "year": 1994,
+          "spotifyUrl": "https://open.spotify.com/album/4X3tL8AOrITDrpgVMAaVy2"
+        }
+      },
+      {
+        "name": "Anoushka Shankar",
+        "nameKo": "아누슈카 샹카르",
+        "role": "discovery",
+        "album": {
+          "title": "Land Of Gold",
+          "year": 2016,
+          "spotifyUrl": "https://open.spotify.com/album/4R6f9RgdHcp29JpvddURsG"
+        }
+      }
+    ],
+    "rock_metal": [
+      {
+        "name": "Black Sabbath",
+        "nameKo": "블랙 사바스",
+        "role": "discovery",
+        "album": {
+          "title": "Paranoid",
+          "year": 1970,
+          "spotifyUrl": "https://open.spotify.com/album/7LGVdC9fFwgWYaIrZwsSv6"
+        }
+      },
+      {
+        "name": "Iron Maiden",
+        "nameKo": "아이언 메이든",
+        "role": "discovery",
+        "album": {
+          "title": "The Number of the Beast",
+          "year": 1982,
+          "spotifyUrl": "https://open.spotify.com/album/0QXyw5GWqDZe3nSWrM6d4z"
+        }
+      },
+      {
+        "name": "Judas Priest",
+        "nameKo": "주다스 프리스트",
+        "role": "discovery",
+        "album": {
+          "title": "Screaming For Vengeance",
+          "year": 1982,
+          "spotifyUrl": "https://open.spotify.com/album/0V7mTTzioHiYIjfM8ATZBI"
+        }
+      },
+      {
+        "name": "Spiritbox",
+        "nameKo": "스피릿박스",
+        "role": "discovery",
+        "album": {
+          "title": "Eternal Blue",
+          "year": 2021,
+          "spotifyUrl": "https://open.spotify.com/album/6cZ39G1mahxDAGfoPzDllb"
+        }
+      }
+    ],
+    "rock_punk": [
+      {
+        "name": "Ramones",
+        "nameKo": "라몬즈",
+        "role": "discovery",
+        "album": {
+          "title": "Ramones",
+          "year": 1976,
+          "spotifyUrl": "https://open.spotify.com/album/33y6731zsM5gqbqxrSpvzX"
+        }
+      },
+      {
+        "name": "Green Day",
+        "nameKo": "그린 데이",
+        "role": "discovery",
+        "album": {
+          "title": "Dookie",
+          "year": 1994,
+          "spotifyUrl": "https://open.spotify.com/album/1zPueS3g2amDmSW3X27Prs"
+        }
+      },
+      {
+        "name": "IDLES",
+        "nameKo": "아이들스",
+        "role": "discovery",
+        "album": {
+          "title": "Joy as an Act of Resistance.",
+          "year": 2018,
+          "spotifyUrl": "https://open.spotify.com/album/2vBa3poU0e82yfPtxcn9lg"
+        }
+      },
+      {
+        "name": "Turnstile",
+        "nameKo": "턴스타일",
+        "role": "discovery",
+        "album": {
+          "title": "GLOW ON",
+          "year": 2021,
+          "spotifyUrl": "https://open.spotify.com/album/2NrYPcMmQBlbBxopc2XlzS"
+        }
+      }
+    ],
+    "electronic_dnb": [
+      {
+        "name": "Roni Size & Reprazent",
+        "nameKo": "로니 사이즈 & 레프라젠트",
+        "role": "discovery",
+        "album": {
+          "title": "New Forms",
+          "year": 1997,
+          "spotifyUrl": "https://open.spotify.com/album/2wa0kOg4mJ94Iw17Gcv4IL"
+        }
+      },
+      {
+        "name": "Pendulum",
+        "nameKo": "펜듈럼",
+        "role": "discovery",
+        "album": {
+          "title": "Hold Your Colour",
+          "year": 2005,
+          "spotifyUrl": "https://open.spotify.com/album/5wHNla8BT8KcqMhAbvqoPU"
+        }
+      },
+      {
+        "name": "Chase & Status",
+        "nameKo": "체이스 앤드 스테이터스",
+        "role": "discovery",
+        "album": {
+          "title": "No More Idols",
+          "year": 2011,
+          "spotifyUrl": "https://open.spotify.com/album/73TGhHHFOdBIvbnUNUnjZs"
+        }
+      },
+      {
+        "name": "Sub Focus",
+        "nameKo": "서브 포커스",
+        "role": "discovery",
+        "album": {
+          "title": "Sub Focus",
+          "year": 2009,
+          "spotifyUrl": "https://open.spotify.com/album/1puaRzEhhLvXP17jUEGWb3"
+        }
+      }
+    ],
+    "electronic_dubstep": [
+      {
+        "name": "Benga",
+        "nameKo": "벵가",
+        "role": "discovery",
+        "album": {
+          "title": "Diary Of An Afro Warrior",
+          "year": 2008,
+          "spotifyUrl": "https://open.spotify.com/album/0tSDp9wExuFzgobmLQ8AFl"
+        }
+      },
+      {
+        "name": "Skream",
+        "nameKo": "스크림",
+        "role": "discovery",
+        "album": {
+          "title": "Skream!",
+          "year": 2006,
+          "spotifyUrl": "https://open.spotify.com/album/2R3Kmi2JbJWPmPeCttaLjC"
+        }
+      },
+      {
+        "name": "James Blake",
+        "nameKo": "제임스 블레이크",
+        "role": "discovery",
+        "album": {
+          "title": "James Blake",
+          "year": 2011,
+          "spotifyUrl": "https://open.spotify.com/album/7MSKLgs6zBCV2Uhp3MZmVV"
+        }
+      }
+    ],
+    "pop_folk": [
+      {
+        "name": "Bob Dylan",
+        "nameKo": "밥 딜런",
+        "role": "discovery",
+        "album": {
+          "title": "The Freewheelin' Bob Dylan",
+          "year": 1963,
+          "spotifyUrl": "https://open.spotify.com/album/0o1uFxZ1VTviqvNaYkTJek"
+        }
+      },
+      {
+        "name": "Joni Mitchell",
+        "nameKo": "조니 미첼",
+        "role": "discovery",
+        "album": {
+          "title": "Blue",
+          "year": 1971,
+          "spotifyUrl": "https://open.spotify.com/album/1vz94WpXDVYIEGja8cjFNa"
+        }
+      },
+      {
+        "name": "Sufjan Stevens",
+        "nameKo": "수프얀 스티븐스",
+        "role": "discovery",
+        "album": {
+          "title": "Carrie & Lowell",
+          "year": 2015,
+          "spotifyUrl": "https://open.spotify.com/album/64xtjfsPHNHch0CZ7fPTjS"
+        }
+      },
+      {
+        "name": "Laura Marling",
+        "nameKo": "로라 말링",
+        "role": "discovery",
+        "album": {
+          "title": "Song For Our Daughter",
+          "year": 2020,
+          "spotifyUrl": "https://open.spotify.com/album/71ASh2z3Y2LQNsEpuW35Kc"
+        }
+      }
+    ],
+    "hiphop_jazzhop": [
+      {
+        "name": "J Dilla",
+        "nameKo": "제이 딜라",
+        "role": "discovery",
+        "album": {
+          "title": "Donuts",
+          "year": 2006,
+          "spotifyUrl": "https://open.spotify.com/album/7xJ7jHNu3JNfdnao9xwMho"
+        }
+      },
+      {
+        "name": "Nomak",
+        "nameKo": "노막",
+        "role": "discovery",
+        "album": {
+          "title": "Calm",
+          "year": 2007,
+          "spotifyUrl": "https://open.spotify.com/album/10WagB9xYOdnrsgiTnCMuX"
+        }
+      },
+      {
+        "name": "fat jon",
+        "nameKo": "팻 존",
+        "role": "discovery",
+        "album": {
+          "title": "afterthought",
+          "year": 2006,
+          "spotifyUrl": "https://open.spotify.com/album/2to8LDpAgTihNlz4MeunER"
+        }
+      }
+    ],
+    "electronic_melodic_dance": [
+      {
+        "name": "Kygo",
+        "nameKo": "카이고",
+        "role": "discovery",
+        "album": {
+          "title": "Cloud Nine",
+          "year": 2016,
+          "spotifyUrl": "https://open.spotify.com/album/0uMIzWh1uEpHEBell4rlF8"
+        }
+      },
+      {
+        "name": "Calvin Harris",
+        "nameKo": "캘빈 해리스",
+        "role": "discovery",
+        "album": {
+          "title": "18 Months",
+          "year": 2012,
+          "spotifyUrl": "https://open.spotify.com/album/4TjPTVBmdyaowp08j2toa0"
+        }
+      },
+      {
+        "name": "Porter Robinson",
+        "nameKo": "포터 로빈슨",
+        "role": "discovery",
+        "album": {
+          "title": "Worlds",
+          "year": 2014,
+          "spotifyUrl": "https://open.spotify.com/album/2NBXE87Al4vVaUGY2cwvwV"
+        }
+      },
+      {
+        "name": "Madeon",
+        "nameKo": "마데온",
+        "role": "discovery",
+        "album": {
+          "title": "Adventure (Deluxe)",
+          "year": 2015,
+          "spotifyUrl": "https://open.spotify.com/album/3uKLwDjku2Us0c81LEmftR"
+        }
+      }
+    ]
+  }
+}

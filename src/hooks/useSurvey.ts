@@ -1,45 +1,54 @@
 'use client';
 
-import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useState, useCallback, useMemo, useEffect, useRef } from 'react';
 import { SurveyState, Question } from '@/types';
 import { calculateMUSICScores, isValidAnswer } from '@/lib/surveyScore';
 import { readBrowserStorage, removeBrowserStorage, writeBrowserStorage } from '@/lib/browserStorage';
+import { SURVEY_VERSION } from '@/lib/surveyVersion';
+import { canonicalSurveyComparisonHash, restoreSurveyDraft, SURVEY_DRAFT_STORAGE_KEY, surveyAnswerProgress } from '@/lib/surveySession';
 
-export const useSurvey = (questions: Question[]) => {
+export const useSurvey = (questions: Question[], comparisonHash: string | null = null, freshStart = false) => {
+  const contextHash = canonicalSurveyComparisonHash(comparisonHash);
+  const ignoreInitialDraft = useRef(freshStart);
   const [surveyState, setSurveyState] = useState<SurveyState>({
     currentStep: 1,
     answers: {},
     startTime: new Date(),
     isComplete: false,
   });
-  const [hasRestored, setHasRestored] = useState(false);
+  const [restoredContext, setRestoredContext] = useState<string | null | undefined>(undefined);
+  const hasRestored = restoredContext === contextHash;
 
   useEffect(() => {
     try {
-      const saved = readBrowserStorage('session', 'music-personality-survey');
+      // Starting over is an in-memory intent too: optional storage removal may fail.
+      const skipSaved = ignoreInitialDraft.current;
+      const saved = skipSaved ? null : readBrowserStorage('session', SURVEY_DRAFT_STORAGE_KEY);
       if (saved) {
-        const parsed = JSON.parse(saved) as SurveyState;
-        const validStep = Math.min(Math.max(parsed.currentStep || 1, 1), Math.max(questions.length, 1));
-        const restoredAnswers = Object.fromEntries(questions
-          .filter(question => isValidAnswer(question, parsed.answers?.[question.id]))
-          .map(question => [question.id, parsed.answers[question.id]]));
-        setSurveyState({ currentStep: validStep, answers: restoredAnswers, startTime: new Date(parsed.startTime), isComplete: false });
+        const restored = restoreSurveyDraft(JSON.parse(saved), questions);
+        if (restored && restored.comparisonHash === contextHash) {
+          setSurveyState(restored);
+          return;
+        }
+        removeBrowserStorage('session', SURVEY_DRAFT_STORAGE_KEY);
       }
     } catch {
-      removeBrowserStorage('session', 'music-personality-survey');
+      removeBrowserStorage('session', SURVEY_DRAFT_STORAGE_KEY);
     } finally {
-      setHasRestored(true);
+      setRestoredContext(contextHash);
     }
-  }, [questions]);
+    setSurveyState({ currentStep: 1, answers: {}, startTime: new Date(), isComplete: false });
+  }, [questions, contextHash]);
 
   useEffect(() => {
     if (!hasRestored) return;
+    ignoreInitialDraft.current = false;
     if (surveyState.isComplete) {
-      removeBrowserStorage('session', 'music-personality-survey');
+      removeBrowserStorage('session', SURVEY_DRAFT_STORAGE_KEY);
       return;
     }
-    writeBrowserStorage('session', 'music-personality-survey', JSON.stringify(surveyState));
-  }, [hasRestored, surveyState]);
+    writeBrowserStorage('session', SURVEY_DRAFT_STORAGE_KEY, JSON.stringify({ ...surveyState, questionVersion: SURVEY_VERSION, comparisonHash: contextHash }));
+  }, [hasRestored, surveyState, contextHash]);
 
   // 현재 질문
   const currentQuestion = useMemo(() => {
@@ -51,10 +60,9 @@ export const useSurvey = (questions: Question[]) => {
     return {
       current: surveyState.currentStep,
       total: questions.length,
-      percentage: (surveyState.currentStep / questions.length) * 100,
-      answeredCount: Object.keys(surveyState.answers).length,
+      ...surveyAnswerProgress(questions, surveyState.answers),
     };
-  }, [surveyState.currentStep, surveyState.answers, questions.length]);
+  }, [surveyState.currentStep, surveyState.answers, questions]);
 
   // 답변 저장
   const setAnswer = useCallback((questionId: string, value: number) => {
@@ -147,6 +155,7 @@ export const useSurvey = (questions: Question[]) => {
 
   return {
     surveyState,
+    hasRestored,
     currentQuestion,
     progress,
     categoryProgress,

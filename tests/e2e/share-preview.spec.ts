@@ -1,8 +1,20 @@
 import { expect, test } from '@playwright/test';
+import { openShareMenu } from './helpers/share-menu';
 
 const hostToken = 'v1.82.46.74.31.68';
 const guestToken = 'v1.70.61.79.48.75';
-const personalDestination = '/?v=2&m=70&u=61&s=79&i=48&c=75&lang=ko';
+const personalDestination = '/?v=3&m=70&u=61&s=79&i=48&c=75&lang=ko';
+
+test('pair share handoff preserves legacy result versions and rejects unsupported ones', async ({ request, page }) => {
+  const response = await request.get(`/share?host=${hostToken}&guest=${guestToken}&hv=2&gv=2`);
+  expect(response.ok()).toBeTruthy();
+  expect(await response.text()).toContain(`/#compare=${hostToken}&amp;guest=${guestToken}&amp;hv=2&amp;gv=2`);
+  expect((await request.get(`/share?host=${hostToken}&hv=99`)).status()).toBe(400);
+  await page.goto(`/share?host=${hostToken}&guest=${guestToken}&hv=2&gv=2`);
+  await expect(page).toHaveURL(/#compare=.+&hv=2&gv=2/);
+  await page.getByRole('button', { name: '응답한 사람의 결과 보기' }).click();
+  await expect(page).toHaveURL(/v=2&m=70/);
+});
 
 test('MUTI branding and canonical domain stay consistent across public metadata', async ({ request, page }) => {
   const homepage = await request.get('/');
@@ -99,14 +111,14 @@ test('a visitor opening the share URL is redirected into the app result', async 
 });
 
 test('a personal result share exposes result-specific social metadata', async ({ request }) => {
-  const response = await request.get(`/result?score=${guestToken}&sv=2&lang=ko`);
+  const response = await request.get(`/result?score=${guestToken}&sv=3&lang=ko`);
   expect(response.ok()).toBeTruthy();
   expect(response.headers()['x-robots-tag']).toBe('noindex, follow');
   const html = await response.text();
   expect(html).toContain('<meta name="robots" content="noindex,follow" />');
-  expect(html).toContain('나의 음악 타입은 인디 팝 · 감성적 몽상가');
-  expect(html).toContain('장르 유사도 91%');
-  expect(html).toContain(`/api/og?score=${guestToken}&amp;ogv=2&amp;sv=2`);
+  expect(html).toContain('가까운 장르 중 하나 · 재즈 힙합 · 비트 사이의 사색가');
+  expect(html).toContain('장르 유사도 92%');
+  expect(html).toContain(`/api/og?score=${guestToken}&amp;ogv=3&amp;sv=3`);
   expect(html).toContain(personalDestination.replaceAll('&', '&amp;'));
 });
 
@@ -116,45 +128,45 @@ test('invalid personal score tokens are rejected without a misleading preview', 
   expect(await response.text()).toContain('Invalid music result link');
 });
 
-test('the server also scores an identical profile at 95', async ({ request }) => {
-  const response = await request.get('/result?score=v1.80.50.85.30.75&sv=2&lang=ko');
+test('the server also scores an identical profile at 100', async ({ request }) => {
+  const response = await request.get('/result?score=v1.80.50.85.30.75&sv=3&lang=ko');
   expect(response.ok()).toBeTruthy();
   const html = await response.text();
-  expect(html).toContain('장르 유사도 95%');
+  expect(html).toContain('장르 유사도 100%');
   expect(html).toContain('나의 음악 타입은 미니멀리즘 · 명상하는 완벽주의자');
 });
 
 test('English personal shares use the same translated type as the app', async ({ request, page }) => {
-  const response = await request.get(`/result?score=${guestToken}&sv=2&lang=en`);
+  const response = await request.get(`/result?score=${guestToken}&sv=3&lang=en`);
   expect(response.ok()).toBeTruthy();
   const html = await response.text();
-  expect(html).toContain('I love Indie Pop · Creative Independent');
-  await page.goto(`/result?score=${guestToken}&sv=2&lang=en`);
-  await expect(page.getByRole('heading', { level: 1, name: /Indie Pop/ })).toBeVisible();
+  expect(html).toContain('One of your nearby genres · Jazz Hip-Hop · Thoughtful Beat Explorer');
+  await page.goto(`/result?score=${guestToken}&sv=3&lang=en`);
+  await expect(page.getByRole('heading', { level: 1, name: /Jazz Hip-Hop/ })).toBeVisible();
 });
 
 test('Japanese personal shares use the same translated type and Japanese Open Graph image', async ({ request, page }) => {
-  const response = await request.get(`/result?score=${guestToken}&sv=2&lang=ja`);
+  const response = await request.get(`/result?score=${guestToken}&sv=3&lang=ja`);
   expect(response.ok()).toBeTruthy();
   const html = await response.text();
-  expect(html).toContain('私はインディー・ポップが好きな「感性豊かな夢想家」');
+  expect(html).toContain('近いジャンルの一つ · ジャズ・ヒップホップ · 静かなビートの探検家');
   expect(html).toContain('property="og:locale" content="ja_JP"');
-  expect(html).toContain(`/?v=2&amp;m=70&amp;u=61&amp;s=79&amp;i=48&amp;c=75&amp;lang=ja`);
-  await page.goto(`/result?score=${guestToken}&sv=2&lang=ja`);
-  await expect(page.getByRole('heading', { level: 1, name: /インディー・ポップ/ })).toBeVisible();
+  expect(html).toContain(`/?v=3&amp;m=70&amp;u=61&amp;s=79&amp;i=48&amp;c=75&amp;lang=ja`);
+  await page.goto(`/result?score=${guestToken}&sv=3&lang=ja`);
+  await expect(page.getByRole('heading', { level: 1, name: /ジャズ・ヒップホップ/ })).toBeVisible();
 
-  const imageResponse = await request.get(`/api/og?score=${guestToken}&sv=2&lang=ja`);
+  const imageResponse = await request.get(`/api/og?score=${guestToken}&sv=3&lang=ja`);
   expect(imageResponse.ok()).toBeTruthy();
   expect(imageResponse.headers()['content-disposition']).toContain('muti-result-ja.png');
   const image = Buffer.from(await imageResponse.body());
   expect(image.readUInt32BE(16)).toBe(1200);
   expect(image.readUInt32BE(20)).toBe(630);
-  const englishImage = Buffer.from(await (await request.get(`/api/og?score=${guestToken}&sv=2&lang=en`)).body());
+  const englishImage = Buffer.from(await (await request.get(`/api/og?score=${guestToken}&sv=3&lang=en`)).body());
   expect(image.equals(englishImage)).toBe(false);
 });
 
 test('the personal result Open Graph endpoint returns a 1200x630 PNG', async ({ request }) => {
-  const response = await request.get(`/api/og?score=${guestToken}&sv=2&lang=ko`);
+  const response = await request.get(`/api/og?score=${guestToken}&sv=3&lang=ko`);
   expect(response.ok()).toBeTruthy();
   expect(response.headers()['content-type']).toBe('image/png');
   expect(response.headers()['content-disposition']).toContain('muti-result-ko.png');
@@ -163,13 +175,36 @@ test('the personal result Open Graph endpoint returns a 1200x630 PNG', async ({ 
   expect(image.readUInt32BE(16)).toBe(1200);
   expect(image.readUInt32BE(20)).toBe(630);
   expect(image.length).toBeGreaterThan(700_000);
-  const englishImage = Buffer.from(await (await request.get(`/api/og?score=${guestToken}&sv=2&lang=en`)).body());
+  const englishImage = Buffer.from(await (await request.get(`/api/og?score=${guestToken}&sv=3&lang=en`)).body());
   expect(image.equals(englishImage)).toBe(false);
 });
 
 test('a visitor opening a personal share URL lands on the restored result', async ({ page }) => {
-  await page.goto(`/result?score=${guestToken}&sv=2&lang=ko`);
+  await page.goto(`/result?score=${guestToken}&sv=3&lang=ko`);
   await expect(page).toHaveURL(new RegExp(`${personalDestination.replace(/[?&]/g, character => `\\${character}`)}$`));
+  await expect(page.getByRole('heading', { level: 1, name: /재즈 힙합/ })).toBeVisible();
+  await expect(page.getByText('이 장르의 소리 · 재즈의 온기와 느긋한 비트가 만나는 음악').first()).toBeVisible();
+});
+
+test('existing version 2 shares preserve their original genre and result after opening', async ({ request, page }) => {
+  const response = await request.get(`/result?score=${guestToken}&sv=2&lang=ko`);
+  expect(response.ok()).toBeTruthy();
+  const html = await response.text();
+  expect(html).toContain('가까운 장르 중 하나 · 인디 팝 · 감성적 몽상가');
+  expect(html).toContain('장르 유사도 91%');
+  expect(html).toContain(`/api/og?score=${guestToken}&amp;ogv=3&amp;sv=2`);
+  expect(html).toContain('/?v=2&amp;m=70&amp;u=61&amp;s=79&amp;i=48&amp;c=75&amp;lang=ko');
+
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: { writeText: async (url: string) => { Object.defineProperty(window, '__copiedResultUrl', { configurable: true, value: url }); } },
+    });
+  });
+  await page.goto(`/result?score=${guestToken}&sv=2&lang=ko`);
+  await expect(page).toHaveURL(/\?v=2&m=70&u=61&s=79&i=48&c=75&lang=ko$/);
   await expect(page.getByRole('heading', { level: 1, name: /인디 팝/ })).toBeVisible();
-  await expect(page.getByText('일상의 감정을 반짝이게 하는 음악을 사랑하는').first()).toBeVisible();
+  await openShareMenu(page);
+  await page.getByRole('button', { name: '링크 복사' }).click();
+  await expect.poll(() => page.evaluate(() => (window as Window & { __copiedResultUrl?: string }).__copiedResultUrl)).toContain(`score=${guestToken}&sv=2&lang=ko`);
 });

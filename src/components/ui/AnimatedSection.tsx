@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 interface AnimatedSectionProps {
   children: React.ReactNode;
@@ -18,6 +18,7 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   direction = 'up',
   className = ''
 }) => {
+  const reduceMotion = useReducedMotion();
   const variants = {
     hidden: {
       opacity: 0,
@@ -34,14 +35,14 @@ const AnimatedSection: React.FC<AnimatedSectionProps> = ({
   };
 
   const transitionProps = {
-    duration,
-    delay
+    duration: reduceMotion ? 0 : duration,
+    delay: reduceMotion ? 0 : delay
   };
 
   return (
     <motion.div
       className={className}
-      initial="hidden"
+      initial={reduceMotion ? false : 'hidden'}
       animate="visible"
       variants={variants}
       transition={transitionProps}

@@ -1,5 +1,7 @@
 import { decodeScoreToken } from '../cloudflare/sharePayload';
 import { createResultAppPath, getPersonalResultSummary } from '../cloudflare/personalResult';
+import { parseResultVersion } from '../src/lib/resultVersion';
+import { resultInterpretationCopy } from '../src/lib/resultInterpretation';
 
 interface PagesFunctionContext {
   request: Request;
@@ -13,24 +15,29 @@ export async function onRequest(context: PagesFunctionContext) {
   const requestUrl = new URL(context.request.url);
   const scoreToken = requestUrl.searchParams.get('score');
   const scores = decodeScoreToken(scoreToken);
+  const resultVersion = parseResultVersion(requestUrl.searchParams.get('sv'));
   const language = requestUrl.searchParams.get('lang') === 'ja' ? 'ja' : requestUrl.searchParams.get('lang') === 'en' ? 'en' : 'ko';
 
   if (!scoreToken || !scores) return new Response('Invalid music result link', { status: 400 });
 
-  const result = getPersonalResultSummary(scores);
-  const title = language === 'ko'
+  const result = getPersonalResultSummary(scores, resultVersion);
+  const interpretation = resultInterpretationCopy(result.interpretationKind, language);
+  const genreName = language === 'ko' ? result.genreNameKo : language === 'ja' ? result.genreNameJa : result.genreName;
+  const typeTitle = language === 'ko' ? result.typeTitleKo : language === 'ja' ? result.typeTitleJa : result.typeTitleEn;
+  const title = result.interpretationKind !== 'clear' ? `${interpretation.badge} · ${genreName} · ${typeTitle}` : language === 'ko'
     ? `나의 음악 타입은 ${result.genreNameKo} · ${result.typeTitleKo}`
     : language === 'ja' ? `私は${result.genreNameJa}が好きな「${result.typeTitleJa}」`
       : `I love ${result.genreName} · ${result.typeTitleEn}`;
-  const description = language === 'ko'
+  const matchLabel = language === 'ko' ? '장르 유사도' : language === 'ja' ? 'ジャンル一致度' : 'genre similarity';
+  const description = result.interpretationKind !== 'clear' ? `${genreName} · ${typeTitle} · ${matchLabel} ${result.compatibility}%. ${interpretation.note}` : language === 'ko'
     ? `${result.genreNameKo} · ${result.typeTitleKo} · 장르 유사도 ${result.compatibility}%. 당신의 음악 타입도 확인해보세요.`
     : language === 'ja' ? `${result.genreNameJa} · ${result.typeTitleJa} · ジャンル一致度${result.compatibility}％。あなたの音楽タイプも見つけよう。`
       : `${result.genreName} · ${result.typeTitleEn} · ${result.compatibility}% genre similarity. Find your music type.`;
-  const imageParams = new URLSearchParams({ score: scoreToken, ogv: '2' });
-  if (requestUrl.searchParams.get('sv') === '2') imageParams.set('sv', '2');
+  const imageParams = new URLSearchParams({ score: scoreToken, ogv: '3' });
+  imageParams.set('sv', String(resultVersion));
   if (language !== 'ko') imageParams.set('lang', language);
   const imageUrl = `${requestUrl.origin}/api/og?${imageParams.toString()}`;
-  const destination = createResultAppPath(scores, language);
+  const destination = createResultAppPath(scores, language, resultVersion);
 
   const html = `<!doctype html>
 <html lang="${language}">

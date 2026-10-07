@@ -12,6 +12,8 @@ const fixedLabels = [
   '友達からの招待', '音楽の好みを比較', '二人の音楽相性',
   'ほぼ同じプレイリスト', '一緒に聴くほど好相性',
   '似ている音と新しい音', '違う好みから発見',
+  '中間に近い好み', '幅広い音に開かれた好み', '均等に表れた好み',
+  '新しい音楽を探索', '近いジャンルの一つ', 'ジャンル一致度 / 探索',
 ].join('');
 const source = `${translationSource}${fixedLabels}`;
 const characters = [...new Set(source.match(/[぀-ヿ㐀-鿿々ー・]/g) || [])].sort();

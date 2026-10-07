@@ -1,134 +1,164 @@
 {
-  "version": 1,
-  "reviewedAt": "2026-09-20",
+  "version": 4,
+  "reviewedAt": "2026-10-04",
   "genres": {
     "jazz_cool": [
-      { "name": "Miles Davis", "nameKo": "마일스 데이비스", "role": "anchor", "album": { "title": "Kind Of Blue", "year": 1959, "spotifyUrl": "https://open.spotify.com/album/1weenld61qoidwYuZ1GESA" } },
-      { "name": "Gerry Mulligan", "nameKo": "제리 멀리건", "role": "discovery", "album": { "title": "Night Lights (Expanded Edition)", "year": 1963, "spotifyUrl": "https://open.spotify.com/album/1uJ9OJIgmgj4ta8xjq9nEJ" } }
+      {"name":"Miles Davis","nameKo":"마일스 데이비스","role":"anchor","album":{"title":"Birth Of The Cool","year":1957,"spotifyUrl":"https://open.spotify.com/album/0QWea2w5Y6pSoSWHuc7JMf"},"track":{"title":"Boplicity","year":1957,"spotifyUrl":"https://open.spotify.com/track/0Wz6DLq8NBoi1viEqrdH9B"}},
+      {"name":"Gerry Mulligan","nameKo":"제리 멀리건","role":"discovery","album":{"title":"Night Lights (Expanded Edition)","year":1963,"spotifyUrl":"https://open.spotify.com/album/1uJ9OJIgmgj4ta8xjq9nEJ"},"track":{"title":"Night Lights","year":1963,"spotifyUrl":"https://open.spotify.com/track/5eVERkVvJKBgV2FziCoLDE"}},
+      {"name":"Bill Charlap Trio","nameKo":"빌 찰랩 트리오","role":"discovery","album":{"title":"Street Of Dreams","year":2021,"spotifyUrl":"https://open.spotify.com/album/61y1rgjqARtBJxEn4WEPPr"},"track":{"title":"Day Dream","year":2021,"spotifyUrl":"https://open.spotify.com/track/5Smmg9SpxnawbuYPKSNcmx"}}
     ],
     "jazz_bebop": [
-      { "name": "Charlie Parker & Dizzy Gillespie", "nameKo": "찰리 파커 & 디지 길레스피", "role": "anchor", "album": { "title": "Bird And Diz: The Genius Of Charlie Parker #4", "year": 1952, "spotifyUrl": "https://open.spotify.com/album/7LVNnSl6UhjkLepWoPLqg1" } },
-      { "name": "Bud Powell", "nameKo": "버드 파월", "role": "discovery", "album": { "title": "The Amazing Bud Powell, Vol. 2", "year": 1953, "spotifyUrl": "https://open.spotify.com/album/49urA9QFIqnlG3XufhHhfH" } }
+      {"name":"Charlie Parker & Dizzy Gillespie","nameKo":"찰리 파커 & 디지 길레스피","role":"anchor","album":{"title":"Bird And Diz: The Genius Of Charlie Parker #4","year":1952,"spotifyUrl":"https://open.spotify.com/album/7LVNnSl6UhjkLepWoPLqg1"},"track":{"title":"Bloomdido - Master Take","year":1952,"spotifyUrl":"https://open.spotify.com/track/2qkDwUvGAQcxqHWsguEbXV"}},
+      {"name":"Emmet Cohen","nameKo":"에밋 코언","role":"discovery","album":{"title":"Uptown in Orbit","year":2022,"spotifyUrl":"https://open.spotify.com/album/5oMwKvYKoc4P5uTAZ4Ywnv"},"track":{"title":"Finger Buster","year":2022,"spotifyUrl":"https://open.spotify.com/track/2bf9DZWvYmGE1dLBMLPr3f"}}
     ],
     "rock_alternative": [
-      { "name": "Nirvana", "nameKo": "너바나", "role": "anchor", "album": { "title": "Nevermind (Remastered)", "year": 1991, "spotifyUrl": "https://open.spotify.com/album/2UJcKiJxNryhL050F5Z1Fk" } },
-      { "name": "Yeah Yeah Yeahs", "nameKo": "예 예 예스", "role": "discovery", "album": { "title": "Fever To Tell", "year": 2003, "spotifyUrl": "https://open.spotify.com/album/0EabZMx74C2wyXhvMMO1eI" } }
+      {"name":"Nirvana","nameKo":"너바나","role":"anchor","album":{"title":"Nevermind (Remastered)","year":1991,"spotifyUrl":"https://open.spotify.com/album/2UJcKiJxNryhL050F5Z1Fk"},"track":{"title":"Smells Like Teen Spirit","year":1991,"spotifyUrl":"https://open.spotify.com/track/4CeeEOM32jQcH3eN9Q2dGj"}},
+      {"name":"Yeah Yeah Yeahs","nameKo":"예 예 예스","role":"discovery","album":{"title":"Cool It Down","year":2022,"spotifyUrl":"https://open.spotify.com/album/7ug0WdvzC2sLXTrtHUwNsj"},"track":{"title":"Spitting Off the Edge of the World","year":2022,"spotifyUrl":"https://open.spotify.com/track/0JX23XA8E7aN1Chj32kgVn"}}
     ],
     "rock_indie": [
-      { "name": "Arctic Monkeys", "nameKo": "악틱 몽키즈", "role": "anchor", "album": { "title": "AM", "year": 2013, "spotifyUrl": "https://open.spotify.com/album/78bpIziExqiI9qztvNFlQu" } },
-      { "name": "Fontaines D.C.", "nameKo": "폰테인스 D.C.", "role": "discovery", "album": { "title": "Romance", "year": 2024, "spotifyUrl": "https://open.spotify.com/album/287QQ922OsJYh8aFNGdJG5" } }
+      {"name":"Arctic Monkeys","nameKo":"악틱 몽키즈","role":"anchor","album":{"title":"AM","year":2013,"spotifyUrl":"https://open.spotify.com/album/78bpIziExqiI9qztvNFlQu"},"track":{"title":"Do I Wanna Know?","year":2013,"spotifyUrl":"https://open.spotify.com/track/5FVd6KXrgO9B3JPmC8OPst"}},
+      {"name":"Fontaines D.C.","nameKo":"폰테인스 D.C.","role":"discovery","album":{"title":"Romance","year":2024,"spotifyUrl":"https://open.spotify.com/album/287QQ922OsJYh8aFNGdJG5"},"track":{"title":"In The Modern World","year":2024,"spotifyUrl":"https://open.spotify.com/track/3kQmcD1XU29nSMrS7kgsWm"}}
     ],
     "electronic_ambient": [
-      { "name": "Brian Eno", "nameKo": "브라이언 이노", "role": "anchor", "album": { "title": "Ambient 1: Music For Airports", "year": 1978, "spotifyUrl": "https://open.spotify.com/album/063f8Ej8rLVTz9KkjQKEMa" } },
-      { "name": "Hiroshi Yoshimura", "nameKo": "요시무라 히로시", "role": "discovery", "album": { "title": "GREEN", "year": 1986, "spotifyUrl": "https://open.spotify.com/album/1tA76N9gawQrNcDkhGXx1A" } }
+      {"name":"Brian Eno","nameKo":"브라이언 이노","role":"anchor","album":{"title":"Ambient 1: Music For Airports (Remastered 2004)","year":1978,"spotifyUrl":"https://open.spotify.com/album/063f8Ej8rLVTz9KkjQKEMa"},"track":{"title":"1/1 - Remastered 2004","year":1978,"spotifyUrl":"https://open.spotify.com/track/3bCmDqflFBHijgJfvtqev5"}},
+      {"name":"Nils Frahm","nameKo":"닐스 프람","role":"discovery","album":{"title":"Music for Animals","year":2022,"spotifyUrl":"https://open.spotify.com/album/0w4P2GvCEY7rVxdU1rrnxJ"},"track":{"title":"Right Right Right","year":2022,"spotifyUrl":"https://open.spotify.com/track/6RpNhl6giVNAhZY2526QgZ"}}
     ],
     "electronic_house": [
-      { "name": "Daft Punk", "nameKo": "다프트 펑크", "role": "anchor", "album": { "title": "Discovery", "year": 2001, "spotifyUrl": "https://open.spotify.com/album/2noRn2Aes5aoNVsU6iWThc" } },
-      { "name": "Moodymann", "nameKo": "무디맨", "role": "discovery", "album": { "title": "Silentintroduction", "year": 1997, "spotifyUrl": "https://open.spotify.com/album/1WuyO8qwthV94n8A4crVss" } }
+      {"name":"Daft Punk","nameKo":"다프트 펑크","role":"anchor","album":{"title":"Discovery","year":2001,"spotifyUrl":"https://open.spotify.com/album/2noRn2Aes5aoNVsU6iWThc"},"track":{"title":"One More Time","year":2001,"spotifyUrl":"https://open.spotify.com/track/0DiWol3AO6WpXZgp0goxAV"}},
+      {"name":"Fred again..","nameKo":"프레드 어게인..","role":"discovery","album":{"title":"Actual Life 3 (January 1 - September 9 2022)","year":2022,"spotifyUrl":"https://open.spotify.com/album/6vN8o7jyIAJvFPqC0vxxmm"},"track":{"title":"Delilah (pull me out of this)","year":2022,"spotifyUrl":"https://open.spotify.com/track/67uX1e9gIoumz0U8ayaOiO"}}
     ],
     "classical_baroque": [
-      { "name": "Johann Sebastian Bach", "nameKo": "요한 제바스티안 바흐", "role": "anchor", "album": { "title": "Bach: Brandenburg Concertos", "year": 1989, "credit": "Orchestra of the Age of Enlightenment", "spotifyUrl": "https://open.spotify.com/album/5jMYJmjUYMHvuWhJTjitaD" } },
-      { "name": "Antonio Vivaldi", "nameKo": "안토니오 비발디", "role": "discovery", "album": { "title": "Vivaldi: The Four Seasons", "year": 1989, "credit": "Itzhak Perlman · Israel Philharmonic Orchestra", "spotifyUrl": "https://open.spotify.com/album/4eEJooUkzenp7lZTtfbIP7" } }
+      {"name":"Johann Sebastian Bach","nameKo":"요한 제바스티안 바흐","role":"anchor","album":{"title":"Bach: Brandenburg Concertos","year":1989,"credit":"Orchestra of the Age of Enlightenment","spotifyUrl":"https://open.spotify.com/album/5jMYJmjUYMHvuWhJTjitaD"},"track":{"title":"Bach, JS: Brandenburg Concerto No. 1 in F Major, BWV 1046: I. —","year":1989,"spotifyUrl":"https://open.spotify.com/track/6QceSLhBYpKqaa2QwJggoG"}},
+      {"name":"Antonio Vivaldi","nameKo":"안토니오 비발디","role":"discovery","album":{"title":"Vivaldi: The Four Seasons","year":1989,"credit":"Itzhak Perlman · Israel Philharmonic Orchestra","spotifyUrl":"https://open.spotify.com/album/4eEJooUkzenp7lZTtfbIP7"},"track":{"title":"Vivaldi: The Four Seasons, Violin Concerto in E Major, Op. 8 No. 1, RV 269 \"Spring\": I. Allegro","year":1989,"spotifyUrl":"https://open.spotify.com/track/3RUBMVfbweULyfoVMXTOLV"}},
+      {"name":"Víkingur Ólafsson","nameKo":"비킹구르 올라프손","role":"discovery","album":{"title":"J.S. Bach: Goldberg Variations","year":2023,"credit":"Johann Sebastian Bach · Víkingur Ólafsson","spotifyUrl":"https://open.spotify.com/album/5kBtLULy6vMwjFRSSEEIjP"},"track":{"title":"Goldberg Variations, BWV 988: Aria","year":2023,"spotifyUrl":"https://open.spotify.com/track/74OIJe9hgZswqyLyicfAy4"}}
     ],
     "classical_minimalism": [
-      { "name": "Philip Glass", "nameKo": "필립 글래스", "role": "anchor", "album": { "title": "Glassworks (Expanded Edition)", "year": 1982, "spotifyUrl": "https://open.spotify.com/album/1My9AZY0XBwVwwy1DDVSQS" } },
-      { "name": "Steve Reich", "nameKo": "스티브 라이히", "role": "discovery", "album": { "title": "Music for 18 Musicians", "year": 1978, "spotifyUrl": "https://open.spotify.com/album/1w9O7mS9WEp5xlZUpYbDt9" } }
+      {"name":"Philip Glass","nameKo":"필립 글래스","role":"anchor","album":{"title":"Glassworks (Expanded Edition)","year":1982,"spotifyUrl":"https://open.spotify.com/album/1My9AZY0XBwVwwy1DDVSQS"},"track":{"title":"Glassworks: I. Opening","year":1982,"spotifyUrl":"https://open.spotify.com/track/4gdwUYVnVv8u0t6XaYob4v"}},
+      {"name":"Steve Reich","nameKo":"스티브 라이히","role":"discovery","album":{"title":"Music for 18 Musicians","year":1978,"spotifyUrl":"https://open.spotify.com/album/1w9O7mS9WEp5xlZUpYbDt9"},"track":{"title":"Music for 18 Musicians: Pulses","year":1978,"spotifyUrl":"https://open.spotify.com/track/3qeXCVaC4tO4gS2aPdlRmc"}},
+      {"name":"Hania Rani","nameKo":"하니아 라니","role":"discovery","album":{"title":"Ghosts","year":2023,"spotifyUrl":"https://open.spotify.com/album/2nxnCjbaiAEJ4yBDMnQhJ8"},"track":{"title":"24.03","year":2023,"spotifyUrl":"https://open.spotify.com/track/5jgJT45Eeitvo5rrSsu0sv"}}
     ],
     "pop_indie": [
-      { "name": "Vampire Weekend", "nameKo": "뱀파이어 위켄드", "role": "anchor", "album": { "title": "Modern Vampires of the City", "year": 2013, "spotifyUrl": "https://open.spotify.com/album/57igjQ0GM3GODkHg7TczO4" } },
-      { "name": "Japanese Breakfast", "nameKo": "재패니즈 브렉퍼스트", "role": "discovery", "album": { "title": "Jubilee", "year": 2021, "spotifyUrl": "https://open.spotify.com/album/1uD1kdwTWH1DZQZqGKz6rY" } }
+      {"name":"Vampire Weekend","nameKo":"뱀파이어 위켄드","role":"anchor","album":{"title":"Modern Vampires of the City","year":2013,"spotifyUrl":"https://open.spotify.com/album/57igjQ0GM3GODkHg7TczO4"},"track":{"title":"Step","year":2013,"spotifyUrl":"https://open.spotify.com/track/5cnjwmSMQbjaS2GxWMh4Wf"}},
+      {"name":"Japanese Breakfast","nameKo":"재패니즈 브렉퍼스트","role":"discovery","album":{"title":"Jubilee","year":2021,"spotifyUrl":"https://open.spotify.com/album/1uD1kdwTWH1DZQZqGKz6rY"},"track":{"title":"Be Sweet","year":2021,"spotifyUrl":"https://open.spotify.com/track/0dpyzcT3RMNNSd2xKBf35I"}}
     ],
     "pop_dream": [
-      { "name": "Beach House", "nameKo": "비치 하우스", "role": "anchor", "album": { "title": "Bloom", "year": 2012, "spotifyUrl": "https://open.spotify.com/album/600BVck2XflTAsEo0KhIfm" } },
-      { "name": "Cocteau Twins", "nameKo": "콕토 트윈스", "role": "discovery", "album": { "title": "Heaven or Las Vegas", "year": 1990, "spotifyUrl": "https://open.spotify.com/album/5lEphbceIgaK1XxWeSrC9E" } }
+      {"name":"Beach House","nameKo":"비치 하우스","role":"anchor","album":{"title":"Bloom","year":2012,"spotifyUrl":"https://open.spotify.com/album/600BVck2XflTAsEo0KhIfm"},"track":{"title":"Myth","year":2012,"spotifyUrl":"https://open.spotify.com/track/2Zw3HNjaNV42LnQ2uY5JQs"}},
+      {"name":"Cocteau Twins","nameKo":"콕토 트윈스","role":"discovery","album":{"title":"Heaven or Las Vegas","year":1990,"spotifyUrl":"https://open.spotify.com/album/5lEphbceIgaK1XxWeSrC9E"},"track":{"title":"Cherry-coloured Funk","year":1990,"spotifyUrl":"https://open.spotify.com/track/37pKTyMwalomKCZjxTc2QZ"}},
+      {"name":"Men I Trust","nameKo":"멘 아이 트러스트","role":"discovery","album":{"title":"Untourable Album","year":2021,"spotifyUrl":"https://open.spotify.com/album/1vYB8mYSGiKxE5C2RGjfDP"},"track":{"title":"Tree Among Shrubs","year":2021,"spotifyUrl":"https://open.spotify.com/track/2JKtCvtxP47fOMYi0BjMoY"}}
     ],
     "rock_classic": [
-      { "name": "Fleetwood Mac", "nameKo": "플리트우드 맥", "role": "anchor", "album": { "title": "Rumours", "year": 1977, "spotifyUrl": "https://open.spotify.com/album/04bZvSsD7bbuKyeEdMABLF" } },
-      { "name": "Thin Lizzy", "nameKo": "씬 리지", "role": "discovery", "album": { "title": "Jailbreak (Deluxe Edition)", "year": 1976, "spotifyUrl": "https://open.spotify.com/album/6Cf545T4jkaiyvMnTRPOB2" } }
+      {"name":"Fleetwood Mac","nameKo":"플리트우드 맥","role":"anchor","album":{"title":"Rumours","year":1977,"spotifyUrl":"https://open.spotify.com/album/04bZvSsD7bbuKyeEdMABLF"},"track":{"title":"Dreams - 2001 Remaster","year":1977,"spotifyUrl":"https://open.spotify.com/track/53qkszfgztIvkFyF31GfdQ"}},
+      {"name":"Thin Lizzy","nameKo":"씬 리지","role":"discovery","album":{"title":"Jailbreak (Deluxe Edition)","year":1976,"spotifyUrl":"https://open.spotify.com/album/6Cf545T4jkaiyvMnTRPOB2"},"track":{"title":"The Boys Are Back In Town","year":1976,"spotifyUrl":"https://open.spotify.com/track/43DeSV93pJPT4lCZaWZ6b1"}},
+      {"name":"Greta Van Fleet","nameKo":"그레타 밴 플리트","role":"discovery","album":{"title":"Starcatcher","year":2023,"spotifyUrl":"https://open.spotify.com/album/7i1NJXQNNFZPyjE0W3GPgE"},"track":{"title":"The Falling Sky","year":2023,"spotifyUrl":"https://open.spotify.com/track/65jnBFNzsBGqTQ3yM2oEcA"}}
     ],
     "electronic_techno": [
-      { "name": "Underworld", "nameKo": "언더월드", "role": "anchor", "album": { "title": "Dubnobasswithmyheadman", "year": 1994, "spotifyUrl": "https://open.spotify.com/album/3WQpmFc7GonmzN40EjbbKY" } },
-      { "name": "Plastikman", "nameKo": "플라스틱맨", "role": "discovery", "album": { "title": "Consumed", "year": 1998, "spotifyUrl": "https://open.spotify.com/album/1U7aY4kI9xeMuI3nD4LKBy" } }
+      {"name":"Underworld","nameKo":"언더월드","role":"anchor","album":{"title":"Dubnobasswithmyheadman (20th Anniversary Remaster)","year":1994,"spotifyUrl":"https://open.spotify.com/album/3WQpmFc7GonmzN40EjbbKY"},"track":{"title":"Cowgirl - Remastered","year":1994,"spotifyUrl":"https://open.spotify.com/track/5nDndZX9lrYjAS4d1aWFxM"}},
+      {"name":"Charlotte de Witte","nameKo":"샤를로트 드 비테","role":"discovery","album":{"title":"Overdrive EP","year":2023,"spotifyUrl":"https://open.spotify.com/album/6L9vJcQPmdPQC7KYAgpk3k"},"track":{"title":"Overdrive","year":2023,"spotifyUrl":"https://open.spotify.com/track/5NW5U1T845XTEVkjIFqLkW"}}
     ],
     "jazz_fusion": [
-      { "name": "Herbie Hancock", "nameKo": "허비 행콕", "role": "anchor", "album": { "title": "Head Hunters", "year": 1973, "spotifyUrl": "https://open.spotify.com/album/5fmIolILp5NAtNYiRPjhzA" } },
-      { "name": "Return to Forever", "nameKo": "리턴 투 포에버", "role": "discovery", "album": { "title": "Romantic Warrior", "year": 1976, "spotifyUrl": "https://open.spotify.com/album/2mLtPMLV5nWE0rzjVvcEmt" } }
+      {"name":"Herbie Hancock","nameKo":"허비 행콕","role":"anchor","album":{"title":"Head Hunters","year":1973,"spotifyUrl":"https://open.spotify.com/album/5fmIolILp5NAtNYiRPjhzA"},"track":{"title":"Chameleon","year":1973,"spotifyUrl":"https://open.spotify.com/track/4Ce66JznW8QbeyTdSzdGwR"}},
+      {"name":"Snarky Puppy","nameKo":"스나키 퍼피","role":"discovery","album":{"title":"Empire Central","year":2022,"spotifyUrl":"https://open.spotify.com/album/17sDfQwRab5dr2aVsgu1IA"},"track":{"title":"East Bay","year":2022,"spotifyUrl":"https://open.spotify.com/track/5jZPXaqfoMwN6Twa8DtluT"}}
     ],
     "classical_romantic": [
-      { "name": "Frédéric Chopin", "nameKo": "프레데리크 쇼팽", "role": "anchor", "album": { "title": "Chopin: Nocturnes", "year": 1967, "credit": "Arthur Rubinstein", "spotifyUrl": "https://open.spotify.com/album/5Q5m22P7jIwdMSKXqhrpaN" } },
-      { "name": "Sergei Rachmaninoff", "nameKo": "세르게이 라흐마니노프", "role": "discovery", "album": { "title": "Rachmaninoff: The Piano Concertos & Paganini Rhapsody", "year": 2023, "credit": "Yuja Wang · Los Angeles Philharmonic · Gustavo Dudamel", "spotifyUrl": "https://open.spotify.com/album/0v3T6fPnrptRXOrd854hIl" } }
+      {"name":"Frédéric Chopin","nameKo":"프레데리크 쇼팽","role":"anchor","album":{"title":"Chopin: Nocturnes - Sony Classical Originals","year":1967,"credit":"Arthur Rubinstein","spotifyUrl":"https://open.spotify.com/album/5Q5m22P7jIwdMSKXqhrpaN"},"track":{"title":"Nocturnes, Op. 9: No. 2 in E-Flat Major. Andante","year":1967,"spotifyUrl":"https://open.spotify.com/track/4xt4W0JcZrLzLuFLm3w5AB"}},
+      {"name":"Yuja Wang","nameKo":"유자 왕","role":"discovery","album":{"title":"Rachmaninoff: The Piano Concertos & Paganini Rhapsody","year":2023,"credit":"Sergei Rachmaninoff · Los Angeles Philharmonic · Gustavo Dudamel","spotifyUrl":"https://open.spotify.com/album/0v3T6fPnrptRXOrd854hIl"},"track":{"title":"Piano Concerto No. 2 in C Minor, Op. 18: II. Adagio sostenuto","year":2023,"spotifyUrl":"https://open.spotify.com/track/1icgyoHziNhsD1SCPyoEKi"}}
     ],
     "pop_kpop": [
-      { "name": "BTS", "nameKo": "방탄소년단", "role": "anchor", "album": { "title": "Love Yourself 結 'Answer'", "year": 2018, "spotifyUrl": "https://open.spotify.com/album/43wFM1HquliY3iwKWzPN4y" } },
-      { "name": "f(x)", "nameKo": "에프엑스", "role": "discovery", "album": { "title": "Pink Tape - The 2nd Album", "year": 2013, "spotifyUrl": "https://open.spotify.com/album/62tuEHFtjk3L6Xjdkzyt4z" } }
+      {"name":"BTS","nameKo":"방탄소년단","role":"anchor","album":{"title":"Love Yourself 結 'Answer'","year":2018,"spotifyUrl":"https://open.spotify.com/album/43wFM1HquliY3iwKWzPN4y"},"track":{"title":"DNA","year":2018,"spotifyUrl":"https://open.spotify.com/track/2ngmiq1KoYn3x25VOmvd8F"}},
+      {"name":"f(x)","nameKo":"에프엑스","role":"discovery","album":{"title":"Pink Tape - The 2nd Album","year":2013,"spotifyUrl":"https://open.spotify.com/album/62tuEHFtjk3L6Xjdkzyt4z"},"track":{"title":"첫 사랑니 (Rum Pum Pum Pum)","year":2013,"spotifyUrl":"https://open.spotify.com/track/22sIPXiQzcPydCC6skPPPq"}},
+      {"name":"aespa","nameKo":"에스파","role":"discovery","album":{"title":"Armageddon - The 1st Album","year":2024,"spotifyUrl":"https://open.spotify.com/album/4SboBpuYojDm02qS4iFeJC"},"track":{"title":"Supernova","year":2024,"spotifyUrl":"https://open.spotify.com/track/5lKnZbdGCBViitE1Ce5TZh"}}
     ],
     "jazz_smooth": [
-      { "name": "George Benson", "nameKo": "조지 벤슨", "role": "anchor", "album": { "title": "Breezin'", "year": 1976, "spotifyUrl": "https://open.spotify.com/album/1ei5QjnfB7PHINJOH8Gft5" } },
-      { "name": "Grover Washington, Jr.", "nameKo": "그로버 워싱턴 주니어", "role": "discovery", "album": { "title": "Winelight", "year": 1980, "spotifyUrl": "https://open.spotify.com/album/50gtvo0hufJj06ipbOjAiU" } }
+      {"name":"George Benson","nameKo":"조지 벤슨","role":"anchor","album":{"title":"Breezin' (Expanded)","year":1976,"spotifyUrl":"https://open.spotify.com/album/1ei5QjnfB7PHINJOH8Gft5"},"track":{"title":"Breezin'","year":1976,"spotifyUrl":"https://open.spotify.com/track/1m3BAsNsQAaSNMD2M6vlKY"}},
+      {"name":"Grover Washington, Jr.","nameKo":"그로버 워싱턴 주니어","role":"discovery","album":{"title":"Winelight","year":1980,"spotifyUrl":"https://open.spotify.com/album/50gtvo0hufJj06ipbOjAiU"},"track":{"title":"Just the Two of Us","year":1980,"spotifyUrl":"https://open.spotify.com/track/5fdNHVZHbWB1AaXk4RBGVD"}},
+      {"name":"Boney James","nameKo":"보니 제임스","role":"discovery","album":{"title":"Solid","year":2020,"spotifyUrl":"https://open.spotify.com/album/1YcK4A5I2wdtgDJZ8Cht0F"},"track":{"title":"Solid","year":2020,"spotifyUrl":"https://open.spotify.com/track/16U1F3uu8g88Z0zABf8A5l"}}
     ],
     "rock_progressive": [
-      { "name": "Pink Floyd", "nameKo": "핑크 플로이드", "role": "anchor", "album": { "title": "Wish You Were Here", "year": 1975, "spotifyUrl": "https://open.spotify.com/album/0bCAjiUamIFqKJsekOYuRw" } },
-      { "name": "King Crimson", "nameKo": "킹 크림슨", "role": "discovery", "album": { "title": "In The Court Of The Crimson King", "year": 1969, "spotifyUrl": "https://open.spotify.com/album/75ol9OP8bJaRqzGimpFHDm" } }
+      {"name":"Pink Floyd","nameKo":"핑크 플로이드","role":"anchor","album":{"title":"Wish You Were Here","year":1975,"spotifyUrl":"https://open.spotify.com/album/0bCAjiUamIFqKJsekOYuRw"},"track":{"title":"Wish You Were Here","year":1975,"spotifyUrl":"https://open.spotify.com/track/6mFkJmJqdDVQ1REhVfGgd1"}},
+      {"name":"black midi","nameKo":"블랙 미디","role":"discovery","album":{"title":"Hellfire","year":2022,"spotifyUrl":"https://open.spotify.com/album/68z6MWYYNmvTcru1QMcYId"},"track":{"title":"27 Questions","year":2022,"spotifyUrl":"https://open.spotify.com/track/7bNRoMMuosDagm66lErRYK"}}
     ],
     "electronic_chillout": [
-      { "name": "Air", "nameKo": "에어", "role": "anchor", "album": { "title": "Moon Safari", "year": 1998, "spotifyUrl": "https://open.spotify.com/album/5dmYtZVJ1bG9RyrZBRrkOA" } },
-      { "name": "Zero 7", "nameKo": "제로 7", "role": "discovery", "album": { "title": "Simple Things", "year": 2001, "spotifyUrl": "https://open.spotify.com/album/291IqGpnrkekWf8hn0xB3x" } }
+      {"name":"Air","nameKo":"에어","role":"anchor","album":{"title":"Moon Safari","year":1998,"spotifyUrl":"https://open.spotify.com/album/5dmYtZVJ1bG9RyrZBRrkOA"},"track":{"title":"All I Need (feat. Beth Hirsch)","year":1998,"spotifyUrl":"https://open.spotify.com/track/6T10XPeC9X5xEaD6tMcK6M"}},
+      {"name":"Maribou State","nameKo":"마리부 스테이트","role":"discovery","album":{"title":"Blackoak","year":2023,"spotifyUrl":"https://open.spotify.com/album/2ulcLtfovYkJyt8frpO6R9"},"track":{"title":"Blackoak","year":2023,"spotifyUrl":"https://open.spotify.com/track/1iJL69P6zSF5lGf961kC18"}}
     ],
     "pop_mainstream": [
-      { "name": "Taylor Swift", "nameKo": "테일러 스위프트", "role": "anchor", "album": { "title": "1989 (Taylor's Version)", "year": 2023, "spotifyUrl": "https://open.spotify.com/album/64LU4c1nfjz1t4VnGhagcg" } },
-      { "name": "Carly Rae Jepsen", "nameKo": "칼리 레이 젭슨", "role": "discovery", "album": { "title": "Emotion", "year": 2015, "spotifyUrl": "https://open.spotify.com/album/0tc6zo8FGuGegfZIicLEwV" } }
+      {"name":"Taylor Swift","nameKo":"테일러 스위프트","role":"anchor","album":{"title":"1989 (Taylor's Version)","year":2023,"spotifyUrl":"https://open.spotify.com/album/64LU4c1nfjz1t4VnGhagcg"},"track":{"title":"Blank Space (Taylor's Version)","year":2023,"spotifyUrl":"https://open.spotify.com/track/45wMBGri1PORPjM9PwFfrS"}},
+      {"name":"Carly Rae Jepsen","nameKo":"칼리 레이 젭슨","role":"discovery","album":{"title":"Emotion","year":2015,"spotifyUrl":"https://open.spotify.com/album/0tc6zo8FGuGegfZIicLEwV"},"track":{"title":"Run Away With Me","year":2015,"spotifyUrl":"https://open.spotify.com/track/0Jirkb7LGNWyVhKOsKFdZ2"}},
+      {"name":"Billie Eilish","nameKo":"빌리 아일리시","role":"discovery","album":{"title":"HIT ME HARD AND SOFT","year":2024,"spotifyUrl":"https://open.spotify.com/album/7aJuG4TFXa2hmE4z1yxc3n"},"track":{"title":"BIRDS OF A FEATHER","year":2024,"spotifyUrl":"https://open.spotify.com/track/6dOtVTDdiauQNBQEDOtlAB"}}
     ],
     "classical_contemporary": [
-      { "name": "Max Richter", "nameKo": "막스 리히터", "role": "anchor", "album": { "title": "The Blue Notebooks", "year": 2004, "spotifyUrl": "https://open.spotify.com/album/1rTHmwhZwhhvivx3pdXXdo" } },
-      { "name": "Caroline Shaw", "nameKo": "캐럴라인 쇼", "role": "discovery", "album": { "title": "Caroline Shaw: Orange", "year": 2019, "credit": "Attacca Quartet", "spotifyUrl": "https://open.spotify.com/album/5d0tz2baP5WGhMzZvONcgU" } }
+      {"name":"Max Richter","nameKo":"막스 리히터","role":"anchor","album":{"title":"The Blue Notebooks (15 Years)","year":2004,"spotifyUrl":"https://open.spotify.com/album/1rTHmwhZwhhvivx3pdXXdo"},"track":{"title":"On the Nature of Daylight","year":2004,"spotifyUrl":"https://open.spotify.com/track/56oReVXIfUO9xkX7pHmEU0"}},
+      {"name":"Caroline Shaw","nameKo":"캐럴라인 쇼","role":"discovery","album":{"title":"Caroline Shaw: Orange","year":2019,"credit":"Attacca Quartet","spotifyUrl":"https://open.spotify.com/album/5d0tz2baP5WGhMzZvONcgU"},"track":{"title":"Entr'acte","year":2019,"spotifyUrl":"https://open.spotify.com/track/3FMv5IC5wxQbPp8UPfUS2f"}},
+      {"name":"Ólafur Arnalds","nameKo":"올라퍼 아르날즈","role":"discovery","album":{"title":"some kind of peace","year":2020,"spotifyUrl":"https://open.spotify.com/album/6NW97EFYSQ9X1CulKyL7wf"},"track":{"title":"Woven Song","year":2020,"spotifyUrl":"https://open.spotify.com/track/4lSsH5NXdwFbBhRrFXPVFj"}}
     ],
     "hiphop_oldschool": [
-      { "name": "Run–D.M.C.", "nameKo": "런-D.M.C.", "role": "anchor", "album": { "title": "Raising Hell", "year": 1986, "spotifyUrl": "https://open.spotify.com/album/53haOw4fOh1rNZK8xKgGY8" } },
-      { "name": "Eric B. & Rakim", "nameKo": "에릭 B. & 라킴", "role": "discovery", "album": { "title": "Paid In Full", "year": 1987, "spotifyUrl": "https://open.spotify.com/album/3miZDfDnP7SmOXAJXWdFmz" } }
+      {"name":"Run–D.M.C.","nameKo":"런-D.M.C.","role":"anchor","album":{"title":"Raising Hell (Expanded Edition)","year":1986,"spotifyUrl":"https://open.spotify.com/album/53haOw4fOh1rNZK8xKgGY8"},"track":{"title":"It's Tricky","year":1986,"spotifyUrl":"https://open.spotify.com/track/5IGUkmuTVroDG2PnaUiNFj"}},
+      {"name":"Eric B. & Rakim","nameKo":"에릭 B. & 라킴","role":"discovery","album":{"title":"Paid In Full","year":1987,"spotifyUrl":"https://open.spotify.com/album/3miZDfDnP7SmOXAJXWdFmz"},"track":{"title":"Paid In Full","year":1987,"spotifyUrl":"https://open.spotify.com/track/20s3FayrStM8GY0m4dRFsw"}},
+      {"name":"Nas","nameKo":"나스","role":"discovery","album":{"title":"Magic","year":2021,"spotifyUrl":"https://open.spotify.com/album/5SF2Pi5TFeBAfv5os5Yn9m"},"track":{"title":"Speechless","year":2021,"spotifyUrl":"https://open.spotify.com/track/1hXmjeQ3mNA0YFu4gwp7nv"}}
     ],
     "hiphop_trap": [
-      { "name": "Travis Scott", "nameKo": "트래비스 스콧", "role": "anchor", "album": { "title": "ASTROWORLD", "year": 2018, "spotifyUrl": "https://open.spotify.com/album/41GuZcammIkupMPKH2OJ6I" } },
-      { "name": "Future", "nameKo": "퓨처", "role": "discovery", "album": { "title": "DS2", "year": 2015, "spotifyUrl": "https://open.spotify.com/album/0fUy6IdLHDpGNwavIlhEsl" } }
+      {"name":"Travis Scott","nameKo":"트래비스 스콧","role":"anchor","album":{"title":"ASTROWORLD","year":2018,"spotifyUrl":"https://open.spotify.com/album/41GuZcammIkupMPKH2OJ6I"},"track":{"title":"BUTTERFLY EFFECT","year":2018,"spotifyUrl":"https://open.spotify.com/track/2cYqizR4lgvp4Qu6IQ3qGN"}},
+      {"name":"Future & Metro Boomin","nameKo":"퓨처 & 메트로 부민","role":"discovery","album":{"title":"WE DON'T TRUST YOU","year":2024,"spotifyUrl":"https://open.spotify.com/album/4iqbFIdGOTzXeDtt9owjQn"},"track":{"title":"We Don't Trust You","year":2024,"spotifyUrl":"https://open.spotify.com/track/1pnDvUuAEd6z8bKEsbAjk1"}}
     ],
     "rnb_classic": [
-      { "name": "Stevie Wonder", "nameKo": "스티비 원더", "role": "anchor", "album": { "title": "Songs In The Key Of Life", "year": 1976, "spotifyUrl": "https://open.spotify.com/album/6YUCc2RiXcEKS9ibuZxjt0" } },
-      { "name": "Donny Hathaway", "nameKo": "도니 해서웨이", "role": "discovery", "album": { "title": "Everything Is Everything", "year": 1970, "spotifyUrl": "https://open.spotify.com/album/7k89fD1BB2xQCibsPtSYyh" } }
+      {"name":"Stevie Wonder","nameKo":"스티비 원더","role":"anchor","album":{"title":"Songs In The Key Of Life","year":1976,"spotifyUrl":"https://open.spotify.com/album/6YUCc2RiXcEKS9ibuZxjt0"},"track":{"title":"Sir Duke","year":1976,"spotifyUrl":"https://open.spotify.com/track/4pNiE4LCVV74vfIBaUHm1b"}},
+      {"name":"Jalen Ngonda","nameKo":"제일런 응곤다","role":"discovery","album":{"title":"Come Around and Love Me","year":2023,"spotifyUrl":"https://open.spotify.com/album/0E2PgtXRUHCslZ7gRselUq"},"track":{"title":"Come Around and Love Me","year":2023,"spotifyUrl":"https://open.spotify.com/track/5FFSlcb55C7pIFcOYapN1b"}}
     ],
     "rnb_neosoul": [
-      { "name": "D'Angelo", "nameKo": "디앤젤로", "role": "anchor", "album": { "title": "Voodoo", "year": 2000, "spotifyUrl": "https://open.spotify.com/album/2lO9yuuIDgBpSJzxTh3ai8" } },
-      { "name": "Cleo Sol", "nameKo": "클레오 솔", "role": "discovery", "album": { "title": "Mother", "year": 2021, "spotifyUrl": "https://open.spotify.com/album/3cDl7l5FGQi93NgtqFR1gR" } }
+      {"name":"D'Angelo","nameKo":"디앤젤로","role":"anchor","album":{"title":"Voodoo","year":2000,"spotifyUrl":"https://open.spotify.com/album/2lO9yuuIDgBpSJzxTh3ai8"},"track":{"title":"Spanish Joint","year":2000,"spotifyUrl":"https://open.spotify.com/track/4euxFlxLWVGmZZLyYARTyE"}},
+      {"name":"Cleo Sol","nameKo":"클레오 솔","role":"discovery","album":{"title":"Mother","year":2021,"spotifyUrl":"https://open.spotify.com/album/3cDl7l5FGQi93NgtqFR1gR"},"track":{"title":"Sunshine","year":2021,"spotifyUrl":"https://open.spotify.com/track/1el1feH98jWUrPpYmu5jN8"}}
     ],
     "world_latin": [
-      { "name": "Marc Anthony", "nameKo": "마크 앤서니", "role": "anchor", "album": { "title": "3.0", "year": 2013, "spotifyUrl": "https://open.spotify.com/album/6vBpLg3T8bojcqzoKI6m0R" } },
-      { "name": "Natalia Lafourcade", "nameKo": "나탈리아 라포우르카데", "role": "discovery", "album": { "title": "De Todas las Flores", "year": 2022, "spotifyUrl": "https://open.spotify.com/album/4BJoDX0fIjR4RsFF4vyd81" } }
+      {"name":"Marc Anthony","nameKo":"마크 앤서니","role":"anchor","album":{"title":"3.0","year":2013,"spotifyUrl":"https://open.spotify.com/album/6vBpLg3T8bojcqzoKI6m0R"},"track":{"title":"Vivir Mi Vida","year":2013,"spotifyUrl":"https://open.spotify.com/track/3QHMxEOAGD51PDlbFPHLyJ"}},
+      {"name":"Natalia Lafourcade","nameKo":"나탈리아 라포우르카데","role":"discovery","album":{"title":"De Todas las Flores","year":2022,"spotifyUrl":"https://open.spotify.com/album/4BJoDX0fIjR4RsFF4vyd81"},"track":{"title":"De todas las flores","year":2022,"spotifyUrl":"https://open.spotify.com/track/3MAHwAmag1U1gLLuvEQNHU"}}
     ],
     "world_traditional": [
-      { "name": "Ravi Shankar", "nameKo": "라비 샹카르", "role": "anchor", "album": { "title": "The Sounds Of India", "year": 1958, "spotifyUrl": "https://open.spotify.com/album/3SsSG7UYklTpyg0K5dA4DM" } },
-      { "name": "Ali Farka Touré", "nameKo": "알리 파르카 투레", "role": "discovery", "album": { "title": "Savane", "year": 2006, "spotifyUrl": "https://open.spotify.com/album/2WsP2BPz9GI5sJBdJFonrO" } }
+      {"name":"Ravi Shankar","nameKo":"라비 샹카르","role":"anchor","album":{"title":"The Sounds Of India","year":1958,"spotifyUrl":"https://open.spotify.com/album/3SsSG7UYklTpyg0K5dA4DM"},"track":{"title":"Dádrá","year":1958,"spotifyUrl":"https://open.spotify.com/track/1n7MktRJHDGxKwb0YbevTh"}},
+      {"name":"Ali Farka Touré","nameKo":"알리 파르카 투레","role":"discovery","album":{"title":"Savane","year":2006,"spotifyUrl":"https://open.spotify.com/album/2WsP2BPz9GI5sJBdJFonrO"},"track":{"title":"Savane","year":2006,"spotifyUrl":"https://open.spotify.com/track/0Wqht20X3ZII115vByDReU"}},
+      {"name":"Ballaké Sissoko","nameKo":"발라케 시소코","role":"discovery","album":{"title":"Djourou","year":2021,"spotifyUrl":"https://open.spotify.com/album/1wqZp9tG65T3FjKAPd5a5u"},"track":{"title":"Demba Kunda","year":2021,"spotifyUrl":"https://open.spotify.com/track/0qr15EE3EznLGcF1joV0Ko"}}
     ],
     "rock_metal": [
-      { "name": "Metallica", "nameKo": "메탈리카", "role": "anchor", "album": { "title": "Master Of Puppets", "year": 1986, "spotifyUrl": "https://open.spotify.com/album/2Lq2qX3hYhiuPckC8Flj21" } },
-      { "name": "Gojira", "nameKo": "고지라", "role": "discovery", "album": { "title": "From Mars to Sirius", "year": 2005, "spotifyUrl": "https://open.spotify.com/album/0AvFF0HlQYvYKHaRURGZBs" } }
+      {"name":"Metallica","nameKo":"메탈리카","role":"anchor","album":{"title":"Master Of Puppets (Remastered)","year":1986,"spotifyUrl":"https://open.spotify.com/album/2Lq2qX3hYhiuPckC8Flj21"},"track":{"title":"Master Of Puppets","year":1986,"spotifyUrl":"https://open.spotify.com/track/2MuWTIM3b0YEAskbeeFE1i"}},
+      {"name":"Gojira","nameKo":"고지라","role":"discovery","album":{"title":"Fortitude","year":2021,"spotifyUrl":"https://open.spotify.com/album/3bmdzJRZ4DLRTiA6yBBQcI"},"track":{"title":"Amazonia","year":2021,"spotifyUrl":"https://open.spotify.com/track/1GWtUkDQk7XC35r7kTPfqx"}}
     ],
     "rock_punk": [
-      { "name": "The Clash", "nameKo": "더 클래시", "role": "anchor", "album": { "title": "London Calling", "year": 1979, "spotifyUrl": "https://open.spotify.com/album/6FCzvataOZh68j8OKzOt9a" } },
-      { "name": "Amyl and The Sniffers", "nameKo": "에이미 앤 더 스니퍼스", "role": "discovery", "album": { "title": "Cartoon Darkness", "year": 2024, "spotifyUrl": "https://open.spotify.com/album/0uMO9LgMLMtHzLnTSONd6k" } }
+      {"name":"The Clash","nameKo":"더 클래시","role":"anchor","album":{"title":"London Calling (Remastered)","year":1979,"spotifyUrl":"https://open.spotify.com/album/6FCzvataOZh68j8OKzOt9a"},"track":{"title":"London Calling - Remastered","year":1979,"spotifyUrl":"https://open.spotify.com/track/5jzma6gCzYtKB1DbEwFZKH"}},
+      {"name":"Amyl and The Sniffers","nameKo":"에이미 앤 더 스니퍼스","role":"discovery","album":{"title":"Cartoon Darkness","year":2024,"spotifyUrl":"https://open.spotify.com/album/0uMO9LgMLMtHzLnTSONd6k"},"track":{"title":"Big Dreams","year":2024,"spotifyUrl":"https://open.spotify.com/track/6d5F8T8SS44UMB2Nz8IMGe"}}
     ],
     "electronic_dnb": [
-      { "name": "Goldie", "nameKo": "골디", "role": "anchor", "album": { "title": "Timeless", "year": 1995, "spotifyUrl": "https://open.spotify.com/album/67HPieOqDZ6G7WOM09Egbk" } },
-      { "name": "Nia Archives", "nameKo": "니아 아카이브스", "role": "discovery", "album": { "title": "Silence Is Loud", "year": 2024, "spotifyUrl": "https://open.spotify.com/album/7aIsJRcf04ZeFiU1Fa70Cq" } }
+      {"name":"Goldie","nameKo":"골디","role":"anchor","album":{"title":"Timeless","year":1995,"spotifyUrl":"https://open.spotify.com/album/67HPieOqDZ6G7WOM09Egbk"},"track":{"title":"Timeless","year":1995,"spotifyUrl":"https://open.spotify.com/track/7AvrJG89s3bVBWNqaLa8Le"}},
+      {"name":"Nia Archives","nameKo":"니아 아카이브스","role":"discovery","album":{"title":"Silence Is Loud","year":2024,"spotifyUrl":"https://open.spotify.com/album/7aIsJRcf04ZeFiU1Fa70Cq"},"track":{"title":"Silence Is Loud","year":2024,"spotifyUrl":"https://open.spotify.com/track/2FlY3tYbBDOExnLhjUZxlc"}}
     ],
     "electronic_dubstep": [
-      { "name": "Skrillex", "nameKo": "스크릴렉스", "role": "anchor", "album": { "title": "Scary Monsters and Nice Sprites", "year": 2010, "spotifyUrl": "https://open.spotify.com/album/6HbNEBza64W10MQxUFq6QL" } },
-      { "name": "Burial", "nameKo": "베리얼", "role": "discovery", "album": { "title": "Untrue", "year": 2007, "spotifyUrl": "https://open.spotify.com/album/3zhiAPi0l1rxjaA1VBa4QX" } }
+      {"name":"Skrillex","nameKo":"스크릴렉스","role":"anchor","album":{"title":"Scary Monsters and Nice Sprites (Deluxe Tour Edition)","year":2010,"spotifyUrl":"https://open.spotify.com/album/6HbNEBza64W10MQxUFq6QL"},"track":{"title":"Scary Monsters and Nice Sprites","year":2010,"spotifyUrl":"https://open.spotify.com/track/5q8oybjZelukF4h0CzSUN9"}},
+      {"name":"Burial","nameKo":"베리얼","role":"discovery","album":{"title":"Untrue","year":2007,"spotifyUrl":"https://open.spotify.com/album/3zhiAPi0l1rxjaA1VBa4QX"},"track":{"title":"Archangel","year":2007,"spotifyUrl":"https://open.spotify.com/track/2agb1CPPGWXqXnrKn6cx7u"}},
+      {"name":"Hamdi","nameKo":"함디","role":"discovery","album":{"title":"Skanka","year":2021,"spotifyUrl":"https://open.spotify.com/album/6VdZkGxkcdhZebv9u7solf"},"track":{"title":"Skanka","year":2021,"spotifyUrl":"https://open.spotify.com/track/3M2l5Rh3qLjHzgVEWbyAbZ"}}
     ],
     "pop_synthpop": [
-      { "name": "Depeche Mode", "nameKo": "디페시 모드", "role": "anchor", "album": { "title": "Violator", "year": 1990, "spotifyUrl": "https://open.spotify.com/album/0Tg76MY2wNK4j37iCb6qyH" } },
-      { "name": "CHVRCHES", "nameKo": "처치스", "role": "discovery", "album": { "title": "The Bones Of What You Believe", "year": 2013, "spotifyUrl": "https://open.spotify.com/album/3gvcOyv8IJfNZUbXjce0JW" } }
+      {"name":"Depeche Mode","nameKo":"디페시 모드","role":"anchor","album":{"title":"Violator (Deluxe)","year":1990,"spotifyUrl":"https://open.spotify.com/album/0Tg76MY2wNK4j37iCb6qyH"},"track":{"title":"Enjoy the Silence","year":1990,"spotifyUrl":"https://open.spotify.com/track/1JekRMGQ8iN4G1AAdh0SBa"}},
+      {"name":"CHVRCHES","nameKo":"처치스","role":"discovery","album":{"title":"Screen Violence","year":2021,"spotifyUrl":"https://open.spotify.com/album/0KuAi49HdkjHiuL7TjKsud"},"track":{"title":"He Said She Said","year":2021,"spotifyUrl":"https://open.spotify.com/track/2n8AlcCqCzkOQtQP4swNiR"}}
     ],
     "pop_folk": [
-      { "name": "Simon & Garfunkel", "nameKo": "사이먼 앤 가펑클", "role": "anchor", "album": { "title": "Bridge Over Troubled Water", "year": 1970, "spotifyUrl": "https://open.spotify.com/album/0JwHz5SSvpYWuuCNbtYZoV" } },
-      { "name": "Fleet Foxes", "nameKo": "플리트 폭시스", "role": "discovery", "album": { "title": "Helplessness Blues", "year": 2011, "spotifyUrl": "https://open.spotify.com/album/7D0rCfJjFj9x0bdgRKtvzb" } }
+      {"name":"Simon & Garfunkel","nameKo":"사이먼 앤 가펑클","role":"anchor","album":{"title":"Bridge Over Troubled Water","year":1970,"spotifyUrl":"https://open.spotify.com/album/0JwHz5SSvpYWuuCNbtYZoV"},"track":{"title":"Bridge Over Troubled Water","year":1970,"spotifyUrl":"https://open.spotify.com/track/6l8EbYRtQMgKOyc1gcDHF9"}},
+      {"name":"Fleet Foxes","nameKo":"플리트 폭시스","role":"discovery","album":{"title":"Shore","year":2020,"spotifyUrl":"https://open.spotify.com/album/5tXJchExPrWfcj1JwoDeZy"},"track":{"title":"Sunblind","year":2020,"spotifyUrl":"https://open.spotify.com/track/1Kpt4G3LsCeKYLqTnRYBio"}}
+    ],
+    "hiphop_jazzhop": [
+      {"name":"Nujabes","nameKo":"누자베스","role":"anchor","album":{"title":"Modal Soul","year":2005,"spotifyUrl":"https://open.spotify.com/album/6b08FpNaFFTjc1dJ9DSWfn"},"track":{"title":"Feather","year":2005,"spotifyUrl":"https://open.spotify.com/track/4aK4LNijbD7kkCg54UoIij"}},
+      {"name":"Uyama Hiroto","nameKo":"우야마 히로토","role":"discovery","album":{"title":"a son of the sun","year":2008,"spotifyUrl":"https://open.spotify.com/album/3lWDRI6LLRZqPbCK7xBeAp"},"track":{"title":"Waltz For Life Will Born","year":2008,"spotifyUrl":"https://open.spotify.com/track/6U7OoPmRp0GRbkXeZpQmRs"}},
+      {"name":"Tom Misch & Yussef Dayes","nameKo":"톰 미쉬 & 유세프 데이즈","role":"discovery","album":{"title":"What Kinda Music","year":2020,"spotifyUrl":"https://open.spotify.com/album/6iOCv7oGL5sGi2aVnRz2BI"},"track":{"title":"Nightrider","year":2020,"spotifyUrl":"https://open.spotify.com/track/5TgZ7lOUugOdabBcD9a6ud"}}
+    ],
+    "electronic_melodic_dance": [
+      {"name":"Avicii","nameKo":"아비치","role":"anchor","album":{"title":"True","year":2013,"spotifyUrl":"https://open.spotify.com/album/1s9tU91VJt4sU5owi29GD3"},"track":{"title":"Wake Me Up","year":2013,"spotifyUrl":"https://open.spotify.com/track/4h8VwCb1MTGoLKueQ1WgbD"}},
+      {"name":"ODESZA","nameKo":"오데자","role":"discovery","album":{"title":"The Last Goodbye","year":2022,"spotifyUrl":"https://open.spotify.com/album/0xVucRYJf5luWLekMGYh3i"},"track":{"title":"The Last Goodbye","year":2022,"spotifyUrl":"https://open.spotify.com/track/2gQK13gXYZRq2MgvPJyHx8"}}
     ]
-  }
+  },
+  "crossovers": [
+    {"name":"YOASOBI","nameKo":"요아소비","role":"bridge","scene":"jpop","genreIds":["pop_synthpop","pop_mainstream"],"album":{"title":"THE BOOK 3","year":2023,"spotifyUrl":"https://open.spotify.com/album/68w73FF3dYC6C3RWdcV0Yl"},"track":{"title":"アイドル","year":2023,"spotifyUrl":"https://open.spotify.com/track/1hAloWiinXLPQUJxrJReb1"}},
+      {"name":"Fujii Kaze","nameKo":"후지이 카제","role":"bridge","scene":"jpop","genreIds":["rnb_neosoul","pop_indie"],"album":{"title":"HELP EVER HURT NEVER","year":2020,"spotifyUrl":"https://open.spotify.com/album/03QiFOKDh6xMiSTkOnsmMG"},"track":{"title":"死ぬのがいいわ","year":2020,"spotifyUrl":"https://open.spotify.com/track/0HYAsQwJIO6FLqpyTeD3l6"}},
+    {"name":"NewJeans","nameKo":"뉴진스","role":"bridge","scene":"kpop","genreIds":["pop_kpop","pop_dream"],"album":{"title":"NewJeans 'OMG'","year":2023,"spotifyUrl":"https://open.spotify.com/album/45ozep8uHHnj5CCittuyXj"},"track":{"title":"Ditto","year":2023,"spotifyUrl":"https://open.spotify.com/track/5702raF31K9rvD6KZ6sCTo"}},
+    {"name":"ILLIT","nameKo":"아일릿","role":"bridge","scene":"kpop","genreIds":["pop_kpop","electronic_house"],"album":{"title":"SUPER REAL ME","year":2024,"spotifyUrl":"https://open.spotify.com/album/6irebIc6UO8fN0jl4UlzBS"},"track":{"title":"Magnetic","year":2024,"spotifyUrl":"https://open.spotify.com/track/1aKvZDoLGkNMxoRYgkckZG"}},
+    {"name":"The Weeknd","nameKo":"더 위켄드","role":"bridge","scene":"global","genreIds":["pop_synthpop","pop_mainstream"],"album":{"title":"After Hours","year":2020,"spotifyUrl":"https://open.spotify.com/album/4yP0hdKOZPNshxUOjY0cZj"},"track":{"title":"Blinding Lights","year":2020,"spotifyUrl":"https://open.spotify.com/track/0VjIjW4GlUZAMYd2vXMi3b"}},
+    {"name":"Dua Lipa","nameKo":"두아 리파","role":"bridge","scene":"global","genreIds":["pop_mainstream","pop_synthpop"],"album":{"title":"Future Nostalgia","year":2020,"spotifyUrl":"https://open.spotify.com/album/2HPv9EfAXl4orgYHE0YjsZ"},"track":{"title":"Levitating","year":2020,"spotifyUrl":"https://open.spotify.com/track/3naozP8C5y0aMbBA8DdtAF"}},
+    {"name":"Laufey","nameKo":"라우페이","role":"bridge","scene":"global","genreIds":["jazz_cool","jazz_smooth"],"album":{"title":"Bewitched","year":2023,"spotifyUrl":"https://open.spotify.com/album/1rpCHilZQkw84A3Y9czvMO"},"track":{"title":"Misty","year":2023,"spotifyUrl":"https://open.spotify.com/track/5oEJyOsT68BDRwLoQQJl6W"}}
+  ]
 }

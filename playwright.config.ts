@@ -19,6 +19,10 @@ export default defineConfig({
       name: 'mobile-chromium',
       use: { ...devices['Pixel 7'] },
     },
+    ...(process.env.MUTI_WEBKIT === '1' ? [{
+      name: 'mobile-webkit',
+      use: { ...devices['iPhone 13'] },
+    }] : []),
   ],
   webServer: {
     command: 'npm run preview:e2e',

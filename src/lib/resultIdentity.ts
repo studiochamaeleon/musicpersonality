@@ -35,6 +35,8 @@ export const GENRE_SOUNDS: Record<string, Record<Language, string>> = {
   electronic_dubstep: { ko: '묵직한 베이스와 극적인 전환의 음악', en: 'music with heavy bass and dramatic drops', ja: '重いベースと劇的な展開の音楽' },
   pop_synthpop: { ko: '빛나는 신시사이저와 선명한 멜로디의 음악', en: 'music with glowing synths and vivid melodies', ja: 'きらめくシンセと鮮やかなメロディーの音楽' },
   pop_folk: { ko: '따뜻한 목소리와 소박한 이야기의 음악', en: 'music with warm voices and honest stories', ja: '温かな歌声と素朴な物語の音楽' },
+  hiphop_jazzhop: { ko: '재즈의 온기와 느긋한 비트가 만나는 음악', en: 'music where jazz warmth meets laid-back beats', ja: 'ジャズの温かさとゆるやかなビートが出会う音楽' },
+  electronic_melodic_dance: { ko: '멜로디와 비트가 함께 치솟는 음악', en: 'music where melody and beat rise together', ja: 'メロディーとビートが一緒に高まる音楽' },
 };
 
 export function getGenreSound(genreId: string, language: Language): string {

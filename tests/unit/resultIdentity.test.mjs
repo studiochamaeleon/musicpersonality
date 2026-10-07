@@ -5,8 +5,8 @@ import { GENRE_SOUNDS, getGenreSound, getResultIdentityCopy } from '../../src/li
 
 const genres = JSON.parse(readFileSync(new URL('../../src/data/genres.json', import.meta.url), 'utf8'));
 
-test('all 32 result genres have a complete, short sound description in three languages', () => {
-  assert.equal(genres.length, 32);
+test('all 34 result genres have a complete, short sound description in three languages', () => {
+  assert.equal(genres.length, 34);
   assert.deepEqual(Object.keys(GENRE_SOUNDS).sort(), genres.map(genre => genre.id).sort());
   for (const genre of genres) {
     for (const language of ['ko', 'en', 'ja']) {

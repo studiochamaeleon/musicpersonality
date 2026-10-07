@@ -53,8 +53,8 @@
   {
     "id": "mellow_4",
     "category": "mellow",
-    "text": "시끄럽고 자극적인 음악을 듣는 것을 피한다",
-    "textEn": "I avoid listening to loud and stimulating music",
+    "text": "소리가 빽빽하게 겹치는 곡보다 여백이 있는 곡이 편하다",
+    "textEn": "I feel more at ease with spacious music than densely layered sounds",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다", 
@@ -70,8 +70,8 @@
   {
     "id": "mellow_5",
     "category": "mellow",
-    "text": "음악은 내 감정을 진정시키는 역할을 해야 한다고 생각한다",
-    "textEn": "I believe music should calm my emotions",
+    "text": "마음을 진정시키는 느낌의 음악을 좋아한다",
+    "textEn": "I like music that feels calming",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -104,8 +104,8 @@
   {
     "id": "mellow_7",
     "category": "mellow",
-    "text": "어쿠스틱 악기 소리가 전자 악기보다 편안하게 느껴진다",
-    "textEn": "Acoustic instruments feel more comfortable than electronic instruments",
+    "text": "잔잔한 전자음이든 어쿠스틱 악기든 부드러운 소리에 끌린다",
+    "textEn": "I am drawn to gentle sounds, whether electronic or acoustic",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -139,8 +139,8 @@
   {
     "id": "unpretentious_1",
     "category": "unpretentious",
-    "text": "음악은 복잡하지 않고 단순할수록 좋다",
-    "textEn": "Music is better when it's simple rather than complex",
+    "text": "복잡한 구성의 곡보다 단순한 구성의 곡을 좋아한다",
+    "textEn": "I prefer songs with simple arrangements over complex ones",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -156,8 +156,8 @@
   {
     "id": "unpretentious_2",
     "category": "unpretentious",
-    "text": "대중적이고 친숙한 음악을 선호한다",
-    "textEn": "I prefer popular and familiar music",
+    "text": "처음 들어도 금방 편하게 느껴지는 음악이 좋다",
+    "textEn": "I like music that feels welcoming from the first listen",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -224,8 +224,8 @@
   {
     "id": "unpretentious_6",
     "category": "unpretentious",
-    "text": "라디오에서 자주 나오는 인기곡들을 듣는 것을 좋아한다",
-    "textEn": "I like listening to popular songs that are frequently played on the radio",
+    "text": "소박한 악기 편성과 친근한 리듬의 곡이 좋다",
+    "textEn": "I like songs with an uncomplicated arrangement and an easygoing rhythm",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -258,8 +258,8 @@
   {
     "id": "unpretentious_8",
     "category": "unpretentious",
-    "text": "정통성보다는 재미있고 즐거운 음악이 더 좋다",
-    "textEn": "Fun and enjoyable music is better than authentic music",
+    "text": "음악이 전통적인 형식에 맞는지보다 듣는 즐거움이 더 중요하다",
+    "textEn": "Enjoying how music sounds matters more to me than whether it follows traditional forms",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -293,8 +293,8 @@
   {
     "id": "sophisticated_2", 
     "category": "sophisticated",
-    "text": "클래식이나 재즈 같은 전통적인 고급 음악을 선호한다",
-    "textEn": "I prefer traditional high-class music like classical or jazz",
+    "text": "장르에 관계없이 정교한 연주와 편곡이 있는 곡에 끌린다",
+    "textEn": "I am drawn to intricate playing and arrangements across genres",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -361,8 +361,8 @@
   {
     "id": "sophisticated_6",
     "category": "sophisticated",
-    "text": "음악사적으로 중요한 작품들에 관심이 많다",
-    "textEn": "I'm very interested in historically important musical works",
+    "text": "한 곡을 다시 들을 때마다 새로운 소리를 발견하는 재미가 있다",
+    "textEn": "I enjoy discovering new details each time I replay a song",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -395,8 +395,8 @@
   {
     "id": "sophisticated_8",
     "category": "sophisticated",
-    "text": "음악을 깊이 있게 이해하고 분석하려고 노력한다",
-    "textEn": "I try to understand and analyze music in depth",
+    "text": "곡이 어떻게 구성되어 있는지 세심하게 따라 들으며 이해하는 것이 즐겁다",
+    "textEn": "I enjoy following an arrangement closely to understand how a track is built",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -430,8 +430,8 @@
   {
     "id": "intense_2",
     "category": "intense",
-    "text": "감정적으로 격정적인 음악을 들으면 카타르시스를 느낀다",
-    "textEn": "I feel catharsis when listening to emotionally intense music",
+    "text": "드럼이나 기타, 전자음이 거칠고 밀도 높게 몰아치는 곡을 즐긴다",
+    "textEn": "I enjoy tracks where drums, guitars, or electronic sounds surge with a raw, dense texture",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -447,8 +447,8 @@
   {
     "id": "intense_3",
     "category": "intense",
-    "text": "음악을 통해 강한 감정을 경험하고 싶다",
-    "textEn": "I want to experience strong emotions through music",
+    "text": "강하게 밀어붙이는 리듬이 있는 곡을 들으면 몰입된다",
+    "textEn": "I get absorbed in tracks with a forceful, driving rhythm",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -464,8 +464,8 @@
   {
     "id": "intense_4",
     "category": "intense",
-    "text": "드라마틱하고 극적인 음악적 전개를 좋아한다",
-    "textEn": "I like dramatic and theatrical musical development",
+    "text": "절제된 흐름보다 소리의 에너지가 크게 터지는 전개에 끌린다",
+    "textEn": "I am drawn to transitions where the sound bursts with energy rather than stays restrained",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -481,8 +481,8 @@
   {
     "id": "intense_5",
     "category": "intense",
-    "text": "높은 볼륨으로 음악을 듣는 것을 좋아한다",
-    "textEn": "I like listening to music at high volume",
+    "text": "소리를 크게 틀지 않아도 강한 타격감이 느껴지는 음악이 좋다",
+    "textEn": "I enjoy music with a strong impact even at a moderate volume",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -498,8 +498,8 @@
   {
     "id": "intense_6",
     "category": "intense",
-    "text": "음악이 내 심장박동을 빠르게 만드는 것을 즐긴다",
-    "textEn": "I enjoy when music makes my heart beat faster",
+    "text": "빠르고 몰아치는 리듬에 몸이 반응하는 느낌을 즐긴다",
+    "textEn": "I enjoy feeling my body respond to fast, driving rhythms",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -515,8 +515,8 @@
   {
     "id": "intense_7",
     "category": "intense",
-    "text": "절망이나 분노 같은 어두운 감정을 다룬 음악도 좋아한다",
-    "textEn": "I also like music that deals with dark emotions like despair or anger",
+    "text": "매끈한 음색보다 날카롭고 거친 질감의 소리에 끌린다",
+    "textEn": "I am drawn to sharp, raw sound textures rather than smooth tones",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -550,8 +550,8 @@
   {
     "id": "contemporary_1",
     "category": "contemporary",
-    "text": "최신 음악 트렌드를 따르는 것을 좋아한다",
-    "textEn": "I like following the latest music trends",
+    "text": "선명한 비트와 현대적인 편곡이 있는 음악에 끌린다",
+    "textEn": "I am drawn to crisp beats and contemporary production",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -584,8 +584,8 @@
   {
     "id": "contemporary_3",
     "category": "contemporary",
-    "text": "젊은 세대가 좋아하는 음악에 관심이 많다",
-    "textEn": "I'm very interested in music that young people like",
+    "text": "리듬과 보컬이 자연스럽게 어우러진 현대적인 곡을 좋아한다",
+    "textEn": "I enjoy modern tracks where rhythm and vocals blend naturally",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -601,8 +601,8 @@
   {
     "id": "contemporary_4",
     "category": "contemporary",
-    "text": "새로운 아티스트와 신곡을 찾아 듣는 것을 즐긴다",
-    "textEn": "I enjoy discovering new artists and new songs",
+    "text": "익숙한 악기 소리에도 새로운 제작 방식이 더해진 곡이 좋다",
+    "textEn": "I like familiar instruments mixed with newer production techniques",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -618,8 +618,8 @@
   {
     "id": "contemporary_5",
     "category": "contemporary",
-    "text": "과거의 음악보다는 현재의 음악이 더 흥미롭다",
-    "textEn": "Current music is more interesting than past music",
+    "text": "발매 연도와 관계없이 현대적인 리듬과 질감이 들리면 좋다",
+    "textEn": "I like contemporary rhythms and textures regardless of release year",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -635,8 +635,8 @@
   {
     "id": "contemporary_6",
     "category": "contemporary",
-    "text": "스트리밍 플랫폼의 추천 음악을 자주 듣는다",
-    "textEn": "I often listen to music recommended by streaming platforms",
+    "text": "전자 비트와 샘플 소리가 반복되며 조금씩 변하는 곡이 재미있다",
+    "textEn": "I enjoy tracks where electronic beats and sampled sounds repeat and gradually change",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -652,8 +652,8 @@
   {
     "id": "contemporary_7",
     "category": "contemporary",
-    "text": "음악과 기술의 융합에 관심이 있다",
-    "textEn": "I'm interested in the fusion of music and technology",
+    "text": "샘플링이나 신시사이저처럼 가공한 소리도 매력적으로 느낀다",
+    "textEn": "Processed sounds such as samples and synthesizers appeal to me",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",
@@ -669,8 +669,8 @@
   {
     "id": "contemporary_8",
     "category": "contemporary",
-    "text": "소셜미디어에서 인기 있는 음악을 찾아 듣는다",
-    "textEn": "I seek out popular music on social media",
+    "text": "리듬이 앞에 나서고 저음이 또렷한 음악을 즐긴다",
+    "textEn": "I enjoy music with a prominent groove and clear bass",
     "scale": 5,
     "scaleLabels": {
       "min": "전혀 그렇지 않다",

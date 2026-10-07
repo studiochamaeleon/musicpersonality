@@ -1,11 +1,12 @@
 import { expect, test } from '@playwright/test';
+import { openShareMenu } from './helpers/share-menu';
 
 const hostToken = 'v1.82.46.74.31.68';
 const guestToken = 'v1.70.61.79.48.75';
 
 test('an invited friend can finish the survey and see the pair result', async ({ page }) => {
   await page.goto(`/#compare=${hostToken}`);
-  await expect(page.getByRole('heading', { name: '친구가 음악 궁합을 기다리고 있어요.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '우리의 음악 취향, 얼마나 닮았을까요?' })).toBeVisible();
 
   await page.getByRole('button', { name: '내 음악 성격 검사하기' }).click();
   await expect(page.getByRole('heading', { name: '나는 조용하고 차분한 음악을 선호한다' })).toBeVisible();
@@ -25,14 +26,22 @@ test('a pair result link restores and opens the guest personal result', async ({
   await page.goto(`/#compare=${hostToken}&guest=${guestToken}`);
   await expect(page.getByText('89%', { exact: true }).first()).toBeVisible();
   await expect(page.getByRole('heading', { level: 1, name: '거의 같은 플레이리스트' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '같이 재생할 세 곡' })).toBeVisible();
+  const pairTracks = page.getByRole('link', { name: /Spotify에서 함께 듣기/ });
+  await expect(pairTracks).toHaveCount(3);
+  const trackUrls = await pairTracks.evaluateAll(links => links.map(link => link.getAttribute('href')));
+  expect(new Set(trackUrls).size).toBe(3);
+  for (const url of trackUrls) expect(url).toMatch(/^https:\/\/open\.spotify\.com\/track\/[A-Za-z0-9]{22}$/);
 
-  await page.getByRole('button', { name: '내 개인 결과 보기' }).click();
-  await expect(page).toHaveURL(/\?v=2&m=70&u=61&s=79&i=48&c=75$/);
+  await page.getByRole('button', { name: '응답한 사람의 결과 보기' }).click();
+  await expect(page).toHaveURL(/\?v=3&m=70&u=61&s=79&i=48&c=75$/);
   await expect(page.getByRole('button', { name: '친구와 음악 궁합 보기' })).toBeVisible();
 });
 
 test('the compatibility card downloads as a non-empty PNG', async ({ page }) => {
+  test.skip(test.info().project.name === 'mobile-webkit', 'iPhone uses the file share sheet instead of a browser download event');
   await page.goto(`/#compare=${hostToken}&guest=${guestToken}`);
+  await openShareMenu(page);
   const downloadPromise = page.waitForEvent('download');
   await page.getByRole('button', { name: '이미지 저장' }).click();
   const download = await downloadPromise;
@@ -46,7 +55,9 @@ test('the compatibility card downloads as a non-empty PNG', async ({ page }) => 
 });
 
 test('the personal result card downloads as a non-empty PNG', async ({ page }) => {
-  await page.goto('/?v=1&m=70&u=61&s=79&i=48&c=75');
+  test.skip(test.info().project.name === 'mobile-webkit', 'iPhone uses the file share sheet instead of a browser download event');
+  await page.goto('/?v=3&m=70&u=61&s=79&i=48&c=75');
+  await openShareMenu(page);
   const downloadPromise = page.waitForEvent('download');
   await page.getByRole('button', { name: '이미지 저장' }).click();
   const download = await downloadPromise;
@@ -60,9 +71,12 @@ test('the personal result card downloads as a non-empty PNG', async ({ page }) =
 });
 
 test('the story card downloads as a 9:16 PNG when file sharing is unavailable', async ({ page }) => {
-  await page.goto('/?v=2&m=70&u=61&s=79&i=48&c=75');
+  test.skip(test.info().project.name === 'mobile-webkit', 'Safari may open a blob image rather than emit a browser download event');
+  await page.goto('/?v=3&m=70&u=61&s=79&i=48&c=75');
+  await openShareMenu(page);
   const storyButton = page.getByRole('button', { name: '스토리용 카드 공유' });
   await expect(storyButton).toBeEnabled({ timeout: 30_000 });
+  await openShareMenu(page);
   const downloadPromise = page.waitForEvent('download');
   await storyButton.click();
   const download = await downloadPromise;
@@ -91,7 +105,8 @@ test('the prepared image reaches the Apple share sheet during the tap gesture', 
       },
     });
   });
-  await page.goto('/?v=2&m=70&u=61&s=79&i=48&c=75');
+  await page.goto('/?v=3&m=70&u=61&s=79&i=48&c=75');
+  await openShareMenu(page);
   const save = page.getByRole('button', { name: '이미지 저장' });
   await expect(save).toBeEnabled({ timeout: 30_000 });
   await save.click();
@@ -112,21 +127,39 @@ test('the prepared story image reaches the mobile share sheet during the tap ges
       },
     });
   });
-  await page.goto('/?v=2&m=70&u=61&s=79&i=48&c=75');
+  await page.goto('/?v=3&m=70&u=61&s=79&i=48&c=75');
+  await openShareMenu(page);
   const storyButton = page.getByRole('button', { name: '스토리용 카드 공유' });
   await expect(storyButton).toBeEnabled({ timeout: 30_000 });
   await storyButton.click();
   await expect.poll(() => page.evaluate(() => (window as Window & { __capturedStoryShare?: { active: boolean; files: number; name: string } }).__capturedStoryShare)).toEqual({ active: true, files: 1, name: 'muti-story.png' });
 });
 
-test('the personal result offers curated direct Spotify album links', async ({ page }) => {
-  await page.goto('/?v=1&m=70&u=61&s=79&i=48&c=75');
-  const albumLinks = page.getByRole('link', { name: /Spotify에서 앨범 듣기/ });
-  await expect(albumLinks).toHaveCount(6);
+test('the personal result offers four genre tracks plus one scene-bridge track', async ({ page }) => {
+  await page.goto('/?v=3&m=70&u=61&s=79&i=48&c=75');
+  const trackLinks = page.getByRole('link', { name: /Spotify에서 곡 듣기/ });
+  await expect(trackLinks).toHaveCount(5);
 
-  const hrefs = await albumLinks.evaluateAll(links => links.map(link => link.getAttribute('href')));
-  expect(new Set(hrefs).size).toBe(6);
-  for (const href of hrefs) expect(href).toMatch(/^https:\/\/open\.spotify\.com\/album\/[A-Za-z0-9]{22}$/);
+  const hrefs = await trackLinks.evaluateAll(links => links.map(link => link.getAttribute('href')));
+  expect(new Set(hrefs).size).toBe(5);
+  for (const href of hrefs) expect(href).toMatch(/^https:\/\/open\.spotify\.com\/track\/[A-Za-z0-9]{22}$/);
+});
+
+test('a saved result is directly visible on the intro and opens in one tap', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('music-personality-recent-results-v1', JSON.stringify([{
+      id: 'saved-result',
+      scores: { mellow: 70, unpretentious: 61, sophisticated: 79, intense: 48, contemporary: 75 },
+      topGenreId: 'classical_minimalism',
+      createdAt: Date.now(),
+    }]));
+  });
+  await page.goto('/');
+  await expect(page.getByRole('button', { name: /최근 결과 바로 보기/ })).toBeVisible();
+  await expect(page.getByRole('button', { name: /최근 결과 바로 보기/ })).toContainText('인디 팝');
+  await page.getByRole('button', { name: /최근 결과 바로 보기/ }).click();
+  await expect(page.getByRole('heading', { level: 1, name: /인디 팝/ })).toBeVisible();
+  await expect(page.getByText('장르 유사도').first()).toBeVisible();
 });
 
 test('the genre explorer reuses the fixed dot matrix background', async ({ page }) => {
@@ -139,7 +172,7 @@ test('the genre explorer reuses the fixed dot matrix background', async ({ page 
 });
 
 test('the personal result keeps viral actions within reach on mobile', async ({ page }) => {
-  await page.goto('/?v=1&m=70&u=61&s=79&i=48&c=75');
+  await page.goto('/?v=3&m=70&u=61&s=79&i=48&c=75');
   await expect(page.locator('.shareable-card-container > div').first()).toBeVisible();
   await page.evaluate(() => window.scrollTo(0, 700));
 

@@ -14,6 +14,8 @@ const fixedLabels = [
   '친구가 초대했어요', '음악 취향 비교', '우리 음악 궁합',
   '거의 같은 플레이리스트', '같이 들을수록 좋은 사이',
   '닮음과 새로움의 균형', '서로 다른 취향의 발견',
+  '중간에 가까운 취향', '폭넓게 열린 취향', '고르게 나타난 취향',
+  '새로운 음악 탐색', '가까운 장르 중 하나', '장르 유사도 / 탐색 추천',
 ];
 const source = [...genres.flatMap(genre => [genre.nameKo, genre.personalityAnalysis?.typeTitle]), ...fixedLabels].join('');
 const characters = [...new Set(source.match(/[가-힣]/g) || [])].sort();

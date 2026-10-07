@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Tooltip } from 'recharts';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ChartDataPoint, RadarChartProps, MUSICTraitInfo } from '@/types/charts';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -31,7 +31,7 @@ const MUSIC_TRAITS: Omit<MUSICTraitInfo, 'nameKo' | 'nameEn'>[] = [
   },
   {
     key: 'contemporary',
-    description: 'Modern trends and contemporary music preference',
+    description: 'Contemporary rhythms and production preference',
     color: '#06B6D4'
   }
 ];
@@ -105,6 +105,10 @@ const MUSICRadarChart: React.FC<RadarChartProps> = ({
   };
 
   const currentSize = sizeConfig[size];
+  const [chartWidth, setChartWidth] = useState<number>(currentSize.width);
+  const compact = chartWidth < 360;
+  const reducedMotion = useReducedMotion();
+  const shouldAnimate = animated && !reducedMotion;
 
   // 애니메이션 설정
   const containerVariants = {
@@ -120,15 +124,15 @@ const MUSICRadarChart: React.FC<RadarChartProps> = ({
   };
 
   return (
-    <div className={`flex flex-col items-center ${className}`}>
+    <div data-testid="music-radar-chart" className={`flex flex-col items-center ${className}`}>
       <motion.div
-        variants={animated ? containerVariants : undefined}
-        initial={animated ? "hidden" : undefined}
-        animate={animated ? "visible" : undefined}
+        variants={shouldAnimate ? containerVariants : undefined}
+        initial={shouldAnimate ? "hidden" : undefined}
+        animate={shouldAnimate ? "visible" : undefined}
         className="w-full flex justify-center"
       >
-        <ResponsiveContainer width="100%" height={currentSize.height}>
-          <RadarChart data={chartData} margin={{ top: 42, right: 58, bottom: 42, left: 58 }}>
+        <ResponsiveContainer width="100%" height={currentSize.height} onResize={width => setChartWidth(width)}>
+          <RadarChart data={chartData} outerRadius={compact ? '65%' : '80%'} margin={{ top: 42, right: 58, bottom: 42, left: 58 }}>
             <PolarGrid 
               stroke="rgba(255,255,255,0.12)"
               strokeWidth={1}
@@ -137,7 +141,7 @@ const MUSICRadarChart: React.FC<RadarChartProps> = ({
             <PolarAngleAxis 
               dataKey="traitDisplay"
               tick={{ 
-                fontSize: 12,
+                fontSize: compact ? 10 : 12,
                 fontWeight: 700,
                 fill: 'rgba(244,244,246,0.7)'
               }}
@@ -150,6 +154,7 @@ const MUSICRadarChart: React.FC<RadarChartProps> = ({
               tickCount={4}
             />
             <Radar
+              isAnimationActive={shouldAnimate}
               name={t('chart.musicPersonality')}
               dataKey="score"
               stroke="#C8FF3D"
@@ -169,18 +174,19 @@ const MUSICRadarChart: React.FC<RadarChartProps> = ({
 
       {/* 점수 범례 */}
       <motion.div 
-        className="mt-1 grid w-full max-w-2xl grid-cols-5 gap-2"
-        initial={animated ? { opacity: 0, y: 20 } : undefined}
-        animate={animated ? { opacity: 1, y: 0 } : undefined}
-        transition={animated ? { delay: 0.3, duration: 0.5 } : undefined}
+        data-testid="music-radar-legend"
+        className={`mt-1 grid w-full max-w-2xl gap-x-3 gap-y-4 ${compact ? 'grid-cols-2' : 'grid-cols-5'}`}
+        initial={shouldAnimate ? { opacity: 0, y: 20 } : undefined}
+        animate={shouldAnimate ? { opacity: 1, y: 0 } : undefined}
+        transition={shouldAnimate ? { delay: 0.3, duration: 0.5 } : undefined}
       >
-         {MUSIC_TRAITS.map((trait) => (
-           <div key={trait.key} className="min-w-0 text-center">
+         {MUSIC_TRAITS.map((trait, index) => (
+           <div key={trait.key} className={`min-w-0 text-center ${compact && index === 4 ? 'col-span-2' : ''}`}>
              <div 
                className="mx-auto mb-2 h-2 w-2 rounded-full"
                style={{ backgroundColor: trait.color }}
              />
-             <div className="truncate text-[9px] font-semibold text-white/70 sm:text-[11px]">
+             <div className="break-words text-[11px] font-semibold leading-5 text-white/70">
                {getTraitName(trait.key)}
              </div>
              <div className="score-tabular mt-1 text-base font-bold text-white sm:text-lg">
@@ -193,9 +199,9 @@ const MUSICRadarChart: React.FC<RadarChartProps> = ({
       {/* 해석 가이드 */}
       <motion.div 
         className="mt-6 max-w-md text-center"
-        initial={animated ? { opacity: 0 } : undefined}
-        animate={animated ? { opacity: 1 } : undefined}
-        transition={animated ? { delay: 0.6, duration: 0.5 } : undefined}
+        initial={shouldAnimate ? { opacity: 0 } : undefined}
+        animate={shouldAnimate ? { opacity: 1 } : undefined}
+        transition={shouldAnimate ? { delay: 0.6, duration: 0.5 } : undefined}
       >
         <p className="text-xs leading-5 text-white/70">
           {t('chart.interpretationGuide')} <br />

@@ -17,15 +17,15 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({ className = '' }) =
   ];
 
   return (
-    <div className={`inline-flex shrink-0 rounded-full border border-white/10 bg-white/[0.045] p-1 backdrop-blur-xl ${className}`}>
+    <div className={`inline-flex shrink-0 rounded-full border border-white/15 bg-[#101115]/75 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,.04)] backdrop-blur-xl ${className}`}>
       {languages.map(({ code, name }) => (
         <button
           key={code}
           onClick={() => setLanguage(code)}
           aria-pressed={language === code}
           aria-label={code === 'ko' ? '한국어로 보기' : code === 'ja' ? '日本語で表示' : 'View in English'}
-          className={`min-h-9 min-w-10 shrink-0 whitespace-nowrap rounded-full px-2 text-[11px] font-bold tracking-[0.14em] transition-colors ${
-            language === code ? 'bg-white text-black' : 'text-white/55 hover:text-white'
+          className={`min-h-11 min-w-11 shrink-0 whitespace-nowrap rounded-full px-2 text-[11px] font-bold tracking-[0.1em] transition-[background-color,color,box-shadow] active:scale-95 ${
+            language === code ? 'bg-white text-black shadow-sm' : 'text-white/70 hover:bg-white/5 hover:text-white'
           }`}
         >
           {name}

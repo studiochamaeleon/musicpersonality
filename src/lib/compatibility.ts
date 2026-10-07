@@ -1,5 +1,21 @@
-import { MUSICPersonality } from '@/types';
+import type { MUSICPersonality } from '@/types';
 import type { Language } from '@/types/i18n';
+import { CURRENT_RESULT_VERSION, LEGACY_RESULT_VERSION, type ResultVersion } from './resultVersion.ts';
+import { buildPairNarrative } from './pairNarrative.ts';
+
+export interface ComparisonVersions {
+  hostVersion?: ResultVersion;
+  guestVersion?: ResultVersion;
+}
+
+export function comparisonVersion(value: string | null): ResultVersion {
+  return value === '2' ? LEGACY_RESULT_VERSION : CURRENT_RESULT_VERSION;
+}
+
+function addComparisonVersions(params: URLSearchParams, versions: ComparisonVersions) {
+  if (versions.hostVersion === LEGACY_RESULT_VERSION) params.set('hv', '2');
+  if (versions.guestVersion === LEGACY_RESULT_VERSION) params.set('gv', '2');
+}
 
 export const MUSIC_TRAITS = ['mellow', 'unpretentious', 'sophisticated', 'intense', 'contemporary'] as const;
 export type MusicTrait = typeof MUSIC_TRAITS[number];
@@ -24,11 +40,11 @@ export interface PairCompatibility {
 
 const TRAIT_LABELS: Record<Language, Record<MusicTrait, string>> = {
   ko: {
-    mellow: '감성',
+    mellow: '차분함',
     unpretentious: '편안함',
     sophisticated: '탐구성',
     intense: '강렬함',
-    contemporary: '트렌드',
+    contemporary: '현대적 사운드',
   },
   en: {
     mellow: 'Mellow',
@@ -42,7 +58,7 @@ const TRAIT_LABELS: Record<Language, Record<MusicTrait, string>> = {
     unpretentious: '親しみやすさ',
     sophisticated: '探究心',
     intense: '力強さ',
-    contemporary: '今っぽさ',
+    contemporary: '現代的な音',
   },
 };
 
@@ -67,9 +83,10 @@ export function decodeScores(value: string | null): MUSICPersonality | null {
   }, {} as MUSICPersonality);
 }
 
-export function createComparisonHash(hostScores: MUSICPersonality, guestScores?: MUSICPersonality | null) {
+export function createComparisonHash(hostScores: MUSICPersonality, guestScores?: MUSICPersonality | null, versions: ComparisonVersions = {}) {
   const params = new URLSearchParams({ compare: encodeScores(hostScores) });
   if (guestScores) params.set('guest', encodeScores(guestScores));
+  addComparisonVersions(params, versions);
   return params.toString();
 }
 
@@ -78,14 +95,15 @@ export function parseComparisonHash(hash: string) {
   const params = new URLSearchParams(normalized);
   const hostScores = decodeScores(params.get('compare'));
   if (!hostScores) return null;
-  return { hostScores, guestScores: decodeScores(params.get('guest')) };
+  return { hostScores, guestScores: decodeScores(params.get('guest')), hostVersion: comparisonVersion(params.get('hv')), guestVersion: comparisonVersion(params.get('gv')) };
 }
 
-export function getComparisonUrl(hostScores: MUSICPersonality, guestScores?: MUSICPersonality | null, language: Language = 'ko') {
+export function getComparisonUrl(hostScores: MUSICPersonality, guestScores?: MUSICPersonality | null, language: Language = 'ko', versions: ComparisonVersions = {}) {
   if (typeof window === 'undefined') return '';
   const params = new URLSearchParams({ host: encodeScores(hostScores) });
   if (guestScores) params.set('guest', encodeScores(guestScores));
   if (language !== 'ko') params.set('lang', language);
+  addComparisonVersions(params, versions);
   return `${window.location.origin}/share?${params.toString()}`;
 }
 
@@ -116,22 +134,11 @@ export function calculatePairCompatibility(
   const strongest = traits.reduce((best, trait) => trait.similarity > best.similarity ? trait : best);
   const biggestDifference = traits.reduce((largest, trait) => trait.difference > largest.difference ? trait : largest);
 
-  if (language === 'ko') {
-    if (score >= 88) return { score, traits, strongest, biggestDifference, title: '거의 같은 플레이리스트', description: `${strongest.label} 취향이 특히 닮았어요. 말없이 음악만 틀어도 금방 통할 조합입니다.` };
-    if (score >= 74) return { score, traits, strongest, biggestDifference, title: '같이 들을수록 좋은 사이', description: `${strongest.label}에서 가장 잘 통하고, ${biggestDifference.label}의 차이는 서로의 플레이리스트를 넓혀줘요.` };
-    if (score >= 60) return { score, traits, strongest, biggestDifference, title: '닮음과 새로움의 균형', description: `${strongest.label}은 편안하게 통하고, ${biggestDifference.label}은 서로에게 새로운 음악을 건넬 포인트예요.` };
-    return { score, traits, strongest, biggestDifference, title: '서로 다른 취향의 발견', description: `차이가 큰 만큼 함께 들으면 새로운 장르를 발견할 가능성이 커요. ${strongest.label}이 두 취향을 잇는 접점입니다.` };
-  }
-
-  if (language === 'ja') {
-    if (score >= 88) return { score, traits, strongest, biggestDifference, title: 'ほぼ同じプレイリスト', description: `${strongest.label}の好みが特に似ています。言葉より先に音楽で通じ合えそうな組み合わせです。` };
-    if (score >= 74) return { score, traits, strongest, biggestDifference, title: '一緒に聴くほど相性のよい二人', description: `${strongest.label}がいちばんの共通点。${biggestDifference.label}の違いが、二人のプレイリストを広げます。` };
-    if (score >= 60) return { score, traits, strongest, biggestDifference, title: '似ているところと新しさのバランス', description: `${strongest.label}は自然に通じ合い、${biggestDifference.label}は新しい音楽を交換するきっかけになります。` };
-    return { score, traits, strongest, biggestDifference, title: '違う好みから始まる発見', description: `違いが大きいぶん、一緒に新しいジャンルを見つけられそうです。${strongest.label}が二人をつなぐ接点です。` };
-  }
-
-  if (score >= 88) return { score, traits, strongest, biggestDifference, title: 'Almost the same playlist', description: `You especially align on ${strongest.label}. Music is likely to click before words do.` };
-  if (score >= 74) return { score, traits, strongest, biggestDifference, title: 'Better when listening together', description: `${strongest.label} connects you most, while your ${biggestDifference.label} gap can broaden both playlists.` };
-  if (score >= 60) return { score, traits, strongest, biggestDifference, title: 'A balance of familiar and new', description: `${strongest.label} feels natural together, and ${biggestDifference.label} gives you something new to share.` };
-  return { score, traits, strongest, biggestDifference, title: 'A meeting of different tastes', description: `Your differences make room for discovery. ${strongest.label} is the bridge between your playlists.` };
+  const titles = language === 'ko'
+    ? ['거의 같은 플레이리스트', '같이 들을수록 좋은 사이', '닮음과 새로움의 균형', '서로 다른 취향의 발견']
+    : language === 'ja'
+      ? ['ほぼ同じプレイリスト', '一緒に聴くほど相性のよい二人', '似ているところと新しさのバランス', '違う好みから始まる発見']
+      : ['Almost the same playlist', 'Better when listening together', 'A balance of familiar and new', 'A meeting of different tastes'];
+  const pair = { score, traits, strongest, biggestDifference, title: titles[score >= 88 ? 0 : score >= 74 ? 1 : score >= 60 ? 2 : 3], description: '' };
+  return { ...pair, description: buildPairNarrative(pair, language).summary };
 }

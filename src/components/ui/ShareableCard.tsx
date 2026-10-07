@@ -1,203 +1,86 @@
 'use client';
 
-import React, { CSSProperties, useEffect, useRef, useState } from 'react';
-import { Check, Download, Instagram, Link2, Share2 } from 'lucide-react';
+import React, { CSSProperties, useRef } from 'react';
 import { MUSICPersonality, GenreSchema } from '@/types';
 import { analytics } from '@/lib/analytics';
 import { useTranslation } from '@/hooks/useTranslation';
 import { getGenreName, getGenreCharacteristics, getPersonalityAnalysis } from '@/lib/genreTranslations';
 import { getGenreTheme, getResultUrl } from '@/lib/resultTheme';
-import { captureCardBlob, createStoryImageBlob, downloadImageBlob, isAppleMobileBrowser, isMobileBrowser, saveCardImage } from '@/lib/cardExport';
+import { useCardSharing } from '@/hooks/useCardSharing';
+import ShareActions from './ShareActions';
 import { getGenreSound, getResultIdentityCopy } from '@/lib/resultIdentity';
+import { CURRENT_RESULT_VERSION, type ResultVersion } from '@/lib/resultVersion';
+import { resultInterpretationCopy, exploratoryIdentity, type ResultInterpretationKind } from '@/lib/resultInterpretation';
 
 interface ShareableCardProps {
   personalityScores: MUSICPersonality;
   topGenre: GenreSchema;
   topGenreScore: number;
+  interpretationKind: ResultInterpretationKind;
+  resultVersion?: ResultVersion;
   className?: string;
 }
 
-const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGenre, topGenreScore, className = '' }) => {
+const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGenre, topGenreScore, interpretationKind, resultVersion = CURRENT_RESULT_VERSION, className = '' }) => {
   const { t, language } = useTranslation();
   const cardRef = useRef<HTMLDivElement>(null);
-  const [feedback, setFeedback] = useState<string | null>(null);
-  const [appleMobile, setAppleMobile] = useState(false);
-  const [mobileBrowser, setMobileBrowser] = useState(false);
-  const [preparedBlob, setPreparedBlob] = useState<Blob | null>(null);
-  const [storyBlob, setStoryBlob] = useState<Blob | null>(null);
-  const [imagePreparationFailed, setImagePreparationFailed] = useState(false);
-  const [storyPreparationFailed, setStoryPreparationFailed] = useState(false);
   const theme = getGenreTheme(topGenre);
   const topTraits = Object.entries(personalityScores).sort(([, a], [, b]) => b - a).slice(0, 3);
   const personalityAnalysis = topGenre.personalityAnalysis
-    ? getPersonalityAnalysis(topGenre.id, topGenre.personalityAnalysis, language)
+    ? getPersonalityAnalysis(topGenre.id, topGenre.personalityAnalysis, language, topGenre.characteristics)
     : null;
   const typeTitle = personalityAnalysis?.typeTitle || getGenreName(topGenre, language);
   const identityCopy = getResultIdentityCopy(language);
+  const tentative = interpretationKind !== 'clear';
+  const interpretationCopy = resultInterpretationCopy(interpretationKind, language);
+  const identity = tentative ? { ...identityCopy, ...exploratoryIdentity(language) } : identityCopy;
   const genreSound = getGenreSound(topGenre.id, language);
   const cardStyle = { '--card-accent': theme.accent, '--card-secondary': theme.secondary } as CSSProperties;
-  const copy = language === 'ko' ? {
-    result: '결과 / 01', closest: '나와 가장 닮은 장르', match: '장르 유사도', question: '너는 어떤 음악 타입?', disclaimer: '재미로 보는 음악 취향 · 진단 아님', share: '공유하기', story: '스토리용 카드 공유', storyRetry: '스토리 카드 다시 준비', storyPreparing: '스토리 카드 준비 중', storyHint: '공유 메뉴에서 Instagram 스토리를 선택하세요. 링크 스티커를 넣으려면 아래 링크 복사를 이용해 주세요.', storySaved: '스토리용 이미지를 저장했어요. Instagram에서 직접 올려주세요.', save: '이미지 저장', copy: '링크 복사', retry: '이미지 다시 준비', preparing: '이미지 준비 중', imageTitle: '내 음악 성격 결과', copied: '결과 링크를 복사했어요.', copyFailed: '링크를 복사하지 못했어요.', shareFailed: '공유하지 못했어요. 다시 시도해 주세요.', imageReady: '결과 이미지를 준비했어요.', imageFailed: '이미지를 만들지 못했어요.',
-  } : language === 'ja' ? {
-    result: '結果 / 01', closest: '私に最も似たジャンル', match: 'ジャンル一致度', question: 'あなたの音楽タイプは？', disclaimer: '気軽に楽しむ音楽の好み · 診断ではありません', share: 'シェア', story: 'ストーリー用カードをシェア', storyRetry: 'ストーリー画像を再作成', storyPreparing: 'ストーリー画像を準備中', storyHint: '共有メニューからInstagramストーリーズを選んでください。リンクスタンプには下のリンクをコピーしてご利用ください。', storySaved: 'ストーリー画像を保存しました。Instagramから投稿してください。', save: '画像を保存', copy: 'リンクをコピー', retry: '画像をもう一度準備', preparing: '画像を準備中', imageTitle: '私の音楽性格の結果', copied: '結果リンクをコピーしました。', copyFailed: 'リンクをコピーできませんでした。', shareFailed: 'シェアできませんでした。もう一度お試しください。', imageReady: '結果画像を準備しました。', imageFailed: '画像を作成できませんでした。',
-  } : {
-    result: 'RESULT / 01', closest: 'THE SOUND MOST LIKE ME', match: 'genre similarity', question: 'WHAT IS YOUR MUSIC TYPE?', disclaimer: 'FOR FUN · NOT A DIAGNOSIS', share: 'Share', story: 'Share story card', storyRetry: 'Retry story card', storyPreparing: 'Preparing story card', storyHint: 'Choose Instagram Stories in the share menu. To add a link sticker, copy the result link below.', storySaved: 'Story image saved. Post it from Instagram.', save: 'Save image', copy: 'Copy link', retry: 'Retry image', preparing: 'Preparing image', imageTitle: 'My music personality result', copied: 'Result link copied.', copyFailed: 'Could not copy the link.', shareFailed: 'Could not share. Please try again.', imageReady: 'Result image is ready.', imageFailed: 'Could not create the image.',
-  };
+  const copy = language === 'ko'
+    ? { result: '결과 / 01', match: '장르 유사도', question: '너는 어떤 음악 타입?', disclaimer: '재미로 보는 음악 취향 · 진단 아님' }
+    : language === 'ja'
+      ? { result: '結果 / 01', match: 'ジャンル一致度', question: 'あなたの音楽タイプは？', disclaimer: '気軽に楽しむ音楽の好み · 診断ではありません' }
+      : { result: 'RESULT / 01', match: 'genre similarity', question: 'WHAT IS YOUR MUSIC TYPE?', disclaimer: 'FOR FUN · NOT A DIAGNOSIS' };
 
   const getTraitName = (trait: string) => language !== 'en'
     ? t(`intro.musicModelTraits.${trait}.description`)
     : t(`intro.musicModelTraits.${trait}.name`);
 
-  useEffect(() => {
-    const apple = isAppleMobileBrowser();
-    const mobile = isMobileBrowser();
-    setAppleMobile(apple);
-    setMobileBrowser(mobile);
-    if (!mobile || !cardRef.current) return;
-    let active = true;
-    setPreparedBlob(null);
-    setStoryBlob(null);
-    setImagePreparationFailed(false);
-    setStoryPreparationFailed(false);
-    void captureCardBlob(cardRef.current)
-      .then(async blob => {
-        if (!active) return;
-        setPreparedBlob(blob);
-        try {
-          const image = await createStoryImageBlob(blob, theme.accent, theme.secondary);
-          if (active) setStoryBlob(image);
-        } catch {
-          if (active) setStoryPreparationFailed(true);
-        }
-      })
-      .catch(() => {
-        if (active) {
-          setImagePreparationFailed(true);
-          setStoryPreparationFailed(true);
-        }
-      });
-    return () => { active = false; };
-  }, [language, topGenre.id, topGenreScore, theme.accent, theme.secondary]);
-
-  const notify = (message: string) => {
-    setFeedback(message);
-    window.setTimeout(() => setFeedback(null), 2400);
-  };
-
-  const share = async () => {
-    const url = getResultUrl(personalityScores, language);
-    const title = language === 'ko' ? `나의 음악 타입은 ${getGenreName(topGenre, language)} · ${typeTitle}` : language === 'ja' ? `私の音楽タイプは${getGenreName(topGenre, language)} · ${typeTitle}` : `My music type is ${getGenreName(topGenre, language)} · ${typeTitle}`;
-    const text = language === 'ko' ? `나는 ${getGenreName(topGenre, language)}와 닮은 ${typeTitle} 타입! 너는 어떤 음악 성격일까?` : language === 'ja' ? `私は${getGenreName(topGenre, language)}に似た「${typeTitle}」タイプ。あなたの音楽性格は？` : `I'm a ${typeTitle} with a ${getGenreName(topGenre, language)} sound. What's your music type?`;
-    try {
-      if (navigator.share) {
-        await navigator.share({ title, text, url });
-        analytics.track('result_shared', { shareType: 'native-link', topGenre: topGenre.name, personalityScores });
-        return;
-      }
-      await navigator.clipboard.writeText(url);
-      analytics.track('result_shared', { shareType: 'copy', topGenre: topGenre.name, personalityScores });
-      notify(copy.copied);
-    } catch (error) {
-      if (error instanceof DOMException && error.name === 'AbortError') return;
-      notify(copy.shareFailed);
-    }
-  };
-
-  const download = async () => {
-    try {
-      if (!cardRef.current) throw new Error('Card is not ready');
-      if (appleMobile && !preparedBlob) throw new Error('Image is still being prepared');
-      await saveCardImage(
-        cardRef.current,
-        'muti-result.png',
-        copy.imageTitle,
-        preparedBlob ?? undefined,
-      );
-      analytics.track('result_shared', { shareType: 'download', topGenre: topGenre.name, personalityScores });
-      notify(copy.imageReady);
-    } catch (error) {
-      if (error instanceof DOMException && error.name === 'AbortError') return;
-      notify(copy.imageFailed);
-    }
-  };
-
-  const saveOrRetry = () => {
-    if (appleMobile && !preparedBlob && cardRef.current) {
-      setImagePreparationFailed(false);
-      void captureCardBlob(cardRef.current)
-        .then(setPreparedBlob)
-        .catch(() => setImagePreparationFailed(true));
-      return;
-    }
-    void download();
-  };
-
-  const shareStory = async () => {
-    try {
-      if (!storyBlob && mobileBrowser && !storyPreparationFailed) return;
-      if (!storyBlob && mobileBrowser && storyPreparationFailed) {
-        if (!cardRef.current) throw new Error('Card is not ready');
-        setStoryPreparationFailed(false);
-        const cardImage = preparedBlob ?? await captureCardBlob(cardRef.current);
-        if (appleMobile && !preparedBlob) setPreparedBlob(cardImage);
-        setStoryBlob(await createStoryImageBlob(cardImage, theme.accent, theme.secondary));
-        return;
-      }
-
-      if (!storyBlob && !cardRef.current) throw new Error('Card is not ready');
-      const image = storyBlob ?? await createStoryImageBlob(await captureCardBlob(cardRef.current!), theme.accent, theme.secondary);
-      const file = new File([image], 'muti-story.png', { type: 'image/png' });
-      // A newly captured image takes an async turn; only a prebuilt image can keep tap activation.
-      if (storyBlob && navigator.share && navigator.canShare?.({ files: [file] })) {
-        await navigator.share({ title: copy.imageTitle, files: [file] });
-        analytics.track('result_shared', { shareType: 'story-native-file', topGenre: topGenre.name, personalityScores });
-        return;
-      }
-      downloadImageBlob(image, file.name);
-      analytics.track('result_shared', { shareType: 'story-download', topGenre: topGenre.name, personalityScores });
-      notify(copy.storySaved);
-    } catch (error) {
-      if (error instanceof DOMException && error.name === 'AbortError') return;
-      setStoryPreparationFailed(true);
-      notify(copy.imageFailed);
-    }
-  };
-
-  const copyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(getResultUrl(personalityScores, language));
-      notify(copy.copied);
-    } catch {
-      notify(copy.copyFailed);
-    }
-  };
+  const sharing = useCardSharing({
+    cardRef, language, url: getResultUrl(personalityScores, language, resultVersion),
+    title: tentative ? `${interpretationCopy.badge} · ${getGenreName(topGenre, language)} · ${typeTitle}` : language === 'ko' ? `나의 음악 타입은 ${getGenreName(topGenre, language)} · ${typeTitle}` : language === 'ja' ? `私の音楽タイプは${getGenreName(topGenre, language)} · ${typeTitle}` : `My music type is ${getGenreName(topGenre, language)} · ${typeTitle}`,
+    text: tentative ? `${getGenreName(topGenre, language)} · ${interpretationCopy.note}` : language === 'ko' ? `나는 ${getGenreName(topGenre, language)}와 닮은 ${typeTitle} 타입! 너는 어떤 음악 타입?` : language === 'ja' ? `私は${getGenreName(topGenre, language)}に似た「${typeTitle}」タイプ。あなたは？` : `I'm a ${typeTitle} with a ${getGenreName(topGenre, language)} sound. What's your music type?`,
+    accent: theme.accent, secondary: theme.secondary, filename: 'muti-result.png', storyFilename: 'muti-story.png',
+    onAction: shareType => analytics.track('result_shared', { shareType, topGenre: topGenre.name, personalityScores }),
+  });
 
   return (
     <div className={`shareable-card-container ${className}`}>
       <div
         ref={cardRef}
         style={cardStyle}
-        className="relative mx-auto min-h-[620px] w-full max-w-[600px] overflow-hidden rounded-[32px] border border-white/20 bg-[#050507] p-7 text-white shadow-2xl sm:aspect-[3/4] sm:min-h-0 sm:p-10"
+        className={`relative mx-auto flex min-h-[620px] w-full max-w-[600px] overflow-hidden rounded-[32px] border border-white/20 bg-[#050507] p-7 text-white shadow-2xl sm:p-10 ${tentative ? 'sm:min-h-[800px]' : 'sm:aspect-[3/4] sm:min-h-0'}`}
       >
         <div className="absolute -right-[18%] -top-[8%] h-[58%] w-[72%] rounded-full opacity-45 blur-[80px]" style={{ background: theme.accent }} />
         <div className="absolute -bottom-[18%] -left-[18%] h-[55%] w-[70%] rounded-full opacity-28 blur-[90px]" style={{ background: theme.secondary }} />
         <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '22px 22px' }} />
 
-        <div className="relative z-10 flex flex-col sm:h-full">
+        <div className="relative z-10 flex min-w-0 flex-1 flex-col">
           <header className="flex items-start justify-between gap-4 border-b border-white/15 pb-5">
             <div><p className="text-sm font-extrabold tracking-[-0.03em]">MUTI</p><p className="mt-1 text-[9px] font-semibold tracking-[0.18em] text-white/40">MUSIC TASTE IDENTITY</p></div>
             <p className="text-[10px] font-bold tracking-[0.14em] text-white/65">{copy.result}</p>
           </header>
 
           <div className="flex flex-1 flex-col justify-center py-6 sm:py-8">
-            <p className="text-[10px] font-bold tracking-[0.14em] text-white/60">{identityCopy.opening}</p>
+            <p className="text-[10px] font-bold tracking-[0.14em] text-white/60">{identity.opening}</p>
             <h3 className="mt-2 font-extrabold leading-[1.06] tracking-[-0.06em] [overflow-wrap:anywhere]">
-              <span className="text-[clamp(1.85rem,8vw,4.3rem)]" style={{ color: theme.accent }}>{identityCopy.quoteOpen}{getGenreName(topGenre, language)}{identityCopy.quoteClose}</span>{identityCopy.ending && <span className={`${language === 'ko' ? 'ml-1' : ''} text-[clamp(1rem,3vw,1.75rem)] text-white`}>{identityCopy.ending}</span>}
+              <span className="text-[clamp(1.85rem,8vw,4.3rem)]" style={{ color: theme.accent }}>{identityCopy.quoteOpen}{getGenreName(topGenre, language)}{identityCopy.quoteClose}</span>{identity.ending && <span className={`${language === 'ko' ? 'ml-1' : ''} text-[clamp(1rem,3vw,1.75rem)] text-white`}>{identity.ending}</span>}
             </h3>
-            <p className="mt-4 text-[11px] leading-5 text-white/70 sm:text-sm">{language === 'en' ? `${identityCopy.affinity} ${genreSound},` : `${genreSound}${identityCopy.affinity}`}</p>
+            <p className="mt-4 text-[11px] leading-5 text-white/70 sm:text-sm">{tentative ? `${exploratoryIdentity(language).sound} · ${genreSound}` : language === 'en' ? `${identityCopy.affinity} ${genreSound},` : `${genreSound}${identityCopy.affinity}`}</p>
             <p className="mt-1 text-[clamp(1.25rem,4.5vw,2.25rem)] font-extrabold leading-[1.12] tracking-[-0.04em] [overflow-wrap:anywhere]">{typeTitle}</p>
             <p className="score-tabular mt-5 text-6xl font-extrabold tracking-[-0.07em] sm:text-8xl" style={{ color: theme.accent }}>{topGenreScore}<span className="text-2xl">%</span></p>
             <p className="mt-1 text-[10px] font-bold tracking-[0.15em] text-white/60 uppercase">{copy.match}</p>
+            {tentative && <div data-testid="card-interpretation" data-kind={interpretationKind} className="mt-4 text-[11px] leading-5 text-white/75"><p className="font-bold" style={{ color: theme.accent }}>{interpretationCopy.badge}</p><p className="mt-1">{interpretationCopy.cardNote}</p></div>}
 
             <div className="mt-7 space-y-3 sm:mt-10">
               {topTraits.map(([trait, score]) => (
@@ -211,19 +94,12 @@ const ShareableCard: React.FC<ShareableCardProps> = ({ personalityScores, topGen
 
           <footer className="border-t border-white/15 pt-5">
             <p className="line-clamp-1 text-[10px] text-white/48">{getGenreCharacteristics(topGenre.id, topGenre.characteristics, language).slice(0, 3).join('  ·  ')}</p>
-            <div className="mt-3 flex items-end justify-between gap-4"><p className="text-[10px] leading-4 text-white/70">{copy.question}<br />{copy.disclaimer}</p><p className="text-[9px] font-bold tracking-[0.1em] text-white/65">BY CHAMELEONS</p></div>
+            <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-4"><p className="text-[10px] leading-4 text-white/70">{copy.question}<br />{copy.disclaimer}</p><p className="shrink-0 self-end whitespace-nowrap text-[9px] font-bold tracking-[0.1em] text-white/65">BY CHAMELEONS</p></div>
           </footer>
         </div>
       </div>
 
-      <div className="mt-6 grid gap-3 sm:grid-cols-2">
-        <button onClick={() => void share()} className="primary-action inline-flex items-center justify-center gap-2" style={{ background: theme.accent, borderColor: theme.accent }}><Share2 size={17} />{copy.share}</button>
-        <button onClick={() => void shareStory()} disabled={mobileBrowser && !storyBlob && !storyPreparationFailed} className="secondary-action inline-flex items-center justify-center gap-2"><Instagram size={17} />{mobileBrowser && !storyBlob ? (storyPreparationFailed ? copy.storyRetry : copy.storyPreparing) : copy.story}</button>
-        <button onClick={saveOrRetry} disabled={appleMobile && !preparedBlob && !imagePreparationFailed} className="secondary-action inline-flex items-center justify-center gap-2"><Download size={17} />{appleMobile && !preparedBlob ? (imagePreparationFailed ? copy.retry : copy.preparing) : copy.save}</button>
-        <button onClick={() => void copyLink()} className="secondary-action inline-flex items-center justify-center gap-2"><Link2 size={17} />{copy.copy}</button>
-      </div>
-      <p className="mx-auto mt-3 max-w-lg text-center text-xs leading-5 text-white/50">{copy.storyHint}</p>
-      <div className="mt-3 min-h-6 text-center text-xs text-white/45" role="status" aria-live="polite">{feedback && <span className="inline-flex items-center gap-1.5"><Check size={13} />{feedback}</span>}</div>
+      <ShareActions scope="personal" accent={theme.accent} sharing={sharing} />
     </div>
   );
 };

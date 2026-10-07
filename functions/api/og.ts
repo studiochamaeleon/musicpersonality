@@ -1,6 +1,7 @@
 import { calculateMatchScore, decodeScoreToken } from '../../cloudflare/sharePayload';
 import { createOgPng } from '../../cloudflare/ogImage';
 import { getPersonalResultSummary } from '../../cloudflare/personalResult';
+import { parseResultVersion } from '../../src/lib/resultVersion';
 
 interface PagesFunctionContext {
   request: Request;
@@ -10,13 +11,14 @@ export async function onRequest(context: PagesFunctionContext) {
   const requestUrl = new URL(context.request.url);
   const resultScores = decodeScoreToken(requestUrl.searchParams.get('score'));
   if (resultScores) {
-    const result = getPersonalResultSummary(resultScores);
+    const result = getPersonalResultSummary(resultScores, parseResultVersion(requestUrl.searchParams.get('sv')));
     const language = requestUrl.searchParams.get('lang') === 'ja' ? 'ja' : requestUrl.searchParams.get('lang') === 'en' ? 'en' : 'ko';
     const image = createOgPng(resultScores, null, {
       genreName: language === 'ko' ? result.genreNameKo : language === 'ja' ? result.genreNameJa : result.genreName,
       typeTitle: language === 'ko' ? result.typeTitleKo : language === 'ja' ? result.typeTitleJa : result.typeTitleEn,
       compatibility: result.compatibility,
       genreCategory: result.genreCategory,
+      interpretationKind: result.interpretationKind,
     }, language);
     return pngResponse(image, `muti-result-${language}.png`, 'public, max-age=86400');
   }

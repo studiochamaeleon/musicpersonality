@@ -33,21 +33,30 @@ export default function DotMatrixBackground({
     const context = canvas.getContext('2d', { alpha: false });
     if (!context) return;
 
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let reduceMotion = motionPreference.matches;
     let width = 0;
     let height = 0;
     let frame = 0;
     let lastDraw = 0;
 
+    const positionCanvas = () => {
+      // Keep a viewport-sized canvas over the visible part of long explorer
+      // pages instead of allocating and repainting every off-screen dot.
+      const top = Math.max(0, Math.min(-container.getBoundingClientRect().top, container.clientHeight - height));
+      canvas.style.transform = `translateY(${top}px)`;
+    };
+
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       width = container.clientWidth;
-      height = container.clientHeight;
+      height = Math.min(container.clientHeight, window.innerHeight);
       canvas.width = Math.max(1, Math.round(width * dpr));
       canvas.height = Math.max(1, Math.round(height * dpr));
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
+      positionCanvas();
     };
 
     const draw = (time = 0) => {
@@ -94,6 +103,8 @@ export default function DotMatrixBackground({
     };
 
     const animate = (time: number) => {
+      frame = 0;
+      if (reduceMotion || document.hidden) return;
       if (time - lastDraw >= 1000 / 30) {
         lastDraw = time;
         draw(time);
@@ -101,19 +112,36 @@ export default function DotMatrixBackground({
       frame = window.requestAnimationFrame(animate);
     };
 
+    const syncAnimation = () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      frame = 0;
+      reduceMotion = motionPreference.matches;
+      if (reduceMotion) draw();
+      else if (!document.hidden) frame = window.requestAnimationFrame(animate);
+    };
+
     resize();
     draw();
-    const observer = new ResizeObserver(() => {
+    const redrawOnResize = () => {
       resize();
       draw(lastDraw);
-    });
+    };
+    const observer = new ResizeObserver(redrawOnResize);
     observer.observe(container);
 
-    if (!reduceMotion) frame = window.requestAnimationFrame(animate);
+    syncAnimation();
+    window.addEventListener('scroll', positionCanvas, { passive: true });
+    window.addEventListener('resize', redrawOnResize);
+    document.addEventListener('visibilitychange', syncAnimation);
+    motionPreference.addEventListener('change', syncAnimation);
 
     return () => {
       observer.disconnect();
       if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', positionCanvas);
+      window.removeEventListener('resize', redrawOnResize);
+      document.removeEventListener('visibilitychange', syncAnimation);
+      motionPreference.removeEventListener('change', syncAnimation);
     };
   }, [background, cellSize, colors, speed]);
 

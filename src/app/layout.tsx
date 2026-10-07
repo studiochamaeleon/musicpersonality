@@ -95,15 +95,18 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => {
-                  navigator.serviceWorker.register('/sw.js')
+                const registerServiceWorker = () => {
+                  navigator.serviceWorker.register('/sw.js', { scope: '/', updateViaCache: 'none' })
                     .then((registration) => {
                       console.log('SW registered: ', registration);
                     })
                     .catch((registrationError) => {
                       console.log('SW registration failed: ', registrationError);
                     });
-                });
+                };
+                if (document.readyState === 'complete') registerServiceWorker();
+                else window.addEventListener('load', registerServiceWorker, { once: true });
+                window.addEventListener('online', registerServiceWorker);
               }
             `
           }}

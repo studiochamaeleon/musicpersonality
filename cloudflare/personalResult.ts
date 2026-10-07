@@ -1,8 +1,11 @@
 import genresData from '../src/data/genres.json';
 import { getGenreTranslation } from '../src/lib/genreTranslations';
 import { genreTranslationsJa } from '../src/lib/genreTranslationsJa';
-import { rankGenres, MUSIC_SCORE_KEYS, type MusicScoreProfile } from '../src/lib/genreScore';
+import { MUSIC_SCORE_KEYS, type MusicScoreProfile } from '../src/lib/genreScore';
+import { rankResultGenres } from '../src/lib/resultRanking';
+import { CURRENT_RESULT_VERSION, type ResultVersion } from '../src/lib/resultVersion';
 import type { Language } from '../src/types/i18n';
+import { interpretResult, type ResultInterpretationKind } from '../src/lib/resultInterpretation';
 
 interface GenreResultData {
   id: string;
@@ -15,6 +18,7 @@ interface GenreResultData {
 }
 
 export interface PersonalResultSummary {
+  interpretationKind: ResultInterpretationKind;
   genreId: string;
   genreCategory: string;
   genreName: string;
@@ -29,12 +33,13 @@ export interface PersonalResultSummary {
 
 const genres = genresData as GenreResultData[];
 
-export function getPersonalResultSummary(scores: number[]): PersonalResultSummary {
+export function getPersonalResultSummary(scores: number[], version: ResultVersion = CURRENT_RESULT_VERSION): PersonalResultSummary {
   const user = Object.fromEntries(MUSIC_SCORE_KEYS.map((key, index) => [key, scores[index]])) as MusicScoreProfile;
-  const ranked = rankGenres(user, genres);
+  const ranked = rankResultGenres(user, genres, version);
   const top = ranked[0];
 
   return {
+    interpretationKind: interpretResult(user, genres, version).kind,
     genreId: top.genre.id,
     genreCategory: top.genre.category,
     genreName: top.genre.name,
@@ -48,9 +53,9 @@ export function getPersonalResultSummary(scores: number[]): PersonalResultSummar
   };
 }
 
-export function createResultAppPath(scores: number[], language: Language = 'ko') {
+export function createResultAppPath(scores: number[], language: Language = 'ko', version: ResultVersion = CURRENT_RESULT_VERSION) {
   const params = new URLSearchParams({
-    v: '2',
+    v: String(version),
     m: String(scores[0]),
     u: String(scores[1]),
     s: String(scores[2]),
